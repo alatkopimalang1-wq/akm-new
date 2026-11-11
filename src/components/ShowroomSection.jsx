@@ -13,7 +13,7 @@ import { STORE_INFO } from '../data/products';
 
 export default function ShowroomSection() {
   return (
-    <section id="showroom-section" className="py-16 sm:py-24 bg-slate-50 border-b border-slate-200 relative">
+    <section id="showroom-section" className="py-16 sm:py-24 bg-slate-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">

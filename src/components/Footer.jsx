@@ -13,10 +13,10 @@ import { STORE_INFO } from '../data/products';
 
 export default function Footer({ onSelectCategory, onScrollToCalculator, onScrollToShowroom }) {
   return (
-    <footer className="bg-[#0b1e36] text-slate-300 border-t border-[#183459] text-xs">
+    <footer className="bg-[#0b1e36] text-slate-300 text-xs">
       
       {/* Top Value Banner (Deep Sapphire Blue) */}
-      <div className="border-b border-[#183459] py-8 bg-[#071426]">
+      <div className="py-8 bg-[#071426]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
           <div className="flex items-center justify-center md:justify-start gap-3">
             <div className="w-10 h-10 rounded-xl bg-[#0e274b] border border-[#1e4274] flex items-center justify-center shrink-0 shadow-sm">

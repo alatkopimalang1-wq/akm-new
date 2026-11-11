@@ -15,7 +15,7 @@ import { CATEGORIES } from '../data/products';
 
 export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCalculator, onScrollToShowroom }) {
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/60 via-white to-white border-b border-slate-200">
+    <section className="relative overflow-hidden bg-gradient-to-b from-blue-50/60 via-white to-white">
       {/* Background Soft Blue Ambient Glow */}
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 bg-gradient-to-br from-blue-200/30 via-indigo-100/20 to-transparent blur-3xl pointer-events-none" />
 

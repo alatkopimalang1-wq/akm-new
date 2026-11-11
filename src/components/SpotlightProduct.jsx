@@ -24,7 +24,7 @@ export default function SpotlightProduct({ onQuickView, onAddToCart, product }) 
   };
 
   return (
-    <section className="py-16 sm:py-20 bg-slate-50 border-b border-slate-200 relative overflow-hidden">
+    <section className="py-16 sm:py-20 bg-slate-50 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="relative rounded-3xl bg-white border border-slate-200 p-8 sm:p-12 shadow-xl shadow-blue-500/5 overflow-hidden">

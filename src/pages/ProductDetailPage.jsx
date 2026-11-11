@@ -106,7 +106,7 @@ export default function ProductDetailPage({
     <div className="min-h-screen bg-white text-slate-900 pb-24">
       
       {/* Top Breadcrumb Bar */}
-      <div className="border-b border-slate-200 bg-slate-50/80 backdrop-blur-sm py-3 px-4 sm:px-6 lg:px-8">
+      <div className="bg-slate-50/80 backdrop-blur-sm py-3 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-slate-500">
           <div className="flex items-center gap-2 flex-wrap">
             <Link to="/" className="hover:text-[#0070f3] transition-colors flex items-center gap-1">

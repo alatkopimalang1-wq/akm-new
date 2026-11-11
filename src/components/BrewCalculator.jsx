@@ -32,7 +32,7 @@ export default function BrewCalculator({ onQuickView, onAddToCart }) {
   const recommendedGear = PRODUCTS.filter(p => currentMethod.recommendedGearIds.includes(p.id));
 
   return (
-    <section id="kalkulator-seduh" className="py-16 sm:py-24 bg-white border-b border-slate-200 relative overflow-hidden">
+    <section id="kalkulator-seduh" className="py-16 sm:py-24 bg-white relative overflow-hidden">
       {/* Background Azure Glow */}
       <div className="absolute top-1/2 left-0 w-96 h-96 bg-blue-100/40 rounded-full blur-3xl pointer-events-none" />
 

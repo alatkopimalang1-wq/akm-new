@@ -281,7 +281,7 @@ export default function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#0b1e36] border-b border-[#183459] shadow-md transition-all" ref={navbarRef}>
+    <header className="sticky top-0 z-50 w-full bg-[#0b1e36] shadow-md transition-all" ref={navbarRef}>
       
       {/* Top Navbar Row */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -533,11 +533,11 @@ export default function Navbar({
           />
 
           {/* Full-width Floating Panel */}
-          <div className="absolute top-full left-0 right-0 z-50 bg-white text-slate-900 border-b border-slate-200 shadow-2xl shadow-blue-950/30 animate-fade-in overflow-hidden">
+          <div className="absolute top-full left-0 right-0 z-50 bg-white text-slate-900 shadow-2xl shadow-blue-950/30 animate-fade-in overflow-hidden">
             <div className="max-w-7xl mx-auto flex flex-col md:flex-row min-h-[380px] sm:min-h-[420px]">
               
               {/* LEFT COLUMN: Parent Category List with Chevrons */}
-              <div className="w-full md:w-72 bg-[#f8fafc] md:border-r border-slate-200 py-6 px-4 shrink-0">
+              <div className="w-full md:w-72 bg-[#f8fafc] py-6 px-4 shrink-0">
                 <div className="space-y-1.5">
                   {MEGA_MENU_CATEGORIES.map((cat) => {
                     const isActive = activeParentCategoryId === cat.id;
@@ -565,7 +565,7 @@ export default function Navbar({
                 
                 <div>
                   {/* Category Header Row */}
-                  <div className="flex items-center justify-between pb-5 border-b border-slate-100 mb-6">
+                  <div className="flex items-center justify-between pb-4 mb-4">
                     <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight font-sans">
                       {activeParent.name}
                     </h3>

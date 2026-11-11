@@ -30,8 +30,3 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #0070f3;
 }
-
-/* Smooth border color defaults */
-* {
-  border-color: #e2e8f0;
-}
