@@ -284,6 +284,7 @@ export default function App() {
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
               showToast={showToast}
+              onOpenCart={() => setIsCartOpen(true)}
             />
           }
         />

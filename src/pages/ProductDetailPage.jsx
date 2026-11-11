@@ -3,20 +3,14 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
   ShoppingBag, 
-  PhoneCall, 
-  Star, 
   ShieldCheck, 
-  Truck, 
-  RotateCcw, 
-  Check, 
-  Heart, 
-  Share2, 
-  Copy, 
   CheckCircle2, 
-  Info, 
-  Coffee, 
-  SlidersHorizontal,
-  ExternalLink 
+  Heart, 
+  Scale, 
+  Award, 
+  CreditCard, 
+  MessageCircle, 
+  Coffee 
 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES, STORE_INFO } from '../data/products';
 import { formatRupiah, generateWhatsAppMessage } from '../utils/format';
@@ -24,9 +18,10 @@ import ProductCard from '../components/ProductCard';
 
 export default function ProductDetailPage({ 
   onAddToCart, 
-  wishlist, 
+  wishlist = [], 
   onToggleWishlist, 
-  showToast 
+  showToast,
+  onOpenCart
 }) {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -37,7 +32,6 @@ export default function ProductDetailPage({
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
-  const [copied, setCopied] = useState(false);
 
   // Set default variant on product change & scroll to top
   useEffect(() => {
@@ -85,322 +79,276 @@ export default function ProductDetailPage({
     showToast(`"${product.name}" (${quantity}x) berhasil dimasukkan ke keranjang!`);
   };
 
+  const handleCheckoutDirect = () => {
+    handleAddToCart();
+    if (onOpenCart) {
+      onOpenCart();
+    }
+  };
+
   const handleBuyWhatsApp = () => {
     const item = {
       ...product,
       quantity,
       selectedVariant
     };
-    const waUrl = `https://wa.me/${STORE_INFO.whatsappNumber}?text=${generateWhatsAppMessage([item], `Pemesanan dari Link Produk: ${window.location.href}`)}`;
+    const waUrl = `https://wa.me/${STORE_INFO.whatsappNumber}?text=${generateWhatsAppMessage([item], `Halo Admin Sanubari x Alat Kopi Malang, saya mau order:\nProduk: ${product.name}${selectedVariant ? ` (${selectedVariant.label})` : ''}\nJumlah: ${quantity} pcs\nLink: ${window.location.href}`)}`;
     window.open(waUrl, '_blank');
   };
 
-  const handleCopyLink = () => {
-    navigator.clipboard.writeText(window.location.href);
-    setCopied(true);
-    showToast('Link produk berhasil disalin ke clipboard!');
-    setTimeout(() => setCopied(false), 2500);
-  };
+  const discountPercent = product.discountPercent || (product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : null);
+  const weight = product.specs?.['Berat Bersih'] || product.specs?.['Berat'] || '500 gram';
+  const stockCount = product.stock || 20;
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 pb-24">
-      
-      {/* Main Product Hero Details Grid */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
-          
-          {/* Left Column: Product Photos & Guarantees */}
-          <div className="lg:col-span-6 space-y-4">
+    <div className="min-h-screen bg-slate-50/40 text-slate-900 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="max-w-5xl mx-auto space-y-10">
+        
+        {/* Main Product Card Container (Persis Screenshot) */}
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-8 shadow-sm">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-7 lg:gap-10 items-start">
             
-            {/* Primary Big Photo */}
-            <div className="relative aspect-square rounded-3xl overflow-hidden bg-slate-100 border border-slate-200 shadow-xl">
-              <img
-                src={product.images[activeImageIndex] || product.images[0]}
-                alt={product.name}
-                className="w-full h-full object-cover"
-              />
+            {/* Left Column: Product Photo & Badges */}
+            <div className="md:col-span-5 space-y-3">
+              <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-xs">
+                <img
+                  src={product.images[activeImageIndex] || product.images[0]}
+                  alt={product.name}
+                  className="w-full h-full object-cover"
+                />
 
-              {/* Floating Badges */}
-              <div className="absolute top-4 left-4 flex flex-col gap-1.5 z-10">
-                {product.badge && (
-                  <span className="px-3.5 py-1.5 rounded-lg text-xs font-extrabold uppercase tracking-wider bg-white/95 text-[#0070f3] border border-blue-200 shadow-xs backdrop-blur-md">
-                    {product.badge}
-                  </span>
-                )}
-                {product.discountPercent > 0 && (
-                  <span className="px-3 py-1 rounded-lg text-xs font-extrabold bg-red-600 text-white shadow-md">
-                    HEMAT {product.discountPercent}%
-                  </span>
-                )}
-              </div>
-
-              {/* Wishlist toggle */}
-              <button
-                onClick={() => onToggleWishlist(product)}
-                className={`absolute top-4 right-4 p-3 rounded-full backdrop-blur-md transition-all shadow-md ${
-                  isWishlisted
-                    ? 'bg-red-500 text-white'
-                    : 'bg-white/90 text-slate-600 hover:text-slate-900 hover:bg-white border border-slate-200'
-                }`}
-                title={isWishlisted ? 'Hapus dari Keinginan' : 'Simpan ke Wishlist'}
-              >
-                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-current' : ''}`} />
-              </button>
-            </div>
-
-            {/* Thumbnail Selectors */}
-            {product.images.length > 1 && (
-              <div className="flex items-center gap-3">
-                {product.images.map((img, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setActiveImageIndex(idx)}
-                    className={`w-20 h-20 rounded-2xl overflow-hidden border-2 transition-all ${
-                      activeImageIndex === idx
-                        ? 'border-[#0070f3] scale-105 shadow-md shadow-blue-500/20'
-                        : 'border-slate-200 opacity-60 hover:opacity-100'
-                    }`}
-                  >
-                    <img src={img} alt="" className="w-full h-full object-cover" />
-                  </button>
-                ))}
-              </div>
-            )}
-
-            {/* Guarantees Box */}
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3 text-xs text-slate-600">
-              <div className="flex items-center gap-3">
-                <ShieldCheck className="w-5 h-5 text-[#0070f3] shrink-0" />
-                <div>
-                  <strong className="text-slate-900 block font-bold">100% Produk Original &amp; Bergaransi Resmi</strong>
-                  <span className="text-[11px] text-slate-500">Bukan produk OEM atau rekondisi, jaminan mutu distributor</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <Truck className="w-5 h-5 text-[#0070f3] shrink-0" />
-                <div>
-                  <strong className="text-slate-900 block font-bold">Gratis Ongkir se-Jawa (Min. Rp 500rb)</strong>
-                  <span className="text-[11px] text-slate-500">Pengiriman cepat ekspedisi atau GoSend Instant area Malang</span>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <RotateCcw className="w-5 h-5 text-[#0070f3] shrink-0" />
-                <div>
-                  <strong className="text-slate-900 block font-bold">Garansi Tukar Baru 7 Hari</strong>
-                  <span className="text-[11px] text-slate-500">Jika terdapat kendala pabrik saat unboxing paket</span>
-                </div>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Right Column: Title, Price, Variants & Buying Actions */}
-          <div className="lg:col-span-6 space-y-6">
-            
-            <div>
-              {/* Brand & Rating */}
-              <div className="flex flex-wrap items-center justify-between gap-2 text-xs mb-2">
-                <span className="uppercase tracking-widest font-extrabold text-[#0070f3] text-sm">
-                  {product.brand}
-                </span>
-                <div className="flex items-center gap-2">
-                  <button
-                    onClick={handleCopyLink}
-                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 hover:bg-slate-100 text-[#0070f3] text-xs font-semibold border border-slate-200 transition-all shadow-2xs"
-                    title="Salin Link Produk Ini"
-                  >
-                    {copied ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                    <span>{copied ? 'Tersalin!' : 'Bagikan'}</span>
-                  </button>
-                  <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
-                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                    <span className="font-extrabold text-slate-900">{product.rating}</span>
-                    <span className="text-slate-500">({product.reviewCount} ulasan)</span>
+                {/* Top-Left Discount Badge: HEMAT XX% */}
+                {(discountPercent || product.badge) && (
+                  <div className="absolute top-3 left-3 z-10">
+                    <span className="px-2.5 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-wider bg-[#ef4444] text-white shadow-xs">
+                      {discountPercent ? `HEMAT ${discountPercent}%` : product.badge}
+                    </span>
                   </div>
-                </div>
-              </div>
-
-              {/* Title */}
-              <h1 className="text-2xl sm:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-                {product.name}
-              </h1>
-
-              {/* Tagline */}
-              <p className="text-sm text-[#0070f3] font-semibold mt-2 leading-relaxed">
-                {product.tagline}
-              </p>
-
-              {/* Direct Link Share Pill */}
-              <div className="mt-3 inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200 text-[11px] text-slate-600">
-                <span>Tautan Produk:</span>
-                <code className="text-[#0070f3] font-mono font-bold">/product/{product.slug}</code>
-              </div>
-            </div>
-
-            {/* Pricing Section */}
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
-              <span className="text-xs text-slate-400 block uppercase font-bold tracking-wider">
-                Harga Resmi AKM:
-              </span>
-              <div className="flex items-baseline gap-4">
-                <span className="text-3xl sm:text-4xl font-extrabold text-slate-900">
-                  {formatRupiah(product.price)}
-                </span>
-                {product.originalPrice && (
-                  <span className="text-base text-slate-400 line-through">
-                    {formatRupiah(product.originalPrice)}
-                  </span>
                 )}
-              </div>
-              <div className="pt-2 flex items-center gap-2 text-xs text-emerald-600 font-semibold">
-                <Check className="w-4 h-4" />
-                <span>Ready Stock di Showroom Ruko Tlogomas Square Malang</span>
-              </div>
-            </div>
 
-            {/* Variants Selector */}
-            {product.variants && product.variants.length > 0 && (
-              <div className="space-y-2.5">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-600">
-                  Pilih Varian / Warna:
-                </label>
-                <div className="flex flex-wrap gap-2.5">
-                  {product.variants.map((v) => (
+                {/* Top-Right Wishlist Toggle */}
+                <button
+                  type="button"
+                  onClick={() => onToggleWishlist(product)}
+                  className={`absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 backdrop-blur-xs border border-slate-200/80 flex items-center justify-center transition-all z-20 shadow-xs hover:scale-105 active:scale-95 ${
+                    isWishlisted 
+                      ? 'text-red-500 fill-red-500 border-red-200' 
+                      : 'text-slate-400 hover:text-red-500'
+                  }`}
+                  title={isWishlisted ? 'Hapus dari Keinginan' : 'Simpan ke Keinginan'}
+                >
+                  <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
+                </button>
+              </div>
+
+              {/* Thumbnail Selector if multiple images */}
+              {product.images.length > 1 && (
+                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+                  {product.images.map((img, idx) => (
                     <button
-                      key={v.id}
-                      onClick={() => setSelectedVariant(v)}
-                      disabled={!v.inStock}
-                      className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-                        selectedVariant?.id === v.id
-                          ? 'bg-blue-50 text-[#0070f3] border-blue-400 shadow-xs'
-                          : v.inStock
-                            ? 'bg-white text-slate-800 border-slate-200 hover:border-slate-300'
-                            : 'bg-slate-100 text-slate-400 border-slate-200 line-through cursor-not-allowed'
+                      key={idx}
+                      type="button"
+                      onClick={() => setActiveImageIndex(idx)}
+                      className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+                        activeImageIndex === idx
+                          ? 'border-[#4f46e5] shadow-xs'
+                          : 'border-slate-200 opacity-60 hover:opacity-100'
                       }`}
                     >
-                      {v.label} {!v.inStock && '(Habis)'}
+                      <img src={img} alt="" className="w-full h-full object-cover" />
                     </button>
                   ))}
                 </div>
-              </div>
-            )}
-
-            {/* Quantity Selector & Order Actions */}
-            <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-4">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-600">
-                  Jumlah Pembelian:
-                </span>
-                <div className="flex items-center border border-slate-200 rounded-xl bg-white shadow-xs">
-                  <button
-                    onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                    className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
-                  >
-                    -
-                  </button>
-                  <span className="px-4 py-2 text-sm font-bold text-slate-900">
-                    {quantity}
-                  </span>
-                  <button
-                    onClick={() => setQuantity(quantity + 1)}
-                    className="px-4 py-2 text-sm text-slate-600 hover:text-slate-900 transition-colors"
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
-                <button
-                  onClick={handleAddToCart}
-                  className="w-full py-3.5 px-4 rounded-xl bg-white hover:bg-slate-100 text-slate-800 text-xs font-bold border border-slate-200 hover:border-slate-300 flex items-center justify-center gap-2 active:scale-95 transition-all shadow-xs"
-                >
-                  <ShoppingBag className="w-4 h-4 text-[#0070f3]" />
-                  <span>Tambah ke Keranjang</span>
-                </button>
-
-                <button
-                  onClick={handleBuyWhatsApp}
-                  className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white text-xs font-bold flex items-center justify-center gap-2 active:scale-95 transition-all shadow-md shadow-blue-500/25"
-                >
-                  <PhoneCall className="w-4 h-4" />
-                  <span>Pesan via WhatsApp</span>
-                </button>
-              </div>
-
-              {/* Marketplace Links */}
-              <div className="pt-2 text-center text-xs text-slate-500 flex items-center justify-center gap-4">
-                <span>Atau order via official marketplace:</span>
-                <a
-                  href={STORE_INFO.tokopediaStoreUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-emerald-600 hover:underline font-bold inline-flex items-center gap-1"
-                >
-                  <span>Tokopedia</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-                <a
-                  href={STORE_INFO.shopeeStoreUrl}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-orange-600 hover:underline font-bold inline-flex items-center gap-1"
-                >
-                  <span>Shopee</span>
-                  <ExternalLink className="w-3 h-3" />
-                </a>
-              </div>
+              )}
             </div>
 
-            {/* Description Paragraph */}
-            <div className="space-y-2 text-xs sm:text-sm text-slate-600 leading-relaxed">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">
-                Tentang Produk:
-              </h3>
-              <p>{product.description}</p>
-            </div>
+            {/* Right Column: Product Info & Actions */}
+            <div className="md:col-span-7 flex flex-col justify-between">
+              <div>
+                {/* Product Title */}
+                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight tracking-tight">
+                  {product.name}
+                </h1>
 
-            {/* Technical Specifications */}
-            {product.specs && (
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
-                <h3 className="text-xs font-bold uppercase tracking-wider text-[#0070f3] flex items-center gap-2">
-                  <Info className="w-4 h-4" />
-                  <span>Spesifikasi Teknis Lengkap</span>
-                </h3>
-                <div className="divide-y divide-slate-200 text-xs">
-                  {Object.entries(product.specs).map(([k, v]) => (
-                    <div key={k} className="py-2.5 flex justify-between gap-4">
-                      <span className="text-slate-500">{k}</span>
-                      <strong className="text-slate-900 text-right font-medium">{v}</strong>
+                {/* Brand & Guarantee Pill Bar */}
+                <div className="mt-3 flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                  <div className="flex items-center gap-2.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
+                      <Award className="w-4 h-4" />
                     </div>
-                  ))}
+                    <div>
+                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block leading-none">
+                        MERK / BRAND RESMI
+                      </span>
+                      <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight block mt-0.5">
+                        {product.brand}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
+                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>100% Original</span>
+                  </div>
+                </div>
+
+                {/* Price Row */}
+                <div className="mt-4 flex items-baseline gap-3">
+                  <span className="text-2xl sm:text-3xl font-extrabold text-[#4f46e5]">
+                    {formatRupiah(product.price)}
+                  </span>
+                  {product.originalPrice && (
+                    <span className="text-sm sm:text-base font-semibold text-slate-400 line-through">
+                      {formatRupiah(product.originalPrice)}
+                    </span>
+                  )}
+                </div>
+
+                {/* Variasi Selector */}
+                {product.variants && product.variants.length > 0 && (
+                  <div className="mt-4">
+                    <span className="text-xs font-semibold text-slate-700 flex items-center gap-1.5 mb-2">
+                      <span>🎨</span>
+                      <span>Pilih Variasi Warna:</span>
+                    </span>
+                    <div className="flex flex-wrap gap-2">
+                      {product.variants.map((v) => (
+                        <button
+                          key={v.id}
+                          type="button"
+                          onClick={() => setSelectedVariant(v)}
+                          disabled={!v.inStock}
+                          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+                            selectedVariant?.id === v.id
+                              ? 'bg-white border-2 border-slate-900 text-slate-900 shadow-xs'
+                              : v.inStock
+                                ? 'bg-slate-50 border-slate-200 text-slate-700 hover:bg-white hover:border-slate-300'
+                                : 'bg-slate-100 text-slate-400 border-slate-200 line-through cursor-not-allowed'
+                          }`}
+                        >
+                          {v.label}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Stock & Weight Row */}
+                <div className="mt-4 flex flex-wrap items-center gap-3">
+                  <div className="flex items-center gap-1.5 text-xs text-slate-600">
+                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
+                    <span>
+                      Stok Tersedia:{' '}
+                      <strong className="text-emerald-700 font-bold">
+                        {stockCount} unit (Siap Kirim)
+                      </strong>
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-xs font-medium">
+                    <Scale className="w-3.5 h-3.5 text-[#4f46e5]" />
+                    <span className="text-slate-700">
+                      Berat:{' '}
+                      <strong className="font-bold text-slate-900">{weight}</strong>
+                    </span>
+                  </div>
+                </div>
+
+                {/* Description & Specifications Box */}
+                <div className="mt-4 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80">
+                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 mb-1.5">
+                    Deskripsi &amp; Spesifikasi Produk:
+                  </h3>
+                  <p className="text-xs text-slate-600 leading-relaxed">
+                    {product.description}
+                  </p>
+                </div>
+
+                {/* Quantity Stepper */}
+                <div className="mt-4 flex items-center gap-3">
+                  <span className="text-xs font-semibold text-slate-700">Jumlah:</span>
+                  <div className="flex items-center border border-slate-200 rounded-lg bg-white overflow-hidden shadow-xs">
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                      className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors text-sm font-bold"
+                    >
+                      -
+                    </button>
+                    <span className="w-10 text-center text-xs font-bold text-slate-900">
+                      {quantity}
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setQuantity(Math.min(stockCount, quantity + 1))}
+                      className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors text-sm font-bold"
+                    >
+                      +
+                    </button>
+                  </div>
+                  <span className="text-[11px] text-slate-400">
+                    Maks. {stockCount} pcs
+                  </span>
                 </div>
               </div>
-            )}
+
+              {/* Action Buttons Row */}
+              <div className="mt-5 space-y-2.5">
+                <div className="flex items-center gap-2.5">
+                  {/* + Tambah Keranjang */}
+                  <button
+                    type="button"
+                    onClick={handleAddToCart}
+                    className="flex-1 py-3 px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-indigo-50/60 text-[#4f46e5] border-2 border-[#4f46e5] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs active:scale-98"
+                  >
+                    <ShoppingBag className="w-4 h-4 text-[#4f46e5]" />
+                    <span>+ Tambah Keranjang</span>
+                  </button>
+
+                  {/* Checkout */}
+                  <button
+                    type="button"
+                    onClick={handleCheckoutDirect}
+                    className="flex-1 py-3 px-4 rounded-xl sm:rounded-2xl bg-[#4f46e5] hover:bg-[#4338ca] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-500/20 active:scale-98"
+                  >
+                    <CreditCard className="w-4 h-4" />
+                    <span>Checkout</span>
+                  </button>
+                </div>
+
+                {/* Order Via WhatsApp */}
+                <button
+                  type="button"
+                  onClick={handleBuyWhatsApp}
+                  className="w-full py-3.5 px-4 rounded-xl sm:rounded-2xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md shadow-green-500/20 transition-all active:scale-98"
+                >
+                  <MessageCircle className="w-4 h-4" />
+                  <span>Order Via WhatsApp</span>
+                </button>
+              </div>
+
+            </div>
 
           </div>
-
         </div>
 
-        {/* Related Products Section */}
+        {/* Related Products Section (Clean & Simple) */}
         {relatedProducts.length > 0 && (
-          <div className="mt-20 pt-12 border-t border-slate-200">
-            <div className="flex items-center justify-between mb-8">
+          <div className="pt-4">
+            <div className="flex items-center justify-between mb-5">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#0070f3]">
-                  REKOMENDASI ALAT SERUPA
+                <span className="text-xs font-bold text-[#4f46e5] uppercase tracking-wider block">
+                  REKOMENDASI TERKAIT
                 </span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
+                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">
                   Pilihan Lain di Kategori {categoryObj?.name}
                 </h3>
               </div>
               <Link
                 to={`/kategori/${categoryObj?.slug || product.category}`}
-                className="text-xs font-bold text-[#0070f3] hover:underline"
+                className="text-xs font-bold text-[#4f46e5] hover:underline"
               >
-                Lihat Semua di {categoryObj?.name || 'Kategori'} →
+                Lihat Semua →
               </Link>
             </div>
 
@@ -420,7 +368,6 @@ export default function ProductDetailPage({
         )}
 
       </div>
-
     </div>
   );
 }
