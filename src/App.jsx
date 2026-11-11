@@ -30,8 +30,7 @@ import {
   Coffee, 
   RotateCcw, 
   CheckCircle,
-  SlidersHorizontal,
-  PhoneCall
+  SlidersHorizontal
 } from 'lucide-react';
 
 export default function App() {
@@ -240,19 +239,6 @@ export default function App() {
           <span>{toastMessage}</span>
         </div>
       )}
-
-      {/* Floating WhatsApp Quick Consultation Button (Azure Sapphire Style) */}
-      <a
-        href={`https://wa.me/${STORE_INFO.whatsappNumber}?text=Halo%20barista%20Sanubari%20x%20Alat%20Kopi%20Malang!%20Saya%20ingin%20tanya%20rekomendasi%20alat`}
-        target="_blank"
-        rel="noreferrer"
-        className="fixed bottom-20 left-4 md:bottom-6 md:left-6 z-30 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white font-bold text-xs shadow-xl shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group"
-        title="Chat Barista via WhatsApp"
-      >
-        <span className="w-2.5 h-2.5 rounded-full bg-cyan-300 animate-ping"></span>
-        <PhoneCall className="w-4 h-4" />
-        <span className="hidden sm:inline">Konsultasi Barista</span>
-      </a>
 
       {/* Main Navbar */}
       <Navbar
