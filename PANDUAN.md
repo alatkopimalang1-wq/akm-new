@@ -26,17 +26,50 @@ Lalu buka browser ke: **`http://localhost:5173`**
 
 | Lokasi File | Fungsi |
 | :--- | :--- |
-| **`src/data/products.js`** | **Pusat Data:** Tambah/edit produk, harga, foto, stok, kontak WhatsApp, alamat toko, dan link sosmed. |
+| **`src/data/products.js`** | **Pusat Data:** Tambah/edit produk, kategori, harga, foto, stok, kontak WhatsApp, alamat toko, dan link sosmed. |
+| **`src/pages/CategoryPage.jsx`** | Halaman khusus terpisah untuk setiap kategori (`/kategori/:slug`). |
+| **`src/pages/ProductDetailPage.jsx`** | Halaman khusus terpisah untuk setiap produk (`/product/:slug`). |
+| **`src/pages/OrderTrackingPage.jsx`** | Halaman lacak status pengiriman pesanan (`/lacak-pesanan`). |
+| **`src/pages/BrewGuidesPage.jsx`** | Halaman resep & panduan seduh resmi barista Sanubari (`/panduan-seduh`). |
+| **`src/pages/WholesalePage.jsx`** | Halaman kemitraan kedai & pengadaan grosir (`/wholesale`). |
 | **`src/data/brewGuides.js`** | Data rumus kalkulator seduh (V60, AeroPress, Kalita, Lever Espresso, French Press). |
-| **`src/components/Navbar.jsx`** | Menu navigasi atas, logo Sanubari x AKM, search bar, & tombol cart. |
-| **`src/components/Hero.jsx`** | Banner utama atas, tagline, trust badge, dan tombol pintasan kategori. |
+| **`src/components/Navbar.jsx`** | Header navigasi, logo Sanubari Roastery, Kategori mega menu, live search bar, lonceng notifikasi (4), keranjang (2), & profil "Winda". |
+| **`src/components/Hero.jsx`** | Banner utama atas, tagline, trust badge, dan tombol pintasan kategori terpisah. |
 | **`src/components/SpotlightProduct.jsx`** | Banner sorotan produk unggulan bulan ini (Flair 58). |
 | **`src/components/BrewCalculator.jsx`** | Fitur interaktif kalkulator rasio kopi & rekomendasi alat seduh. |
 | **`src/components/GrinderClickChartModal.jsx`** | Tabel referensi setelan klik grinder (Timemore & Kingrinder). |
-| **`src/components/CartDrawer.jsx`** | Keranjang belanja, voucher promo (`SANUBARI10`), & checkout WhatsApp. |
+| **`src/components/CartDrawer.jsx`** | Keranjang belanja, voucher promo (`SANUBARI10`), & checkout WhatsApp / online. |
 | **`src/components/ShowroomSection.jsx`** | Informasi kunjungan showroom Slow Bar di Ruko Tlogomas Square Malang. |
 | **`src/components/FAQSection.jsx`** | Pertanyaan & jawaban seputar garansi, packing, dan servis. |
 | **`src/components/Footer.jsx`** | Footer website yang disamakan dengan layout Sanubari Roastery. |
+
+---
+
+## 3. Daftar Halaman & Tautan Penting (Direct Links)
+
+Website ini sudah dilengkapi sistem routing lengkap:
+
+1. **Halaman Kategori Produk:**
+   - Manual Brew: `/kategori/manual-brew`
+   - Grinder Kopi: `/kategori/grinder`
+   - Espresso & Lever: `/kategori/espresso-tools`
+   - Kettle Leher Angsa: `/kategori/kettle`
+   - Timbangan Digital: `/kategori/scale`
+   - Aksesoris & Filter: `/kategori/accessories`
+   - Paket Starter Kit: `/kategori/bundles`
+   - Filter Beans: `/kategori/filter-beans`
+   - Espresso Beans: `/kategori/espresso-beans`
+   - Semua Alat: `/kategori/all`
+
+2. **Halaman Detail Produk:**
+   - Contoh: `/product/flair-58-plus`
+   - Contoh: `/product/timemore-chestnut-c3s-pro`
+   - Setiap produk memiliki tombol *"Bagikan Link"* untuk copy URL instan.
+
+3. **Halaman Khusus Lainnya:**
+   - Lacak Pesanan: `/lacak-pesanan`
+   - Panduan Seduh Barista: `/panduan-seduh`
+   - Kemitraan Kedai (Wholesale): `/wholesale`
 
 ---
 
