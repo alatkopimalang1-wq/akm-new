@@ -12,7 +12,7 @@
   }
 }
 
-/* Custom clean scrollbar */
+/* Custom clean scrollbar for page vertical scrolling */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
@@ -29,6 +29,20 @@
 
 ::-webkit-scrollbar-thumb:hover {
   background: #0070f3;
+}
+
+/* Hide scrollbar completely on all carousels, tabs, and .no-scrollbar containers */
+.no-scrollbar::-webkit-scrollbar,
+[data-no-scrollbar]::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+.no-scrollbar,
+[data-no-scrollbar] {
+  -ms-overflow-style: none !important; /* IE and Edge */
+  scrollbar-width: none !important;    /* Firefox */
 }
 
 /* Remove default browser black focus box / outline */

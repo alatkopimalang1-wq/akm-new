@@ -461,7 +461,8 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           {/* Carousel Scrollable Track */}
           <div
             ref={categoryScrollRef}
-            className="flex items-start gap-6 sm:gap-10 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-3 px-3 sm:px-4"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+            className="flex items-start gap-6 sm:gap-10 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth snap-x snap-mandatory py-3 px-3 sm:px-4"
           >
             {KATEGORI_PILIHAN_ITEMS.map((item) => {
               const content = (
@@ -623,7 +624,8 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             {/* Brand Scrollable Track */}
             <div
               ref={brandScrollRef}
-              className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1"
+              style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+              className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar [scrollbar-width:none] [&::-webkit-scrollbar]:hidden scroll-smooth snap-x snap-mandatory py-2 px-1"
             >
               {OFFICIAL_BRANDS_DATA.map((brand) => (
                 <Link

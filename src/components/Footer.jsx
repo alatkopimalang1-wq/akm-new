@@ -129,6 +129,14 @@ export default function Footer({ onSelectCategory, onScrollToCalculator, onScrol
               </li>
               <li>
                 <Link 
+                  to="/brands"
+                  className="hover:text-[#38bdf8] transition-colors block text-slate-300 font-medium"
+                >
+                  Brand Pilihan Resmi
+                </Link>
+              </li>
+              <li>
+                <Link 
                   to="/wholesale"
                   className="hover:text-[#38bdf8] transition-colors block text-slate-300"
                 >
