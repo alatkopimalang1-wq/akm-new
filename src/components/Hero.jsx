@@ -447,7 +447,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
         </div>
 
         {/* Carousel Outer Container with Left & Right Arrow Buttons */}
-        <div className="relative group px-1 sm:px-2">
+        <div className="relative px-1 sm:px-2">
           
           {/* Carousel Scroll Left Button */}
           <button
@@ -466,7 +466,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           >
             {KATEGORI_PILIHAN_ITEMS.map((item) => {
               const content = (
-                <div className="flex flex-col items-center group cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center snap-start">
+                <div className="flex flex-col items-center group/cat cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center snap-start">
                   
                   {/* Circular Emblem Container with Badge */}
                   <div className="relative mb-2.5">
@@ -479,10 +479,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                     )}
 
                     {/* Outer Light Gray Circle */}
-                    <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-slate-100 group-hover:bg-blue-50 flex items-center justify-center transition-all duration-300 group-hover:scale-105 shadow-xs border border-slate-200/60 group-hover:border-[#0070f3]/40">
+                    <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-slate-100 group-hover/cat:bg-blue-50 flex items-center justify-center transition-all duration-300 group-hover/cat:scale-105 shadow-xs border border-slate-200/60 group-hover/cat:border-[#0070f3]/40">
                       
                       {/* Inner Dark / Black Circle */}
-                      <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#111827] group-hover:bg-[#0b1e36] flex items-center justify-center transition-colors shadow-sm">
+                      <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#111827] group-hover/cat:bg-[#0b1e36] flex items-center justify-center transition-colors shadow-sm">
                         {renderCategoryEmblem(item.iconType)}
                       </div>
 
@@ -490,7 +490,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                   </div>
 
                   {/* Label Text */}
-                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-[#0070f3] transition-colors leading-tight line-clamp-2">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover/cat:text-[#0070f3] transition-colors leading-tight line-clamp-2">
                     {item.name}
                   </span>
 
@@ -610,7 +610,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           </div>
 
           {/* Carousel Outer Container with Left & Right Arrow Buttons */}
-          <div className="relative group px-1">
+          <div className="relative px-1">
             
             {/* Carousel Scroll Left Button */}
             <button
@@ -631,14 +631,14 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                 <Link
                   key={brand.id}
                   to={`/kategori/all?brand=${encodeURIComponent(brand.name)}`}
-                  className="flex flex-col items-center group cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center snap-start focus:outline-none"
+                  className="flex flex-col items-center group/brand cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center snap-start focus:outline-none"
                   title={`Lihat produk resmi ${brand.name}`}
                 >
                   
                   {/* Circular Emblem Container with Pastel Ring & Verified Checkmark */}
                   <div className="relative mb-2.5">
                     <div
-                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center font-black tracking-wider uppercase transition-transform duration-300 group-hover:scale-105 shadow-xs"
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center font-black tracking-wider uppercase transition-transform duration-300 group-hover/brand:scale-105 shadow-xs"
                       style={{
                         backgroundColor: brand.bg,
                         borderColor: brand.border,
@@ -671,7 +671,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                   </div>
 
                   {/* Brand Name Label Text below Circle */}
-                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-[#0070f3] transition-colors leading-tight line-clamp-1 truncate max-w-[76px] sm:max-w-[92px]">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover/brand:text-[#0070f3] transition-colors leading-tight line-clamp-1 truncate max-w-[76px] sm:max-w-[92px]">
                     {brand.name}
                   </span>
 
