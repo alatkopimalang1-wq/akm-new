@@ -15,6 +15,7 @@ import {
   Check
 } from 'lucide-react';
 import { STORE_INFO, OFFICIAL_BRANDS_DATA } from '../data/products';
+import { getStoredHeroSlides } from '../utils/contentStore';
 
 export const HERO_SLIDES = [
   {
@@ -122,6 +123,7 @@ export const KATEGORI_PILIHAN_ITEMS = [
 ];
 
 export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCalculator, onScrollToShowroom }) {
+  const [slides, setSlides] = useState(() => getStoredHeroSlides());
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(0);
@@ -130,21 +132,32 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
   const brandScrollRef = useRef(null);
   const navigate = useNavigate();
 
+  // Listen to admin banner updates
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setSlides(getStoredHeroSlides());
+    };
+    window.addEventListener('akm_content_updated', handleStorageUpdate);
+    return () => window.removeEventListener('akm_content_updated', handleStorageUpdate);
+  }, []);
+
   // Auto-play timer for hero banner slider (5 seconds)
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length === 0) return;
     const interval = setInterval(() => {
-      setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+      setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, [isPaused]);
+  }, [isPaused, slides.length]);
 
   const handlePrev = () => {
-    setCurrentSlide((prev) => (prev === 0 ? HERO_SLIDES.length - 1 : prev - 1));
+    if (slides.length === 0) return;
+    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+    if (slides.length === 0) return;
+    setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
   const handleTouchStart = (e) => {
@@ -168,7 +181,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
   const scrollCategoryCarousel = (direction) => {
     if (categoryScrollRef.current) {
       const scrollAmount = direction === 'left' ? -280 : 280;
-      categoryScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      categoryScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'auto' });
     }
   };
 
@@ -176,15 +189,16 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
   const scrollBrandCarousel = (direction) => {
     if (brandScrollRef.current) {
       const scrollAmount = direction === 'left' ? -260 : 260;
-      brandScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      brandScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'auto' });
     }
   };
 
-  const activeSlideData = HERO_SLIDES[currentSlide];
+  const totalSlides = slides.length > 0 ? slides.length : 1;
+  const activeSlideData = slides[currentSlide % totalSlides] || HERO_SLIDES[0];
 
   // Helper index for left and right peeking slides
-  const prevSlideIndex = (currentSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
-  const nextSlideIndex = (currentSlide + 1) % HERO_SLIDES.length;
+  const prevSlideIndex = (currentSlide - 1 + totalSlides) % totalSlides;
+  const nextSlideIndex = (currentSlide + 1) % totalSlides;
 
   // Render circular icon emblems matching the user's screenshot
   const renderCategoryEmblem = (type) => {
@@ -328,17 +342,17 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           onTouchEnd={handleTouchEnd}
         >
           
-          {/* LEFT PEEKING SLIDE (Slide Sebelumnya - Tampak di Sisi Kiri) */}
+          {/* LEFT PEEKING SLIDE (Slide Sebelumnya - Tampak di Sisi Kanan) */}
           <div 
             onClick={handlePrev}
             className="hidden lg:block absolute left-[-16%] xl:left-[-12%] w-[45%] h-[340px] xl:h-[390px] rounded-3xl overflow-hidden opacity-40 hover:opacity-70 transition-all duration-500 cursor-pointer shadow-lg scale-95 pointer-events-auto z-10"
           >
             <img 
-              src={HERO_SLIDES[prevSlideIndex].image} 
+              src={(slides[prevSlideIndex] || slides[0]).image} 
               alt="Slide Sebelumnya" 
               onError={(e) => {
-                if (HERO_SLIDES[prevSlideIndex].fallbackImage) {
-                  e.target.src = HERO_SLIDES[prevSlideIndex].fallbackImage;
+                if ((slides[prevSlideIndex] || slides[0]).fallbackImage) {
+                  e.target.src = (slides[prevSlideIndex] || slides[0]).fallbackImage;
                 }
               }}
               className="w-full h-full object-cover"
@@ -351,7 +365,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             
             {/* Clickable Banner Image */}
             <Link 
-              to={activeSlideData.ctaLink} 
+              to={activeSlideData.ctaLink || '/kategori/all'} 
               className="block w-full h-full cursor-pointer overflow-hidden focus:outline-none"
               title={`Buka ${activeSlideData.title}`}
             >
@@ -399,11 +413,11 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             className="hidden lg:block absolute right-[-16%] xl:right-[-12%] w-[45%] h-[340px] xl:h-[390px] rounded-3xl overflow-hidden opacity-40 hover:opacity-70 transition-all duration-500 cursor-pointer shadow-lg scale-95 pointer-events-auto z-10"
           >
             <img 
-              src={HERO_SLIDES[nextSlideIndex].image} 
+              src={(slides[nextSlideIndex] || slides[0]).image} 
               alt="Slide Berikutnya" 
               onError={(e) => {
-                if (HERO_SLIDES[nextSlideIndex].fallbackImage) {
-                  e.target.src = HERO_SLIDES[nextSlideIndex].fallbackImage;
+                if ((slides[nextSlideIndex] || slides[0]).fallbackImage) {
+                  e.target.src = (slides[nextSlideIndex] || slides[0]).fallbackImage;
                 }
               }}
               className="w-full h-full object-cover"
@@ -413,9 +427,9 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
 
         </div>
 
-        {/* 5 INDICATOR DOTS (Elongated Active Pill) */}
+        {/* INDICATOR DOTS (Elongated Active Pill) */}
         <div className="flex items-center justify-center gap-2 mt-4 sm:mt-6">
-          {HERO_SLIDES.map((_, index) => {
+          {slides.map((_, index) => {
             const isActive = currentSlide === index;
             return (
               <button

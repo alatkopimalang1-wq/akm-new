@@ -7,6 +7,7 @@ import {
   Filter
 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES, BRANDS } from '../data/products';
+import { getStoredProducts } from '../utils/contentStore';
 import ProductCard from '../components/ProductCard';
 
 export default function CategoryPage({ 
@@ -34,11 +35,21 @@ export default function CategoryPage({
     setSelectedBrand(brandParam || 'Semua Brand');
   }, [categorySlug, searchParams]);
 
+  const [allProducts, setAllProducts] = useState(() => getStoredProducts());
+
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setAllProducts(getStoredProducts());
+    };
+    window.addEventListener('akm_content_updated', handleStorageUpdate);
+    return () => window.removeEventListener('akm_content_updated', handleStorageUpdate);
+  }, []);
+
   // Filtered & Sorted products for this category
   const filteredProducts = useMemo(() => {
     if (!category) return [];
 
-    return PRODUCTS.filter((item) => {
+    return allProducts.filter((item) => {
       // Search query filter (matches name, brand, category, description, tagline)
       if (searchQueryParam) {
         const qLower = searchQueryParam.toLowerCase();
@@ -73,11 +84,11 @@ export default function CategoryPage({
     }).sort((a, b) => {
       return (b.badge ? 1 : 0) - (a.badge ? 1 : 0);
     });
-  }, [category, selectedBrand, searchQueryParam]);
+  }, [allProducts, category, selectedBrand, searchQueryParam]);
 
   // Brands present in this specific category / search for cleaner filter chips
   const categoryBrands = useMemo(() => {
-    let base = PRODUCTS;
+    let base = allProducts;
     if (category && category.id !== 'all') {
       base = base.filter((p) => p.category === category.id);
     }

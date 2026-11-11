@@ -13,6 +13,7 @@ import {
 } from 'lucide-react';
 import { formatRupiah, generateWhatsAppMessage } from '../utils/format';
 import { STORE_INFO } from '../data/products';
+import { addStoredOrder } from '../utils/contentStore';
 import confetti from 'canvas-confetti';
 
 export default function CartDrawer({ 
@@ -74,6 +75,28 @@ export default function CartDrawer({
 
   const handleCompleteOnlineOrder = (e) => {
     e.preventDefault();
+    const newOrder = {
+      id: `ORD-${Date.now().toString().slice(-6)}`,
+      customerName: customerData.name || 'Pelanggan AKM',
+      phone: customerData.phone || '0812-3456-7890',
+      email: customerData.email || 'customer@alatkopimalang.co.id',
+      shippingAddress: customerData.address ? `${customerData.address}, ${customerData.city}` : 'Showroom Tlogomas Malang',
+      date: new Date().toISOString().slice(0, 16).replace('T', ' '),
+      status: 'Diproses',
+      paymentMethod: (customerData.paymentMethod || 'QRIS').toUpperCase(),
+      shippingCourier: shippingOption === 'ambil-showroom' ? 'Ambil di Showroom' : customerData.courier,
+      items: cartItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity, price: it.price })),
+      subtotal,
+      shippingCost,
+      discount: discountAmount,
+      total: finalTotal,
+      notes: customerNotes
+    };
+    try {
+      addStoredOrder(newOrder);
+    } catch (err) {
+      console.error(err);
+    }
     setOrderSuccess(true);
     confetti({ particleCount: 100, spread: 80, origin: { y: 0.6 } });
   };

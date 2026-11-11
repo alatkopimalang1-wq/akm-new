@@ -20,9 +20,11 @@ import WholesalePage from './pages/WholesalePage';
 import BrandsPage from './pages/BrandsPage';
 import CategoriesHubPage from './pages/CategoriesHubPage';
 import AccountPage from './pages/AccountPage';
+import AdminDashboardPage from './pages/AdminDashboardPage';
 import MobileBottomNav from './components/MobileBottomNav';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
+import { getStoredProducts } from './utils/contentStore';
 import { 
   Filter, 
   ArrowUpDown, 
@@ -205,9 +207,20 @@ export default function App() {
     }
   };
 
+  // Live Products synced with Admin Storage
+  const [liveProducts, setLiveProducts] = useState(() => getStoredProducts());
+
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setLiveProducts(getStoredProducts());
+    };
+    window.addEventListener('akm_content_updated', handleStorageUpdate);
+    return () => window.removeEventListener('akm_content_updated', handleStorageUpdate);
+  }, []);
+
   // Filtered & Sorted Products for catalog
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((item) => {
+    return liveProducts.filter((item) => {
       if (selectedCategory !== 'all' && item.category !== selectedCategory) {
         return false;
       }
@@ -231,10 +244,21 @@ export default function App() {
       if (sortBy === 'rating') return b.rating - a.rating;
       return (b.badge ? 1 : 0) - (a.badge ? 1 : 0);
     });
-  }, [selectedCategory, selectedBrand, searchQuery, sortBy]);
+  }, [liveProducts, selectedCategory, selectedBrand, searchQuery, sortBy]);
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-  const spotlightItem = PRODUCTS.find((p) => p.id === 'akm-flair-58') || PRODUCTS[0];
+  const spotlightItem = liveProducts.find((p) => p.id === 'akm-flair-58') || liveProducts[0];
+
+  // If user is accessing Admin Dashboard (/admin), isolate and render admin workspace directly
+  const isAdminRoute = location.pathname.startsWith('/admin');
+  if (isAdminRoute) {
+    return (
+      <Routes>
+        <Route path="/admin" element={<AdminDashboardPage />} />
+        <Route path="/admin/*" element={<AdminDashboardPage />} />
+      </Routes>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white pb-20 md:pb-0 overflow-x-clip">

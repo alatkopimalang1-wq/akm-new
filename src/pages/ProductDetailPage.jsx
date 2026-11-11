@@ -11,6 +11,7 @@ import {
   Coffee 
 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES, STORE_INFO } from '../data/products';
+import { getStoredProducts } from '../utils/contentStore';
 import { formatRupiah, generateWhatsAppMessage } from '../utils/format';
 import ProductCard from '../components/ProductCard';
 
@@ -24,8 +25,9 @@ export default function ProductDetailPage({
   const { slug } = useParams();
   const navigate = useNavigate();
 
-  // Find product by slug or id
-  const product = PRODUCTS.find((p) => p.slug === slug || p.id === slug);
+  // Find product by slug or id from stored products
+  const allProducts = getStoredProducts();
+  const product = allProducts.find((p) => p.slug === slug || p.id === slug) || PRODUCTS.find((p) => p.slug === slug || p.id === slug);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [mobileImageIndex, setMobileImageIndex] = useState(0);
@@ -88,7 +90,7 @@ export default function ProductDetailPage({
   const categoryObj = CATEGORIES.find((c) => c.id === product.category);
 
   // Related products
-  const relatedProducts = PRODUCTS.filter(
+  const relatedProducts = allProducts.filter(
     (p) => p.id !== product.id && p.category === product.category
   ).slice(0, 4);
 
