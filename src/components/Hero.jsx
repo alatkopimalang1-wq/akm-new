@@ -16,68 +16,34 @@ import { CATEGORIES } from '../data/products';
 export const HERO_SLIDES = [
   {
     id: 'dirty-latte',
-    badge: 'MENU FAVORIT SLOW BAR',
-    title: 'Dirty Latte',
-    subtitle: 'Bold, Sweet, & Perfectly Balanced',
-    description: 'Nikmati gradasi rasa yang kaya dan tekstur lembut dalam setiap tegukan Dirty Latte kami.',
-    ctaText: 'COBA SEKARANG',
+    title: 'Dirty Latte Sanubari',
     ctaLink: '/kategori/espresso-beans',
-    actionType: 'internal',
-    image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1600&q=85',
-    accentColor: '#6f4e37',
-    pillText: 'NIKMATI GRADASI RASA YANG KAYA DAN TEKSTUR LEMBUT DALAM SETIAP TEGUKAN DIRTY LATTE KAMI'
+    image: '/slides/dirty-latte-banner.jpg',
+    fallbackImage: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=1600&q=85',
   },
   {
     id: 'manual-brew',
-    badge: 'KOMPETISI & HOME BARISTA',
-    title: 'Pour Over Mastery',
-    subtitle: 'Hario V60 Kasuya & Origami Japan',
-    description: 'Presisi ekstraksi aroma floral dan acidity cerah biji kopi specialty dengan dripper standar dunia.',
-    ctaText: 'JELAJAHI MANUAL BREW',
+    title: 'Manual Brew Mastery',
     ctaLink: '/kategori/manual-brew',
-    actionType: 'internal',
     image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1600&q=85',
-    accentColor: '#0070f3',
-    pillText: 'PRESISI EKSTRAKSI SPECIALTY COFFEE DENGAN ALAT SEDUH TERBAIK STANDAR KOMPETISI DUNIA'
   },
   {
     id: 'hand-grinder',
-    badge: 'MATA BURR BAJA CNC',
     title: 'Hand Grinder Presisi',
-    subtitle: 'Timemore C3S Pro & Kingrinder K6',
-    description: 'Konsistensi gilingan mikro-partikel seragam dari espresso halus hingga filter pour over seduh manual.',
-    ctaText: 'LIHAT KOLEKSI GRINDER',
     ctaLink: '/kategori/grinder',
-    actionType: 'internal',
     image: 'https://images.unsplash.com/photo-1589396575653-c09c794ff6a6?auto=format&fit=crop&w=1600&q=85',
-    accentColor: '#0070f3',
-    pillText: 'KONSISTENSI GILINGAN MIKRO-PARTIKEL DARI ESPRESSO HALUS HINGGA FILTER POUR OVER'
   },
   {
     id: 'flair-58',
-    badge: 'FLAGSHIP COMMERCIAL LEVER',
-    title: 'Flair 58 Commercial',
-    subtitle: 'Real 9-Bar Manual Extraction',
-    description: 'Mesin espresso manual lever dengan portafilter 58mm komersial dan pre-heating elektrik 3 tingkat.',
-    ctaText: 'DETAIL FLAIR 58',
+    title: 'Flair 58 Commercial Lever',
     ctaLink: '/product/akm-flair-58',
-    actionType: 'internal',
     image: 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1600&q=85',
-    accentColor: '#0070f3',
-    pillText: 'MESIN ESPRESSO MANUAL LEVER PROFESIONAL DENGAN PRE-HEATING ELEKTRIK 3-LEVEL'
   },
   {
     id: 'roastery-beans',
-    badge: 'SANUBARI ROASTERY MALANG',
     title: 'Specialty Coffee Beans',
-    subtitle: 'Gunung Kawi Arabica & Dampit Fine Robusta',
-    description: 'Sangrai segar mingguan di Malang dengan profil rasa floral, sweet honey, dan chocolate notes.',
-    ctaText: 'BELI BIJI KOPI',
     ctaLink: '/kategori/filter-beans',
-    actionType: 'internal',
     image: 'https://images.unsplash.com/photo-1447933601403-0c6688de566e?auto=format&fit=crop&w=1600&q=85',
-    accentColor: '#0070f3',
-    pillText: 'BIJI KOPI ARTI-SAN TERBAIK JAWA TIMUR DISANGRAI DENGAN PROFIL KHUSUS SLOW BAR'
   }
 ];
 
@@ -154,85 +120,44 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             <img 
               src={HERO_SLIDES[prevSlideIndex].image} 
               alt="Slide Sebelumnya" 
+              onError={(e) => {
+                if (HERO_SLIDES[prevSlideIndex].fallbackImage) {
+                  e.target.src = HERO_SLIDES[prevSlideIndex].fallbackImage;
+                }
+              }}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/30" />
           </div>
 
-          {/* MAIN ACTIVE CENTER SLIDE */}
-          <div className="relative w-full max-w-5xl h-[360px] sm:h-[400px] lg:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/15 z-20 transition-all duration-500 ease-out group">
+          {/* MAIN ACTIVE CENTER SLIDE (Hanya Menampilkan Gambar Bersih) */}
+          <div className="relative w-full max-w-5xl h-[300px] sm:h-[380px] lg:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/15 z-20 transition-all duration-500 ease-out group">
             
-            {/* Background Image */}
-            <img
-              src={activeSlideData.image}
-              alt={activeSlideData.title}
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-            />
-
-            {/* Dark & Warm Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/35 sm:from-black/80 sm:via-black/40 sm:to-transparent" />
-
-            {/* Inner Content Grid */}
-            <div className="relative h-full flex flex-col justify-between p-6 sm:p-10 lg:p-12 text-white">
-              
-              {/* Top Badge */}
-              <div className="flex items-center gap-2">
-                <span className="px-3.5 py-1 rounded-full bg-white/20 backdrop-blur-md border border-white/30 text-[11px] sm:text-xs font-bold tracking-wider uppercase text-white shadow-sm flex items-center gap-1.5">
-                  <span className="w-2 h-2 rounded-full bg-[#38bdf8] animate-pulse"></span>
-                  {activeSlideData.badge}
-                </span>
-              </div>
-
-              {/* Middle & Right Content */}
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center my-auto">
-                
-                {/* Left Side: Typography */}
-                <div className="lg:col-span-7 space-y-2 sm:space-y-3">
-                  <h2 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight font-serif drop-shadow-md leading-[1.1] text-white">
-                    {activeSlideData.title}
-                  </h2>
-                  <p className="text-sm sm:text-lg text-slate-200 font-medium italic drop-shadow-sm">
-                    {activeSlideData.subtitle}
-                  </p>
-                  <p className="text-xs sm:text-sm text-slate-300 max-w-md line-clamp-2 sm:line-clamp-none font-normal leading-relaxed drop-shadow-sm">
-                    {activeSlideData.description}
-                  </p>
-                </div>
-
-                {/* Right Side: Circular/Pill Callout Card (Persis Gambar ke-2) */}
-                <div className="lg:col-span-5 flex justify-end">
-                  <div className="w-full max-w-xs sm:max-w-sm rounded-3xl bg-white/95 backdrop-blur-md p-5 sm:p-6 text-slate-900 shadow-2xl border border-white/40 flex flex-col items-center text-center space-y-4">
-                    <p className="text-[11px] sm:text-xs font-extrabold tracking-wide uppercase leading-snug text-slate-900">
-                      {activeSlideData.pillText}
-                    </p>
-                    <Link
-                      to={activeSlideData.ctaLink}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-2.5 sm:py-3 rounded-full bg-[#0b1e36] hover:bg-[#0070f3] text-white text-xs font-black tracking-wider uppercase transition-all shadow-md active:scale-95 hover:shadow-lg hover:shadow-blue-500/20"
-                    >
-                      <span>{activeSlideData.ctaText}</span>
-                      <ArrowRight className="w-3.5 h-3.5" />
-                    </Link>
-                  </div>
-                </div>
-
-              </div>
-
-              {/* Bottom Subtle Indicator */}
-              <div className="flex items-center justify-between text-[11px] text-slate-300 pt-2">
-                <span className="font-medium tracking-wide">
-                  Slide {currentSlide + 1} dari {HERO_SLIDES.length}
-                </span>
-                <span className="hidden sm:inline text-xs text-slate-300/80">
-                  AKM x Sanubari Roastery Malang
-                </span>
-              </div>
-
-            </div>
+            {/* Clickable Banner Image (Tanpa Teks / Judul / Deskripsi) */}
+            <Link 
+              to={activeSlideData.ctaLink} 
+              className="block w-full h-full cursor-pointer overflow-hidden focus:outline-none"
+              title={`Buka ${activeSlideData.title}`}
+            >
+              <img
+                src={activeSlideData.image}
+                alt={activeSlideData.title}
+                onError={(e) => {
+                  if (activeSlideData.fallbackImage) {
+                    e.target.src = activeSlideData.fallbackImage;
+                  }
+                }}
+                className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+              />
+            </Link>
 
             {/* Navigation Arrow LEFT (Circular Pill) */}
             <button
-              onClick={handlePrev}
-              className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-30 outline-none focus:outline-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                handlePrev();
+              }}
+              className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-30 outline-none focus:outline-none cursor-pointer"
               title="Slide Sebelumnya"
             >
               <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 text-slate-800" />
@@ -240,8 +165,11 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
 
             {/* Navigation Arrow RIGHT (Circular Pill) */}
             <button
-              onClick={handleNext}
-              className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-30 outline-none focus:outline-none"
+              onClick={(e) => {
+                e.stopPropagation();
+                handleNext();
+              }}
+              className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white/90 hover:bg-white text-slate-800 shadow-xl flex items-center justify-center transition-all hover:scale-110 active:scale-95 z-30 outline-none focus:outline-none cursor-pointer"
               title="Slide Berikutnya"
             >
               <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 text-slate-800" />
@@ -257,6 +185,11 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             <img 
               src={HERO_SLIDES[nextSlideIndex].image} 
               alt="Slide Berikutnya" 
+              onError={(e) => {
+                if (HERO_SLIDES[nextSlideIndex].fallbackImage) {
+                  e.target.src = HERO_SLIDES[nextSlideIndex].fallbackImage;
+                }
+              }}
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-black/30" />
