@@ -79,6 +79,15 @@ export default function App() {
     localStorage.setItem('akm_wishlist', JSON.stringify(wishlist));
   }, [wishlist]);
 
+  // Sync search query from URL parameter if available
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const q = params.get('q') || params.get('search');
+    if (q) {
+      setSearchQuery(q);
+    }
+  }, [location.search]);
+
   // Show Toast
   const showToast = (message) => {
     setToastMessage(message);

@@ -26,6 +26,7 @@ export default function CategoryPage({
 
   const initialBrandParam = searchParams.get('brand');
   const [selectedBrand, setSelectedBrand] = useState(initialBrandParam || 'Semua Brand');
+  const searchQueryParam = (searchParams.get('q') || searchParams.get('search') || '').trim();
 
   // Scroll to top when category or brand param changes
   useEffect(() => {
@@ -39,6 +40,19 @@ export default function CategoryPage({
     if (!category) return [];
 
     return PRODUCTS.filter((item) => {
+      // Search query filter (matches name, brand, category, description, tagline)
+      if (searchQueryParam) {
+        const qLower = searchQueryParam.toLowerCase();
+        const nameMatch = (item.name || '').toLowerCase().includes(qLower);
+        const brandMatch = (item.brand || '').toLowerCase().includes(qLower);
+        const catMatch = (item.category || '').toLowerCase().includes(qLower);
+        const descMatch = (item.description || '').toLowerCase().includes(qLower);
+        const taglineMatch = (item.tagline || '').toLowerCase().includes(qLower);
+        if (!nameMatch && !brandMatch && !catMatch && !descMatch && !taglineMatch) {
+          return false;
+        }
+      }
+
       // Category match
       if (category.id !== 'all' && item.category !== category.id) {
         return false;
@@ -60,15 +74,26 @@ export default function CategoryPage({
     }).sort((a, b) => {
       return (b.badge ? 1 : 0) - (a.badge ? 1 : 0);
     });
-  }, [category, selectedBrand]);
+  }, [category, selectedBrand, searchQueryParam]);
 
-  // Brands present in this specific category for cleaner filter chips
+  // Brands present in this specific category / search for cleaner filter chips
   const categoryBrands = useMemo(() => {
-    if (!category || category.id === 'all') return BRANDS;
-    const raw = PRODUCTS.filter((p) => p.category === category.id).map((p) => p.brand);
+    let base = PRODUCTS;
+    if (category && category.id !== 'all') {
+      base = base.filter((p) => p.category === category.id);
+    }
+    if (searchQueryParam) {
+      const qLower = searchQueryParam.toLowerCase();
+      base = base.filter((p) => 
+        (p.name || '').toLowerCase().includes(qLower) ||
+        (p.brand || '').toLowerCase().includes(qLower) ||
+        (p.category || '').toLowerCase().includes(qLower)
+      );
+    }
+    const raw = base.map((p) => p.brand).filter(Boolean);
     const unique = ['Semua Brand', ...new Set(raw)];
     return unique;
-  }, [category]);
+  }, [category, searchQueryParam]);
 
   if (!category) {
     return (
@@ -97,8 +122,29 @@ export default function CategoryPage({
         <div className="max-w-7xl mx-auto">
           
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            {category.name}
+            {searchQueryParam ? (
+              <span className="flex items-center gap-3 flex-wrap">
+                <span>Hasil Pencarian:</span>
+                <span className="text-[#0e1f36]">"{searchQueryParam}"</span>
+                <span className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                  {filteredProducts.length} produk ditemukan
+                </span>
+              </span>
+            ) : (
+              category.name
+            )}
           </h1>
+
+          {searchQueryParam && (
+            <div className="mt-3 flex items-center gap-2">
+              <Link
+                to={`/kategori/${categorySlug}`}
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors border border-slate-200"
+              >
+                <span>✕ Hapus Filter Pencarian</span>
+              </Link>
+            </div>
+          )}
 
           {/* Quick Category Switcher Tabs */}
           <div className="mt-4 pt-4 border-t border-slate-200/80">
@@ -166,14 +212,17 @@ export default function CategoryPage({
             <Coffee className="w-12 h-12 text-slate-300 mx-auto" />
             <h3 className="text-lg font-bold text-slate-900">Produk Tidak Ditemukan</h3>
             <p className="text-xs text-slate-500 max-w-sm mx-auto">
-              Tidak ada produk di kategori "{category.name}" yang cocok dengan filter brand "{selectedBrand}".
+              {searchQueryParam
+                ? `Tidak ada produk yang cocok dengan kata kunci "${searchQueryParam}". Silakan coba kata kunci lain atau lihat seluruh katalog produk.`
+                : `Tidak ada produk di kategori "${category.name}" yang cocok dengan filter brand "${selectedBrand}".`
+              }
             </p>
-            <button
-              onClick={() => setSelectedBrand('Semua Brand')}
-              className="px-5 py-2.5 rounded-xl bg-[#0e1f36] hover:bg-[#152e50] text-white font-bold text-xs shadow-md shadow-slate-900/15"
+            <Link
+              to="/kategori/all"
+              className="inline-block px-5 py-2.5 rounded-xl bg-[#0e1f36] hover:bg-[#152e50] text-white font-bold text-xs shadow-md shadow-slate-900/15"
             >
-              Reset Filter Kategori
-            </button>
+              Lihat Semua Produk
+            </Link>
           </div>
         ) : (
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">

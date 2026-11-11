@@ -136,14 +136,29 @@ export default function Navbar({
   const navigate = useNavigate();
 
   // Search results for live dropdown preview
-  const searchResults = searchQuery.trim().length > 1
+  const allMatchingProducts = searchQuery.trim().length > 1
     ? PRODUCTS.filter(p => 
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.tagline?.toLowerCase().includes(searchQuery.toLowerCase())
-      ).slice(0, 5)
+        p.tagline?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description?.toLowerCase().includes(searchQuery.toLowerCase())
+      )
     : [];
+
+  const searchResults = allMatchingProducts.slice(0, 5);
+  const totalMatchesCount = allMatchingProducts.length;
+
+  const handleSearchSubmit = (e) => {
+    if (e) e.preventDefault();
+    const query = searchQuery.trim();
+    setSearchFocused(false);
+    if (query) {
+      navigate(`/kategori/all?q=${encodeURIComponent(query)}`);
+    } else {
+      navigate('/kategori/all');
+    }
+  };
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -346,7 +361,7 @@ export default function Navbar({
 
           {/* CENTER: Wide Search Bar with Instant Suggestions */}
           <div className="flex-1 max-w-xl mx-1.5 sm:mx-6 relative">
-            <div className="relative w-full">
+            <form onSubmit={handleSearchSubmit} className="relative w-full">
               <input
                 type="text"
                 placeholder="Cari biji kopi, alat seduh..."
@@ -355,33 +370,35 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    setSearchFocused(false);
-                    if (searchResults.length > 0) {
-                      navigate(`/product/${searchResults[0].slug}`);
-                    } else {
-                      navigate('/kategori/all');
-                    }
+                    handleSearchSubmit(e);
                   }
                 }}
                 className="w-full bg-[#060e1a] focus:bg-[#0a1526] border border-[#172b47] focus:border-[#0084ff] text-xs sm:text-sm text-white placeholder-[#64748b] rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-inner focus:shadow-md"
               />
-              <Search className="w-4 h-4 text-[#64748b] absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <button
+                type="submit"
+                className="absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 text-[#64748b] hover:text-white transition-colors"
+                title="Cari Produk"
+              >
+                <Search className="w-4 h-4" />
+              </button>
               {searchQuery && (
                 <button 
+                  type="button"
                   onClick={() => setSearchQuery('')}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#94a3b8] hover:text-white bg-[#172b47] px-1.5 py-0.5 rounded font-medium"
                 >
                   Clear
                 </button>
               )}
-            </div>
+            </form>
 
             {/* Instant Search Results Dropdown */}
             {searchFocused && searchQuery.trim().length > 1 && (
               <div className="absolute left-0 right-0 top-full mt-2 bg-white text-slate-900 rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-50 animate-fade-in divide-y divide-slate-100">
                 <div className="p-3 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
                   <span className="font-semibold text-slate-700">Hasil Pencarian Produk</span>
-                  <span>{searchResults.length} ditemukan</span>
+                  <span>{totalMatchesCount} ditemukan</span>
                 </div>
                 <div className="max-h-72 overflow-y-auto divide-y divide-slate-100">
                   {searchResults.length === 0 ? (
@@ -397,31 +414,26 @@ export default function Navbar({
                           setSearchFocused(false);
                           setSearchQuery('');
                         }}
-                        className="p-3 hover:bg-blue-50/50 flex items-center gap-3 transition-colors group"
+                        className="p-3 hover:bg-slate-50 flex items-center gap-3 transition-colors group"
                       >
                         <img src={p.images[0]} alt={p.name} className="w-10 h-10 rounded-lg object-cover bg-slate-100 border border-slate-200 shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[10px] font-bold text-[#0070f3] uppercase">{p.brand}</p>
-                          <h5 className="text-xs font-bold text-slate-900 truncate group-hover:text-[#0070f3]">{p.name}</h5>
+                          <p className="text-[10px] font-bold text-[#0e1f36] uppercase">{p.brand}</p>
+                          <h5 className="text-xs font-bold text-slate-900 truncate group-hover:text-[#0e1f36]">{p.name}</h5>
                           <span className="text-xs font-extrabold text-slate-900">{formatRupiah(p.price)}</span>
                         </div>
-                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-[#0070f3] group-hover:translate-x-0.5 transition-all shrink-0" />
+                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-[#0e1f36] group-hover:translate-x-0.5 transition-all shrink-0" />
                       </Link>
                     ))
                   )}
                 </div>
-                {searchResults.length > 0 && (
+                {totalMatchesCount > 0 && (
                   <button
-                    onClick={() => {
-                      navigate('/');
-                      setSearchFocused(false);
-                      setTimeout(() => {
-                        document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
-                      }, 100);
-                    }}
-                    className="w-full py-2.5 px-4 bg-slate-50 hover:bg-blue-50 text-[#0070f3] text-xs font-bold text-center block transition-colors"
+                    type="button"
+                    onClick={handleSearchSubmit}
+                    className="w-full py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-[#0e1f36] text-xs font-bold text-center block transition-colors border-t border-slate-100"
                   >
-                    Lihat Semua di Katalog Produk →
+                    Lihat Semua Hasil untuk "{searchQuery}" ({totalMatchesCount} produk) →
                   </button>
                 )}
               </div>
