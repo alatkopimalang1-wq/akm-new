@@ -23,13 +23,13 @@ export default function BrewGuidesPage() {
   const recommendedProducts = PRODUCTS.filter((p) => currentMethod.recommendedGearIds.includes(p.id));
 
   return (
-    <div className="min-h-screen bg-[#070e1b] text-[#f1f5f9] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white text-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         
         {/* Back Link */}
         <Link 
           to="/" 
-          className="inline-flex items-center gap-2 text-xs font-semibold text-[#94a3b8] hover:text-[#38bdf8] mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-[#0070f3] mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Katalog Alat Kopi</span>
@@ -37,14 +37,14 @@ export default function BrewGuidesPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b172a] text-xs font-bold text-[#38bdf8] border border-[#172b47] tracking-wider uppercase mb-3">
-            <BookOpen className="w-3.5 h-3.5 text-[#0084ff]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-xs font-bold text-[#0070f3] border border-blue-200 tracking-wider uppercase mb-3">
+            <BookOpen className="w-3.5 h-3.5 text-[#0070f3]" />
             <span>SANUBARI ROASTERY BREWING LAB</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#f1f5f9] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
             Resep &amp; Panduan Seduh Kopi
           </h1>
-          <p className="text-xs sm:text-base text-[#94a3b8] mt-3 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-xs sm:text-base text-slate-600 mt-3 max-w-2xl mx-auto leading-relaxed font-normal">
             Kumpulan resep dan standar ekstraksi seduh manual yang dipraktikkan langsung oleh para barista di Slow Bar Sanubari Roastery Malang.
           </p>
         </div>
@@ -57,8 +57,8 @@ export default function BrewGuidesPage() {
               onClick={() => setSelectedMethodId(m.id)}
               className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border ${
                 selectedMethodId === m.id
-                  ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white border-[#0084ff] shadow-lg shadow-[#0070f3]/25'
-                  : 'bg-[#0b172a] text-[#94a3b8] border-[#172b47] hover:border-[#0070f3]/50 hover:text-[#f1f5f9]'
+                  ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white border-[#0070f3] shadow-md shadow-blue-500/25'
+                  : 'bg-white text-slate-600 border-slate-200 hover:border-slate-300 hover:text-slate-900'
               }`}
             >
               {m.name}
@@ -67,74 +67,74 @@ export default function BrewGuidesPage() {
         </div>
 
         {/* Active Method Detail Card */}
-        <div className="rounded-3xl bg-[#0b172a] border border-[#172b47] shadow-2xl p-6 sm:p-10 mb-12">
+        <div className="rounded-3xl bg-white border border-slate-200 shadow-xl p-6 sm:p-10 mb-12">
           
-          <div className="border-b border-[#172b47] pb-8 mb-8">
+          <div className="border-b border-slate-100 pb-8 mb-8">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
-                <span className="text-xs font-extrabold uppercase tracking-widest text-[#38bdf8]">
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#0070f3]">
                   Metode Ekstraksi
                 </span>
-                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f1f5f9] mt-1">
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 mt-1">
                   {currentMethod.name}
                 </h2>
-                <p className="text-xs sm:text-sm text-[#94a3b8] mt-2 max-w-xl">
+                <p className="text-xs sm:text-sm text-slate-600 mt-2 max-w-xl">
                   {currentMethod.tagline}
                 </p>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47] flex items-center gap-3">
-                <Sparkles className="w-5 h-5 text-[#38bdf8]" />
+              <div className="p-4 rounded-2xl bg-blue-50/70 border border-blue-100 flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-[#0070f3]" />
                 <div className="text-xs">
-                  <div className="text-[#64748b]">Karakter Rasa:</div>
-                  <strong className="text-[#f1f5f9]">{currentMethod.flavorProfile}</strong>
+                  <div className="text-slate-500">Karakter Rasa:</div>
+                  <strong className="text-slate-900">{currentMethod.flavorProfile}</strong>
                 </div>
               </div>
             </div>
 
             {/* Quick Metrics */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
-              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
-                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
-                  <Coffee className="w-4 h-4 text-[#38bdf8]" />
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
+                  <Coffee className="w-4 h-4 text-[#0070f3]" />
                   <span>Dosis &amp; Rasio</span>
                 </div>
-                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.ratio}</div>
-                <div className="text-[11px] text-[#94a3b8]">{currentMethod.dose} Kopi / {currentMethod.water} Air</div>
+                <div className="text-lg font-bold text-slate-900">{currentMethod.ratio}</div>
+                <div className="text-[11px] text-slate-500">{currentMethod.dose} Kopi / {currentMethod.water} Air</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
-                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
-                  <Thermometer className="w-4 h-4 text-rose-400" />
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
+                  <Thermometer className="w-4 h-4 text-rose-500" />
                   <span>Suhu Air</span>
                 </div>
-                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.temperature}</div>
-                <div className="text-[11px] text-[#94a3b8]">Rekomendasi Kettle Leher Angsa</div>
+                <div className="text-lg font-bold text-slate-900">{currentMethod.temperature}</div>
+                <div className="text-[11px] text-slate-500">Rekomendasi Kettle Leher Angsa</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
-                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
-                  <Timer className="w-4 h-4 text-emerald-400" />
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
+                  <Timer className="w-4 h-4 text-emerald-600" />
                   <span>Waktu Seduh</span>
                 </div>
-                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.time}</div>
-                <div className="text-[11px] text-[#94a3b8]">Termasuk fase blooming</div>
+                <div className="text-lg font-bold text-slate-900">{currentMethod.time}</div>
+                <div className="text-[11px] text-slate-500">Termasuk fase blooming</div>
               </div>
 
-              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
-                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
-                  <Sliders className="w-4 h-4 text-[#38bdf8]" />
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200">
+                <div className="flex items-center gap-2 text-xs text-slate-500 mb-1">
+                  <Sliders className="w-4 h-4 text-[#0070f3]" />
                   <span>Gilingan (Grind)</span>
                 </div>
-                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.grindSize}</div>
-                <div className="text-[11px] text-[#94a3b8]">Burr kalibrasi manual</div>
+                <div className="text-lg font-bold text-[#0070f3]">{currentMethod.grindSize}</div>
+                <div className="text-[11px] text-slate-500">Burr kalibrasi manual</div>
               </div>
             </div>
           </div>
 
           {/* Step-by-Step Instructions */}
           <div className="space-y-6">
-            <h3 className="text-sm font-bold uppercase tracking-wider text-[#38bdf8]">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[#0070f3]">
               Langkah Demi Langkah Seduh Sempurna:
             </h3>
 
@@ -142,21 +142,21 @@ export default function BrewGuidesPage() {
               {currentMethod.steps.map((step, idx) => (
                 <div 
                   key={idx} 
-                  className="flex items-start gap-4 p-4 rounded-2xl bg-[#070e1b] border border-[#172b47] hover:border-[#0070f3]/40 transition-colors"
+                  className="flex items-start gap-4 p-4 rounded-2xl bg-slate-50 border border-slate-200 hover:border-[#0070f3] transition-colors shadow-xs"
                 >
-                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0070f3] to-[#0052cc] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-md">
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0070f3] to-[#0052cc] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-sm">
                     {idx + 1}
                   </div>
                   <div className="flex-1">
                     <div className="flex items-baseline justify-between gap-2">
-                      <h4 className="text-sm font-bold text-[#f1f5f9]">{step.title}</h4>
+                      <h4 className="text-sm font-bold text-slate-900">{step.title}</h4>
                       {step.timing && (
-                        <span className="text-[11px] font-mono text-[#38bdf8] bg-[#112240] px-2 py-0.5 rounded-md border border-[#1e3a5f]">
+                        <span className="text-[11px] font-mono text-[#0070f3] bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200">
                           {step.timing}
                         </span>
                       )}
                     </div>
-                    <p className="text-xs text-[#94a3b8] mt-1 leading-relaxed">
+                    <p className="text-xs text-slate-600 mt-1 leading-relaxed">
                       {step.desc}
                     </p>
                   </div>
@@ -172,14 +172,14 @@ export default function BrewGuidesPage() {
           <div>
             <div className="flex items-center justify-between mb-6">
               <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-[#38bdf8]">
+                <span className="text-xs font-bold uppercase tracking-wider text-[#0070f3]">
                   PERALATAN YANG DIREKOMENDASIKAN
                 </span>
-                <h3 className="text-xl sm:text-2xl font-extrabold text-[#f1f5f9] mt-1">
+                <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 mt-1">
                   Gear Resmi untuk Seduh {currentMethod.name}
                 </h3>
               </div>
-              <Link to="/" className="text-xs font-bold text-[#38bdf8] hover:underline flex items-center gap-1">
+              <Link to="/" className="text-xs font-bold text-[#0070f3] hover:underline flex items-center gap-1">
                 <span>Lihat Semua</span>
                 <ArrowRight className="w-3.5 h-3.5" />
               </Link>
@@ -190,15 +190,15 @@ export default function BrewGuidesPage() {
                 <Link
                   key={p.id}
                   to={`/product/${p.slug}`}
-                  className="p-4 rounded-2xl bg-[#0b172a] border border-[#172b47] hover:border-[#0070f3] transition-all group flex gap-4 items-center"
+                  className="p-4 rounded-2xl bg-white border border-slate-200 hover:border-[#0070f3] transition-all group flex gap-4 items-center shadow-xs"
                 >
-                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#070e1b] shrink-0 border border-[#172b47]">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-slate-100 shrink-0 border border-slate-200">
                     <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <span className="text-[10px] font-extrabold text-[#38bdf8] uppercase tracking-wider block">{p.brand}</span>
-                    <h4 className="text-xs font-bold text-[#f1f5f9] truncate mt-0.5 group-hover:text-[#38bdf8] transition-colors">{p.name}</h4>
-                    <div className="text-xs font-extrabold text-[#38bdf8] mt-1.5">{formatRupiah(p.price)}</div>
+                    <span className="text-[10px] font-extrabold text-[#0070f3] uppercase tracking-wider block">{p.brand}</span>
+                    <h4 className="text-xs font-bold text-slate-900 truncate mt-0.5 group-hover:text-[#0070f3] transition-colors">{p.name}</h4>
+                    <div className="text-xs font-extrabold text-slate-900 mt-1.5">{formatRupiah(p.price)}</div>
                   </div>
                 </Link>
               ))}

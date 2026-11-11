@@ -7,31 +7,31 @@
 
   body {
     font-family: var(--font-sans);
-    background-color: #070e1b;
-    color: #f1f5f9;
+    background-color: #ffffff;
+    color: #0f172a;
   }
 }
 
-/* Custom scrollbar matching electric sapphire blue theme */
+/* Custom clean scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b172a;
+  background: #f1f5f9;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #1e3a5f;
+  background: #cbd5e1;
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #0084ff;
+  background: #0070f3;
 }
 
-/* Smooth transitions */
+/* Smooth border color defaults */
 * {
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: #e2e8f0;
 }
