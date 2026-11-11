@@ -548,8 +548,8 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               <Truck className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">Pengiriman Cepat</h4>
-              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">Order Langsung Kirim</p>
+              <h4 className="text-xs sm:text-sm lg:text-sm font-bold text-slate-900 leading-tight truncate">Pengiriman Cepat</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight truncate">Order Langsung Kirim</p>
             </div>
           </div>
 
@@ -559,8 +559,8 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">100% Original</h4>
-              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">Garansi uang kembali</p>
+              <h4 className="text-xs sm:text-sm lg:text-sm font-bold text-slate-900 leading-tight truncate">100% Original</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight truncate">Garansi uang kembali</p>
             </div>
           </div>
 
@@ -570,8 +570,8 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               <BadgeCheck className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">Produk Bergaransi</h4>
-              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">Garansi Toko & Distributor</p>
+              <h4 className="text-xs sm:text-sm lg:text-sm font-bold text-slate-900 leading-tight truncate">Produk Bergaransi</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight truncate">Garansi Toko & Distributor</p>
             </div>
           </div>
 
@@ -581,8 +581,8 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               <Headphones className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
             <div className="min-w-0">
-              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">Free Konsultasi</h4>
-              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">24 Jam</p>
+              <h4 className="text-xs sm:text-sm lg:text-sm font-bold text-slate-900 leading-tight truncate">Free Konsultasi</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight truncate">24 Jam</p>
             </div>
           </div>
 

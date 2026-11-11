@@ -65,28 +65,28 @@ export default function ProductCard({
       <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
         <div>
           {/* Brand Name */}
-          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider block mb-1">
             {product.brand}
           </span>
 
           {/* Title */}
-          <Link to={productUrl} className="block group-hover:text-[#0e1f36] transition-colors min-h-[3rem] sm:min-h-[2.6rem]">
-            <h3 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-3 sm:line-clamp-2 leading-snug">
+          <Link to={productUrl} className="block group-hover:text-[#0e1f36] transition-colors min-h-[3.2rem] sm:min-h-[2.8rem]">
+            <h3 className="text-[13px] sm:text-sm font-bold text-slate-900 line-clamp-3 sm:line-clamp-2 leading-snug">
               {product.name}
             </h3>
           </Link>
 
           {/* Price Section */}
           <div className="mt-2">
-            <span className="text-sm sm:text-base font-extrabold text-[#0e1f36] block leading-tight">
+            <span className="text-base sm:text-lg font-extrabold text-[#0e1f36] block leading-tight">
               {formatRupiah(product.price)}
             </span>
             {product.originalPrice ? (
-              <span className="text-[10px] sm:text-[11px] text-slate-400 line-through block mt-0.5">
+              <span className="text-xs text-slate-400 line-through block mt-0.5">
                 {formatRupiah(product.originalPrice)}
               </span>
             ) : (
-              <span className="text-[10px] sm:text-[11px] text-transparent block mt-0.5 select-none">
+              <span className="text-xs text-transparent block mt-0.5 select-none">
                 -
               </span>
             )}
@@ -96,7 +96,7 @@ export default function ProductCard({
         {/* Bottom Status & Action Row */}
         <div className="mt-3 pt-2.5 flex items-center justify-between gap-2 border-t border-slate-100">
           {/* Status: ✓ Tersedia */}
-          <div className="flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+          <div className="flex items-center gap-1 text-xs font-medium text-emerald-600">
             <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[2.5]" />
             <span>Tersedia</span>
           </div>
@@ -105,7 +105,7 @@ export default function ProductCard({
           {hasVariants ? (
             <Link
               to={productUrl}
-              className="inline-flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-[#0e1f36] hover:bg-[#152e50] text-white text-xs font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
+              className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-[#0e1f36] hover:bg-[#152e50] text-white text-xs sm:text-sm font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
             >
               <span>Pilih</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -118,10 +118,10 @@ export default function ProductCard({
                 e.stopPropagation();
                 onAddToCart(product);
               }}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0e1f36] hover:bg-[#152e50] text-white flex items-center justify-center transition-all shadow-xs hover:shadow-md active:scale-95"
+              className="w-8 h-8 rounded-full bg-[#0e1f36] hover:bg-[#152e50] text-white flex items-center justify-center transition-all shadow-xs hover:shadow-md active:scale-95"
               title="Tambah ke Keranjang"
             >
-              <ShoppingBag className="w-3.5 h-3.5" />
+              <ShoppingBag className="w-4 h-4" />
             </button>
           )}
         </div>

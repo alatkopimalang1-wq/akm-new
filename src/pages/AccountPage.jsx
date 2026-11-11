@@ -210,8 +210,8 @@ export default function AccountPage({ showToast }) {
                   </span>
                 </div>
 
-                <div className="flex items-center gap-2 text-slate-300 text-xs sm:text-sm mt-1 sm:mt-1.5 font-medium">
-                  <Mail className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                <div className="flex items-center gap-2 text-slate-300 text-sm sm:text-base mt-1 sm:mt-1.5 font-medium">
+                  <Mail className="w-4 h-4 text-slate-400 shrink-0" />
                   <span>{userProfile.email}</span>
                 </div>
               </div>
@@ -224,10 +224,10 @@ export default function AccountPage({ showToast }) {
               {/* Button: Keluar */}
               <button
                 onClick={handleLogout}
-                className="inline-flex items-center gap-1.5 px-3.5 sm:px-4 py-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-700/70 text-slate-300 hover:text-white border border-slate-700/70 text-xs sm:text-sm font-semibold transition-all active:scale-95 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-xl bg-slate-800/60 hover:bg-slate-700/70 text-slate-300 hover:text-white border border-slate-700/70 text-sm sm:text-base font-semibold transition-all active:scale-95 cursor-pointer"
                 title="Keluar dari akun"
               >
-                <LogOut className="w-3.5 h-3.5" />
+                <LogOut className="w-4 h-4" />
                 <span>Keluar</span>
               </button>
 
@@ -245,7 +245,7 @@ export default function AccountPage({ showToast }) {
             {/* Tab 1: Riwayat Pesanan */}
             <button
               onClick={() => setActiveTab('orders')}
-              className={`pb-3 sm:pb-3.5 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
+              className={`pb-3 sm:pb-3.5 text-sm sm:text-base font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
                 activeTab === 'orders'
                   ? 'text-[#965c2e] border-b-2 border-[#965c2e]'
                   : 'text-slate-500 hover:text-slate-900 border-b-2 border-transparent'
@@ -260,7 +260,7 @@ export default function AccountPage({ showToast }) {
             {/* Tab 2: Alamat Pengiriman */}
             <button
               onClick={() => setActiveTab('address')}
-              className={`pb-3 sm:pb-3.5 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
+              className={`pb-3 sm:pb-3.5 text-sm sm:text-base font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
                 activeTab === 'address'
                   ? 'text-[#965c2e] border-b-2 border-[#965c2e]'
                   : 'text-slate-500 hover:text-slate-900 border-b-2 border-transparent'
@@ -273,7 +273,7 @@ export default function AccountPage({ showToast }) {
             {/* Tab 3: Profil & Kontak */}
             <button
               onClick={() => setActiveTab('profile')}
-              className={`pb-3 sm:pb-3.5 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
+              className={`pb-3 sm:pb-3.5 text-sm sm:text-base font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
                 activeTab === 'profile'
                   ? 'text-[#965c2e] border-b-2 border-[#965c2e]'
                   : 'text-slate-500 hover:text-slate-900 border-b-2 border-transparent'
@@ -286,7 +286,7 @@ export default function AccountPage({ showToast }) {
             {/* Tab 4: Kata Sandi */}
             <button
               onClick={() => setActiveTab('password')}
-              className={`pb-3 sm:pb-3.5 text-xs sm:text-sm font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
+              className={`pb-3 sm:pb-3.5 text-sm sm:text-base font-bold flex items-center gap-2 transition-all cursor-pointer relative ${
                 activeTab === 'password'
                   ? 'text-[#965c2e] border-b-2 border-[#965c2e]'
                   : 'text-slate-500 hover:text-slate-900 border-b-2 border-transparent'
@@ -319,14 +319,14 @@ export default function AccountPage({ showToast }) {
               </h2>
 
               {/* Description */}
-              <p className="text-xs sm:text-sm text-slate-500 leading-relaxed max-w-md mx-auto mb-6">
+              <p className="text-sm sm:text-base text-slate-500 leading-relaxed max-w-md mx-auto mb-6">
                 Anda belum memiliki transaksi pesanan di Sanubari Roastery. Temukan kopi segar sangrai pilihan kami sekarang.
               </p>
 
               {/* Action Button: Mulai Belanja Lagi (Otomatis diarahkan ke shop page menampilkan semua produk) */}
               <Link
                 to="/shop"
-                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#0e1f36] hover:bg-[#162f52] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all active:scale-95"
+                className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#0e1f36] hover:bg-[#162f52] text-white font-bold text-sm sm:text-base shadow-md hover:shadow-lg transition-all active:scale-95"
               >
                 <span>Mulai Belanja Lagi</span>
                 <ArrowRight className="w-4 h-4" />

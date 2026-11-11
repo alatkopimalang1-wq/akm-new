@@ -369,7 +369,7 @@ export default function Navbar({
                     handleSearchSubmit(e);
                   }
                 }}
-                className="w-full bg-[#060e1a] focus:bg-[#0a1526] border border-[#172b47] focus:border-[#0084ff] text-xs sm:text-sm text-white placeholder-[#64748b] rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-inner focus:shadow-md"
+                className="w-full bg-[#060e1a] focus:bg-[#0a1526] border border-[#172b47] focus:border-[#0084ff] text-sm text-white placeholder-[#64748b] rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-inner focus:shadow-md"
               />
               <button
                 type="submit"
@@ -382,7 +382,7 @@ export default function Navbar({
                 <button 
                   type="button"
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#94a3b8] hover:text-white bg-[#172b47] px-1.5 py-0.5 rounded font-medium"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-[#94a3b8] hover:text-white bg-[#172b47] px-2 py-0.5 rounded font-medium"
                 >
                   Clear
                 </button>
@@ -414,9 +414,9 @@ export default function Navbar({
                       >
                         <img src={p.images[0]} alt={p.name} className="w-10 h-10 rounded-lg object-cover bg-slate-100 border border-slate-200 shrink-0" />
                         <div className="flex-1 min-w-0">
-                          <p className="text-[10px] font-bold text-[#0e1f36] uppercase">{p.brand}</p>
-                          <h5 className="text-xs font-bold text-slate-900 truncate group-hover:text-[#0e1f36]">{p.name}</h5>
-                          <span className="text-xs font-extrabold text-slate-900">{formatRupiah(p.price)}</span>
+                          <p className="text-xs font-bold text-[#0e1f36] uppercase">{p.brand}</p>
+                          <h5 className="text-sm font-bold text-slate-900 truncate group-hover:text-[#0e1f36]">{p.name}</h5>
+                          <span className="text-sm font-extrabold text-slate-900">{formatRupiah(p.price)}</span>
                         </div>
                         <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-[#0e1f36] group-hover:translate-x-0.5 transition-all shrink-0" />
                       </Link>
@@ -427,7 +427,7 @@ export default function Navbar({
                   <button
                     type="button"
                     onClick={handleSearchSubmit}
-                    className="w-full py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-[#0e1f36] text-xs font-bold text-center block transition-colors border-t border-slate-100"
+                    className="w-full py-2.5 px-4 bg-slate-50 hover:bg-slate-100 text-[#0e1f36] text-xs sm:text-sm font-bold text-center block transition-colors border-t border-slate-100"
                   >
                     Lihat Semua Hasil untuk "{searchQuery}" ({totalMatchesCount} produk) →
                   </button>

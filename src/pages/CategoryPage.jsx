@@ -126,7 +126,7 @@ export default function CategoryPage({
               <span className="flex items-center gap-3 flex-wrap">
                 <span>Hasil Pencarian:</span>
                 <span className="text-[#0e1f36]">"{searchQueryParam}"</span>
-                <span className="text-xs sm:text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
+                <span className="text-sm font-semibold text-slate-500 bg-slate-100 px-3 py-1 rounded-full border border-slate-200">
                   {filteredProducts.length} produk ditemukan
                 </span>
               </span>
@@ -139,7 +139,7 @@ export default function CategoryPage({
             <div className="mt-3 flex items-center gap-2">
               <Link
                 to={`/kategori/${categorySlug}`}
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors border border-slate-200"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs sm:text-sm font-semibold transition-colors border border-slate-200"
               >
                 <span>✕ Hapus Filter Pencarian</span>
               </Link>
@@ -148,7 +148,7 @@ export default function CategoryPage({
 
           {/* Quick Category Switcher Tabs */}
           <div className="mt-4 pt-4 border-t border-slate-200/80">
-            <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-2">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-2">
               Jelajahi Kategori Lainnya:
             </span>
             <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
@@ -156,7 +156,7 @@ export default function CategoryPage({
                 <Link
                   key={cat.id}
                   to={`/kategori/${cat.slug}`}
-                  className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+                  className={`px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border ${
                     category.id === cat.id
                       ? 'bg-[#0e1f36] text-white border-[#0e1f36] shadow-sm'
                       : 'bg-white text-slate-600 border-slate-200 hover:text-slate-900 hover:bg-slate-50'
@@ -176,15 +176,15 @@ export default function CategoryPage({
         
         {/* Brand Filter Chips for this category */}
         {categoryBrands.length > 2 && (
-          <div className="mb-6 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs pt-1">
-            <span className="text-slate-400 text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1">
+          <div className="mb-6 flex items-center gap-2 overflow-x-auto no-scrollbar text-xs sm:text-sm pt-1">
+            <span className="text-slate-400 text-xs font-semibold uppercase tracking-wider shrink-0 mr-1">
               Brand:
             </span>
             {categoryBrands.map((brand) => (
               <button
                 key={brand}
                 onClick={() => setSelectedBrand(brand)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all border ${
+                className={`px-3 py-1.5 rounded-lg text-xs sm:text-sm font-medium whitespace-nowrap transition-all border ${
                   selectedBrand === brand
                     ? 'bg-slate-100 text-[#0e1f36] border-[#0e1f36]/40 font-bold shadow-xs'
                     : 'bg-white text-slate-500 border-slate-200 hover:text-slate-800 hover:bg-slate-50'
@@ -197,9 +197,9 @@ export default function CategoryPage({
             {selectedBrand !== 'Semua Brand' && (
               <button
                 onClick={() => setSelectedBrand('Semua Brand')}
-                className="ml-auto text-[11px] text-red-500 hover:text-red-700 font-medium flex items-center gap-1 shrink-0 px-2 py-1"
+                className="ml-auto text-xs text-red-500 hover:text-red-700 font-medium flex items-center gap-1 shrink-0 px-2 py-1"
               >
-                <RotateCcw className="w-3 h-3" />
+                <RotateCcw className="w-3.5 h-3.5" />
                 <span>Reset</span>
               </button>
             )}

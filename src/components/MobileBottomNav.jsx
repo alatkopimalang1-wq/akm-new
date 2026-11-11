@@ -93,8 +93,8 @@ export default function MobileBottomNav({
                 />
               </div>
               <span 
-                className={`text-[11px] leading-none transition-colors ${
-                  isHomeActive ? 'font-bold' : 'font-medium'
+                className={`text-xs leading-none transition-colors ${
+                  isHomeActive ? 'font-bold' : 'font-semibold'
                 }`}
               >
                 Home
@@ -114,8 +114,8 @@ export default function MobileBottomNav({
                 />
               </div>
               <span 
-                className={`text-[11px] leading-none transition-colors ${
-                  isCategoryActive ? 'font-bold' : 'font-medium'
+                className={`text-xs leading-none transition-colors ${
+                  isCategoryActive ? 'font-bold' : 'font-semibold'
                 }`}
               >
                 Kategori
@@ -139,7 +139,7 @@ export default function MobileBottomNav({
                   </span>
                 )}
               </div>
-              <span className="text-[11px] font-medium leading-none transition-colors">
+              <span className="text-xs font-semibold leading-none transition-colors">
                 Keranjang
               </span>
             </button>
@@ -157,8 +157,8 @@ export default function MobileBottomNav({
                 />
               </div>
               <span 
-                className={`text-[11px] leading-none transition-colors ${
-                  isAccountActive ? 'font-bold' : 'font-medium'
+                className={`text-xs leading-none transition-colors ${
+                  isAccountActive ? 'font-bold' : 'font-semibold'
                 }`}
               >
                 Akun
