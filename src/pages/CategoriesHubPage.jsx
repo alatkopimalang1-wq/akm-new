@@ -10,6 +10,7 @@ import {
   Filter
 } from 'lucide-react';
 import { STORE_INFO } from '../data/products';
+import { CATEGORY_NAVIGATION_DATA } from '../data/categoryNavigation';
 
 export default function CategoriesHubPage() {
   const navigate = useNavigate();
@@ -212,54 +213,8 @@ export default function CategoriesHubPage() {
     }
   };
 
-  // Pre-configured category sections matching screenshot
-  const categorySections = [
-    {
-      id: 'filter-beans',
-      title: 'Filter Beans',
-      allUrl: '/kategori/filter-beans',
-      items: [
-        { id: 'classic-process', name: 'Classic Process', iconType: 'beans-classic', link: '/kategori/filter-beans' },
-        { id: 'experimental-process', name: 'Experimantal Process', iconType: 'beans-exp', link: '/kategori/filter-beans' },
-        { id: 'co-ferment', name: 'Co-Ferment Process', iconType: 'beans-coferment', link: '/kategori/filter-beans' },
-        { id: 'paket-box-hampers', name: 'Paket Box Hampers', iconType: 'gift', link: '/kategori/bundles' }
-      ]
-    },
-    {
-      id: 'espresso-beans',
-      title: 'Espresso Beans',
-      allUrl: '/kategori/espresso-beans',
-      items: [
-        { id: 'fine-robusta', name: 'Fine Robusta', iconType: 'robusta', link: '/kategori/espresso-beans' },
-        { id: 'full-arabica', name: 'Full Arabica', iconType: 'arabica', link: '/kategori/espresso-beans' },
-        { id: 'houseblend', name: 'Houseblend', iconType: 'houseblend', link: '/kategori/espresso-beans' }
-      ]
-    },
-    {
-      id: 'fitur-penawaran',
-      title: 'Fitur dan Penawaran',
-      allUrl: '/panduan-seduh',
-      items: [
-        { id: 'cybr', name: 'C.Y.B.R (Custom...)', iconType: 'cybr', link: '/kategori/filter-beans' },
-        { id: 'acara', name: 'Acara', iconType: 'acara', link: '/showroom' },
-        { id: 'kalkulator', name: 'Kalkulator Rasio Seduh', iconType: 'scale', link: '/#calculator' },
-        { id: 'panduan-seduh', name: 'Panduan Resep Seduh', iconType: 'dripper', link: '/panduan-seduh' }
-      ]
-    },
-    {
-      id: 'alat-kopi',
-      title: 'Peralatan Seduh (Alat Kopi)',
-      allUrl: '/kategori/all',
-      items: [
-        { id: 'manual-brew', name: 'Manual Brew & Dripper', iconType: 'dripper', link: '/kategori/manual-brew' },
-        { id: 'hand-grinder', name: 'Hand Grinder Presisi', iconType: 'grinder', link: '/kategori/grinder' },
-        { id: 'espresso-tools', name: 'Espresso & Lever Tools', iconType: 'flair', link: '/kategori/espresso-tools' },
-        { id: 'kettle', name: 'Kettle Gooseneck', iconType: 'kettle', link: '/kategori/kettle' },
-        { id: 'scale', name: 'Scale & Timer Digital', iconType: 'scale', link: '/kategori/scale' },
-        { id: 'bundles', name: 'Paket Starter Kit', iconType: 'bundle', link: '/kategori/bundles' }
-      ]
-    }
-  ];
+  // Pre-configured category sections (100% selaras dengan desktop Mega Menu)
+  const categorySections = CATEGORY_NAVIGATION_DATA;
 
   // Filter sections by chip and search
   const visibleSections = useMemo(() => {
@@ -349,7 +304,7 @@ export default function CategoriesHubPage() {
         {/* ========================================================================= */}
         {/* HORIZONTAL CATEGORY FILTER CHIPS (Persis Screenshot) */}
         {/* ========================================================================= */}
-        <div className="border-t border-slate-100/80 bg-white py-2.5 px-4 overflow-x-auto no-scrollbar scroll-smooth">
+        <div className="border-t border-slate-100/80 bg-white py-2.5 px-4 overflow-x-auto no-scrollbar">
           <div className="flex items-center gap-2 max-w-md sm:max-w-xl mx-auto">
             {categoryChips.map((chip) => {
               const isActive = selectedChip === chip.id;

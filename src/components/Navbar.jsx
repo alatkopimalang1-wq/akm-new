@@ -25,93 +25,10 @@ import {
   BookOpen
 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES, STORE_INFO } from '../data/products';
+import { MEGA_MENU_CATEGORIES } from '../data/categoryNavigation';
 import { formatRupiah } from '../utils/format';
 
-// Data Mega Menu yang selaras persis dengan website Sanubari Roastery
-export const MEGA_MENU_CATEGORIES = [
-  {
-    id: 'filter-beans',
-    name: 'Filter Beans',
-    slug: 'filter-beans',
-    categoryTarget: 'filter-beans',
-    allLabel: 'Lihat Semua di Filter Beans',
-    allUrl: '/kategori/filter-beans',
-    subcategories: [
-      { id: 'classic-process', name: 'Classic Process', iconType: 'beans-classic', desc: 'Washed & Natural Profile Kawi', targetCategory: 'filter-beans' },
-      { id: 'experimental-process', name: 'Experimantal Process', iconType: 'beans-exp', desc: 'Anaerobic & Yeast Inoculation', targetCategory: 'filter-beans' },
-      { id: 'co-ferment', name: 'Co-Ferment Process', iconType: 'beans-coferment', desc: 'Nanas Madu & Sweet Plum', targetCategory: 'filter-beans' },
-      { id: 'paket-box-hampers', name: 'Paket Box Hampers', iconType: 'gift', desc: 'Specialty Gift Box Roastery', targetCategory: 'bundles' }
-    ]
-  },
-  {
-    id: 'espresso-beans',
-    name: 'Espresso Beans',
-    slug: 'espresso-beans',
-    categoryTarget: 'espresso-beans',
-    allLabel: 'Lihat Semua di Espresso Beans',
-    allUrl: '/kategori/espresso-beans',
-    subcategories: [
-      { id: 'fine-robusta', name: 'Fine Robusta', iconType: 'robusta', desc: 'Dampit & Malang Grade 1', targetCategory: 'espresso-beans' },
-      { id: 'full-arabica', name: 'Full Arabica', iconType: 'arabica', desc: '100% Arabika Gunung Kawi', targetCategory: 'espresso-beans' },
-      { id: 'houseblend', name: 'Houseblend', iconType: 'houseblend', desc: 'Formula Kopi Susu & Espresso', targetCategory: 'espresso-beans' }
-    ]
-  },
-  {
-    id: 'alat-kopi',
-    name: 'Peralatan Seduh (Alat Kopi)',
-    slug: 'alat-kopi',
-    categoryTarget: 'all',
-    allLabel: 'Lihat Semua Peralatan Kopi',
-    allUrl: '/kategori/all',
-    subcategories: [
-      { id: 'manual-brew-gear', name: 'Manual Brew & Dripper', iconType: 'dripper', desc: 'Hario Kasuya, Origami, Aeropress', targetCategory: 'manual-brew' },
-      { id: 'hand-grinder', name: 'Hand Grinder Presisi', iconType: 'grinder', desc: 'Timemore C3S & Kingrinder K6', targetCategory: 'grinder' },
-      { id: 'espresso-gear', name: 'Espresso & Lever Tools', iconType: 'flair', desc: 'Flair 58, Portafilter 58mm, WDT', targetCategory: 'espresso-tools' },
-      { id: 'kettle-gear', name: 'Kettle Gooseneck', iconType: 'kettle', desc: 'Fellow Stagg & Timemore Fish', targetCategory: 'kettle' },
-      { id: 'scale-gear', name: 'Scale & Timer Digital', iconType: 'scale', desc: 'Timemore Black Mirror Basic 2', targetCategory: 'scale' },
-      { id: 'starter-kit', name: 'Paket Starter Kit (5-in-1)', iconType: 'bundle', desc: 'Set Lengkap Barista Rumah', targetCategory: 'bundles' }
-    ]
-  },
-  {
-    id: 'fitur-penawaran',
-    name: 'Fitur dan Penawaran',
-    slug: 'fitur-penawaran',
-    allLabel: 'Lihat Seluruh Fitur & Panduan',
-    allUrl: '/panduan-seduh',
-    subcategories: [
-      { id: 'kalkulator-seduh', name: 'Kalkulator Rasio Seduh', iconType: 'calc', desc: 'Hitung gramasi kopi & air presisi', action: 'calc' },
-      { id: 'tabel-grinder', name: 'Tabel Kalibrasi Klik Grinder', iconType: 'cog', desc: 'Panduan klik gilingan barista', action: 'grinder-chart' },
-      { id: 'panduan-resep', name: 'Resep & Panduan Seduh', iconType: 'guide', desc: 'Ekstraksi resmi Slow Bar Sanubari', internalUrl: '/panduan-seduh' },
-      { id: 'wholesale-partner', name: 'Kemitraan Kedai (Wholesale)', iconType: 'wholesale', desc: 'Pengadaan bar kopi & supply biji', internalUrl: '/wholesale' }
-    ]
-  },
-  {
-    id: 'market-place',
-    name: 'Market Place',
-    slug: 'market-place',
-    allLabel: 'Kunjungi Marketplace Official',
-    allUrl: 'https://tokopedia.com',
-    isExternal: true,
-    subcategories: [
-      { id: 'tokopedia', name: 'Tokopedia Official Store', iconType: 'tokopedia', desc: 'Bebas Ongkir & Cicilan Resmi', externalUrl: STORE_INFO.tokopediaStoreUrl },
-      { id: 'shopee', name: 'Shopee Official Mall', iconType: 'shopee', desc: 'Voucher diskon & Flash Sale', externalUrl: STORE_INFO.shopeeStoreUrl },
-      { id: 'tiktok', name: 'TikTok Shop Sanubari', iconType: 'tiktok', desc: 'Belanja langsung saat Live', externalUrl: 'https://tiktok.com' }
-    ]
-  },
-  {
-    id: 'our-social-media',
-    name: 'Our Social Media',
-    slug: 'our-social-media',
-    allLabel: 'Ikuti Komunitas Sanubari',
-    allUrl: STORE_INFO.instagram,
-    isExternal: true,
-    subcategories: [
-      { id: 'ig', name: 'Instagram @sanubari.roastery.mlg', iconType: 'instagram', desc: 'Update sangrai mingguan & event', externalUrl: STORE_INFO.instagram },
-      { id: 'wa', name: 'WhatsApp Barista Consult', iconType: 'whatsapp', desc: 'Konsultasi gratis alat & biji kopi', externalUrl: `https://wa.me/${STORE_INFO.whatsappNumber}` },
-      { id: 'maps', name: 'Slow Bar & Showroom Malang', iconType: 'maps', desc: 'Ruko Tlogomas Square Kav. 34', externalUrl: STORE_INFO.googleMapsUrl }
-    ]
-  }
-];
+export { MEGA_MENU_CATEGORIES };
 
 export default function Navbar({ 
   cartCount, 
@@ -195,6 +112,8 @@ export default function Navbar({
       onOpenGrinderChart();
     } else if (sub.internalUrl) {
       navigate(sub.internalUrl);
+    } else if (sub.link) {
+      navigate(sub.link);
     } else if (sub.externalUrl) {
       window.open(sub.externalUrl, '_blank');
     } else if (sub.targetCategory) {
@@ -203,9 +122,86 @@ export default function Navbar({
     setMegaMenuOpen(false);
   };
 
-  // Helper render circular icon badge dengan aksen biru
+  // Helper render circular icon badge dengan aksen biru & ilustrasi selaras mobile
   const renderIconBadge = (type) => {
     switch (type) {
+      case 'beans-classic':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <circle cx="10" cy="10" r="3.5" fill="#f59e0b" />
+              <path d="M10 4v2M10 14v2M4 10h2M14 10h2" stroke="#f59e0b" strokeWidth="1.5" strokeLinecap="round" />
+              <path d="M7 26c6-4 14-6 22-8" stroke="#57534e" strokeWidth="2" strokeLinecap="round" />
+              <path d="M14 19c-3-4-2-7 0-9 4 1 5 4 4 7" fill="#4ade80" stroke="#16a34a" strokeWidth="1.2" />
+              <path d="M21 16c2-4 5-5 7-4-1 4-3 6-6 6" fill="#22c55e" stroke="#16a34a" strokeWidth="1.2" />
+              <circle cx="18" cy="22" r="3.5" fill="#ef4444" stroke="#991b1b" strokeWidth="1.2" />
+              <circle cx="23" cy="20" r="3.2" fill="#dc2626" stroke="#991b1b" strokeWidth="1.2" />
+            </svg>
+          </div>
+        );
+      case 'beans-exp':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <path d="M10 8h6M13 8v8l-6 11a2 2 0 0 0 1.7 3h10.6a2 2 0 0 0 1.7-3L15 16V8" fill="#fef3c7" stroke="#78350f" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M9.5 24h9l-1.5 4H11z" fill="#d97706" opacity="0.8" />
+              <circle cx="13" cy="20" r="1.5" fill="#f59e0b" />
+              <circle cx="15" cy="25" r="1" fill="#fff" />
+            </svg>
+          </div>
+        );
+      case 'beans-coferment':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <ellipse cx="17" cy="11" rx="8" ry="2.5" fill="#fef3c7" stroke="#854d0e" strokeWidth="1.6" />
+              <path d="M9 11c-2 5-2 11 0 15 2 1.5 14 1.5 16 0 2-4 2-10 0-15" fill="#fde047" fillOpacity="0.3" stroke="#854d0e" strokeWidth="1.6" />
+              <ellipse cx="17" cy="26" rx="8" ry="2" fill="#ca8a04" stroke="#854d0e" strokeWidth="1.6" />
+              <circle cx="27" cy="27" r="2.5" fill="#dc2626" stroke="#991b1b" strokeWidth="1" />
+            </svg>
+          </div>
+        );
+      case 'gift':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <path d="M8 18h20l-2.5 11h-15z" fill="#fef3c7" stroke="#92400e" strokeWidth="1.6" strokeLinejoin="round" />
+              <rect x="13" y="11" width="10" height="7" rx="1.5" fill="#e0f2fe" stroke="#0284c7" strokeWidth="1.4" />
+              <path d="M18 11v7M13 14.5h10" stroke="#0284c7" strokeWidth="1.2" />
+              <path d="M15 8c-3 0-3 3 0 3h6c3 0 3-3 0-3-2 0-3 2-3 2s-1-2-3-2z" fill="#ef4444" stroke="#991b1b" strokeWidth="1.2" />
+            </svg>
+          </div>
+        );
+      case 'cybr':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <path d="M10 8h16l-5 9v8l-6 2v-10z" fill="#fef3c7" stroke="#78350f" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+              <text x="18" y="15" textAnchor="middle" fill="#78350f" fontSize="7" fontWeight="900" fontFamily="sans-serif">CY</text>
+              <text x="18" y="22" textAnchor="middle" fill="#78350f" fontSize="6" fontWeight="900" fontFamily="sans-serif">BR</text>
+            </svg>
+          </div>
+        );
+      case 'acara':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <circle cx="18" cy="18" r="10" fill="#fef3c7" stroke="#b45309" strokeWidth="1.8" />
+              <path d="M15 13c-2 2-3 5-1 9s5 3 7 1" stroke="#78350f" strokeWidth="1.6" strokeLinecap="round" />
+              <path d="M21 13c2 2 3 5 1 9s-5 3-7 1" stroke="#78350f" strokeWidth="1.6" strokeLinecap="round" />
+            </svg>
+          </div>
+        );
+      case 'bundle':
+        return (
+          <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
+            <svg className="w-7 h-7" viewBox="0 0 36 36" fill="none">
+              <rect x="7" y="12" width="22" height="16" rx="2.5" fill="#fef3c7" stroke="#b45309" strokeWidth="1.8" />
+              <path d="M7 17h22M18 12v16" stroke="#b45309" strokeWidth="1.5" />
+              <circle cx="18" cy="9.5" r="2.5" fill="#ef4444" stroke="#991b1b" strokeWidth="1" />
+            </svg>
+          </div>
+        );
       case 'robusta':
         return (
           <div className="w-12 h-12 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center shrink-0 shadow-sm group-hover:scale-105 transition-transform">
