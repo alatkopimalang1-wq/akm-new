@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
   ShoppingBag, 
+  ShoppingCart,
   ShieldCheck, 
   Heart, 
   Award, 
@@ -374,10 +375,11 @@ export default function ProductDetailPage({
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="flex-1 py-3 px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-indigo-50/60 text-[#4f46e5] border-2 border-[#4f46e5] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-xs active:scale-98"
+                    className="flex-1 py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-indigo-50/60 text-[#4f46e5] border-2 border-[#4f46e5] font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-xs active:scale-98 whitespace-nowrap"
                   >
-                    <ShoppingBag className="w-4 h-4 text-[#4f46e5]" />
-                    <span>+ Tambah Keranjang</span>
+                    <ShoppingCart className="w-4 h-4 text-[#4f46e5] shrink-0" />
+                    <span className="sm:hidden">+ Keranjang</span>
+                    <span className="hidden sm:inline">+ Tambah Keranjang</span>
                   </button>
 
                   {/* Checkout */}
