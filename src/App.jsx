@@ -18,6 +18,7 @@ import OrderTrackingPage from './pages/OrderTrackingPage';
 import BrewGuidesPage from './pages/BrewGuidesPage';
 import WholesalePage from './pages/WholesalePage';
 import BrandsPage from './pages/BrandsPage';
+import MobileBottomNav from './components/MobileBottomNav';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
 import { 
@@ -219,7 +220,7 @@ export default function App() {
   const spotlightItem = PRODUCTS.find((p) => p.id === 'akm-flair-58') || PRODUCTS[0];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white pb-16 md:pb-0">
       
       {/* Toast Notification */}
       {toastMessage && (
@@ -369,6 +370,14 @@ export default function App() {
         wishlistItems={wishlist}
         onAddToCart={handleAddToCart}
         onRemoveFromWishlist={handleRemoveFromWishlist}
+      />
+
+      {/* Mobile Bottom Navigation Bar (Persis Screenshot) */}
+      <MobileBottomNav
+        cartCount={totalCartCount}
+        wishlistCount={wishlist.length}
+        onOpenCart={() => setIsCartOpen(true)}
+        onOpenWishlist={() => setIsWishlistOpen(true)}
       />
 
     </div>
