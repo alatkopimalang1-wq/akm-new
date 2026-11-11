@@ -50,9 +50,8 @@ export default function ProductDetailPage({
     }
   };
 
-  // Set default variant on product change & scroll to top instantly
+  // Set default variant on product change
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (product && product.variants && product.variants.length > 0) {
       setSelectedVariant(product.variants[0]);
     } else {

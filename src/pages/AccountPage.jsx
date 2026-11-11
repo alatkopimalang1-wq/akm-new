@@ -26,11 +26,6 @@ import {
 export default function AccountPage({ showToast }) {
   const navigate = useNavigate();
 
-  // Scroll to top instantly on load
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   // Active Tab state: 'orders' | 'address' | 'profile' | 'password'
   const [activeTab, setActiveTab] = useState('orders');
 

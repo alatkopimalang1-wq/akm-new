@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { 
   Search, 
   ShoppingBag, 
@@ -133,6 +133,7 @@ export default function Navbar({
   
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   // Search results for live dropdown preview
   const allMatchingProducts = searchQuery.trim().length > 1
@@ -296,8 +297,9 @@ export default function Navbar({
     setMegaMenuOpen(false);
     setNotificationOpen(false);
     setSearchFocused(false);
-    navigate('/');
-    window.scrollTo(0, 0);
+    if (location.pathname !== '/') {
+      navigate('/');
+    }
   };
 
   return (

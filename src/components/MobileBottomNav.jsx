@@ -41,9 +41,7 @@ export default function MobileBottomNav({
   const handleHomeClick = () => {
     setCategorySheetOpen(false);
     setAccountSheetOpen(false);
-    if (location.pathname === '/') {
-      window.scrollTo(0, 0);
-    } else {
+    if (location.pathname !== '/') {
       navigate('/');
     }
   };

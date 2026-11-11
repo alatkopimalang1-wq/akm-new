@@ -4,11 +4,6 @@ import { Coffee } from 'lucide-react';
 import { OFFICIAL_BRANDS_DATA } from '../data/products';
 
 export default function BrandsPage() {
-  // Always scroll to top instantly on page load
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <div className="min-h-screen bg-white text-slate-900 py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
       
