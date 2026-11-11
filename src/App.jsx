@@ -13,6 +13,7 @@ import CartDrawer from './components/CartDrawer';
 import WishlistDrawer from './components/WishlistDrawer';
 import Footer from './components/Footer';
 import ProductDetailPage from './pages/ProductDetailPage';
+import CategoryPage from './pages/CategoryPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
 import BrewGuidesPage from './pages/BrewGuidesPage';
 import WholesalePage from './pages/WholesalePage';
@@ -457,6 +458,30 @@ export default function App() {
           path="/product/:slug"
           element={
             <ProductDetailPage
+              onAddToCart={handleAddToCart}
+              wishlist={wishlist}
+              onToggleWishlist={handleToggleWishlist}
+              showToast={showToast}
+            />
+          }
+        />
+
+        {/* Dedicated Category Routes */}
+        <Route
+          path="/kategori/:categorySlug"
+          element={
+            <CategoryPage
+              onAddToCart={handleAddToCart}
+              wishlist={wishlist}
+              onToggleWishlist={handleToggleWishlist}
+              showToast={showToast}
+            />
+          }
+        />
+        <Route
+          path="/category/:categorySlug"
+          element={
+            <CategoryPage
               onAddToCart={handleAddToCart}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}

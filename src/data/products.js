@@ -2,16 +2,96 @@
 // Partner Resmi Showroom Sanubari Roastery, Malang
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Semua Produk', icon: 'Sparkles', count: 30 },
-  { id: 'filter-beans', name: 'Filter Beans', icon: 'Coffee', count: 4 },
-  { id: 'espresso-beans', name: 'Espresso Beans', icon: 'Flame', count: 3 },
-  { id: 'manual-brew', name: 'Manual Brew', icon: 'Coffee', count: 7 },
-  { id: 'grinder', name: 'Grinder Kopi', icon: 'Cog', count: 6 },
-  { id: 'espresso-tools', name: 'Espresso & Lever', icon: 'Flame', count: 5 },
-  { id: 'kettle', name: 'Kettle Gooseneck', icon: 'Pipette', count: 4 },
-  { id: 'scale', name: 'Scale & Timer', icon: 'Timer', count: 4 },
-  { id: 'accessories', name: 'Aksesoris & Filter', icon: 'Filter', count: 5 },
-  { id: 'bundles', name: 'Paket Starter Kit', icon: 'PackageCheck', count: 4 }
+  { 
+    id: 'all', 
+    name: 'Semua Produk', 
+    slug: 'all',
+    icon: 'Sparkles', 
+    count: 30,
+    tagline: 'Koleksi Lengkap Alat Seduh & Biji Kopi',
+    description: 'Seluruh perlengkapan seduh kopi specialty, grinder presisi, mesin lever espresso, serta biji kopi sangrai fresh dari Sanubari Roastery Malang.'
+  },
+  { 
+    id: 'filter-beans', 
+    name: 'Filter Beans', 
+    slug: 'filter-beans',
+    icon: 'Coffee', 
+    count: 4,
+    tagline: 'Biji Kopi Sangrai Profil Seduh Manual (Filter Roast)',
+    description: 'Koleksi biji kopi specialty pilihan Sanubari Roastery dengan profil roasting ringan hingga medium, menonjolkan keasaman buah (acidity) cerah, aroma floral, dan rasa manis alami.'
+  },
+  { 
+    id: 'espresso-beans', 
+    name: 'Espresso Beans', 
+    slug: 'espresso-beans',
+    icon: 'Flame', 
+    count: 3,
+    tagline: 'Biji Kopi Sangrai Profil Mesin Espresso & Susu',
+    description: 'Biji kopi dengan bodi tebal, krema pekat, dan aftertaste cokelat karamel yang seimbang sempurna untuk espresso murni maupun minuman kopi susu (latte, cappuccino).'
+  },
+  { 
+    id: 'manual-brew', 
+    name: 'Manual Brew', 
+    slug: 'manual-brew',
+    icon: 'Coffee', 
+    count: 7,
+    tagline: 'Dripper Pour Over, Server Kaca & Alat Seduh Lambat',
+    description: 'Peralatan seduh seduh manual terkurasi: dari Hario V60 Kasuya Edition, Origami Dripper buatan Jepang, Aeropress Original, hingga server kaca tahan panas.'
+  },
+  { 
+    id: 'grinder', 
+    name: 'Grinder Kopi', 
+    slug: 'grinder',
+    icon: 'Cog', 
+    count: 6,
+    tagline: 'Hand Grinder Presisi Tinggi dengan Mata Burr CNC',
+    description: 'Penggiling kopi manual dengan mata burr baja presisi (Timemore S2C Burr, Kingrinder Heptagonal Burr) untuk partikel gilingan seragam dari espresso hingga cold brew.'
+  },
+  { 
+    id: 'espresso-tools', 
+    name: 'Espresso & Lever', 
+    slug: 'espresso-tools',
+    icon: 'Flame', 
+    count: 5,
+    tagline: 'Mesin Manual Lever 9-Bar & Aksesoris Barista 58mm',
+    description: 'Mesin lever espresso komersial Flair 58, portafilter 58mm bottomless, WDT distribution tool, dan precision tamper untuk hasil ekstraksi espresso terbaik.'
+  },
+  { 
+    id: 'kettle', 
+    name: 'Kettle Gooseneck', 
+    slug: 'kettle',
+    icon: 'Pipette', 
+    count: 4,
+    tagline: 'Teko Leher Angsa Pengontrol Aliran Air Presisi',
+    description: 'Kettle elektrik cerdas dengan kontrol suhu digital dan spout leher angsa ergonomis untuk kecepatan tuangan air yang stabil saat menyeduh pour over.'
+  },
+  { 
+    id: 'scale', 
+    name: 'Scale & Timer', 
+    slug: 'scale',
+    icon: 'Timer', 
+    count: 4,
+    tagline: 'Timbangan Digital Cerdas dengan Auto-Timer & Flow-Rate',
+    description: 'Timbangan barista akurasi 0.1 gram dengan sensor respon cepat, mode auto-tare, dan indikator laju aliran air untuk hasil seduhan konsisten setiap hari.'
+  },
+  { 
+    id: 'accessories', 
+    name: 'Aksesoris & Filter', 
+    slug: 'accessories',
+    icon: 'Filter', 
+    count: 5,
+    tagline: 'Kertas Filter Berkualitas Tinggi & Perlengkapan Perawatan',
+    description: 'Kertas filter Cafec Abaca, Hario Misarashi, brush pembersih burr, bellows silikon, dan dosing cup pelengkap rutinitas seduh kopi harianmu.'
+  },
+  { 
+    id: 'bundles', 
+    name: 'Paket Starter Kit', 
+    slug: 'bundles',
+    icon: 'PackageCheck', 
+    count: 4,
+    tagline: 'Set Lengkap Barista Rumah Siap Seduh (+ Bonus Biji Kopi)',
+    description: 'Paket hemat starter pack perlengkapan seduh lengkap dengan harga khusus, sudah termasuk bonus 100g Freshly Roasted Coffee Beans dari Sanubari Roastery.'
+  }
 ];
 
 export const BRANDS = [

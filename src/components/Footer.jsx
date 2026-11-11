@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Coffee, 
   MapPin, 
@@ -87,34 +88,44 @@ export default function Footer({ onSelectCategory, onScrollToCalculator, onScrol
             </h4>
             <ul className="space-y-2 text-xs">
               <li>
-                <button onClick={() => onSelectCategory('manual-brew')} className="hover:text-[#0070f3] transition-colors">
+                <Link to="/kategori/manual-brew" className="hover:text-[#0070f3] transition-colors block">
                   Manual Brew (V60, Origami, Aeropress)
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('grinder')} className="hover:text-[#0070f3] transition-colors">
+                <Link to="/kategori/grinder" className="hover:text-[#0070f3] transition-colors block">
                   Hand Grinder Presisi (Timemore, Kingrinder)
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('espresso-tools')} className="hover:text-[#0070f3] transition-colors">
+                <Link to="/kategori/espresso-tools" className="hover:text-[#0070f3] transition-colors block">
                   Espresso Manual &amp; Lever (Flair 58, WDT)
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('kettle')} className="hover:text-[#0070f3] transition-colors">
+                <Link to="/kategori/kettle" className="hover:text-[#0070f3] transition-colors block">
                   Electric Kettle Gooseneck (Fellow, Timemore)
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('scale')} className="hover:text-[#0070f3] transition-colors">
+                <Link to="/kategori/scale" className="hover:text-[#0070f3] transition-colors block">
                   Timbangan Digital Smart Flow-Rate
-                </button>
+                </Link>
               </li>
               <li>
-                <button onClick={() => onSelectCategory('bundles')} className="hover:text-[#0070f3] transition-colors">
+                <Link to="/kategori/bundles" className="hover:text-[#0070f3] transition-colors block">
                   Paket Hemat Starter Kit Home Barista
-                </button>
+                </Link>
+              </li>
+              <li>
+                <Link to="/kategori/filter-beans" className="hover:text-[#0070f3] transition-colors block">
+                  Filter Roast Coffee Beans
+                </Link>
+              </li>
+              <li>
+                <Link to="/kategori/espresso-beans" className="hover:text-[#0070f3] transition-colors block">
+                  Espresso Roast Coffee Beans
+                </Link>
               </li>
             </ul>
           </div>

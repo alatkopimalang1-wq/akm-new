@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Sparkles, 
   ShieldCheck, 
@@ -161,12 +162,9 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
 
           <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
             {CATEGORIES.filter(c => c.id !== 'all').map((cat) => (
-              <button
+              <Link
                 key={cat.id}
-                onClick={() => {
-                  onSelectCategory(cat.id);
-                  onScrollToCatalog();
-                }}
+                to={`/kategori/${cat.slug}`}
                 className="flex flex-col items-center justify-center p-3.5 rounded-2xl bg-white hover:bg-blue-50/50 border border-slate-200 hover:border-[#0070f3] transition-all text-center group active:scale-95 shadow-xs"
               >
                 <div className="w-9 h-9 rounded-xl bg-blue-50 group-hover:bg-blue-100/70 flex items-center justify-center mb-2 transition-colors">
@@ -178,7 +176,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                 <span className="text-[10px] text-slate-400 mt-0.5">
                   {cat.count} Produk
                 </span>
-              </button>
+              </Link>
             ))}
           </div>
         </div>

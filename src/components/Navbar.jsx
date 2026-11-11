@@ -24,7 +24,8 @@ import {
   ExternalLink,
   BookOpen
 } from 'lucide-react';
-import { CATEGORIES, STORE_INFO } from '../data/products';
+import { PRODUCTS, CATEGORIES, STORE_INFO } from '../data/products';
+import { formatRupiah } from '../utils/format';
 
 // Data Mega Menu yang selaras persis dengan website Sanubari Roastery
 export const MEGA_MENU_CATEGORIES = [
@@ -34,7 +35,7 @@ export const MEGA_MENU_CATEGORIES = [
     slug: 'filter-beans',
     categoryTarget: 'filter-beans',
     allLabel: 'Lihat Semua di Filter Beans',
-    allUrl: '/?category=filter-beans',
+    allUrl: '/kategori/filter-beans',
     subcategories: [
       { id: 'classic-process', name: 'Classic Process', iconType: 'beans-classic', desc: 'Washed & Natural Profile Kawi', targetCategory: 'filter-beans' },
       { id: 'experimental-process', name: 'Experimantal Process', iconType: 'beans-exp', desc: 'Anaerobic & Yeast Inoculation', targetCategory: 'filter-beans' },
@@ -48,7 +49,7 @@ export const MEGA_MENU_CATEGORIES = [
     slug: 'espresso-beans',
     categoryTarget: 'espresso-beans',
     allLabel: 'Lihat Semua di Espresso Beans',
-    allUrl: '/?category=espresso-beans',
+    allUrl: '/kategori/espresso-beans',
     subcategories: [
       { id: 'fine-robusta', name: 'Fine Robusta', iconType: 'robusta', desc: 'Dampit & Malang Grade 1', targetCategory: 'espresso-beans' },
       { id: 'full-arabica', name: 'Full Arabica', iconType: 'arabica', desc: '100% Arabika Gunung Kawi', targetCategory: 'espresso-beans' },
@@ -61,7 +62,7 @@ export const MEGA_MENU_CATEGORIES = [
     slug: 'alat-kopi',
     categoryTarget: 'all',
     allLabel: 'Lihat Semua Peralatan Kopi',
-    allUrl: '/?category=all',
+    allUrl: '/kategori/all',
     subcategories: [
       { id: 'manual-brew-gear', name: 'Manual Brew & Dripper', iconType: 'dripper', desc: 'Hario Kasuya, Origami, Aeropress', targetCategory: 'manual-brew' },
       { id: 'hand-grinder', name: 'Hand Grinder Presisi', iconType: 'grinder', desc: 'Timemore C3S & Kingrinder K6', targetCategory: 'grinder' },
@@ -129,9 +130,20 @@ export default function Navbar({
   const [activeParentCategoryId, setActiveParentCategoryId] = useState(MEGA_MENU_CATEGORIES[1].id); // Default: Espresso Beans as in screenshot!
   const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
   
   const navbarRef = useRef(null);
   const navigate = useNavigate();
+
+  // Search results for live dropdown preview
+  const searchResults = searchQuery.trim().length > 1
+    ? PRODUCTS.filter(p => 
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.tagline?.toLowerCase().includes(searchQuery.toLowerCase())
+      ).slice(0, 5)
+    : [];
 
   // Close dropdowns on outside click
   useEffect(() => {
@@ -140,6 +152,7 @@ export default function Navbar({
         setMegaMenuOpen(false);
         setUserDropdownOpen(false);
         setNotificationOpen(false);
+        setSearchFocused(false);
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
@@ -153,6 +166,7 @@ export default function Navbar({
         setMegaMenuOpen(false);
         setUserDropdownOpen(false);
         setNotificationOpen(false);
+        setSearchFocused(false);
       }
     }
     window.addEventListener('keydown', handleKeyDown);
@@ -171,7 +185,7 @@ export default function Navbar({
     } else if (sub.externalUrl) {
       window.open(sub.externalUrl, '_blank');
     } else if (sub.targetCategory) {
-      onSelectCategory(sub.targetCategory);
+      navigate(`/kategori/${sub.targetCategory}`);
     }
     setMegaMenuOpen(false);
   };
@@ -320,14 +334,24 @@ export default function Navbar({
             </button>
           </div>
 
-          {/* CENTER: Wide Search Bar */}
-          <div className="flex-1 max-w-xl mx-2 sm:mx-6">
+          {/* CENTER: Wide Search Bar with Instant Suggestions */}
+          <div className="flex-1 max-w-xl mx-2 sm:mx-6 relative">
             <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Cari biji kopi, varietas, tasting notes..."
                 value={searchQuery}
+                onFocus={() => setSearchFocused(true)}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    navigate('/');
+                    setSearchFocused(false);
+                    setTimeout(() => {
+                      document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+                    }, 100);
+                  }
+                }}
                 className="w-full bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#0070f3] text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-xs focus:shadow-md"
               />
               <Search className="w-4 h-4 text-slate-400 absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -340,6 +364,57 @@ export default function Navbar({
                 </button>
               )}
             </div>
+
+            {/* Instant Search Results Dropdown */}
+            {searchFocused && searchQuery.trim().length > 1 && (
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-50 animate-fade-in divide-y divide-slate-100">
+                <div className="p-3 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
+                  <span className="font-semibold text-slate-700">Hasil Pencarian Produk</span>
+                  <span>{searchResults.length} ditemukan</span>
+                </div>
+                <div className="max-h-72 overflow-y-auto divide-y divide-slate-100">
+                  {searchResults.length === 0 ? (
+                    <div className="p-4 text-center text-xs text-slate-500">
+                      Tidak ada produk dengan kata kunci "{searchQuery}"
+                    </div>
+                  ) : (
+                    searchResults.map((p) => (
+                      <Link
+                        key={p.id}
+                        to={`/product/${p.slug}`}
+                        onClick={() => {
+                          setSearchFocused(false);
+                          setSearchQuery('');
+                        }}
+                        className="p-3 hover:bg-blue-50/50 flex items-center gap-3 transition-colors group"
+                      >
+                        <img src={p.images[0]} alt={p.name} className="w-10 h-10 rounded-lg object-cover bg-slate-100 border border-slate-200 shrink-0" />
+                        <div className="flex-1 min-w-0">
+                          <p className="text-[10px] font-bold text-[#0070f3] uppercase">{p.brand}</p>
+                          <h5 className="text-xs font-bold text-slate-900 truncate group-hover:text-[#0070f3]">{p.name}</h5>
+                          <span className="text-xs font-extrabold text-slate-900">{formatRupiah(p.price)}</span>
+                        </div>
+                        <ChevronRight className="w-4 h-4 text-slate-300 group-hover:text-[#0070f3] group-hover:translate-x-0.5 transition-all shrink-0" />
+                      </Link>
+                    ))
+                  )}
+                </div>
+                {searchResults.length > 0 && (
+                  <button
+                    onClick={() => {
+                      navigate('/');
+                      setSearchFocused(false);
+                      setTimeout(() => {
+                        document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+                      }, 100);
+                    }}
+                    className="w-full py-2.5 px-4 bg-slate-50 hover:bg-blue-50 text-[#0070f3] text-xs font-bold text-center block transition-colors"
+                  >
+                    Lihat Semua di Katalog Produk →
+                  </button>
+                )}
+              </div>
+            )}
           </div>
 
           {/* RIGHT: Notifications Bell (4) + Cart Bag (2) + User Pill "Winda" */}

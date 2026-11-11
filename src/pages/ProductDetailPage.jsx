@@ -114,7 +114,9 @@ export default function ProductDetailPage({
               <span>Katalog Alat</span>
             </Link>
             <span className="text-slate-300">/</span>
-            <span className="text-slate-600">{categoryObj?.name || 'Alat Kopi'}</span>
+            <Link to={`/kategori/${categoryObj?.slug || product.category}`} className="text-slate-600 hover:text-[#0070f3] transition-colors">
+              {categoryObj?.name || 'Alat Kopi'}
+            </Link>
             <span className="text-slate-300">/</span>
             <span className="text-[#0070f3] font-medium truncate max-w-xs">{product.name}</span>
           </div>
@@ -413,10 +415,10 @@ export default function ProductDetailPage({
                 </h3>
               </div>
               <Link
-                to="/"
+                to={`/kategori/${categoryObj?.slug || product.category}`}
                 className="text-xs font-bold text-[#0070f3] hover:underline"
               >
-                Lihat Semua Alat →
+                Lihat Semua di {categoryObj?.name || 'Kategori'} →
               </Link>
             </div>
 
