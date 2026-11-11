@@ -31,7 +31,7 @@ export default function MobileBottomNav({
 
   // Check active state
   const isHomeActive = location.pathname === '/' && !categorySheetOpen && !accountSheetOpen;
-  const isCategoryActive = (location.pathname.startsWith('/kategori') || categorySheetOpen) && !accountSheetOpen;
+  const isCategoryActive = (location.pathname.startsWith('/kategori') || location.pathname === '/semua-kategori') && !accountSheetOpen;
   const isAccountActive = accountSheetOpen;
 
   // Colors matching user screenshot: active is warm coffee/bronze (#8B5A2B), inactive is slate (#596b82)
@@ -50,7 +50,9 @@ export default function MobileBottomNav({
 
   const handleCategoryClick = () => {
     setAccountSheetOpen(false);
-    setCategorySheetOpen(!categorySheetOpen);
+    setCategorySheetOpen(false);
+    navigate('/kategori');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCartClick = () => {
@@ -130,7 +132,7 @@ export default function MobileBottomNav({
                   strokeWidth={1.8} 
                 />
                 {cartCount > 0 && (
-                  <span className="absolute -top-1.5 -right-2.5 px-1.5 py-0.5 min-w-[18px] text-[10px] font-black leading-none bg-[#ef4444] text-white rounded-full flex items-center justify-center shadow-xs animate-scale-in">
+                  <span className="absolute -top-1.5 -right-2 px-1.5 py-0.5 min-w-[18px] text-[10px] font-black leading-none bg-[#925624] text-white rounded-full flex items-center justify-center shadow-xs animate-scale-in">
                     {cartCount > 99 ? '99+' : cartCount}
                   </span>
                 )}
@@ -140,7 +142,7 @@ export default function MobileBottomNav({
               </span>
             </button>
 
-            {/* TAB 4: WINDA (PROFIL / AKUN) */}
+            {/* TAB 4: AKUN (PROFIL PENGGUNA) */}
             <button
               onClick={handleAccountClick}
               className="flex flex-col items-center justify-center gap-1 py-1 focus:outline-none transition-transform active:scale-95 cursor-pointer"
@@ -157,7 +159,7 @@ export default function MobileBottomNav({
                   isAccountActive ? 'font-bold' : 'font-medium'
                 }`}
               >
-                Winda
+                Akun
               </span>
             </button>
 

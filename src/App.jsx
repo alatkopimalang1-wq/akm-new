@@ -18,6 +18,7 @@ import OrderTrackingPage from './pages/OrderTrackingPage';
 import BrewGuidesPage from './pages/BrewGuidesPage';
 import WholesalePage from './pages/WholesalePage';
 import BrandsPage from './pages/BrandsPage';
+import CategoriesHubPage from './pages/CategoriesHubPage';
 import MobileBottomNav from './components/MobileBottomNav';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
@@ -285,6 +286,16 @@ export default function App() {
               showToast={showToast}
             />
           }
+        />
+
+        {/* Dedicated All Categories Hub Route (Persis Screenshot) */}
+        <Route
+          path="/kategori"
+          element={<CategoriesHubPage />}
+        />
+        <Route
+          path="/semua-kategori"
+          element={<CategoriesHubPage />}
         />
 
         {/* Dedicated Category Routes */}
