@@ -293,20 +293,20 @@ export default function Navbar({
     <header className="sticky top-0 z-50 w-full bg-[#0b1e36] shadow-md transition-all" ref={navbarRef}>
       
       {/* Top Navbar Row */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-18 sm:h-20 gap-3 sm:gap-4">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
           
           {/* LEFT: Brand Logo + Name + Kategori Pill */}
-          <div className="flex items-center gap-3 sm:gap-4 shrink-0">
+          <div className="flex items-center gap-2.5 sm:gap-4 shrink-0">
             {/* Brand Logo & Name (Tombol Kembali ke Homepage) */}
             <Link 
               to="/" 
               onClick={handleLogoHomeClick}
               title="Kembali ke Beranda (Homepage)"
-              className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none cursor-pointer select-none"
+              className="flex items-center gap-2 sm:gap-3 group focus:outline-none cursor-pointer select-none"
             >
               {/* Circular Sanubari Logo Badge */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-[#10223b] border border-[#1e3a5f] group-hover:border-[#0084ff] group-hover:scale-105 transition-all shrink-0 flex items-center justify-center shadow-md">
+              <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-[#10223b] border border-[#1e3a5f] group-hover:border-[#0084ff] group-hover:scale-105 transition-all shrink-0 flex items-center justify-center shadow-md">
                 <img
                   src="/sanubari-logo.png"
                   alt="Sanubari Roastery"
@@ -320,19 +320,19 @@ export default function Navbar({
 
               {/* Brand Typography */}
               <div className="flex flex-col leading-tight">
-                <span className="font-extrabold text-base sm:text-lg text-white tracking-tight group-hover:text-[#38bdf8] transition-colors font-sans">
+                <span className="font-extrabold text-sm sm:text-lg text-white tracking-tight group-hover:text-[#38bdf8] transition-colors font-sans">
                   Sanubari
                 </span>
-                <span className="text-[11px] sm:text-xs text-[#94a3b8] group-hover:text-slate-300 font-medium tracking-normal transition-colors">
+                <span className="text-[10px] sm:text-xs text-[#94a3b8] group-hover:text-slate-300 font-medium tracking-normal transition-colors">
                   Roastery Malang
                 </span>
               </div>
             </Link>
 
-            {/* Kategori Button */}
+            {/* Kategori Button (Hidden di versi mobile, tampil di desktop) */}
             <button
               onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md outline-none focus:outline-none focus:ring-0 ${
+              className={`hidden md:flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md outline-none focus:outline-none focus:ring-0 ${
                 megaMenuOpen
                   ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white shadow-lg shadow-[#0070f3]/30 scale-[1.02]'
                   : 'bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9]'
@@ -345,11 +345,11 @@ export default function Navbar({
           </div>
 
           {/* CENTER: Wide Search Bar with Instant Suggestions */}
-          <div className="flex-1 max-w-xl mx-2 sm:mx-6 relative">
+          <div className="flex-1 max-w-xl mx-1.5 sm:mx-6 relative">
             <div className="relative w-full">
               <input
                 type="text"
-                placeholder="Cari biji kopi, varietas, tasting notes..."
+                placeholder="Cari biji kopi, alat seduh..."
                 value={searchQuery}
                 onFocus={() => setSearchFocused(true)}
                 onChange={(e) => setSearchQuery(e.target.value)}
@@ -445,7 +445,7 @@ export default function Navbar({
               </button>
 
               {notificationOpen && (
-                <div className="absolute right-0 top-full mt-2 w-72 bg-[#0c192d] rounded-2xl border border-[#1e3a5f] shadow-2xl p-4 z-50 animate-fade-in space-y-3 text-left">
+                <div className="absolute right-0 top-full mt-2 w-72 max-w-[calc(100vw-1.5rem)] bg-[#0c192d] rounded-2xl border border-[#1e3a5f] shadow-2xl p-4 z-50 animate-fade-in space-y-3 text-left">
                   <div className="flex items-center justify-between border-b border-[#172b47] pb-2">
                     <span className="text-xs font-bold text-white">Notifikasi</span>
                     <span className="text-[10px] text-[#38bdf8] bg-[#10223b] px-2 py-0.5 rounded-full border border-[#1e3a5f]">4 Baru</span>
@@ -464,10 +464,10 @@ export default function Navbar({
               )}
             </div>
 
-            {/* Shopping Bag */}
+            {/* Shopping Bag (Hidden di mobile, tampil di desktop) */}
             <button
               onClick={onOpenCart}
-              className="relative p-2.5 text-[#94a3b8] hover:text-white rounded-xl hover:bg-[#10223b] transition-colors"
+              className="hidden md:flex relative p-2.5 text-[#94a3b8] hover:text-white rounded-xl hover:bg-[#10223b] transition-colors"
               title="Keranjang Belanja"
             >
               <ShoppingBag className="w-5 h-5" />
@@ -476,8 +476,8 @@ export default function Navbar({
               </span>
             </button>
 
-            {/* User Pill: "Winda" */}
-            <div className="relative">
+            {/* User Pill: "Winda" (Hidden di mobile, tampil di desktop) */}
+            <div className="hidden md:block relative">
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
                 className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9] text-xs sm:text-sm font-semibold transition-all shadow-sm"
