@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Heart, 
@@ -15,11 +15,9 @@ export default function ProductCard({
   isWishlisted, 
   onToggleWishlist 
 }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  const displayImage = isHovered && product.images && product.images.length > 1 
-    ? product.images[1] 
-    : product.images[0];
+  const displayImage = product.images && product.images.length > 0 
+    ? product.images[0] 
+    : '';
 
   const productUrl = `/product/${product.slug}`;
   const hasVariants = product.variants && product.variants.length > 1;
@@ -27,15 +25,13 @@ export default function ProductCard({
   return (
     <div 
       className="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-[#4f46e5]/40 transition-all duration-300 flex flex-col overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-0.5"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Product Image Area */}
+      {/* Product Image Area with smooth zoom effect on hover */}
       <Link to={productUrl} className="relative aspect-square overflow-hidden bg-slate-50 block">
         <img
           src={displayImage}
           alt={product.name}
-          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-110"
           loading="lazy"
         />
 
