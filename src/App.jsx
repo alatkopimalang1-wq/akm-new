@@ -88,6 +88,13 @@ export default function App() {
     }
   }, [location.search]);
 
+  // Reset scroll to top instantly on every route/page change (tanpa animasi scrolling)
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [location.pathname, location.search]);
+
   // Show Toast
   const showToast = (message) => {
     setToastMessage(message);
@@ -191,10 +198,10 @@ export default function App() {
     if (location.pathname !== '/') {
       navigate('/');
       setTimeout(() => {
-        document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
+        document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'auto' });
+      }, 50);
     } else {
-      document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'smooth' });
+      document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'auto' });
     }
   };
 

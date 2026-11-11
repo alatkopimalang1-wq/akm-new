@@ -23,7 +23,11 @@ export default function Footer({ onSelectCategory, onScrollToCalculator, onScrol
           <div className="lg:col-span-4 space-y-4">
             <Link 
               to="/" 
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+              }}
               title="Kembali ke Beranda (Homepage)"
               className="flex items-center gap-3 group cursor-pointer select-none"
             >
