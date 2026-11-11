@@ -28,8 +28,6 @@ import { PRODUCTS, CATEGORIES, STORE_INFO } from '../data/products';
 import { MEGA_MENU_CATEGORIES } from '../data/categoryNavigation';
 import { formatRupiah } from '../utils/format';
 
-export { MEGA_MENU_CATEGORIES };
-
 export default function Navbar({ 
   cartCount, 
   wishlistCount, 

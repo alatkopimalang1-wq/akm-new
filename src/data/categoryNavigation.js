@@ -189,3 +189,4 @@ export const MEGA_MENU_CATEGORIES = CATEGORY_NAVIGATION_DATA.map(cat => ({
   ...cat,
   subcategories: cat.items
 }));
+
