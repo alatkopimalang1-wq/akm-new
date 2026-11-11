@@ -268,7 +268,7 @@ export default function ProductDetailPage({
                 </h1>
 
                 {/* Brand & Guarantee Pill Bar */}
-                <div className="mt-3 flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-200/80">
+                <div className="mt-3 flex items-center justify-between py-1">
                   <div className="flex items-center gap-2.5">
                     <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
                       <Award className="w-4 h-4" />
@@ -331,7 +331,7 @@ export default function ProductDetailPage({
                 )}
 
                 {/* Description & Specifications Box */}
-                <div className="mt-4 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80">
+                <div className="mt-4">
                   <h3 className="text-xs sm:text-sm font-bold text-slate-900 mb-1.5">
                     Deskripsi &amp; Spesifikasi Produk:
                   </h3>
