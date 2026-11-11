@@ -245,7 +245,7 @@ export default function ProductDetailPage({
                         onClick={() => setActiveImageIndex(idx)}
                         className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
                           activeImageIndex === idx
-                            ? 'border-[#4f46e5] shadow-xs'
+                            ? 'border-[#0070f3] shadow-xs'
                             : 'border-slate-200 opacity-60 hover:opacity-100'
                         }`}
                       >
@@ -268,7 +268,7 @@ export default function ProductDetailPage({
 
                 {/* Brand Bar */}
                 <div className="mt-3 md:mt-4 flex items-center gap-2.5 py-1">
-                  <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
+                  <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-[#0070f3] text-white flex items-center justify-center shrink-0 shadow-xs">
                     <Award className="w-4 h-4 md:w-4.5 md:h-4.5" />
                   </div>
                   <div>
@@ -283,7 +283,7 @@ export default function ProductDetailPage({
 
                 {/* Price Row */}
                 <div className="mt-4 md:mt-5 flex items-baseline gap-3">
-                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#4f46e5]">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#0070f3]">
                     {formatRupiah(product.price)}
                   </span>
                   {product.originalPrice && (
@@ -367,9 +367,9 @@ export default function ProductDetailPage({
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="flex-1 py-3 md:py-3.5 px-3 sm:px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-indigo-50/60 text-[#4f46e5] border-2 border-[#4f46e5] font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-xs active:scale-98 whitespace-nowrap"
+                    className="flex-1 py-3 md:py-3.5 px-3 sm:px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-blue-50/70 text-[#0070f3] border-2 border-[#0070f3] font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-xs active:scale-98 whitespace-nowrap"
                   >
-                    <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-[#4f46e5] shrink-0" />
+                    <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-[#0070f3] shrink-0" />
                     <span className="sm:hidden">+ Keranjang</span>
                     <span className="hidden sm:inline">+ Tambah Keranjang</span>
                   </button>
@@ -378,7 +378,7 @@ export default function ProductDetailPage({
                   <button
                     type="button"
                     onClick={handleCheckoutDirect}
-                    className="flex-1 py-3 md:py-3.5 px-4 rounded-xl sm:rounded-2xl bg-[#4f46e5] hover:bg-[#4338ca] text-white font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-500/20 active:scale-98"
+                    className="flex-1 py-3 md:py-3.5 px-4 rounded-xl sm:rounded-2xl bg-[#0070f3] hover:bg-[#0052cc] text-white font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 transition-all shadow-md shadow-blue-500/25 active:scale-98"
                   >
                     <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
                     <span>Checkout</span>
@@ -406,7 +406,7 @@ export default function ProductDetailPage({
           <div className="pt-8 border-t border-slate-100">
             <div className="flex items-center justify-between mb-5">
               <div>
-                <span className="text-xs font-bold text-[#4f46e5] uppercase tracking-wider block">
+                <span className="text-xs font-bold text-[#0070f3] uppercase tracking-wider block">
                   REKOMENDASI TERKAIT
                 </span>
                 <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">
@@ -415,7 +415,7 @@ export default function ProductDetailPage({
               </div>
               <Link
                 to={`/kategori/${categoryObj?.slug || product.category}`}
-                className="text-xs font-bold text-[#4f46e5] hover:underline"
+                className="text-xs font-bold text-[#0070f3] hover:underline"
               >
                 Lihat Semua →
               </Link>

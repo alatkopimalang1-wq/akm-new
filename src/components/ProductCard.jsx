@@ -24,7 +24,7 @@ export default function ProductCard({
 
   return (
     <div 
-      className="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-[#4f46e5]/40 transition-all duration-300 flex flex-col overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-0.5"
+      className="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-[#0070f3]/40 transition-all duration-300 flex flex-col overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-0.5"
     >
       {/* Product Image Area with smooth zoom effect on hover */}
       <Link to={productUrl} className="relative aspect-square overflow-hidden bg-slate-50 block">
@@ -37,7 +37,7 @@ export default function ProductCard({
 
         {/* Top-Left Badge: TERBARU */}
         <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
-          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#4f46e5] text-white shadow-xs">
+          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#0070f3] text-white shadow-xs">
             {product.badge || 'TERBARU'}
           </span>
         </div>
@@ -70,7 +70,7 @@ export default function ProductCard({
           </span>
 
           {/* Title */}
-          <Link to={productUrl} className="block group-hover:text-[#4f46e5] transition-colors">
+          <Link to={productUrl} className="block group-hover:text-[#0070f3] transition-colors">
             <h3 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2 leading-snug min-h-[2.4rem] sm:min-h-[2.6rem]">
               {product.name}
             </h3>
@@ -78,7 +78,7 @@ export default function ProductCard({
 
           {/* Price Section */}
           <div className="mt-2">
-            <span className="text-sm sm:text-base font-extrabold text-[#4f46e5] block leading-tight">
+            <span className="text-sm sm:text-base font-extrabold text-[#0070f3] block leading-tight">
               {formatRupiah(product.price)}
             </span>
             {product.originalPrice ? (
@@ -105,7 +105,7 @@ export default function ProductCard({
           {hasVariants ? (
             <Link
               to={productUrl}
-              className="inline-flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
+              className="inline-flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-[#0070f3] hover:bg-[#0052cc] text-white text-xs font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
             >
               <span>Pilih</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -118,7 +118,7 @@ export default function ProductCard({
                 e.stopPropagation();
                 onAddToCart(product);
               }}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#4f46e5] hover:bg-[#4338ca] text-white flex items-center justify-center transition-all shadow-xs hover:shadow-md active:scale-95"
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#0070f3] hover:bg-[#0052cc] text-white flex items-center justify-center transition-all shadow-xs hover:shadow-md active:scale-95"
               title="Tambah ke Keranjang"
             >
               <ShoppingBag className="w-3.5 h-3.5" />

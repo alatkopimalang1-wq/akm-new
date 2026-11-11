@@ -80,7 +80,7 @@ export default function CategoryPage({
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#4f46e5] hover:bg-[#4338ca] text-white font-bold text-xs transition-all shadow-lg shadow-indigo-500/20"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0070f3] hover:bg-[#0052cc] text-white font-bold text-xs transition-all shadow-lg shadow-blue-500/20"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Katalog Utama</span>
@@ -93,7 +93,7 @@ export default function CategoryPage({
     <div className="min-h-screen bg-white text-slate-900 pb-24">
       
       {/* Category Hero Banner */}
-      <div className="bg-gradient-to-b from-indigo-50/40 via-slate-50/20 to-white border-b border-slate-200 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
+      <div className="bg-gradient-to-b from-blue-50/50 via-slate-50/20 to-white border-b border-slate-200 py-6 sm:py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           
           <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
@@ -112,7 +112,7 @@ export default function CategoryPage({
                   to={`/kategori/${cat.slug}`}
                   className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                     category.id === cat.id
-                      ? 'bg-[#4f46e5] text-white border-[#4f46e5] shadow-md shadow-indigo-500/20'
+                      ? 'bg-[#0070f3] text-white border-[#0070f3] shadow-md shadow-blue-500/20'
                       : 'bg-white text-slate-600 border-slate-200 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
