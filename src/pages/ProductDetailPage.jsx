@@ -404,21 +404,10 @@ export default function ProductDetailPage({
         {/* Related Products Section (Clean & Simple) */}
         {relatedProducts.length > 0 && (
           <div className="pt-8 border-t border-slate-100">
-            <div className="flex items-center justify-between mb-5">
-              <div>
-                <span className="text-xs font-bold text-[#0e1f36] uppercase tracking-wider block">
-                  REKOMENDASI TERKAIT
-                </span>
-                <h3 className="text-lg sm:text-xl font-extrabold text-slate-900 mt-0.5">
-                  Pilihan Lain di Kategori {categoryObj?.name}
-                </h3>
-              </div>
-              <Link
-                to={`/kategori/${categoryObj?.slug || product.category}`}
-                className="text-xs font-bold text-[#0e1f36] hover:underline"
-              >
-                Lihat Semua →
-              </Link>
+            <div className="mb-6">
+              <h2 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 tracking-tight">
+                Rekomendasi Terkait
+              </h2>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5 lg:gap-6">
