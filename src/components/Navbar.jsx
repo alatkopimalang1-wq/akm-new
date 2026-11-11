@@ -128,7 +128,6 @@ export default function Navbar({
 }) {
   const [megaMenuOpen, setMegaMenuOpen] = useState(false);
   const [activeParentCategoryId, setActiveParentCategoryId] = useState(MEGA_MENU_CATEGORIES[1].id); // Default: Espresso Beans as in screenshot!
-  const [userDropdownOpen, setUserDropdownOpen] = useState(false);
   const [notificationOpen, setNotificationOpen] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   
@@ -165,7 +164,6 @@ export default function Navbar({
     function handleClickOutside(event) {
       if (navbarRef.current && !navbarRef.current.contains(event.target)) {
         setMegaMenuOpen(false);
-        setUserDropdownOpen(false);
         setNotificationOpen(false);
         setSearchFocused(false);
       }
@@ -179,7 +177,6 @@ export default function Navbar({
     function handleKeyDown(e) {
       if (e.key === 'Escape') {
         setMegaMenuOpen(false);
-        setUserDropdownOpen(false);
         setNotificationOpen(false);
         setSearchFocused(false);
       }
@@ -297,7 +294,6 @@ export default function Navbar({
 
   const handleLogoHomeClick = (e) => {
     setMegaMenuOpen(false);
-    setUserDropdownOpen(false);
     setNotificationOpen(false);
     setSearchFocused(false);
     navigate('/');
@@ -488,76 +484,16 @@ export default function Navbar({
               </span>
             </button>
 
-            {/* User Pill: "Winda" (Hidden di mobile, tampil di desktop) */}
-            <div className="hidden md:block relative">
-              <button
-                onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9] text-xs sm:text-sm font-semibold transition-all shadow-sm"
+            {/* User Pill: "Winda" (Langsung ke Halaman Akun saat diklik) */}
+            <div className="hidden md:block">
+              <Link
+                to="/akun"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9] text-xs sm:text-sm font-semibold transition-all shadow-sm hover:border-[#38bdf8]/40 active:scale-95 cursor-pointer"
+                title="Buka Halaman Akun Saya"
               >
                 <User className="w-4 h-4 text-[#38bdf8]" />
                 <span className="font-semibold text-white">Winda</span>
-              </button>
-
-              {userDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 bg-[#0c192d] rounded-2xl border border-[#1e3a5f] shadow-2xl py-2 z-50 animate-fade-in divide-y divide-[#172b47] text-left">
-                  <div className="px-4 py-2.5 flex items-center justify-between border-b border-[#172b47]">
-                    <div>
-                      <p className="text-xs font-bold text-white">Winda Sari</p>
-                      <p className="text-[10px] text-amber-400 font-semibold">Pelanggan Setia</p>
-                    </div>
-                    <button
-                      onClick={() => {
-                        navigate('/akun');
-                        setUserDropdownOpen(false);
-                      }}
-                      className="text-[11px] font-bold text-[#38bdf8] hover:underline"
-                    >
-                      Buka
-                    </button>
-                  </div>
-                  <div className="py-1 text-xs">
-                    <button
-                      onClick={() => {
-                        navigate('/akun');
-                        setUserDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-[#cbd5e1] hover:bg-[#10223b] hover:text-white flex items-center gap-2"
-                    >
-                      <User className="w-3.5 h-3.5 text-amber-400" />
-                      <span>Akun Saya</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        navigate('/lacak-pesanan');
-                        setUserDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-[#cbd5e1] hover:bg-[#10223b] hover:text-white flex items-center gap-2"
-                    >
-                      <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
-                      <span>Lacak Pesanan Saya</span>
-                    </button>
-                    <button
-                      onClick={() => {
-                        onOpenWishlist();
-                        setUserDropdownOpen(false);
-                      }}
-                      className="w-full text-left px-4 py-2 text-[#cbd5e1] hover:bg-[#10223b] hover:text-white flex items-center gap-2"
-                    >
-                      <ShoppingBag className="w-3.5 h-3.5 text-[#38bdf8]" />
-                      <span>Wishlist ({wishlistCount})</span>
-                    </button>
-                  </div>
-                  <div className="p-1">
-                    <button
-                      onClick={() => setUserDropdownOpen(false)}
-                      className="w-full text-left px-3 py-1.5 text-[11px] text-[#ef4444] hover:bg-[#10223b] rounded-lg flex items-center gap-2"
-                    >
-                      <LogOut className="w-3 h-3" />
-                      <span>Keluar Akun</span>
-                    </button>
-                  </div>
-                </div>
-              )}
+              </Link>
             </div>
 
           </div>
