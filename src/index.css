@@ -30,3 +30,11 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #0070f3;
 }
+
+/* Remove default browser black focus box / outline */
+button:focus,
+button:focus-visible,
+[role="button"]:focus,
+[role="button"]:focus-visible {
+  outline: none !important;
+}

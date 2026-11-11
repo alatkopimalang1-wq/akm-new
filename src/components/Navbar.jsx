@@ -332,7 +332,7 @@ export default function Navbar({
             {/* Kategori Button */}
             <button
               onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md ${
+              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md outline-none focus:outline-none focus:ring-0 ${
                 megaMenuOpen
                   ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white shadow-lg shadow-[#0070f3]/30 scale-[1.02]'
                   : 'bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9]'
@@ -556,9 +556,9 @@ export default function Navbar({
                         key={cat.id}
                         onMouseEnter={() => setActiveParentCategoryId(cat.id)}
                         onClick={() => setActiveParentCategoryId(cat.id)}
-                        className={`w-full text-left px-4 py-3 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-between transition-all duration-200 ${
+                        className={`w-full text-left px-4 py-3 rounded-2xl text-xs sm:text-sm font-semibold flex items-center justify-between transition-all duration-200 outline-none focus:outline-none focus:ring-0 ${
                           isActive
-                            ? 'bg-blue-50 text-[#0070f3] font-bold shadow-xs border border-blue-200/60'
+                            ? 'bg-blue-50 text-[#0070f3] font-bold shadow-xs'
                             : 'text-slate-700 hover:text-slate-900 hover:bg-slate-100'
                         }`}
                       >
@@ -590,7 +590,7 @@ export default function Navbar({
                           }
                           setMegaMenuOpen(false);
                         }}
-                        className="text-xs sm:text-sm font-bold text-[#0070f3] hover:text-[#0052cc] hover:underline flex items-center gap-1 transition-colors"
+                        className="text-xs sm:text-sm font-bold text-[#0070f3] hover:text-[#0052cc] hover:underline flex items-center gap-1 transition-colors outline-none focus:outline-none focus:ring-0"
                       >
                         <span>{activeParent.allLabel || `Lihat Semua di ${activeParent.name}`}</span>
                         <ChevronRight className="w-4 h-4" />
