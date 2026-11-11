@@ -449,10 +449,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
         {/* Carousel Outer Container with Left & Right Arrow Buttons */}
         <div className="relative px-1 sm:px-2">
           
-          {/* Carousel Scroll Left Button - Precisely centered to circle icons */}
+          {/* Carousel Scroll Left Button - Hidden on mobile, visible on desktop */}
           <button
             onClick={() => scrollCategoryCarousel('left')}
-            className="absolute -left-2 sm:-left-4 top-[44px] sm:top-[48px] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+            className="hidden sm:flex absolute -left-2 sm:-left-4 top-[44px] sm:top-[48px] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
             title="Geser kategori ke kiri"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -523,10 +523,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             })}
           </div>
 
-          {/* Carousel Scroll Right Button - Precisely centered to circle icons */}
+          {/* Carousel Scroll Right Button - Hidden on mobile, visible on desktop */}
           <button
             onClick={() => scrollCategoryCarousel('right')}
-            className="absolute -right-2 sm:-right-4 top-[44px] sm:top-[48px] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+            className="hidden sm:flex absolute -right-2 sm:-right-4 top-[44px] sm:top-[48px] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
             title="Geser kategori ke kanan"
           >
             <ChevronRight className="w-5 h-5" />
@@ -612,10 +612,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           {/* Carousel Outer Container with Left & Right Arrow Buttons */}
           <div className="relative px-1">
             
-            {/* Carousel Scroll Left Button */}
+            {/* Carousel Scroll Left Button - Hidden on mobile, visible on desktop */}
             <button
               onClick={() => scrollBrandCarousel('left')}
-              className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+              className="hidden sm:flex absolute -left-3 sm:-left-5 top-[40px] sm:top-[48px] -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
               title="Geser brand ke kiri"
             >
               <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -679,10 +679,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               ))}
             </div>
 
-            {/* Carousel Scroll Right Button */}
+            {/* Carousel Scroll Right Button - Hidden on mobile, visible on desktop */}
             <button
               onClick={() => scrollBrandCarousel('right')}
-              className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+              className="hidden sm:flex absolute -right-3 sm:-right-5 top-[40px] sm:top-[48px] -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
               title="Geser brand ke kanan"
             >
               <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
