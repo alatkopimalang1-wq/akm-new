@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -28,6 +28,8 @@ export default function ProductDetailPage({
   const product = PRODUCTS.find((p) => p.slug === slug || p.id === slug);
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [mobileImageIndex, setMobileImageIndex] = useState(0);
+  const mobileSliderRef = useRef(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
   const [isZoomed, setIsZoomed] = useState(false);
@@ -40,6 +42,14 @@ export default function ProductDetailPage({
     setZoomPos({ x, y });
   };
 
+  const handleMobileScroll = (e) => {
+    const width = e.currentTarget.clientWidth;
+    if (width > 0) {
+      const idx = Math.round(e.currentTarget.scrollLeft / width);
+      setMobileImageIndex(idx);
+    }
+  };
+
   // Set default variant on product change & scroll to top
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -49,6 +59,10 @@ export default function ProductDetailPage({
       setSelectedVariant(null);
     }
     setActiveImageIndex(0);
+    setMobileImageIndex(0);
+    if (mobileSliderRef.current) {
+      mobileSliderRef.current.scrollLeft = 0;
+    }
     setQuantity(1);
   }, [slug, product]);
 
@@ -114,42 +128,50 @@ export default function ProductDetailPage({
         <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-8 shadow-sm">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-7 lg:gap-10 items-start">
             
-            {/* Left Column: Product Photo & Badges */}
-            <div className="md:col-span-5 space-y-3">
-              {/* Main Photo with Cursor Zoom */}
-              <div 
-                className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-xs cursor-zoom-in group/photo"
-                onMouseEnter={() => setIsZoomed(true)}
-                onMouseLeave={() => {
-                  setIsZoomed(false);
-                  setZoomPos({ x: 50, y: 50 });
-                }}
-                onMouseMove={handleMouseMove}
-              >
-                <img
-                  src={product.images[activeImageIndex] || product.images[0]}
-                  alt={product.name}
-                  className="w-full h-full object-cover transition-transform duration-200 ease-out pointer-events-none select-none"
-                  style={{
-                    transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
-                    transform: isZoomed ? 'scale(1.8)' : 'scale(1)'
-                  }}
-                />
+            {/* Left Column: Product Photo (Mobile Swipeable Slider & Desktop Zoom Photo) */}
+            <div className="md:col-span-5">
+              
+              {/* MOBILE VERSION (md:hidden): Swipeable Slide Carousel, NO small thumbnails below */}
+              <div className="md:hidden relative aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-xs">
+                {product.images && product.images.length > 1 ? (
+                  <div 
+                    ref={mobileSliderRef}
+                    onScroll={handleMobileScroll}
+                    className="w-full h-full flex overflow-x-auto snap-x snap-mandatory no-scrollbar scroll-smooth"
+                  >
+                    {product.images.map((img, idx) => (
+                      <div key={idx} className="w-full h-full shrink-0 snap-center relative">
+                        <img
+                          src={img}
+                          alt={`${product.name} ${idx + 1}`}
+                          className="w-full h-full object-cover"
+                          loading={idx === 0 ? "eager" : "lazy"}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <img
+                    src={product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover"
+                  />
+                )}
 
-                {/* Top-Left Discount Badge: HEMAT XX% */}
+                {/* Top-Left Discount Badge on Mobile */}
                 {(discountPercent || product.badge) && (
-                  <div className="absolute top-3 left-3 z-10">
+                  <div className="absolute top-3 left-3 z-10 pointer-events-none">
                     <span className="px-2.5 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-wider bg-[#ef4444] text-white shadow-xs">
                       {discountPercent ? `HEMAT ${discountPercent}%` : product.badge}
                     </span>
                   </div>
                 )}
 
-                {/* Top-Right Wishlist Toggle */}
+                {/* Top-Right Wishlist Toggle on Mobile */}
                 <button
                   type="button"
                   onClick={() => onToggleWishlist(product)}
-                  className={`absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 backdrop-blur-xs border border-slate-200/80 flex items-center justify-center transition-all z-20 shadow-xs hover:scale-105 active:scale-95 ${
+                  className={`absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 backdrop-blur-xs border border-slate-200/80 flex items-center justify-center transition-all z-20 shadow-xs active:scale-95 ${
                     isWishlisted 
                       ? 'text-red-500 fill-red-500 border-red-200' 
                       : 'text-slate-400 hover:text-red-500'
@@ -158,27 +180,82 @@ export default function ProductDetailPage({
                 >
                   <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
                 </button>
+
+                {/* Mobile Image Counter Indicator (e.g. 1/3) */}
+                {product.images && product.images.length > 1 && (
+                  <div className="absolute bottom-3 right-3 z-10 bg-slate-900/75 backdrop-blur-xs text-white text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-xs pointer-events-none">
+                    {mobileImageIndex + 1}/{product.images.length}
+                  </div>
+                )}
               </div>
 
-              {/* Thumbnail Selector if multiple images */}
-              {product.images.length > 1 && (
-                <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
-                  {product.images.map((img, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setActiveImageIndex(idx)}
-                      className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
-                        activeImageIndex === idx
-                          ? 'border-[#4f46e5] shadow-xs'
-                          : 'border-slate-200 opacity-60 hover:opacity-100'
-                      }`}
-                    >
-                      <img src={img} alt="" className="w-full h-full object-cover" />
-                    </button>
-                  ))}
+              {/* DESKTOP VERSION (hidden md:block): Cursor tracking zoom + small thumbnails below */}
+              <div className="hidden md:block space-y-3">
+                {/* Main Desktop Photo with Cursor Tracking Zoom */}
+                <div 
+                  className="relative aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-xs cursor-zoom-in group/photo"
+                  onMouseEnter={() => setIsZoomed(true)}
+                  onMouseLeave={() => {
+                    setIsZoomed(false);
+                    setZoomPos({ x: 50, y: 50 });
+                  }}
+                  onMouseMove={handleMouseMove}
+                >
+                  <img
+                    src={product.images[activeImageIndex] || product.images[0]}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-200 ease-out pointer-events-none select-none"
+                    style={{
+                      transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                      transform: isZoomed ? 'scale(1.8)' : 'scale(1)'
+                    }}
+                  />
+
+                  {/* Top-Left Discount Badge on Desktop */}
+                  {(discountPercent || product.badge) && (
+                    <div className="absolute top-3 left-3 z-10 pointer-events-none">
+                      <span className="px-2.5 py-1 rounded-lg text-[11px] font-extrabold uppercase tracking-wider bg-[#ef4444] text-white shadow-xs">
+                        {discountPercent ? `HEMAT ${discountPercent}%` : product.badge}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Top-Right Wishlist Toggle on Desktop */}
+                  <button
+                    type="button"
+                    onClick={() => onToggleWishlist(product)}
+                    className={`absolute top-3 right-3 w-8 h-8 rounded-full bg-white/95 backdrop-blur-xs border border-slate-200/80 flex items-center justify-center transition-all z-20 shadow-xs hover:scale-105 active:scale-95 ${
+                      isWishlisted 
+                        ? 'text-red-500 fill-red-500 border-red-200' 
+                        : 'text-slate-400 hover:text-red-500'
+                    }`}
+                    title={isWishlisted ? 'Hapus dari Keinginan' : 'Simpan ke Keinginan'}
+                  >
+                    <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
+                  </button>
                 </div>
-              )}
+
+                {/* Desktop Thumbnail Selector below */}
+                {product.images && product.images.length > 1 && (
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1">
+                    {product.images.map((img, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setActiveImageIndex(idx)}
+                        className={`w-14 h-14 rounded-xl overflow-hidden border-2 transition-all shrink-0 ${
+                          activeImageIndex === idx
+                            ? 'border-[#4f46e5] shadow-xs'
+                            : 'border-slate-200 opacity-60 hover:opacity-100'
+                        }`}
+                      >
+                        <img src={img} alt="" className="w-full h-full object-cover" />
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
             </div>
 
             {/* Right Column: Product Info & Actions */}
