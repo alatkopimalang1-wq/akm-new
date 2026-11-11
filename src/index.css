@@ -5,7 +5,9 @@
     --font-sans: 'Raleway', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
-  body {
+  html, body {
+    overflow-x: hidden;
+    max-width: 100vw;
     font-family: var(--font-sans);
     background-color: #ffffff;
     color: #0f172a;

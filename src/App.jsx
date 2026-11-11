@@ -220,11 +220,11 @@ export default function App() {
   const spotlightItem = PRODUCTS.find((p) => p.id === 'akm-flair-58') || PRODUCTS[0];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white pb-16 md:pb-0">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white pb-20 md:pb-0 overflow-x-hidden">
       
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-slate-900 border border-slate-800 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 animate-fade-in text-xs font-semibold">
+        <div className="fixed bottom-20 md:bottom-6 right-4 sm:right-6 z-50 bg-slate-900 border border-slate-800 text-white px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 animate-fade-in text-xs font-semibold">
           <CheckCircle className="w-4 h-4 text-emerald-400" />
           <span>{toastMessage}</span>
         </div>
@@ -235,7 +235,7 @@ export default function App() {
         href={`https://wa.me/${STORE_INFO.whatsappNumber}?text=Halo%20barista%20Sanubari%20x%20Alat%20Kopi%20Malang!%20Saya%20ingin%20tanya%20rekomendasi%20alat`}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 left-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white font-bold text-xs shadow-xl shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group"
+        className="fixed bottom-20 left-4 md:bottom-6 md:left-6 z-30 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white font-bold text-xs shadow-xl shadow-blue-500/30 hover:scale-105 active:scale-95 transition-all group"
         title="Chat Barista via WhatsApp"
       >
         <span className="w-2.5 h-2.5 rounded-full bg-cyan-300 animate-ping"></span>
