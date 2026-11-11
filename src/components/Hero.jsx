@@ -449,10 +449,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
         {/* Carousel Outer Container with Left & Right Arrow Buttons */}
         <div className="relative px-1 sm:px-2">
           
-          {/* Carousel Scroll Left Button */}
+          {/* Carousel Scroll Left Button - Precisely centered to circle icons */}
           <button
             onClick={() => scrollCategoryCarousel('left')}
-            className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+            className="absolute -left-2 sm:-left-4 top-[44px] sm:top-[48px] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
             title="Geser kategori ke kiri"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -479,10 +479,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                     )}
 
                     {/* Outer Light Gray Circle */}
-                    <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-slate-100 group-hover/cat:bg-blue-50 flex items-center justify-center transition-all duration-300 group-hover/cat:scale-105 shadow-xs border border-slate-200/60 group-hover/cat:border-[#0070f3]/40">
+                    <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-slate-100 group-hover/cat:bg-slate-200/60 flex items-center justify-center transition-all duration-300 group-hover/cat:scale-105 shadow-xs border border-slate-200/60 group-hover/cat:border-[#0e1f36]/30">
                       
                       {/* Inner Dark / Black Circle */}
-                      <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#111827] group-hover/cat:bg-[#0b1e36] flex items-center justify-center transition-colors shadow-sm">
+                      <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#111827] group-hover/cat:bg-[#0e1f36] flex items-center justify-center transition-colors shadow-sm">
                         {renderCategoryEmblem(item.iconType)}
                       </div>
 
@@ -490,7 +490,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                   </div>
 
                   {/* Label Text */}
-                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover/cat:text-[#0070f3] transition-colors leading-tight line-clamp-2">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover/cat:text-[#0e1f36] transition-colors leading-tight line-clamp-2">
                     {item.name}
                   </span>
 
@@ -523,10 +523,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             })}
           </div>
 
-          {/* Carousel Scroll Right Button */}
+          {/* Carousel Scroll Right Button - Precisely centered to circle icons */}
           <button
             onClick={() => scrollCategoryCarousel('right')}
-            className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+            className="absolute -right-2 sm:-right-4 top-[44px] sm:top-[48px] -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0e1f36] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
             title="Geser kategori ke kanan"
           >
             <ChevronRight className="w-5 h-5" />
