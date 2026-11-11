@@ -4,9 +4,7 @@ import {
   ArrowLeft, 
   ShoppingBag, 
   ShieldCheck, 
-  CheckCircle2, 
   Heart, 
-  Scale, 
   Award, 
   CreditCard, 
   MessageCircle, 
@@ -97,7 +95,6 @@ export default function ProductDetailPage({
   };
 
   const discountPercent = product.discountPercent || (product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : null);
-  const weight = product.specs?.['Berat Bersih'] || product.specs?.['Berat'] || '500 gram';
   const stockCount = product.stock || 20;
 
   return (
@@ -232,27 +229,6 @@ export default function ProductDetailPage({
                     </div>
                   </div>
                 )}
-
-                {/* Stock & Weight Row */}
-                <div className="mt-4 flex flex-wrap items-center gap-3">
-                  <div className="flex items-center gap-1.5 text-xs text-slate-600">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0" />
-                    <span>
-                      Stok Tersedia:{' '}
-                      <strong className="text-emerald-700 font-bold">
-                        {stockCount} unit (Siap Kirim)
-                      </strong>
-                    </span>
-                  </div>
-
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-indigo-50 border border-indigo-100 text-xs font-medium">
-                    <Scale className="w-3.5 h-3.5 text-[#4f46e5]" />
-                    <span className="text-slate-700">
-                      Berat:{' '}
-                      <strong className="font-bold text-slate-900">{weight}</strong>
-                    </span>
-                  </div>
-                </div>
 
                 {/* Description & Specifications Box */}
                 <div className="mt-4 p-4 rounded-2xl bg-slate-50/80 border border-slate-200/80">
