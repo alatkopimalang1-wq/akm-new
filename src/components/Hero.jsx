@@ -537,52 +537,52 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
       </div>
 
       {/* ========================================================================= */}
-      {/* 4 FITUR UNGGULAN / TRUST CARDS (Persis Gambar ke-2) */}
+      {/* 4 FITUR UNGGULAN / TRUST CARDS (2 Kolom di Mobile, 4 Kolom di Desktop) */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-14">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 sm:mt-14">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 lg:gap-5">
           
           {/* Card 1: Pengiriman Cepat */}
-          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
-              <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
+          <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <Truck className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Pengiriman Cepat</h4>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">Order Langsung Kirim</p>
+            <div className="min-w-0">
+              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">Pengiriman Cepat</h4>
+              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">Order Langsung Kirim</p>
             </div>
           </div>
 
           {/* Card 2: 100% Original */}
-          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
+          <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">100% Original</h4>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">Garansi uang kembali</p>
+            <div className="min-w-0">
+              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">100% Original</h4>
+              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">Garansi uang kembali</p>
             </div>
           </div>
 
           {/* Card 3: Produk Bergaransi */}
-          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
-              <BadgeCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
+          <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <BadgeCheck className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Produk Bergaransi</h4>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">Garansi Toko dan Distributor</p>
+            <div className="min-w-0">
+              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">Produk Bergaransi</h4>
+              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">Garansi Toko & Distributor</p>
             </div>
           </div>
 
           {/* Card 4: Free Konsultasi */}
-          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
-            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
-              <Headphones className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
+          <div className="flex items-center gap-2.5 sm:gap-4 p-3 sm:p-4 lg:p-5 rounded-xl sm:rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-8 h-8 sm:w-11 sm:h-11 lg:w-12 lg:h-12 rounded-lg sm:rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <Headphones className="w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6 text-[#2563eb]" />
             </div>
-            <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Free Konsultasi</h4>
-              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">24 Jam</p>
+            <div className="min-w-0">
+              <h4 className="text-[11px] sm:text-xs lg:text-sm font-bold text-slate-900 leading-tight truncate">Free Konsultasi</h4>
+              <p className="text-[9px] sm:text-[11px] lg:text-xs text-slate-500 mt-0.5 leading-tight truncate">24 Jam</p>
             </div>
           </div>
 
