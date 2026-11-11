@@ -26,6 +26,7 @@ import {
 } from 'lucide-react';
 import { PRODUCTS, CATEGORIES, STORE_INFO } from '../data/products';
 import { MEGA_MENU_CATEGORIES } from '../data/categoryNavigation';
+import { getStoredProducts } from '../utils/contentStore';
 import { formatRupiah } from '../utils/format';
 
 export default function Navbar({ 
@@ -50,9 +51,20 @@ export default function Navbar({
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Live products catalog for instant search
+  const [liveCatalog, setLiveCatalog] = useState(() => getStoredProducts());
+
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setLiveCatalog(getStoredProducts());
+    };
+    window.addEventListener('akm_content_updated', handleStorageUpdate);
+    return () => window.removeEventListener('akm_content_updated', handleStorageUpdate);
+  }, []);
+
   // Search results for live dropdown preview
   const allMatchingProducts = searchQuery.trim().length > 1
-    ? PRODUCTS.filter(p => 
+    ? liveCatalog.filter(p => 
         p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
         p.category.toLowerCase().includes(searchQuery.toLowerCase()) ||

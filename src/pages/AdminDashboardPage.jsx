@@ -33,7 +33,10 @@ import {
   Menu,
   Save,
   MessageCircle,
-  ArrowRight
+  ArrowRight,
+  Upload,
+  Camera,
+  Star
 } from 'lucide-react';
 import { 
   getStoredProducts, 
@@ -50,6 +53,10 @@ import {
   saveAdminCredentials,
   checkAdminSession, 
   setAdminSession,
+  getStoredShowroomPhotos,
+  saveStoredShowroomPhotos,
+  DEFAULT_SHOWROOM_PHOTOS,
+  compressImageFile,
   DEFAULT_ADMIN_CREDENTIALS,
   DEFAULT_ORDERS,
   DEFAULT_COUPONS
@@ -82,6 +89,7 @@ export default function AdminDashboardPage() {
   const [products, setProducts] = useState(() => getStoredProducts());
   const [orders, setOrders] = useState(() => getStoredOrders());
   const [heroSlides, setHeroSlides] = useState(() => getStoredHeroSlides());
+  const [showroomPhotos, setShowroomPhotos] = useState(() => getStoredShowroomPhotos());
   const [storeInfo, setStoreInfo] = useState(() => getStoredStoreInfo());
   const [coupons, setCoupons] = useState(() => getStoredCoupons());
   const [credentials, setCredentials] = useState(() => getAdminCredentials());
@@ -92,6 +100,7 @@ export default function AdminDashboardPage() {
       setProducts(getStoredProducts());
       setOrders(getStoredOrders());
       setHeroSlides(getStoredHeroSlides());
+      setShowroomPhotos(getStoredShowroomPhotos());
       setStoreInfo(getStoredStoreInfo());
       setCoupons(getStoredCoupons());
       setCredentials(getAdminCredentials());
@@ -142,6 +151,7 @@ export default function AdminDashboardPage() {
   const [productCategoryFilter, setProductCategoryFilter] = useState('all');
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
   const [editingProduct, setEditingProduct] = useState(null);
+  const [newProductImageUrl, setNewProductImageUrl] = useState('');
   const [productForm, setProductForm] = useState({
     id: '',
     name: '',
@@ -154,7 +164,7 @@ export default function AdminDashboardPage() {
     rating: 4.9,
     tagline: '',
     description: '',
-    image: '',
+    images: [],
     badge: 'BARU'
   });
 
@@ -171,6 +181,7 @@ export default function AdminDashboardPage() {
   const handleOpenAddProduct = () => {
     const newId = `akm-prod-${Date.now()}`;
     setEditingProduct(null);
+    setNewProductImageUrl('');
     setProductForm({
       id: newId,
       name: '',
@@ -183,7 +194,7 @@ export default function AdminDashboardPage() {
       rating: 5.0,
       tagline: 'Produk kurasi terbaik Sanubari Roastery Malang',
       description: 'Deskripsi lengkap peralatan atau biji kopi pilihan dengan mutu specialty grade.',
-      image: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80',
+      images: ['https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'],
       badge: 'TERLARIS'
     });
     setIsProductModalOpen(true);
@@ -191,6 +202,11 @@ export default function AdminDashboardPage() {
 
   const handleOpenEditProduct = (prod) => {
     setEditingProduct(prod);
+    setNewProductImageUrl('');
+    const existingImages = Array.isArray(prod.images) && prod.images.length > 0 
+      ? [...prod.images] 
+      : (prod.image ? [prod.image] : ['https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80']);
+
     setProductForm({
       id: prod.id,
       name: prod.name,
@@ -203,10 +219,61 @@ export default function AdminDashboardPage() {
       rating: prod.rating || 4.9,
       tagline: prod.tagline || '',
       description: prod.description || '',
-      image: prod.images?.[0] || 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80',
-      badge: prod.badges?.[0] || ''
+      images: existingImages,
+      badge: prod.badges?.[0] || prod.badge || ''
     });
     setIsProductModalOpen(true);
+  };
+
+  // Upload product images from device / file picker
+  const handleProductImageUpload = async (e) => {
+    const files = Array.from(e.target.files || []);
+    if (!files.length) return;
+    try {
+      const compressedList = [];
+      for (const file of files) {
+        const compressed = await compressImageFile(file, 1000, 1000, 0.82);
+        compressedList.push(compressed);
+      }
+      setProductForm((prev) => ({
+        ...prev,
+        images: [...(prev.images || []), ...compressedList]
+      }));
+      showAdminToast(`${compressedList.length} foto produk berhasil diunggah!`);
+      e.target.value = '';
+    } catch (err) {
+      alert('Gagal mengupload foto: ' + err.message);
+    }
+  };
+
+  // Add image via URL
+  const handleAddProductImageUrl = () => {
+    if (!newProductImageUrl.trim()) return;
+    setProductForm((prev) => ({
+      ...prev,
+      images: [...(prev.images || []), newProductImageUrl.trim()]
+    }));
+    setNewProductImageUrl('');
+    showAdminToast('Link gambar ditambahkan ke galeri!');
+  };
+
+  // Delete individual image from product
+  const handleRemoveProductImage = (idxToRemove) => {
+    setProductForm((prev) => {
+      const updated = (prev.images || []).filter((_, idx) => idx !== idxToRemove);
+      return { ...prev, images: updated };
+    });
+    showAdminToast('Foto dihapus dari galeri produk.');
+  };
+
+  // Set selected image as primary (move to index 0)
+  const handleSetPrimaryProductImage = (idxToPrimary) => {
+    setProductForm((prev) => {
+      const current = [...(prev.images || [])];
+      const [chosen] = current.splice(idxToPrimary, 1);
+      return { ...prev, images: [chosen, ...current] };
+    });
+    showAdminToast('Foto utama thumbnail berhasil diubah!');
   };
 
   const handleSaveProduct = (e) => {
@@ -215,6 +282,10 @@ export default function AdminDashboardPage() {
       alert('Nama produk wajib diisi');
       return;
     }
+
+    const finalImages = (productForm.images && productForm.images.length > 0)
+      ? productForm.images
+      : ['https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80'];
 
     const updatedProduct = {
       id: productForm.id,
@@ -228,7 +299,7 @@ export default function AdminDashboardPage() {
       rating: Number(productForm.rating),
       tagline: productForm.tagline.trim(),
       description: productForm.description.trim(),
-      images: [productForm.image.trim()],
+      images: finalImages,
       badges: productForm.badge ? [productForm.badge] : []
     };
 
@@ -284,7 +355,7 @@ export default function AdminDashboardPage() {
   };
 
   // =========================================================================
-  // HERO BANNER SLIDES LOGIC
+  // HERO BANNER SLIDES LOGIC (UPLOAD, EDIT, HAPUS)
   // =========================================================================
   const [isBannerModalOpen, setIsBannerModalOpen] = useState(false);
   const [editingBanner, setEditingBanner] = useState(null);
@@ -295,6 +366,19 @@ export default function AdminDashboardPage() {
     image: '',
     fallbackImage: ''
   });
+
+  const handleOpenAddBanner = () => {
+    const newSlideId = `banner-${Date.now()}`;
+    setEditingBanner(null);
+    setBannerForm({
+      id: newSlideId,
+      title: 'Promo Spesial Alat Kopi',
+      ctaLink: '/kategori/all',
+      image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1600&q=80',
+      fallbackImage: ''
+    });
+    setIsBannerModalOpen(true);
+  };
 
   const handleOpenEditBanner = (slide) => {
     setEditingBanner(slide);
@@ -308,30 +392,73 @@ export default function AdminDashboardPage() {
     setIsBannerModalOpen(true);
   };
 
+  const handleBannerFileUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const compressed = await compressImageFile(file, 1600, 900, 0.85);
+      setBannerForm((prev) => ({
+        ...prev,
+        image: compressed,
+        fallbackImage: compressed
+      }));
+      showAdminToast('File banner berhasil diunggah!');
+      e.target.value = '';
+    } catch (err) {
+      alert('Gagal mengupload banner: ' + err.message);
+    }
+  };
+
+  const handleDeleteBanner = (slideId, title) => {
+    if (heroSlides.length <= 1) {
+      alert('Minimal harus ada 1 banner slide di homepage.');
+      return;
+    }
+    if (window.confirm(`Hapus slide banner "${title}"?`)) {
+      const updated = heroSlides.filter((s) => s.id !== slideId);
+      setHeroSlides(updated);
+      saveStoredHeroSlides(updated);
+      showAdminToast(`Banner "${title}" berhasil dihapus.`);
+    }
+  };
+
   const handleSaveBanner = (e) => {
     e.preventDefault();
     if (!bannerForm.title.trim() || !bannerForm.image.trim()) {
-      alert('Judul dan URL Banner wajib diisi');
+      alert('Judul dan Gambar Banner wajib diisi');
       return;
     }
 
-    const updatedSlides = heroSlides.map((s) => {
-      if (s.id === editingBanner.id) {
-        return {
-          ...s,
-          title: bannerForm.title.trim(),
-          ctaLink: bannerForm.ctaLink.trim(),
-          image: bannerForm.image.trim(),
-          fallbackImage: bannerForm.fallbackImage.trim() || bannerForm.image.trim()
-        };
-      }
-      return s;
-    });
+    let updatedSlides;
+    if (editingBanner) {
+      updatedSlides = heroSlides.map((s) => {
+        if (s.id === editingBanner.id) {
+          return {
+            ...s,
+            title: bannerForm.title.trim(),
+            ctaLink: bannerForm.ctaLink.trim(),
+            image: bannerForm.image.trim(),
+            fallbackImage: bannerForm.fallbackImage.trim() || bannerForm.image.trim()
+          };
+        }
+        return s;
+      });
+      showAdminToast(`Banner "${bannerForm.title}" berhasil diperbarui!`);
+    } else {
+      const newSlide = {
+        id: bannerForm.id,
+        title: bannerForm.title.trim(),
+        ctaLink: bannerForm.ctaLink.trim(),
+        image: bannerForm.image.trim(),
+        fallbackImage: bannerForm.fallbackImage.trim() || bannerForm.image.trim()
+      };
+      updatedSlides = [...heroSlides, newSlide];
+      showAdminToast(`Banner baru "${bannerForm.title}" berhasil ditambahkan!`);
+    }
 
     setHeroSlides(updatedSlides);
     saveStoredHeroSlides(updatedSlides);
     setIsBannerModalOpen(false);
-    showAdminToast(`Banner "${bannerForm.title}" berhasil disimpan!`);
   };
 
   const handleResetDefaultBanners = () => {
@@ -343,14 +470,73 @@ export default function AdminDashboardPage() {
   };
 
   // =========================================================================
-  // STORE SETTINGS LOGIC
+  // SHOWROOM & SLOW BAR GALLERY LOGIC (UPLOAD, EDIT, HAPUS/RESET)
+  // =========================================================================
+  const handleShowroomPhotoUpload = async (idx, e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const compressed = await compressImageFile(file, 1200, 1000, 0.85);
+      const updated = [...showroomPhotos];
+      updated[idx] = { ...updated[idx], image: compressed };
+      setShowroomPhotos(updated);
+      saveStoredShowroomPhotos(updated);
+      showAdminToast(`Foto slot "${updated[idx].title}" berhasil diupload dan disimpan!`);
+      e.target.value = '';
+    } catch (err) {
+      alert('Gagal mengupload foto showroom: ' + err.message);
+    }
+  };
+
+  const handleResetShowroomSlot = (idx) => {
+    const defaultPhoto = DEFAULT_SHOWROOM_PHOTOS[idx] || DEFAULT_SHOWROOM_PHOTOS[0];
+    const updated = [...showroomPhotos];
+    updated[idx] = { ...updated[idx], image: defaultPhoto.image };
+    setShowroomPhotos(updated);
+    saveStoredShowroomPhotos(updated);
+    showAdminToast(`Foto slot "${updated[idx].title}" direset ke bawaan.`);
+  };
+
+  const handleUpdateShowroomSlotText = (idx, field, value) => {
+    const updated = [...showroomPhotos];
+    updated[idx] = { ...updated[idx], [field]: value };
+    setShowroomPhotos(updated);
+  };
+
+  const handleSaveShowroomPhotos = (e) => {
+    e.preventDefault();
+    saveStoredShowroomPhotos(showroomPhotos);
+    showAdminToast('Seluruh data galeri showroom berhasil disimpan live!');
+  };
+
+  // =========================================================================
+  // STORE SETTINGS LOGIC (TERMASUK LOGO TOKO)
   // =========================================================================
   const [storeSettingsForm, setStoreSettingsForm] = useState({ ...storeInfo });
+
+  const handleStoreLogoUpload = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      const compressed = await compressImageFile(file, 400, 400, 0.9);
+      setStoreSettingsForm((prev) => ({ ...prev, logo: compressed }));
+      showAdminToast('Logo toko berhasil diupload!');
+      e.target.value = '';
+    } catch (err) {
+      alert('Gagal mengupload logo: ' + err.message);
+    }
+  };
+
+  const handleResetStoreLogo = () => {
+    setStoreSettingsForm((prev) => ({ ...prev, logo: '' }));
+    showAdminToast('Logo toko direset ke default icon.');
+  };
+
   const handleSaveStoreSettings = (e) => {
     e.preventDefault();
     setStoreInfo(storeSettingsForm);
     saveStoredStoreInfo(storeSettingsForm);
-    showAdminToast('Pengaturan toko dan kontak berhasil disimpan!');
+    showAdminToast('Pengaturan identitas toko & kontak berhasil disimpan!');
   };
 
   // =========================================================================
@@ -629,8 +815,9 @@ export default function AdminDashboardPage() {
               { id: 'products', label: 'Kelola Produk & Biji', icon: Package, badge: products.length },
               { id: 'orders', label: 'Pesanan Pelanggan', icon: ShoppingBag, badge: orders.filter(o => o.status === 'Diproses').length },
               { id: 'banners', label: 'Banner Slider Homepage', icon: ImageIcon, badge: heroSlides.length },
+              { id: 'showroom', label: 'Galeri Foto Showroom', icon: Camera, badge: showroomPhotos.length },
               { id: 'coupons', label: 'Kupon Promo & Voucher', icon: Ticket, badge: coupons.length },
-              { id: 'settings', label: 'Pengaturan Toko & Kontak', icon: Settings },
+              { id: 'settings', label: 'Pengaturan Toko & Logo', icon: Settings },
               { id: 'security', label: 'Keamanan Akun Admin', icon: ShieldCheck },
             ].map((item) => {
               const Icon = item.icon;
@@ -714,8 +901,9 @@ export default function AdminDashboardPage() {
                 {activeTab === 'products' && 'Manajemen Produk & Biji Kopi'}
                 {activeTab === 'orders' && 'Daftar Pesanan & Transaksi'}
                 {activeTab === 'banners' && 'Banner Slider Homepage'}
+                {activeTab === 'showroom' && 'Galeri Showroom & Slow Bar'}
                 {activeTab === 'coupons' && 'Kupon Diskon & Promo'}
-                {activeTab === 'settings' && 'Pengaturan Toko & Kontak'}
+                {activeTab === 'settings' && 'Pengaturan Toko & Logo'}
                 {activeTab === 'security' && 'Keamanan & Akses Admin'}
               </h2>
               <p className="text-[11px] text-slate-400 hidden sm:block">
@@ -1135,24 +1323,33 @@ export default function AdminDashboardPage() {
           {/* ----------------------------------------------------------------- */}
           {activeTab === 'banners' && (
             <div className="space-y-6 animate-fade-in">
-              <div className="flex items-center justify-between">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                 <div>
                   <h3 className="text-sm font-bold text-white">Banner Slider di Beranda (Homepage)</h3>
-                  <p className="text-xs text-slate-400">Atur gambar slide banner utama yang tampil di bagian atas website.</p>
+                  <p className="text-xs text-slate-400">Upload, edit gambar slide, atur link CTA, atau tambah slide banner baru.</p>
                 </div>
-                <button
-                  onClick={handleResetDefaultBanners}
-                  className="px-3 py-1.5 rounded-xl bg-[#0e213b] hover:bg-[#142e50] border border-[#1b3a63] text-xs font-semibold text-slate-300 flex items-center gap-1.5 cursor-pointer"
-                >
-                  <RotateCcw className="w-3.5 h-3.5" />
-                  <span>Reset Default Banner</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleOpenAddBanner}
+                    className="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:from-[#0084ff] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-md"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Tambah Banner Baru</span>
+                  </button>
+                  <button
+                    onClick={handleResetDefaultBanners}
+                    className="px-3 py-1.5 rounded-xl bg-[#0e213b] hover:bg-[#142e50] border border-[#1b3a63] text-xs font-semibold text-slate-300 flex items-center gap-1.5 cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Reset Default</span>
+                  </button>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 {heroSlides.map((slide, idx) => (
                   <div key={slide.id} className="rounded-2xl bg-[#0c1c33] border border-[#173357] overflow-hidden shadow-lg p-4 space-y-3">
-                    <div className="relative h-44 rounded-xl overflow-hidden bg-slate-900 border border-[#1b3a63]">
+                    <div className="relative h-44 rounded-xl overflow-hidden bg-slate-900 border border-[#1b3a63] group">
                       <img
                         src={slide.image}
                         alt={slide.title}
@@ -1166,19 +1363,151 @@ export default function AdminDashboardPage() {
                       </span>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <h4 className="text-sm font-bold text-white">{slide.title}</h4>
-                        <p className="text-[11px] text-[#38bdf8]">Tautan CTA: {slide.ctaLink}</p>
+                    <div className="flex items-center justify-between gap-2">
+                      <div className="min-w-0 flex-1">
+                        <h4 className="text-sm font-bold text-white truncate">{slide.title}</h4>
+                        <p className="text-[11px] text-[#38bdf8] truncate">Tautan CTA: {slide.ctaLink}</p>
                       </div>
-                      <button
-                        onClick={() => handleOpenEditBanner(slide)}
-                        className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer"
-                      >
-                        <Edit3 className="w-3.5 h-3.5" />
-                        <span>Edit Banner</span>
-                      </button>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <button
+                          onClick={() => handleOpenEditBanner(slide)}
+                          className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-xs"
+                        >
+                          <Edit3 className="w-3.5 h-3.5" />
+                          <span>Edit</span>
+                        </button>
+                        <button
+                          onClick={() => handleDeleteBanner(slide.id, slide.title)}
+                          className="p-1.5 text-red-400 hover:text-red-300 hover:bg-red-950/40 rounded-xl transition-colors cursor-pointer"
+                          title="Hapus Slide Banner"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
                     </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ----------------------------------------------------------------- */}
+          {/* TAB: SHOWROOM & SLOW BAR GALLERY (UPLOAD, EDIT, HAPUS FOTO) */}
+          {/* ----------------------------------------------------------------- */}
+          {activeTab === 'showroom' && (
+            <div className="space-y-6 animate-fade-in max-w-5xl">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h3 className="text-sm font-bold text-white">Galeri Foto Showroom &amp; Slow Bar Malang</h3>
+                  <p className="text-xs text-slate-400">
+                    Upload foto langsung dari perangkat (otomatis terkompresi), ganti link gambar, atau reset foto setiap slot showroom.
+                  </p>
+                </div>
+                <button
+                  onClick={handleSaveShowroomPhotos}
+                  className="px-4 py-2 bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:from-[#0084ff] text-white text-xs font-bold rounded-xl shadow-md cursor-pointer flex items-center gap-2 self-start sm:self-auto"
+                >
+                  <Save className="w-4 h-4" />
+                  <span>Simpan Perubahan Galeri</span>
+                </button>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {showroomPhotos.map((slot, idx) => (
+                  <div key={slot.id || `sr-${idx}`} className="rounded-2xl bg-[#0c1c33] border border-[#173357] p-5 shadow-lg flex flex-col justify-between space-y-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between">
+                        <span className="px-2.5 py-1 rounded-full bg-[#153257] text-[#38bdf8] text-[10px] font-bold uppercase tracking-wider">
+                          Slot #{idx + 1}
+                        </span>
+                        <button
+                          type="button"
+                          onClick={() => handleResetShowroomSlot(idx)}
+                          className="text-[11px] text-slate-400 hover:text-amber-300 flex items-center gap-1 cursor-pointer transition-colors"
+                          title="Kembalikan ke foto bawaan"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                          <span>Reset Foto</span>
+                        </button>
+                      </div>
+
+                      {/* Photo Preview Box */}
+                      <div className="relative h-48 rounded-xl overflow-hidden bg-slate-900 border border-[#1b3a63] group">
+                        <img
+                          src={slot.image}
+                          alt={slot.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3">
+                          <p className="text-xs font-bold text-white line-clamp-1">{slot.title}</p>
+                        </div>
+                      </div>
+
+                      {/* Upload Photo Button */}
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-300 mb-1.5">
+                          Upload Foto Baru (Dari HP / Komputer)
+                        </label>
+                        <label className="flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-[#071322] hover:bg-[#0e213b] border border-[#1b3a63] hover:border-[#38bdf8] text-xs font-semibold text-slate-200 cursor-pointer transition-all">
+                          <Upload className="w-3.5 h-3.5 text-[#38bdf8]" />
+                          <span>Pilih Foto dari Galeri</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            onChange={(e) => handleShowroomPhotoUpload(idx, e)}
+                            className="hidden"
+                          />
+                        </label>
+                      </div>
+
+                      {/* Or Image URL */}
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                          Atau URL Gambar
+                        </label>
+                        <input
+                          type="text"
+                          value={slot.image}
+                          onChange={(e) => handleUpdateShowroomSlotText(idx, 'image', e.target.value)}
+                          placeholder="https://..."
+                          className="w-full bg-[#071322] border border-[#1b3a63] text-white px-3 py-2 rounded-xl text-xs focus:border-[#0084ff] focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Slot Title */}
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                          Judul Spot / Area
+                        </label>
+                        <input
+                          type="text"
+                          value={slot.title}
+                          onChange={(e) => handleUpdateShowroomSlotText(idx, 'title', e.target.value)}
+                          className="w-full bg-[#071322] border border-[#1b3a63] text-white px-3 py-2 rounded-xl text-xs focus:border-[#0084ff] focus:outline-none"
+                        />
+                      </div>
+
+                      {/* Slot Description */}
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-300 mb-1">
+                          Keterangan Spot
+                        </label>
+                        <textarea
+                          rows={2}
+                          value={slot.desc}
+                          onChange={(e) => handleUpdateShowroomSlotText(idx, 'desc', e.target.value)}
+                          className="w-full bg-[#071322] border border-[#1b3a63] text-white px-3 py-2 rounded-xl text-xs focus:border-[#0084ff] focus:outline-none"
+                        />
+                      </div>
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleResetShowroomSlot(idx)}
+                      className="w-full py-1.5 text-center rounded-lg bg-red-950/20 hover:bg-red-950/40 border border-red-800/40 text-red-300 text-[11px] font-semibold cursor-pointer transition-colors"
+                    >
+                      Hapus / Reset Foto Slot Ini
+                    </button>
                   </div>
                 ))}
               </div>
@@ -1292,6 +1621,44 @@ export default function AdminDashboardPage() {
                 <h3 className="text-sm font-bold text-white mb-4">Pengaturan Identitas &amp; Kontak Toko</h3>
                 
                 <form onSubmit={handleSaveStoreSettings} className="space-y-4">
+                  {/* Logo Toko Section */}
+                  <div className="p-4 rounded-xl bg-[#071322] border border-[#1b3a63] space-y-3">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <h4 className="text-xs font-bold text-white">Logo &amp; Identitas Toko</h4>
+                        <p className="text-[11px] text-slate-400">Upload file logo toko (PNG transparan / JPG) atau gunakan icon default.</p>
+                      </div>
+                      {storeSettingsForm.logo && (
+                        <button
+                          type="button"
+                          onClick={handleResetStoreLogo}
+                          className="text-[11px] text-red-400 hover:text-red-300 flex items-center gap-1 cursor-pointer"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                          <span>Hapus / Reset Logo</span>
+                        </button>
+                      )}
+                    </div>
+
+                    <div className="flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-2xl bg-[#0e213b] border border-[#1b3a63] flex items-center justify-center overflow-hidden shrink-0">
+                        {storeSettingsForm.logo ? (
+                          <img src={storeSettingsForm.logo} alt="Logo Toko" className="w-full h-full object-contain p-1" />
+                        ) : (
+                          <Coffee className="w-8 h-8 text-[#38bdf8]" />
+                        )}
+                      </div>
+                      <div className="flex-1 space-y-2">
+                        <label className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#0e213b] hover:bg-[#153257] border border-[#1b3a63] text-xs font-semibold text-white cursor-pointer transition-colors shadow-xs">
+                          <Upload className="w-3.5 h-3.5 text-[#38bdf8]" />
+                          <span>Upload File Logo dari Perangkat</span>
+                          <input type="file" accept="image/*" onChange={handleStoreLogoUpload} className="hidden" />
+                        </label>
+                        <p className="text-[10px] text-slate-500">Format yang disarankan: PNG transparan, rasio 1:1 atau horizontal.</p>
+                      </div>
+                    </div>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                       <label className="block text-xs font-bold text-slate-300 mb-1">Nama Toko</label>
@@ -1550,20 +1917,103 @@ export default function AdminDashboardPage() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">URL Gambar Produk</label>
-                <input
-                  type="text"
-                  required
-                  placeholder="https://..."
-                  value={productForm.image}
-                  onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
-                  className="w-full bg-[#071322] border border-[#1b3a63] text-white px-3 py-2 rounded-xl text-xs"
-                />
-                {productForm.image && (
-                  <div className="mt-2 flex items-center gap-3 p-2 bg-[#071322] rounded-xl border border-[#1b3a63]">
-                    <img src={productForm.image} alt="Preview" className="w-12 h-12 object-cover rounded-lg" />
-                    <span className="text-[11px] text-slate-400">Preview foto produk</span>
+              {/* Product Gallery Images (Upload, Add URL, Delete, Set Primary) */}
+              <div className="p-4 rounded-2xl bg-[#071322] border border-[#1b3a63] space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <label className="block text-xs font-bold text-white">
+                      Galeri Foto Produk ({(productForm.images || []).length} Foto)
+                    </label>
+                    <p className="text-[11px] text-slate-400">
+                      Foto pertama akan otomatis menjadi foto utama (thumbnail katalog).
+                    </p>
+                  </div>
+                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:from-[#0084ff] text-white text-xs font-bold cursor-pointer transition-all shadow-xs self-start sm:self-auto">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload Foto dari HP / PC</span>
+                    <input
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleProductImageUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                {/* Add by URL input */}
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Atau tempel link URL foto: https://..."
+                    value={newProductImageUrl}
+                    onChange={(e) => setNewProductImageUrl(e.target.value)}
+                    className="flex-1 bg-[#0c1c33] border border-[#1b3a63] text-white px-3 py-1.5 rounded-xl text-xs focus:border-[#0084ff] focus:outline-none"
+                  />
+                  <button
+                    type="button"
+                    onClick={handleAddProductImageUrl}
+                    className="px-3 py-1.5 rounded-xl bg-[#0e213b] hover:bg-[#153257] border border-[#1b3a63] text-xs font-semibold text-slate-200 transition-colors cursor-pointer"
+                  >
+                    + Tambah Link
+                  </button>
+                </div>
+
+                {/* Images Grid */}
+                {(productForm.images && productForm.images.length > 0) ? (
+                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-1">
+                    {productForm.images.map((imgUrl, imgIdx) => (
+                      <div
+                        key={imgIdx}
+                        className={`relative rounded-xl overflow-hidden border p-1 group flex flex-col justify-between ${
+                          imgIdx === 0
+                            ? 'bg-[#0070f3]/10 border-[#0070f3] ring-1 ring-[#0070f3]/50'
+                            : 'bg-[#0c1c33] border-[#1b3a63]'
+                        }`}
+                      >
+                        <div className="relative h-24 rounded-lg overflow-hidden bg-slate-900">
+                          <img
+                            src={imgUrl}
+                            alt={`Foto Produk ${imgIdx + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                          {imgIdx === 0 && (
+                            <span className="absolute top-1 left-1 px-1.5 py-0.5 rounded-md bg-[#0070f3] text-white text-[9px] font-black flex items-center gap-1 shadow-sm">
+                              <Star className="w-2.5 h-2.5 fill-current" />
+                              <span>UTAMA</span>
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="mt-1.5 flex items-center justify-between gap-1 pt-1 border-t border-[#173357]/60">
+                          {imgIdx !== 0 ? (
+                            <button
+                              type="button"
+                              onClick={() => handleSetPrimaryProductImage(imgIdx)}
+                              className="text-[10px] text-[#38bdf8] hover:text-white font-medium flex items-center gap-0.5 cursor-pointer"
+                            >
+                              <Star className="w-2.5 h-2.5" />
+                              <span>Set Utama</span>
+                            </button>
+                          ) : (
+                            <span className="text-[10px] text-emerald-400 font-bold">Thumbnail</span>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={() => handleRemoveProductImage(imgIdx)}
+                            className="p-1 text-red-400 hover:text-red-300 hover:bg-red-950/40 rounded-md transition-colors cursor-pointer"
+                            title="Hapus foto ini"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="p-4 rounded-xl border border-dashed border-[#1b3a63] text-center text-xs text-slate-400">
+                    Belum ada foto produk. Klik tombol &ldquo;Upload Foto&rdquo; di atas untuk memilih gambar.
                   </div>
                 )}
               </div>
@@ -1611,14 +2061,16 @@ export default function AdminDashboardPage() {
       )}
 
       {/* ===================================================================== */}
-      {/* MODAL: EDIT HERO BANNER */}
+      {/* MODAL: EDIT & TAMBAH HERO BANNER (UPLOAD & HAPUS FOTO) */}
       {/* ===================================================================== */}
       {isBannerModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-xs animate-fade-in">
           <div className="w-full max-w-lg bg-[#0c1c33] border border-[#1b3a63] rounded-3xl p-6 shadow-2xl space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-[#173357]">
-              <h3 className="text-base font-bold text-white">Edit Banner Slide: {bannerForm.title}</h3>
-              <button onClick={() => setIsBannerModalOpen(false)} className="text-slate-400 hover:text-white">
+              <h3 className="text-base font-bold text-white">
+                {editingBanner ? `Edit Banner Slide: ${bannerForm.title}` : 'Tambah Banner Slide Baru'}
+              </h3>
+              <button onClick={() => setIsBannerModalOpen(false)} className="text-slate-400 hover:text-white cursor-pointer">
                 <X className="w-5 h-5" />
               </button>
             </div>
@@ -1646,18 +2098,44 @@ export default function AdminDashboardPage() {
                 />
               </div>
 
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">URL Gambar Banner</label>
-                <input
-                  type="text"
-                  required
-                  value={bannerForm.image}
-                  onChange={(e) => setBannerForm({ ...bannerForm, image: e.target.value })}
-                  className="w-full bg-[#071322] border border-[#1b3a63] text-white px-3 py-2 rounded-xl text-xs"
-                />
+              {/* Banner Image with Upload & URL */}
+              <div className="p-4 rounded-2xl bg-[#071322] border border-[#1b3a63] space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="block text-xs font-bold text-white">Gambar Slide Banner</label>
+                  <label className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:from-[#0084ff] text-white text-xs font-bold cursor-pointer transition-all shadow-xs">
+                    <Upload className="w-3.5 h-3.5" />
+                    <span>Upload File Banner</span>
+                    <input
+                      type="file"
+                      accept="image/*"
+                      onChange={handleBannerFileUpload}
+                      className="hidden"
+                    />
+                  </label>
+                </div>
+
+                <div>
+                  <input
+                    type="text"
+                    required
+                    placeholder="Atau masukkan URL: https://..."
+                    value={bannerForm.image}
+                    onChange={(e) => setBannerForm({ ...bannerForm, image: e.target.value })}
+                    className="w-full bg-[#0c1c33] border border-[#1b3a63] text-white px-3 py-2 rounded-xl text-xs focus:border-[#0084ff] focus:outline-none"
+                  />
+                </div>
+
                 {bannerForm.image && (
-                  <div className="mt-2 h-28 rounded-xl overflow-hidden bg-slate-900 border border-[#1b3a63]">
-                    <img src={bannerForm.image} alt="Preview" className="w-full h-full object-cover" />
+                  <div className="relative h-36 rounded-xl overflow-hidden bg-slate-900 border border-[#1b3a63] group">
+                    <img src={bannerForm.image} alt="Preview Banner" className="w-full h-full object-cover" />
+                    <button
+                      type="button"
+                      onClick={() => setBannerForm({ ...bannerForm, image: '' })}
+                      className="absolute top-2 right-2 px-2.5 py-1 rounded-lg bg-red-950/80 hover:bg-red-900 text-red-300 text-xs font-bold flex items-center gap-1 border border-red-800/60 transition-colors shadow-sm cursor-pointer"
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                      <span>Hapus Foto</span>
+                    </button>
                   </div>
                 )}
               </div>
@@ -1752,3 +2230,4 @@ export default function AdminDashboardPage() {
     </div>
   );
 }
+

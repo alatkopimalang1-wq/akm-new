@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   MapPin, 
   Clock, 
@@ -10,8 +10,22 @@ import {
   Award
 } from 'lucide-react';
 import { STORE_INFO } from '../data/products';
+import { getStoredShowroomPhotos } from '../utils/contentStore';
 
 export default function ShowroomSection() {
+  const [showroomPhotos, setShowroomPhotos] = useState(() => getStoredShowroomPhotos());
+
+  useEffect(() => {
+    const handleStorageUpdate = () => {
+      setShowroomPhotos(getStoredShowroomPhotos());
+    };
+    window.addEventListener('akm_content_updated', handleStorageUpdate);
+    return () => window.removeEventListener('akm_content_updated', handleStorageUpdate);
+  }, []);
+
+  const photo1 = showroomPhotos[0] || { image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80', title: 'Slow Bar Sanubari x AKM' };
+  const photo2 = showroomPhotos[1] || { image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80', title: 'Espresso Lever Testing' };
+  const photo3 = showroomPhotos[2] || { image: 'https://images.unsplash.com/photo-1518057111178-44a106bad636?auto=format&fit=crop&w=800&q=80', title: 'Manual Brew Table' };
   return (
     <section id="showroom-section" className="py-16 sm:py-24 bg-slate-50 relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,23 +37,23 @@ export default function ShowroomSection() {
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-3xl overflow-hidden aspect-[4/5] bg-slate-100 border border-slate-200 shadow-xl">
                 <img
-                  src="https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80"
-                  alt="Slow Bar Sanubari x Alat Kopi Malang"
+                  src={photo1.image}
+                  alt={photo1.title || 'Slow Bar Sanubari x Alat Kopi Malang'}
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="space-y-4">
                 <div className="rounded-3xl overflow-hidden aspect-square bg-slate-100 border border-slate-200 shadow-md">
                   <img
-                    src="https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80"
-                    alt="Espresso Lever Testing Showroom"
+                    src={photo2.image}
+                    alt={photo2.title || 'Espresso Lever Testing Showroom'}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="rounded-3xl overflow-hidden aspect-square bg-slate-100 border border-slate-200 shadow-md">
                   <img
-                    src="https://images.unsplash.com/photo-1518057111178-44a106bad636?auto=format&fit=crop&w=800&q=80"
-                    alt="Manual Brew Table Showroom"
+                    src={photo3.image}
+                    alt={photo3.title || 'Manual Brew Table Showroom'}
                     className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
                   />
                 </div>

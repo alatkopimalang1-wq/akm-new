@@ -75,6 +75,80 @@ export const DEFAULT_ORDERS = [
   }
 ];
 
+// Default Showroom Photos
+export const DEFAULT_SHOWROOM_PHOTOS = [
+  {
+    id: 'sr-1',
+    title: 'Slow Bar Sanubari x AKM',
+    desc: 'Meja seduh manual brew dan kalibrasi specialty coffee bersama barista',
+    image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'sr-2',
+    title: 'Espresso Lever Testing Showroom',
+    desc: 'Uji coba langsung mesin Flair 58 dan hand grinder presisi sebelum membeli',
+    image: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80'
+  },
+  {
+    id: 'sr-3',
+    title: 'Manual Brew Table Showroom',
+    desc: 'Koleksi lengkap kettle, dripper, timbangan digital, dan kertas filter',
+    image: 'https://images.unsplash.com/photo-1518057111178-44a106bad636?auto=format&fit=crop&w=800&q=80'
+  }
+];
+
+// Client-side image compression: reads file and converts to optimized Base64
+export function compressImageFile(file, maxWidth = 1200, maxHeight = 1200, quality = 0.85) {
+  return new Promise((resolve, reject) => {
+    if (!file) return reject(new Error('No file provided'));
+    if (!file.type.startsWith('image/')) return reject(new Error('File must be an image'));
+
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        let width = img.width;
+        let height = img.height;
+        if (width > maxWidth || height > maxHeight) {
+          if (width > height) {
+            height = Math.round((height * maxWidth) / width);
+            width = maxWidth;
+          } else {
+            width = Math.round((width * maxHeight) / height);
+            height = maxHeight;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL('image/jpeg', quality));
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+}
+
+// Showroom Photos Storage
+export function getStoredShowroomPhotos() {
+  try {
+    const saved = localStorage.getItem('akm_showroom_photos');
+    if (saved) return JSON.parse(saved);
+  } catch (e) {
+    console.error('Error loading showroom photos', e);
+  }
+  return DEFAULT_SHOWROOM_PHOTOS;
+}
+
+export function saveStoredShowroomPhotos(photosList) {
+  localStorage.setItem('akm_showroom_photos', JSON.stringify(photosList));
+  notifyContentUpdate();
+}
+
 // Default Promo Coupons
 export const DEFAULT_COUPONS = [
   { id: 'cp-1', code: 'SANUBARI10', discountPercent: 10, maxDiscount: 100000, minSpend: 150000, isActive: true, usageCount: 42 },
@@ -202,3 +276,4 @@ export function setAdminSession(isAuth) {
     localStorage.removeItem('akm_admin_login_time');
   }
 }
+

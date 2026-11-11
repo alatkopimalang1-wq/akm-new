@@ -12,6 +12,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { STORE_INFO } from '../data/products';
+import { getStoredOrders } from '../utils/contentStore';
 import { formatRupiah } from '../utils/format';
 
 export default function OrderTrackingPage() {
@@ -24,17 +25,43 @@ export default function OrderTrackingPage() {
     if (!invoiceQuery.trim()) return;
 
     setHasSearched(true);
-    // Simulate real order tracking data
     const query = invoiceQuery.trim().toUpperCase();
+    const allOrders = getStoredOrders();
+    const realOrder = allOrders.find(o => 
+      o.id.toUpperCase() === query || 
+      o.id.toUpperCase().includes(query) ||
+      (o.phone && o.phone.replace(/[^0-9]/g, '').includes(query.replace(/[^0-9]/g, '')))
+    );
+
+    if (realOrder) {
+      setTrackedOrder({
+        invoiceNumber: realOrder.id,
+        date: realOrder.date,
+        customerName: realOrder.customerName,
+        courier: `${realOrder.shippingCourier || 'JNE Express'} (Status: ${realOrder.status})`,
+        destination: realOrder.shippingAddress || 'Kota Malang, Jawa Timur',
+        status: realOrder.status.toLowerCase(), // diproses, dikirim, selesai
+        estimatedDelivery: 'Estimasi 1 - 2 Hari Kerja',
+        items: realOrder.items || [],
+        subtotal: realOrder.subtotal || realOrder.total,
+        shipping: realOrder.shippingCost || 0,
+        total: realOrder.total,
+        timeline: [
+          { time: `${realOrder.date} WIB`, title: 'Pesanan Dikonfirmasi', desc: 'Pesanan berhasil terdaftar di sistem Alat Kopi Malang' },
+          { time: `${realOrder.date} WIB`, title: `Status Terkini: ${realOrder.status}`, desc: `Pesanan sedang ${realOrder.status.toLowerCase()} oleh tim showroom Tlogomas Malang` }
+        ]
+      });
+      return;
+    }
     
-    // Sample simulated order
+    // Fallback sample simulated order if query not found
     setTrackedOrder({
-      invoiceNumber: query.startsWith('INV-') ? query : `INV-AKM-${query}`,
+      invoiceNumber: query.startsWith('INV-') || query.startsWith('ORD-') ? query : `ORD-AKM-${query}`,
       date: '11 November 2026',
       customerName: 'Pelanggan Alat Kopi Malang',
       courier: 'JNE Reguler (Resi: JNE88291049102)',
       destination: 'Kota Malang, Jawa Timur',
-      status: 'dikirim', // diproses, dikirim, selesai
+      status: 'dikirim',
       estimatedDelivery: '12 - 13 November 2026',
       items: [
         { name: 'Timemore Chestnut C3S Pro Manual Coffee Grinder (Matte Black)', qty: 1, price: 875000 },
