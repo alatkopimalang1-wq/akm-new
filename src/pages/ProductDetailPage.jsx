@@ -262,32 +262,32 @@ export default function ProductDetailPage({
             <div className="md:col-span-7 flex flex-col justify-between">
               <div>
                 {/* Product Title */}
-                <h1 className="text-xl sm:text-2xl font-extrabold text-slate-900 leading-tight tracking-tight">
+                <h1 className="text-xl sm:text-2xl md:text-3xl font-extrabold text-slate-900 leading-tight tracking-tight">
                   {product.name}
                 </h1>
 
                 {/* Brand Bar */}
-                <div className="mt-3 flex items-center gap-2.5 py-1">
-                  <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
-                    <Award className="w-4 h-4" />
+                <div className="mt-3 md:mt-4 flex items-center gap-2.5 py-1">
+                  <div className="w-8 h-8 md:w-9 md:h-9 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <Award className="w-4 h-4 md:w-4.5 md:h-4.5" />
                   </div>
                   <div>
-                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block leading-none">
+                    <span className="text-[10px] md:text-xs font-bold text-slate-400 uppercase tracking-wider block leading-none">
                       MERK / BRAND RESMI
                     </span>
-                    <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight block mt-0.5">
+                    <span className="text-xs sm:text-sm md:text-base font-bold text-slate-900 leading-tight block mt-0.5">
                       {product.brand}
                     </span>
                   </div>
                 </div>
 
                 {/* Price Row */}
-                <div className="mt-4 flex items-baseline gap-3">
-                  <span className="text-2xl sm:text-3xl font-extrabold text-[#4f46e5]">
+                <div className="mt-4 md:mt-5 flex items-baseline gap-3">
+                  <span className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#4f46e5]">
                     {formatRupiah(product.price)}
                   </span>
                   {product.originalPrice && (
-                    <span className="text-sm sm:text-base font-semibold text-slate-400 line-through">
+                    <span className="text-sm sm:text-base md:text-lg font-semibold text-slate-400 line-through">
                       {formatRupiah(product.originalPrice)}
                     </span>
                   )}
@@ -295,8 +295,8 @@ export default function ProductDetailPage({
 
                 {/* Variasi Selector */}
                 {product.variants && product.variants.length > 0 && (
-                  <div className="mt-4">
-                    <span className="text-xs font-semibold text-slate-700 flex items-center gap-1.5 mb-2">
+                  <div className="mt-4 md:mt-5">
+                    <span className="text-xs sm:text-sm md:text-base font-semibold text-slate-700 flex items-center gap-1.5 mb-2">
                       <span>🎨</span>
                       <span>Pilih Variasi Warna:</span>
                     </span>
@@ -307,7 +307,7 @@ export default function ProductDetailPage({
                           type="button"
                           onClick={() => setSelectedVariant(v)}
                           disabled={!v.inStock}
-                          className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all border ${
+                          className={`px-3.5 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-semibold transition-all border ${
                             selectedVariant?.id === v.id
                               ? 'bg-white border-2 border-slate-900 text-slate-900 shadow-xs'
                               : v.inStock
@@ -323,53 +323,53 @@ export default function ProductDetailPage({
                 )}
 
                 {/* Description & Specifications Box */}
-                <div className="mt-4">
-                  <h3 className="text-xs sm:text-sm font-bold text-slate-900 mb-1.5">
+                <div className="mt-5 md:mt-6">
+                  <h3 className="text-xs sm:text-sm md:text-base font-bold text-slate-900 mb-1.5 md:mb-2">
                     Deskripsi &amp; Spesifikasi Produk:
                   </h3>
-                  <p className="text-xs text-slate-600 leading-relaxed">
+                  <p className="text-xs sm:text-sm md:text-base text-slate-600 leading-relaxed">
                     {product.description}
                   </p>
                 </div>
 
                 {/* Quantity Stepper */}
-                <div className="mt-4 flex items-center gap-3">
-                  <span className="text-xs font-semibold text-slate-700">Jumlah:</span>
-                  <div className="flex items-center border border-slate-200 rounded-lg bg-white overflow-hidden shadow-xs">
+                <div className="mt-5 md:mt-6 flex items-center gap-3.5">
+                  <span className="text-xs sm:text-sm md:text-base font-semibold text-slate-700">Jumlah:</span>
+                  <div className="flex items-center border border-slate-200 rounded-lg md:rounded-xl bg-white overflow-hidden shadow-xs">
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                      className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors text-sm font-bold"
+                      className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors text-sm md:text-base font-bold"
                     >
                       -
                     </button>
-                    <span className="w-10 text-center text-xs font-bold text-slate-900">
+                    <span className="w-10 md:w-12 text-center text-xs sm:text-sm md:text-base font-bold text-slate-900">
                       {quantity}
                     </span>
                     <button
                       type="button"
                       onClick={() => setQuantity(Math.min(stockCount, quantity + 1))}
-                      className="w-8 h-8 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors text-sm font-bold"
+                      className="w-8 h-8 md:w-10 md:h-10 flex items-center justify-center bg-slate-50 hover:bg-slate-100 text-slate-600 hover:text-slate-900 transition-colors text-sm md:text-base font-bold"
                     >
                       +
                     </button>
                   </div>
-                  <span className="text-[11px] text-slate-400">
+                  <span className="text-[11px] sm:text-xs md:text-sm text-slate-400">
                     Maks. {stockCount} pcs
                   </span>
                 </div>
               </div>
 
               {/* Action Buttons Row */}
-              <div className="mt-5 space-y-2.5">
-                <div className="flex items-center gap-2.5">
+              <div className="mt-6 md:mt-7 space-y-2.5">
+                <div className="flex items-center gap-2.5 sm:gap-3">
                   {/* + Tambah Keranjang */}
                   <button
                     type="button"
                     onClick={handleAddToCart}
-                    className="flex-1 py-3 px-3 sm:px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-indigo-50/60 text-[#4f46e5] border-2 border-[#4f46e5] font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-xs active:scale-98 whitespace-nowrap"
+                    className="flex-1 py-3 md:py-3.5 px-3 sm:px-4 rounded-xl sm:rounded-2xl bg-white hover:bg-indigo-50/60 text-[#4f46e5] border-2 border-[#4f46e5] font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-1.5 sm:gap-2 transition-all shadow-xs active:scale-98 whitespace-nowrap"
                   >
-                    <ShoppingCart className="w-4 h-4 text-[#4f46e5] shrink-0" />
+                    <ShoppingCart className="w-4 h-4 md:w-5 md:h-5 text-[#4f46e5] shrink-0" />
                     <span className="sm:hidden">+ Keranjang</span>
                     <span className="hidden sm:inline">+ Tambah Keranjang</span>
                   </button>
@@ -378,9 +378,9 @@ export default function ProductDetailPage({
                   <button
                     type="button"
                     onClick={handleCheckoutDirect}
-                    className="flex-1 py-3 px-4 rounded-xl sm:rounded-2xl bg-[#4f46e5] hover:bg-[#4338ca] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-500/20 active:scale-98"
+                    className="flex-1 py-3 md:py-3.5 px-4 rounded-xl sm:rounded-2xl bg-[#4f46e5] hover:bg-[#4338ca] text-white font-bold text-xs sm:text-sm md:text-base flex items-center justify-center gap-2 transition-all shadow-md shadow-indigo-500/20 active:scale-98"
                   >
-                    <CreditCard className="w-4 h-4" />
+                    <CreditCard className="w-4 h-4 md:w-5 md:h-5" />
                     <span>Checkout</span>
                   </button>
                 </div>
@@ -389,9 +389,9 @@ export default function ProductDetailPage({
                 <button
                   type="button"
                   onClick={handleBuyWhatsApp}
-                  className="w-full py-3.5 px-4 rounded-xl sm:rounded-2xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-sm flex items-center justify-center gap-2 shadow-md shadow-green-500/20 transition-all active:scale-98"
+                  className="w-full py-3.5 md:py-4 px-4 rounded-xl sm:rounded-2xl bg-[#22c55e] hover:bg-[#16a34a] text-white font-bold text-sm md:text-base flex items-center justify-center gap-2 shadow-md shadow-green-500/20 transition-all active:scale-98"
                 >
-                  <MessageCircle className="w-4 h-4" />
+                  <MessageCircle className="w-4 h-4 md:w-5 md:h-5" />
                   <span>Order Via WhatsApp</span>
                 </button>
               </div>
