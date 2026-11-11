@@ -2,18 +2,21 @@
 // Partner Resmi Showroom Sanubari Roastery, Malang
 
 export const CATEGORIES = [
-  { id: 'all', name: 'Semua Produk', icon: 'Sparkles', count: 24 },
+  { id: 'all', name: 'Semua Produk', icon: 'Sparkles', count: 30 },
+  { id: 'filter-beans', name: 'Filter Beans', icon: 'Coffee', count: 4 },
+  { id: 'espresso-beans', name: 'Espresso Beans', icon: 'Flame', count: 3 },
   { id: 'manual-brew', name: 'Manual Brew', icon: 'Coffee', count: 7 },
   { id: 'grinder', name: 'Grinder Kopi', icon: 'Cog', count: 6 },
   { id: 'espresso-tools', name: 'Espresso & Lever', icon: 'Flame', count: 5 },
   { id: 'kettle', name: 'Kettle Gooseneck', icon: 'Pipette', count: 4 },
   { id: 'scale', name: 'Scale & Timer', icon: 'Timer', count: 4 },
   { id: 'accessories', name: 'Aksesoris & Filter', icon: 'Filter', count: 5 },
-  { id: 'bundles', name: 'Paket Starter Kit', icon: 'PackageCheck', count: 3 }
+  { id: 'bundles', name: 'Paket Starter Kit', icon: 'PackageCheck', count: 4 }
 ];
 
 export const BRANDS = [
   'Semua Brand',
+  'Sanubari Roastery',
   'Timemore',
   'Hario',
   'Fellow',
@@ -443,6 +446,184 @@ export const PRODUCTS = [
     isFeatured: false,
     isNew: false,
     stock: 15,
+    tokopediaUrl: 'https://tokopedia.com',
+    shopeeUrl: 'https://shopee.co.id'
+  },
+  {
+    id: 'snb-nanas-madu',
+    name: 'Arabika Nanas Madu Wethulled Co-Ferment 100g',
+    brand: 'Sanubari Roastery',
+    category: 'filter-beans',
+    slug: 'arabika-nanas-madu-wethulled-co-ferment',
+    badge: 'Co-Ferment',
+    rating: 5.0,
+    reviewCount: 88,
+    price: 85000,
+    originalPrice: 95000,
+    discountPercent: 11,
+    images: [
+      'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80'
+    ],
+    tagline: 'Pineapple, Sweet Honey, Lime Acidity, Ginger, Tropical Fruit, Long Sweet',
+    description: 'Biji kopi artisan unggulan Sanubari Roastery dari Papandayan Jawa Barat dengan proses inovatif Co-Fermentation bersama sari nanas madu segar. Menghasilkan rasa manis madu yang lembut, keasaman buah tropis cerah, dan aftertaste manis berkepanjangan.',
+    specs: {
+      'Origin': 'Papandayan, Jawa Barat',
+      'Varietal': 'Catimor & Typica',
+      'Process': 'Wethulled Co-Ferment',
+      'Altitude': '1500 Masl',
+      'Roast Level': 'Light to Medium (Filter Roast)',
+      'Tasting Notes': 'Pineapple, Sweet Honey, Lime Acidity, Ginger, Brown Sugar'
+    },
+    variants: [
+      { id: 'v-nm-100', label: '100 Gram Biji', inStock: true },
+      { id: 'v-nm-200', label: '200 Gram Biji', inStock: true },
+      { id: 'v-nm-v60', label: '100g Giling V60', inStock: true }
+    ],
+    isFeatured: true,
+    isNew: true,
+    stock: 30,
+    tokopediaUrl: 'https://tokopedia.com',
+    shopeeUrl: 'https://shopee.co.id'
+  },
+  {
+    id: 'snb-sindoro-plum',
+    name: 'Arabika Sindoro Sweet Plum Honey Brew Yeast 100g',
+    brand: 'Sanubari Roastery',
+    category: 'filter-beans',
+    slug: 'arabika-sindoro-sweet-plum-honey-brew-yeast',
+    badge: 'Experimental',
+    rating: 4.9,
+    reviewCount: 62,
+    price: 77500,
+    originalPrice: 85000,
+    discountPercent: 9,
+    images: [
+      'https://images.unsplash.com/photo-1610632380989-680fe40816c6?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80'
+    ],
+    tagline: 'Purple Plum, Wild Honey, Jasmine Floral, Crisp Apple',
+    description: 'Biji kopi eksperimental proses inokulasi ragi (yeast brewing fermentation) dari lereng Gunung Sindoro. Aroma floral melati semerbak berpadu dengan keasaman plum ungu yang menyegarkan.',
+    specs: {
+      'Origin': 'Gunung Sindoro, Jawa Tengah',
+      'Varietal': 'Kartika & Lini S',
+      'Process': 'Yeast Inoculation Honey',
+      'Altitude': '1600 Masl',
+      'Roast Level': 'Light Roast (Filter Special)',
+      'Tasting Notes': 'Sweet Plum, Wildflower Honey, Jasmine, Crisp Red Apple'
+    },
+    variants: [
+      { id: 'v-sp-100', label: '100 Gram Biji', inStock: true },
+      { id: 'v-sp-200', label: '200 Gram Biji', inStock: true }
+    ],
+    isFeatured: true,
+    isNew: false,
+    stock: 25,
+    tokopediaUrl: 'https://tokopedia.com',
+    shopeeUrl: 'https://shopee.co.id'
+  },
+  {
+    id: 'snb-fine-robusta',
+    name: 'Fine Robusta Dampit Malang 250g (Espresso Series)',
+    brand: 'Sanubari Roastery',
+    category: 'espresso-beans',
+    slug: 'fine-robusta-dampit-malang',
+    badge: 'Espresso Blend',
+    rating: 4.9,
+    reviewCount: 195,
+    price: 52000,
+    originalPrice: 60000,
+    discountPercent: 13,
+    images: [
+      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80'
+    ],
+    tagline: 'Dark Chocolate, Roasted Hazelnut, Brown Sugar, Ultra Thick Crema',
+    description: 'Robusta petik merah kualitas Fine dari perkebunan Dampit, Kabupaten Malang. Diproses dengan sortir ketat zero-defect, menghasilkan crema espresso yang sangat tebal, gurih, dan minim rasa pahit tajam. Sangat digemari untuk bahan dasar Es Kopi Susu kekinian.',
+    specs: {
+      'Origin': 'Dampit, Malang, Jawa Timur',
+      'Process': 'Natural Full Washed',
+      'Altitude': '800 - 900 Masl',
+      'Roast Level': 'Medium Dark (Espresso Profile)',
+      'Cocok Untuk': 'Mesin Espresso, Moka Pot, Vietnam Drip, Es Kopi Susu'
+    },
+    variants: [
+      { id: 'v-fr-250', label: '250 Gram Biji', inStock: true },
+      { id: 'v-fr-500', label: '500 Gram Biji', inStock: true },
+      { id: 'v-fr-1kg', label: '1 Kilogram (Hemat)', inStock: true }
+    ],
+    isFeatured: false,
+    isNew: false,
+    stock: 50,
+    tokopediaUrl: 'https://tokopedia.com',
+    shopeeUrl: 'https://shopee.co.id'
+  },
+  {
+    id: 'snb-full-arabica-kawi',
+    name: 'Full Arabica Gunung Kawi Natural 200g',
+    brand: 'Sanubari Roastery',
+    category: 'espresso-beans',
+    slug: 'full-arabica-gunung-kawi-natural',
+    badge: 'Kawi Series',
+    rating: 5.0,
+    reviewCount: 134,
+    price: 75000,
+    originalPrice: 85000,
+    discountPercent: 12,
+    images: [
+      'https://images.unsplash.com/photo-1610632380989-680fe40816c6?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80'
+    ],
+    tagline: 'Ripe Strawberry, Brown Sugar, Orange Citrus, Sweet Aftertaste',
+    description: 'Koleksi kebanggaan Sanubari Roastery: Jejak Rasa di Gunung Kawi Malang. 100% Arabika proses natural dengan tingkat kematangan optimal. Memberikan aroma stroberi matang, keasaman jeruk manis, dan rasa manis karamel cokelat.',
+    specs: {
+      'Origin': 'Lereng Gunung Kawi, Malang',
+      'Varietal': 'Kartika & USDA',
+      'Process': 'Slow Dry Natural',
+      'Altitude': '1400 - 1600 Masl',
+      'Roast Level': 'Medium (Omni-Roast: Filter & Espresso)'
+    },
+    variants: [
+      { id: 'v-kawi-200', label: '200 Gram Biji', inStock: true },
+      { id: 'v-kawi-500', label: '500 Gram Biji', inStock: true }
+    ],
+    isFeatured: true,
+    isNew: false,
+    stock: 40,
+    tokopediaUrl: 'https://tokopedia.com',
+    shopeeUrl: 'https://shopee.co.id'
+  },
+  {
+    id: 'snb-signature-houseblend',
+    name: 'Sanubari Signature Houseblend 70:30 (500g)',
+    brand: 'Sanubari Roastery',
+    category: 'espresso-beans',
+    slug: 'sanubari-signature-houseblend-70-30',
+    badge: 'Kedai Best Seller',
+    rating: 5.0,
+    reviewCount: 240,
+    price: 115000,
+    originalPrice: 130000,
+    discountPercent: 11,
+    images: [
+      'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=800&q=80',
+      'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80'
+    ],
+    tagline: '70% Arabika Kawi + 30% Fine Robusta Dampit — Formula Kopi Susu Mantap',
+    description: 'Houseblend signature yang dipakai setiap hari di slow bar Sanubari Roastery Malang. Perpaduan body tebal dan crema pekat dari Robusta Dampit dengan rasa manis buah dan aroma floral dari Arabika Kawi.',
+    specs: {
+      'Komposisi': '70% Arabika Gunung Kawi + 30% Fine Robusta Dampit',
+      'Roast Level': 'Medium Dark Roasted',
+      'Karakter': 'Bold Body, Low Acidity, Sweet Caramel, Rich Crema',
+      'Berat': '500 gram (Kemasan One-Way Valve dengan Ziplock)'
+    },
+    variants: [
+      { id: 'v-hb-500', label: '500 Gram Biji', inStock: true },
+      { id: 'v-hb-1kg', label: '1 Kilogram (Kemasan Kedai)', inStock: true }
+    ],
+    isFeatured: true,
+    isNew: false,
+    stock: 60,
     tokopediaUrl: 'https://tokopedia.com',
     shopeeUrl: 'https://shopee.co.id'
   }
