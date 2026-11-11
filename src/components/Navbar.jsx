@@ -281,7 +281,7 @@ export default function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs transition-all" ref={navbarRef}>
+    <header className="sticky top-0 z-50 w-full bg-[#0b1e36] border-b border-[#183459] shadow-md transition-all" ref={navbarRef}>
       
       {/* Top Navbar Row */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -296,24 +296,24 @@ export default function Navbar({
               className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none"
             >
               {/* Circular Sanubari Logo Badge */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-slate-50 border border-slate-200 group-hover:border-[#0070f3] transition-colors shrink-0 flex items-center justify-center shadow-xs">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-[#10223b] border border-[#1e3a5f] group-hover:border-[#0084ff] transition-colors shrink-0 flex items-center justify-center shadow-md">
                 <img
                   src="/sanubari-logo.png"
                   alt="Sanubari Roastery"
                   className="w-full h-full object-cover"
                   onError={(e) => {
                     e.target.style.display = 'none';
-                    e.target.parentElement.innerHTML = '<span class="text-xs font-black text-[#0070f3]">SNB</span>';
+                    e.target.parentElement.innerHTML = '<span class="text-xs font-black text-[#0084ff]">SNB</span>';
                   }}
                 />
               </div>
 
               {/* Brand Typography */}
               <div className="flex flex-col leading-tight">
-                <span className="font-extrabold text-base sm:text-lg text-slate-900 tracking-tight group-hover:text-[#0070f3] transition-colors font-sans">
+                <span className="font-extrabold text-base sm:text-lg text-white tracking-tight group-hover:text-[#38bdf8] transition-colors font-sans">
                   Sanubari
                 </span>
-                <span className="text-[11px] sm:text-xs text-slate-500 font-medium tracking-normal">
+                <span className="text-[11px] sm:text-xs text-[#94a3b8] font-medium tracking-normal">
                   Roastery Malang
                 </span>
               </div>
@@ -322,15 +322,15 @@ export default function Navbar({
             {/* Kategori Button */}
             <button
               onClick={() => setMegaMenuOpen(!megaMenuOpen)}
-              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-xs ${
+              className={`flex items-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all shadow-md ${
                 megaMenuOpen
-                  ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white shadow-md shadow-blue-500/25 scale-[1.02]'
-                  : 'bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-800'
+                  ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white shadow-lg shadow-[#0070f3]/30 scale-[1.02]'
+                  : 'bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9]'
               }`}
             >
-              <LayoutGrid className={`w-4 h-4 ${megaMenuOpen ? 'text-white' : 'text-[#0070f3]'}`} />
+              <LayoutGrid className={`w-4 h-4 ${megaMenuOpen ? 'text-white' : 'text-[#38bdf8]'}`} />
               <span className="font-semibold tracking-wide">Kategori</span>
-              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${megaMenuOpen ? 'rotate-180 text-white' : 'text-slate-500'}`} />
+              <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-300 ${megaMenuOpen ? 'rotate-180 text-white' : 'text-[#94a3b8]'}`} />
             </button>
           </div>
 
@@ -352,13 +352,13 @@ export default function Navbar({
                     }, 100);
                   }
                 }}
-                className="w-full bg-slate-50 focus:bg-white border border-slate-200 focus:border-[#0070f3] text-xs sm:text-sm text-slate-900 placeholder-slate-400 rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-xs focus:shadow-md"
+                className="w-full bg-[#060e1a] focus:bg-[#0a1526] border border-[#172b47] focus:border-[#0084ff] text-xs sm:text-sm text-white placeholder-[#64748b] rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-inner focus:shadow-md"
               />
-              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#64748b] absolute left-3.5 sm:left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
               {searchQuery && (
                 <button 
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-slate-500 hover:text-slate-900 bg-slate-200 px-1.5 py-0.5 rounded font-medium"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] text-[#94a3b8] hover:text-white bg-[#172b47] px-1.5 py-0.5 rounded font-medium"
                 >
                   Clear
                 </button>
@@ -367,7 +367,7 @@ export default function Navbar({
 
             {/* Instant Search Results Dropdown */}
             {searchFocused && searchQuery.trim().length > 1 && (
-              <div className="absolute left-0 right-0 top-full mt-2 bg-white rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-50 animate-fade-in divide-y divide-slate-100">
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white text-slate-900 rounded-2xl border border-slate-200 shadow-2xl overflow-hidden z-50 animate-fade-in divide-y divide-slate-100">
                 <div className="p-3 bg-slate-50 flex items-center justify-between text-xs text-slate-500">
                   <span className="font-semibold text-slate-700">Hasil Pencarian Produk</span>
                   <span>{searchResults.length} ditemukan</span>
@@ -424,29 +424,29 @@ export default function Navbar({
             <div className="relative">
               <button
                 onClick={() => setNotificationOpen(!notificationOpen)}
-                className="relative p-2.5 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors"
+                className="relative p-2.5 text-[#94a3b8] hover:text-white rounded-xl hover:bg-[#10223b] transition-colors"
                 title="Notifikasi"
               >
                 <Bell className="w-5 h-5" />
-                <span className="absolute top-1.5 right-1.5 bg-[#ef4444] text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+                <span className="absolute top-1.5 right-1.5 bg-[#ef4444] text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
                   4
                 </span>
               </button>
 
               {notificationOpen && (
-                <div className="absolute right-0 top-full mt-2 w-72 bg-white rounded-2xl border border-slate-200 shadow-2xl p-4 z-50 animate-fade-in space-y-3 text-left">
-                  <div className="flex items-center justify-between border-b border-slate-100 pb-2">
-                    <span className="text-xs font-bold text-slate-900">Notifikasi</span>
-                    <span className="text-[10px] font-semibold text-[#0070f3] bg-blue-50 px-2 py-0.5 rounded-full">4 Baru</span>
+                <div className="absolute right-0 top-full mt-2 w-72 bg-[#0c192d] rounded-2xl border border-[#1e3a5f] shadow-2xl p-4 z-50 animate-fade-in space-y-3 text-left">
+                  <div className="flex items-center justify-between border-b border-[#172b47] pb-2">
+                    <span className="text-xs font-bold text-white">Notifikasi</span>
+                    <span className="text-[10px] text-[#38bdf8] bg-[#10223b] px-2 py-0.5 rounded-full border border-[#1e3a5f]">4 Baru</span>
                   </div>
                   <div className="space-y-2 text-xs">
-                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                      <p className="font-semibold text-slate-900">Promo Buka Showroom ☕</p>
-                      <p className="text-[11px] text-slate-500">Gunakan kupon SANUBARI10 untuk diskon 10%.</p>
+                    <div className="p-2.5 rounded-xl bg-[#10223b] border border-[#1a365d]">
+                      <p className="font-semibold text-white">Promo Buka Showroom ☕</p>
+                      <p className="text-[11px] text-[#94a3b8]">Gunakan kupon SANUBARI10 untuk diskon 10%.</p>
                     </div>
-                    <div className="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
-                      <p className="font-semibold text-slate-900">Paket Baru: Flair 58 Ready!</p>
-                      <p className="text-[11px] text-slate-500">Unit Flair 58 Lever kini ready stock di Tlogomas.</p>
+                    <div className="p-2.5 rounded-xl bg-[#10223b] border border-[#1a365d]">
+                      <p className="font-semibold text-white">Paket Baru: Flair 58 Ready!</p>
+                      <p className="text-[11px] text-[#94a3b8]">Unit Flair 58 Lever kini ready stock di Tlogomas.</p>
                     </div>
                   </div>
                 </div>
@@ -456,11 +456,11 @@ export default function Navbar({
             {/* Shopping Bag */}
             <button
               onClick={onOpenCart}
-              className="relative p-2.5 text-slate-600 hover:text-slate-900 rounded-xl hover:bg-slate-100 transition-colors"
+              className="relative p-2.5 text-[#94a3b8] hover:text-white rounded-xl hover:bg-[#10223b] transition-colors"
               title="Keranjang Belanja"
             >
               <ShoppingBag className="w-5 h-5" />
-              <span className="absolute top-1.5 right-1.5 bg-[#ef4444] text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-xs">
+              <span className="absolute top-1.5 right-1.5 bg-[#ef4444] text-white text-[10px] font-black w-4 h-4 rounded-full flex items-center justify-center shadow-md">
                 {cartCount > 0 ? cartCount : 2}
               </span>
             </button>
@@ -469,17 +469,17 @@ export default function Navbar({
             <div className="relative">
               <button
                 onClick={() => setUserDropdownOpen(!userDropdownOpen)}
-                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200/80 border border-slate-200 text-slate-800 text-xs sm:text-sm font-semibold transition-all shadow-xs"
+                className="flex items-center gap-2 px-3 sm:px-4 py-2 rounded-xl bg-[#10223b] hover:bg-[#162e50] border border-[#1d3b66] text-[#f1f5f9] text-xs sm:text-sm font-semibold transition-all shadow-sm"
               >
-                <User className="w-4 h-4 text-[#0070f3]" />
-                <span className="font-semibold text-slate-900">Winda</span>
+                <User className="w-4 h-4 text-[#38bdf8]" />
+                <span className="font-semibold text-white">Winda</span>
               </button>
 
               {userDropdownOpen && (
-                <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl border border-slate-200 shadow-2xl py-2 z-50 animate-fade-in divide-y divide-slate-100 text-left">
+                <div className="absolute right-0 top-full mt-2 w-52 bg-[#0c192d] rounded-2xl border border-[#1e3a5f] shadow-2xl py-2 z-50 animate-fade-in divide-y divide-[#172b47] text-left">
                   <div className="px-4 py-2">
-                    <p className="text-xs font-bold text-slate-900">Winda</p>
-                    <p className="text-[11px] text-slate-500">Member Sanubari Club</p>
+                    <p className="text-xs font-bold text-white">Winda</p>
+                    <p className="text-[11px] text-[#94a3b8]">Member Sanubari Club</p>
                   </div>
                   <div className="py-1 text-xs">
                     <button
@@ -487,9 +487,9 @@ export default function Navbar({
                         navigate('/lacak-pesanan');
                         setUserDropdownOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-[#0070f3] flex items-center gap-2"
+                      className="w-full text-left px-4 py-2 text-[#cbd5e1] hover:bg-[#10223b] hover:text-white flex items-center gap-2"
                     >
-                      <FileText className="w-3.5 h-3.5 text-[#0070f3]" />
+                      <FileText className="w-3.5 h-3.5 text-[#38bdf8]" />
                       <span>Lacak Pesanan Saya</span>
                     </button>
                     <button
@@ -497,16 +497,16 @@ export default function Navbar({
                         onOpenWishlist();
                         setUserDropdownOpen(false);
                       }}
-                      className="w-full text-left px-4 py-2 text-slate-700 hover:bg-slate-50 hover:text-[#0070f3] flex items-center gap-2"
+                      className="w-full text-left px-4 py-2 text-[#cbd5e1] hover:bg-[#10223b] hover:text-white flex items-center gap-2"
                     >
-                      <ShoppingBag className="w-3.5 h-3.5 text-[#0070f3]" />
+                      <ShoppingBag className="w-3.5 h-3.5 text-[#38bdf8]" />
                       <span>Wishlist ({wishlistCount})</span>
                     </button>
                   </div>
                   <div className="p-1">
                     <button
                       onClick={() => setUserDropdownOpen(false)}
-                      className="w-full text-left px-3 py-1.5 text-[11px] text-red-600 hover:bg-red-50 rounded-lg flex items-center gap-2 font-medium"
+                      className="w-full text-left px-3 py-1.5 text-[11px] text-[#ef4444] hover:bg-[#10223b] rounded-lg flex items-center gap-2"
                     >
                       <LogOut className="w-3 h-3" />
                       <span>Keluar Akun</span>
