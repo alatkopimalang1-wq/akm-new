@@ -250,7 +250,7 @@ export const OFFICIAL_BRANDS_DATA = [
   },
   {
     id: 'stealth',
-    name: 'Stealth',
+    name: 'Stealth Urban',
     shortName: 'STEALTH',
     slug: 'stealth',
     origin: 'Taiwan',
@@ -260,6 +260,20 @@ export const OFFICIAL_BRANDS_DATA = [
     bg: '#f1f5f9',
     border: '#cbd5e1',
     text: '#475569',
+    logoType: 'text'
+  },
+  {
+    id: 'mechcraft',
+    name: 'MechCraft',
+    shortName: 'MECH',
+    slug: 'mechcraft',
+    origin: 'Surabaya, Indonesia',
+    flag: '🇮🇩',
+    desc: 'Custom portafilter handles, distributor tools, and precision espresso accessories.',
+    tagline: 'Crafted Precision Espresso Hardware',
+    bg: '#fef3c7',
+    border: '#fde68a',
+    text: '#d97706',
     logoType: 'text'
   },
   {
