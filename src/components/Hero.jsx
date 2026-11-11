@@ -4,6 +4,9 @@ import {
   ChevronLeft, 
   ChevronRight, 
   ShieldCheck, 
+  Truck,
+  BadgeCheck,
+  Headphones,
   Award, 
   Store, 
   Coffee, 
@@ -448,11 +451,11 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           {/* Carousel Scrollable Track */}
           <div
             ref={categoryScrollRef}
-            className="flex items-start gap-6 sm:gap-10 overflow-x-auto no-scrollbar scroll-smooth py-3 px-3 sm:px-4"
+            className="flex items-start gap-6 sm:gap-10 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-3 px-3 sm:px-4"
           >
             {KATEGORI_PILIHAN_ITEMS.map((item) => {
               const content = (
-                <div className="flex flex-col items-center group cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center">
+                <div className="flex flex-col items-center group cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center snap-start">
                   
                   {/* Circular Emblem Container with Badge */}
                   <div className="relative mb-2.5">
@@ -523,48 +526,52 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
       </div>
 
       {/* ========================================================================= */}
-      {/* 4 TRUST BADGES (Keaslian, Garansi, Showroom & Konsultasi) */}
+      {/* 4 FITUR UNGGULAN / TRUST CARDS (Persis Gambar ke-2) */}
       {/* ========================================================================= */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-14">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-6 px-6 sm:px-8 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
           
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/60 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-5 h-5 text-[#0070f3]" />
+          {/* Card 1: Pengiriman Cepat */}
+          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <Truck className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
             </div>
             <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900">100% Original</h4>
-              <p className="text-[11px] text-slate-500">Garansi Resmi Distributor</p>
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Pengiriman Cepat</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">Order Langsung Kirim</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/60 flex items-center justify-center shrink-0">
-              <Award className="w-5 h-5 text-[#0070f3]" />
+          {/* Card 2: 100% Original */}
+          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
             </div>
             <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900">Barista Tested</h4>
-              <p className="text-[11px] text-slate-500">Standar Kedai Sanubari</p>
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">100% Original</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">Garansi uang kembali</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/60 flex items-center justify-center shrink-0">
-              <Store className="w-5 h-5 text-[#0070f3]" />
+          {/* Card 3: Produk Bergaransi */}
+          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <BadgeCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
             </div>
             <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900">Showroom Malang</h4>
-              <p className="text-[11px] text-slate-500">Test Drive Sebelum Beli</p>
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Produk Bergaransi</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">Garansi Toko dan Distributor</p>
             </div>
           </div>
 
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-blue-50 border border-blue-200/60 flex items-center justify-center shrink-0">
-              <Coffee className="w-5 h-5 text-[#0070f3]" />
+          {/* Card 4: Free Konsultasi */}
+          <div className="flex items-center gap-3.5 sm:gap-4 p-4 sm:p-5 rounded-2xl bg-white border border-slate-200/90 shadow-xs hover:shadow-md transition-all">
+            <div className="w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#eef4ff] flex items-center justify-center shrink-0">
+              <Headphones className="w-5 h-5 sm:w-6 sm:h-6 text-[#2563eb]" />
             </div>
             <div>
-              <h4 className="text-xs sm:text-sm font-bold text-slate-900">Free Konsultasi</h4>
-              <p className="text-[11px] text-slate-500">Rekomendasi Seduh Ahli</p>
+              <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Free Konsultasi</h4>
+              <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">24 Jam</p>
             </div>
           </div>
 
