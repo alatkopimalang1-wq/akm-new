@@ -218,19 +218,9 @@ export default function AccountPage({ showToast }) {
 
             </div>
 
-            {/* Right Column: Action Buttons ("Belanja Kopi Lagi" & "Keluar") */}
+            {/* Right Column: Action Button ("Keluar") */}
             <div className="flex items-center gap-3 shrink-0 self-start md:self-center">
               
-              {/* Button: Belanja Kopi Lagi */}
-              <Link
-                to="/kategori"
-                className="inline-flex items-center gap-2 px-4 sm:px-5 py-2.5 rounded-xl bg-[#965c2e] hover:bg-[#824f26] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all active:scale-95 cursor-pointer"
-                title="Buka katalog kopi dan alat"
-              >
-                <ShoppingBag className="w-4 h-4" />
-                <span>Belanja Kopi Lagi</span>
-              </Link>
-
               {/* Button: Keluar */}
               <button
                 onClick={handleLogout}
@@ -333,12 +323,12 @@ export default function AccountPage({ showToast }) {
                 Anda belum memiliki transaksi pesanan di Sanubari Roastery. Temukan kopi segar sangrai pilihan kami sekarang.
               </p>
 
-              {/* Action Button: Mulai Belanja Kopi */}
+              {/* Action Button: Mulai Belanja Lagi (Otomatis diarahkan ke shop page menampilkan semua produk) */}
               <Link
-                to="/kategori"
+                to="/shop"
                 className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#0e1f36] hover:bg-[#162f52] text-white font-bold text-xs sm:text-sm shadow-md hover:shadow-lg transition-all active:scale-95"
               >
-                <span>Mulai Belanja Kopi</span>
+                <span>Mulai Belanja Lagi</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
 
