@@ -668,3 +668,4 @@ export default function AccountPage({ showToast }) {
     </div>
   );
 }
+

@@ -429,19 +429,19 @@ export default function CartDrawer({
 
                 <div className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex justify-between items-center text-xs">
                   <span className="text-slate-600">Total Tagihan:</span>
-                  <span className="text-base font-extrabold text-[#0070f3]">{formatRupiah(finalTotal)}</span>
+                  <span className="text-base font-extrabold text-[#0e1f36]">{formatRupiah(finalTotal)}</span>
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white font-bold text-xs uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-md shadow-blue-500/25"
+                  className="w-full py-3.5 rounded-xl bg-[#0e1f36] hover:bg-[#162f52] text-white font-bold text-xs uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-md"
                 >
                   Konfirmasi &amp; Terbitkan Pesanan
                 </button>
               </form>
             ) : (
               <div className="text-center py-6 space-y-4">
-                <div className="w-14 h-14 rounded-full bg-blue-50 border border-blue-200 flex items-center justify-center mx-auto text-[#0070f3]">
+                <div className="w-14 h-14 rounded-full bg-emerald-50 border border-emerald-200 flex items-center justify-center mx-auto text-emerald-600">
                   <CheckCircle2 className="w-8 h-8" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900">Pesanan Berhasil Dibuat!</h3>
@@ -450,7 +450,7 @@ export default function CartDrawer({
                 </p>
                 <div className="p-4 rounded-2xl bg-slate-50 text-xs text-left space-y-1.5 border border-slate-200">
                   <div className="flex justify-between"><span className="text-slate-500">No. Invoice:</span> <strong className="text-slate-900">INV-AKM-{Math.floor(100000 + Math.random() * 900000)}</strong></div>
-                  <div className="flex justify-between"><span className="text-slate-500">Total Pembayaran:</span> <strong className="text-[#0070f3]">{formatRupiah(finalTotal)}</strong></div>
+                  <div className="flex justify-between"><span className="text-slate-500">Total Pembayaran:</span> <strong className="text-[#0e1f36]">{formatRupiah(finalTotal)}</strong></div>
                   <div className="flex justify-between"><span className="text-slate-500">Metode:</span> <strong className="text-slate-900 uppercase">{customerData.paymentMethod}</strong></div>
                 </div>
                 <div className="flex gap-2">
@@ -461,7 +461,7 @@ export default function CartDrawer({
                       setOrderSuccess(false);
                       onClose();
                     }}
-                    className="w-full py-3 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white font-bold text-xs hover:brightness-110 shadow-md shadow-blue-500/25"
+                    className="w-full py-3 rounded-xl bg-[#0e1f36] hover:bg-[#162f52] text-white font-bold text-xs shadow-md transition-all active:scale-95"
                   >
                     Selesai &amp; Kembali Belanja
                   </button>
