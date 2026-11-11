@@ -4,7 +4,6 @@ import {
   ArrowLeft, 
   ShoppingBag, 
   ShoppingCart,
-  ShieldCheck, 
   Heart, 
   Award, 
   CreditCard, 
@@ -267,25 +266,18 @@ export default function ProductDetailPage({
                   {product.name}
                 </h1>
 
-                {/* Brand & Guarantee Pill Bar */}
-                <div className="mt-3 flex items-center justify-between py-1">
-                  <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
-                      <Award className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block leading-none">
-                        MERK / BRAND RESMI
-                      </span>
-                      <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight block mt-0.5">
-                        {product.brand}
-                      </span>
-                    </div>
+                {/* Brand Bar */}
+                <div className="mt-3 flex items-center gap-2.5 py-1">
+                  <div className="w-8 h-8 rounded-lg bg-[#4f46e5] text-white flex items-center justify-center shrink-0 shadow-xs">
+                    <Award className="w-4 h-4" />
                   </div>
-
-                  <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold">
-                    <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>100% Original</span>
+                  <div>
+                    <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block leading-none">
+                      MERK / BRAND RESMI
+                    </span>
+                    <span className="text-xs sm:text-sm font-bold text-slate-900 leading-tight block mt-0.5">
+                      {product.brand}
+                    </span>
                   </div>
                 </div>
 
