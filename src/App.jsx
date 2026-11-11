@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import ProductCard from './components/ProductCard';
@@ -11,6 +12,7 @@ import ShowroomSection from './components/ShowroomSection';
 import CartDrawer from './components/CartDrawer';
 import WishlistDrawer from './components/WishlistDrawer';
 import Footer from './components/Footer';
+import ProductDetailPage from './pages/ProductDetailPage';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
 import { 
@@ -21,11 +23,13 @@ import {
   RotateCcw, 
   CheckCircle,
   SlidersHorizontal,
-  PhoneCall,
-  MessageCircle
+  PhoneCall
 } from 'lucide-react';
 
 export default function App() {
+  const navigate = useNavigate();
+  const location = useLocation();
+
   // Cart state persisted in localStorage
   const [cart, setCart] = useState(() => {
     try {
@@ -153,31 +157,61 @@ export default function App() {
     setWishlist((prev) => prev.filter((item) => item.id !== productId));
   };
 
-  // Smooth scroll helpers
+  // Navigation helpers
+  const handleSelectCategory = (catId) => {
+    setSelectedCategory(catId);
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   const scrollToCatalog = () => {
-    document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const scrollToCalculator = () => {
-    document.getElementById('kalkulator-seduh')?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('kalkulator-seduh')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById('kalkulator-seduh')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
   const scrollToShowroom = () => {
-    document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'smooth' });
+    if (location.pathname !== '/') {
+      navigate('/');
+      setTimeout(() => {
+        document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      document.getElementById('showroom-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
   };
 
-  // Filtered & Sorted Products
+  // Filtered & Sorted Products for catalog
   const filteredProducts = useMemo(() => {
     return PRODUCTS.filter((item) => {
-      // Category filter
       if (selectedCategory !== 'all' && item.category !== selectedCategory) {
         return false;
       }
-      // Brand filter
       if (selectedBrand !== 'Semua Brand' && item.brand !== selectedBrand) {
         return false;
       }
-      // Search query
       if (searchQuery.trim()) {
         const query = searchQuery.toLowerCase();
         const matchTitle = item.name.toLowerCase().includes(query);
@@ -193,14 +227,11 @@ export default function App() {
       if (sortBy === 'price-low') return a.price - b.price;
       if (sortBy === 'price-high') return b.price - a.price;
       if (sortBy === 'rating') return b.rating - a.rating;
-      // Default: popular / best seller priority
       return (b.badge ? 1 : 0) - (a.badge ? 1 : 0);
     });
   }, [selectedCategory, selectedBrand, searchQuery, sortBy]);
 
   const totalCartCount = cart.reduce((acc, item) => acc + item.quantity, 0);
-
-  // Spotlight product: Flair 58
   const spotlightItem = PRODUCTS.find((p) => p.id === 'akm-flair-58') || PRODUCTS[0];
 
   return (
@@ -237,200 +268,207 @@ export default function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         selectedCategory={selectedCategory}
-        onSelectCategory={(catId) => {
-          setSelectedCategory(catId);
-          scrollToCatalog();
-        }}
+        onSelectCategory={handleSelectCategory}
         onScrollToCalculator={scrollToCalculator}
         onScrollToShowroom={scrollToShowroom}
       />
 
-      {/* Hero Section */}
-      <Hero
-        onSelectCategory={setSelectedCategory}
-        onScrollToCatalog={scrollToCatalog}
-        onScrollToCalculator={scrollToCalculator}
-        onScrollToShowroom={scrollToShowroom}
-      />
-
-      {/* Spotlight Product Section (Flagship Flair 58) */}
-      <SpotlightProduct
-        product={spotlightItem}
-        onQuickView={setActiveModalProduct}
-        onAddToCart={handleAddToCart}
-      />
-
-      {/* Main Product Catalog Section */}
-      <main id="katalog-produk" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-1 w-full">
-        
-        {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
-          <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-2">
-              <Coffee className="w-3.5 h-3.5" />
-              <span>KATALOG ALAT SEDUH</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f5f5f4] tracking-tight">
-              Peralatan Kopi Specialty Pilihan
-            </h2>
-            <p className="text-xs sm:text-sm text-[#78716c] mt-1">
-              Menampilkan {filteredProducts.length} dari {PRODUCTS.length} alat kopi pilihan
-            </p>
-          </div>
-
-          {/* Action Tools & Sort Dropdown */}
-          <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
-            <button
-              onClick={() => setIsGrinderChartOpen(true)}
-              className="px-3.5 py-2 rounded-xl bg-[#1c1917] hover:bg-[#292524] text-xs font-semibold text-[#c2a676] border border-[#38332f] flex items-center gap-1.5 transition-all"
-            >
-              <SlidersHorizontal className="w-3.5 h-3.5" />
-              <span>Tabel Klik Grinder</span>
-            </button>
-
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-[#78716c] flex items-center gap-1">
-                <ArrowUpDown className="w-3.5 h-3.5" />
-                <span>Urutkan:</span>
-              </span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-[#1c1917] border border-[#292524] text-xs text-[#f5f5f4] rounded-xl px-3 py-2 focus:border-[#c2a676] focus:outline-none"
-              >
-                <option value="popular">Paling Populer</option>
-                <option value="price-low">Harga Terendah</option>
-                <option value="price-high">Harga Tertinggi</option>
-                <option value="rating">Rating Tertinggi</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        {/* Filters Bar: Category Tabs & Brand Filter */}
-        <div className="space-y-4 mb-8">
-          
-          {/* Category Tabs */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
-            {CATEGORIES.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setSelectedCategory(cat.id)}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
-                  selectedCategory === cat.id
-                    ? 'bg-[#c2a676] text-[#141211] border-[#c2a676] shadow-md shadow-[#c2a676]/20'
-                    : 'bg-[#1c1917] text-[#a8a29e] border-[#292524] hover:text-[#f5f5f4] hover:bg-[#292524]'
-                }`}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
-
-          {/* Brand Filter Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
-            <span className="text-[#78716c] text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1">
-              Brand:
-            </span>
-            {BRANDS.map((brand) => (
-              <button
-                key={brand}
-                onClick={() => setSelectedBrand(brand)}
-                className={`px-3 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all border ${
-                  selectedBrand === brand
-                    ? 'bg-[#292524] text-[#c2a676] border-[#c2a676]'
-                    : 'bg-[#1c1917]/70 text-[#78716c] border-[#292524] hover:text-[#a8a29e]'
-                }`}
-              >
-                {brand}
-              </button>
-            ))}
-
-            {(selectedCategory !== 'all' || selectedBrand !== 'Semua Brand' || searchQuery) && (
-              <button
-                onClick={() => {
-                  setSelectedCategory('all');
-                  setSelectedBrand('Semua Brand');
-                  setSearchQuery('');
-                }}
-                className="ml-auto text-[11px] text-[#ef4444] hover:text-red-300 flex items-center gap-1 shrink-0 px-2 py-1"
-              >
-                <RotateCcw className="w-3 h-3" />
-                <span>Reset Filter</span>
-              </button>
-            )}
-          </div>
-
-        </div>
-
-        {/* Product Grid */}
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-20 rounded-3xl bg-[#1c1917] border border-[#292524] p-8 space-y-4">
-            <Coffee className="w-12 h-12 text-[#78716c] mx-auto opacity-50" />
-            <h3 className="text-lg font-bold text-[#f5f5f4]">Produk Tidak Ditemukan</h3>
-            <p className="text-xs text-[#78716c] max-w-sm mx-auto">
-              Tidak ada alat kopi yang cocok dengan kata kunci "{searchQuery}" atau filter yang dipilih. Silakan coba filter lainnya.
-            </p>
-            <button
-              onClick={() => {
-                setSelectedCategory('all');
-                setSelectedBrand('Semua Brand');
-                setSearchQuery('');
-              }}
-              className="px-5 py-2.5 rounded-xl bg-[#c2a676] text-[#141211] font-bold text-xs hover:brightness-110"
-            >
-              Tampilkan Semua Produk
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {filteredProducts.map((product) => (
-              <ProductCard
-                key={product.id}
-                product={product}
-                onQuickView={setActiveModalProduct}
-                onAddToCart={handleAddToCart}
-                isWishlisted={wishlist.some((w) => w.id === product.id)}
-                onToggleWishlist={handleToggleWishlist}
+      {/* Routing between Homepage and Product Detail Page */}
+      <Routes>
+        {/* Homepage Route */}
+        <Route
+          path="/"
+          element={
+            <>
+              {/* Hero Section */}
+              <Hero
+                onSelectCategory={handleSelectCategory}
+                onScrollToCatalog={scrollToCatalog}
+                onScrollToCalculator={scrollToCalculator}
+                onScrollToShowroom={scrollToShowroom}
               />
-            ))}
-          </div>
-        )}
 
-      </main>
+              {/* Spotlight Product Section (Flair 58) */}
+              <SpotlightProduct
+                product={spotlightItem}
+                onQuickView={(p) => navigate(`/product/${p.slug}`)}
+                onAddToCart={handleAddToCart}
+              />
 
-      {/* Interactive Brewing Ratio Calculator Section */}
-      <BrewCalculator
-        onQuickView={setActiveModalProduct}
-        onAddToCart={handleAddToCart}
-      />
+              {/* Main Product Catalog Section */}
+              <main id="katalog-produk" className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-1 w-full">
+                
+                {/* Section Header */}
+                <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-2">
+                      <Coffee className="w-3.5 h-3.5" />
+                      <span>KATALOG ALAT SEDUH</span>
+                    </div>
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f5f5f4] tracking-tight">
+                      Peralatan Kopi Specialty Pilihan
+                    </h2>
+                    <p className="text-xs sm:text-sm text-[#78716c] mt-1">
+                      Menampilkan {filteredProducts.length} dari {PRODUCTS.length} alat kopi pilihan — Klik produk untuk membuka link &amp; spesifikasi lengkap
+                    </p>
+                  </div>
 
-      {/* FAQ Section */}
-      <FAQSection />
+                  {/* Action Tools & Sort Dropdown */}
+                  <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
+                    <button
+                      onClick={() => setIsGrinderChartOpen(true)}
+                      className="px-3.5 py-2 rounded-xl bg-[#1c1917] hover:bg-[#292524] text-xs font-semibold text-[#c2a676] border border-[#38332f] flex items-center gap-1.5 transition-all"
+                    >
+                      <SlidersHorizontal className="w-3.5 h-3.5" />
+                      <span>Tabel Klik Grinder</span>
+                    </button>
 
-      {/* Showroom & Slow Bar Tlogomas Square Section */}
-      <ShowroomSection />
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs text-[#78716c] flex items-center gap-1">
+                        <ArrowUpDown className="w-3.5 h-3.5" />
+                        <span>Urutkan:</span>
+                      </span>
+                      <select
+                        value={sortBy}
+                        onChange={(e) => setSortBy(e.target.value)}
+                        className="bg-[#1c1917] border border-[#292524] text-xs text-[#f5f5f4] rounded-xl px-3 py-2 focus:border-[#c2a676] focus:outline-none"
+                      >
+                        <option value="popular">Paling Populer</option>
+                        <option value="price-low">Harga Terendah</option>
+                        <option value="price-high">Harga Tertinggi</option>
+                        <option value="rating">Rating Tertinggi</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
 
-      {/* Footer */}
+                {/* Filters Bar: Category Tabs & Brand Filter */}
+                <div className="space-y-4 mb-8">
+                  
+                  {/* Category Tabs */}
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
+                    {CATEGORIES.map((cat) => (
+                      <button
+                        key={cat.id}
+                        onClick={() => setSelectedCategory(cat.id)}
+                        className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+                          selectedCategory === cat.id
+                            ? 'bg-[#c2a676] text-[#141211] border-[#c2a676] shadow-md shadow-[#c2a676]/20'
+                            : 'bg-[#1c1917] text-[#a8a29e] border-[#292524] hover:text-[#f5f5f4] hover:bg-[#292524]'
+                        }`}
+                      >
+                        {cat.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Brand Filter Chips */}
+                  <div className="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
+                    <span className="text-[#78716c] text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1">
+                      Brand:
+                    </span>
+                    {BRANDS.map((brand) => (
+                      <button
+                        key={brand}
+                        onClick={() => setSelectedBrand(brand)}
+                        className={`px-3 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all border ${
+                          selectedBrand === brand
+                            ? 'bg-[#292524] text-[#c2a676] border-[#c2a676]'
+                            : 'bg-[#1c1917]/70 text-[#78716c] border-[#292524] hover:text-[#a8a29e]'
+                        }`}
+                      >
+                        {brand}
+                      </button>
+                    ))}
+
+                    {(selectedCategory !== 'all' || selectedBrand !== 'Semua Brand' || searchQuery) && (
+                      <button
+                        onClick={() => {
+                          setSelectedCategory('all');
+                          setSelectedBrand('Semua Brand');
+                          setSearchQuery('');
+                        }}
+                        className="ml-auto text-[11px] text-[#ef4444] hover:text-red-300 flex items-center gap-1 shrink-0 px-2 py-1"
+                      >
+                        <RotateCcw className="w-3 h-3" />
+                        <span>Reset Filter</span>
+                      </button>
+                    )}
+                  </div>
+
+                </div>
+
+                {/* Product Grid */}
+                {filteredProducts.length === 0 ? (
+                  <div className="text-center py-20 rounded-3xl bg-[#1c1917] border border-[#292524] p-8 space-y-4">
+                    <Coffee className="w-12 h-12 text-[#78716c] mx-auto opacity-50" />
+                    <h3 className="text-lg font-bold text-[#f5f5f4]">Produk Tidak Ditemukan</h3>
+                    <p className="text-xs text-[#78716c] max-w-sm mx-auto">
+                      Tidak ada alat kopi yang cocok dengan kata kunci "{searchQuery}" atau filter yang dipilih. Silakan coba filter lainnya.
+                    </p>
+                    <button
+                      onClick={() => {
+                        setSelectedCategory('all');
+                        setSelectedBrand('Semua Brand');
+                        setSearchQuery('');
+                      }}
+                      className="px-5 py-2.5 rounded-xl bg-[#c2a676] text-[#141211] font-bold text-xs hover:brightness-110"
+                    >
+                      Tampilkan Semua Produk
+                    </button>
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    {filteredProducts.map((product) => (
+                      <ProductCard
+                        key={product.id}
+                        product={product}
+                        onQuickView={(p) => navigate(`/product/${p.slug}`)}
+                        onAddToCart={handleAddToCart}
+                        isWishlisted={wishlist.some((w) => w.id === product.id)}
+                        onToggleWishlist={handleToggleWishlist}
+                      />
+                    ))}
+                  </div>
+                )}
+
+              </main>
+
+              {/* Interactive Brewing Ratio Calculator Section */}
+              <BrewCalculator
+                onQuickView={(p) => navigate(`/product/${p.slug}`)}
+                onAddToCart={handleAddToCart}
+              />
+
+              {/* FAQ Section */}
+              <FAQSection />
+
+              {/* Showroom & Slow Bar Tlogomas Square Section */}
+              <ShowroomSection />
+            </>
+          }
+        />
+
+        {/* Dedicated Product Detail Route */}
+        <Route
+          path="/product/:slug"
+          element={
+            <ProductDetailPage
+              onAddToCart={handleAddToCart}
+              wishlist={wishlist}
+              onToggleWishlist={handleToggleWishlist}
+              showToast={showToast}
+            />
+          }
+        />
+      </Routes>
+
+      {/* Footer (Available across all pages) */}
       <Footer
-        onSelectCategory={(catId) => {
-          setSelectedCategory(catId);
-          scrollToCatalog();
-        }}
+        onSelectCategory={handleSelectCategory}
         onScrollToCalculator={scrollToCalculator}
         onScrollToShowroom={scrollToShowroom}
       />
-
-      {/* Product Detail Modal */}
-      {activeModalProduct && (
-        <ProductModal
-          product={activeModalProduct}
-          onClose={() => setActiveModalProduct(null)}
-          onAddToCart={handleAddToCart}
-          isWishlisted={wishlist.some((w) => w.id === activeModalProduct.id)}
-          onToggleWishlist={handleToggleWishlist}
-        />
-      )}
 
       {/* Grinder Click Chart Modal */}
       <GrinderClickChartModal

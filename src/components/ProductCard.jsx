@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Heart, 
   ShoppingBag, 
@@ -28,15 +29,18 @@ export default function ProductCard({
     : product.images[0];
 
   const handleDirectWhatsApp = (e) => {
+    e.preventDefault();
     e.stopPropagation();
     const item = {
       ...product,
       quantity: 1,
       selectedVariant: selectedVariant
     };
-    const waUrl = `https://wa.me/${STORE_INFO.whatsappNumber}?text=${generateWhatsAppMessage([item], 'Order Cepat Langsung via Web')}`;
+    const waUrl = `https://wa.me/${STORE_INFO.whatsappNumber}?text=${generateWhatsAppMessage([item], `Order Cepat Produk: ${product.name}`)}`;
     window.open(waUrl, '_blank');
   };
+
+  const productUrl = `/product/${product.slug}`;
 
   return (
     <div 
@@ -44,8 +48,8 @@ export default function ProductCard({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Product Image Area */}
-      <div className="relative aspect-square overflow-hidden bg-[#24201d] cursor-pointer" onClick={() => onQuickView(product)}>
+      {/* Product Image Area with Link */}
+      <Link to={productUrl} className="relative aspect-square overflow-hidden bg-[#24201d] block">
         <img
           src={displayImage}
           alt={product.name}
@@ -54,7 +58,7 @@ export default function ProductCard({
         />
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1 z-10">
+        <div className="absolute top-3 left-3 flex flex-col gap-1 z-10 pointer-events-none">
           {product.badge && (
             <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-[#141211]/90 text-[#c2a676] border border-[#c2a676]/30 backdrop-blur-sm">
               {product.badge}
@@ -70,10 +74,11 @@ export default function ProductCard({
         {/* Wishlist Button */}
         <button
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
             onToggleWishlist(product);
           }}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-colors z-10 ${
+          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-colors z-20 ${
             isWishlisted 
               ? 'bg-[#ef4444] text-white' 
               : 'bg-[#141211]/70 text-[#a8a29e] hover:text-[#f5f5f4] hover:bg-[#141211]'
@@ -84,19 +89,13 @@ export default function ProductCard({
         </button>
 
         {/* Quick View Button on Hover */}
-        <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:flex items-center justify-center gap-2">
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              onQuickView(product);
-            }}
-            className="w-full py-2 px-3 rounded-xl bg-[#141211]/90 hover:bg-[#141211] text-[#f5f5f4] text-xs font-semibold backdrop-blur-md border border-[#38332f] flex items-center justify-center gap-1.5 transition-all shadow-lg"
-          >
+        <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:flex items-center justify-center gap-2 z-10">
+          <span className="w-full py-2 px-3 rounded-xl bg-[#141211]/90 hover:bg-[#141211] text-[#f5f5f4] text-xs font-semibold backdrop-blur-md border border-[#38332f] flex items-center justify-center gap-1.5 transition-all shadow-lg">
             <Eye className="w-3.5 h-3.5 text-[#c2a676]" />
-            <span>Lihat Detail &amp; Spesifikasi</span>
-          </button>
+            <span>Buka Link Produk</span>
+          </span>
         </div>
-      </div>
+      </Link>
 
       {/* Content Area */}
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
@@ -113,13 +112,12 @@ export default function ProductCard({
             </div>
           </div>
 
-          {/* Title */}
-          <h3 
-            onClick={() => onQuickView(product)}
-            className="text-sm font-bold text-[#f5f5f4] group-hover:text-[#c2a676] transition-colors line-clamp-2 cursor-pointer leading-snug"
-          >
-            {product.name}
-          </h3>
+          {/* Title with Link */}
+          <Link to={productUrl} className="block group-hover:text-[#c2a676] transition-colors">
+            <h3 className="text-sm font-bold text-[#f5f5f4] line-clamp-2 leading-snug">
+              {product.name}
+            </h3>
+          </Link>
 
           {/* Tagline / Subtitle */}
           <p className="text-xs text-[#a8a29e] line-clamp-1 mt-1 font-normal">
@@ -134,6 +132,7 @@ export default function ProductCard({
                 <button
                   key={v.id}
                   onClick={(e) => {
+                    e.preventDefault();
                     e.stopPropagation();
                     setSelectedVariant(v);
                   }}
@@ -192,4 +191,3 @@ export default function ProductCard({
     </div>
   );
 }
-

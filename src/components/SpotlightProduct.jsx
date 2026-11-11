@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Flame, 
   Award, 
@@ -7,7 +8,8 @@ import {
   PhoneCall, 
   Check, 
   SlidersHorizontal,
-  Sparkles
+  Sparkles,
+  ArrowRight
 } from 'lucide-react';
 import { formatRupiah, generateWhatsAppMessage } from '../utils/format';
 import { STORE_INFO } from '../data/products';
@@ -124,12 +126,13 @@ export default function SpotlightProduct({ onQuickView, onAddToCart, product }) 
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <button
-                    onClick={() => onQuickView(product)}
-                    className="px-5 py-3 rounded-xl bg-[#292524] hover:bg-[#38332f] text-xs font-bold text-[#f5f5f4] border border-[#38332f] hover:border-[#c2a676] transition-all"
+                  <Link
+                    to={`/product/${product.slug}`}
+                    className="px-5 py-3 rounded-xl bg-[#292524] hover:bg-[#38332f] text-xs font-bold text-[#f5f5f4] border border-[#38332f] hover:border-[#c2a676] transition-all flex items-center gap-1.5"
                   >
-                    Detail Teknis
-                  </button>
+                    <span>Buka Halaman Produk</span>
+                    <ArrowRight className="w-3.5 h-3.5 text-[#c2a676]" />
+                  </Link>
 
                   <button
                     onClick={() => onAddToCart(product)}

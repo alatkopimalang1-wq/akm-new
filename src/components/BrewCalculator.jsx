@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Sparkles, 
   Coffee, 
@@ -191,9 +192,9 @@ export default function BrewCalculator({ onQuickView, onAddToCart }) {
 
             <div className="space-y-3">
               {recommendedGear.map((item) => (
-                <div
+                <Link
                   key={item.id}
-                  onClick={() => onQuickView(item)}
+                  to={`/product/${item.slug}`}
                   className="flex items-center gap-3 p-3 rounded-2xl bg-[#292524]/60 border border-[#38332f] hover:border-[#c2a676]/50 transition-all cursor-pointer group"
                 >
                   <img
@@ -212,6 +213,7 @@ export default function BrewCalculator({ onQuickView, onAddToCart }) {
                   </div>
                   <button
                     onClick={(e) => {
+                      e.preventDefault();
                       e.stopPropagation();
                       onAddToCart(item);
                     }}
@@ -220,7 +222,7 @@ export default function BrewCalculator({ onQuickView, onAddToCart }) {
                   >
                     <ArrowRight className="w-4 h-4" />
                   </button>
-                </div>
+                </Link>
               ))}
             </div>
 
