@@ -221,7 +221,7 @@ export default function App() {
   const spotlightItem = PRODUCTS.find((p) => p.id === 'akm-flair-58') || PRODUCTS[0];
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white pb-20 md:pb-0 overflow-x-hidden">
+    <div className="min-h-screen bg-white text-slate-900 flex flex-col font-sans selection:bg-[#0070f3] selection:text-white pb-20 md:pb-0 overflow-x-clip">
       
       {/* Toast Notification */}
       {toastMessage && (

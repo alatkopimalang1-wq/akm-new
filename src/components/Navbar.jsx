@@ -290,7 +290,7 @@ export default function Navbar({
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-[#0b1e36] shadow-md transition-all" ref={navbarRef}>
+    <header className="sticky top-0 z-50 w-full bg-[#0b1e36]/98 backdrop-blur-md shadow-md border-b border-[#142944] transition-all" ref={navbarRef}>
       
       {/* Top Navbar Row */}
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
