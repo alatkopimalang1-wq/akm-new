@@ -124,40 +124,51 @@ export default function Navbar({
 
               {/* Dropdown Menu */}
               {categoryDropdownOpen && (
-                <div className="absolute left-0 top-full mt-2 w-64 bg-[#1c272a] rounded-2xl border border-[#2f4044] shadow-2xl py-2 z-50 animate-fade-in divide-y divide-[#243336]">
-                  <div className="px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-[#788a8d]">
-                    Pilih Kategori Alat Kopi
+                <div className="absolute left-0 top-full mt-2 w-80 bg-[#1c272a] rounded-2xl border border-[#2f4044] shadow-2xl p-3 z-50 animate-fade-in divide-y divide-[#243336]">
+                  <div className="pb-2">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#788a8d] block px-2 mb-1.5">
+                      Koleksi Perlengkapan Kopi
+                    </span>
+                    <div className="grid grid-cols-1 gap-1">
+                      {CATEGORIES.map((cat) => (
+                        <button
+                          key={cat.id}
+                          onClick={() => handleCategoryClick(cat.id)}
+                          className={`w-full text-left px-3 py-2 rounded-xl text-xs flex items-center justify-between transition-colors ${
+                            selectedCategory === cat.id
+                              ? 'bg-[#28383c] text-[#c2a676] font-bold border border-[#c2a676]/30'
+                              : 'text-[#dbe3e5] hover:bg-[#233033] hover:text-white'
+                          }`}
+                        >
+                          <div className="flex items-center gap-2.5">
+                            {getCategoryIcon(cat.id)}
+                            <span>{cat.name}</span>
+                          </div>
+                          <span className="text-[10px] text-[#788a8d] bg-[#141d1f] px-2 py-0.5 rounded-full">{cat.count}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                  <div className="py-1">
-                    {CATEGORIES.map((cat) => (
-                      <button
-                        key={cat.id}
-                        onClick={() => handleCategoryClick(cat.id)}
-                        className={`w-full text-left px-3.5 py-2.5 text-xs flex items-center justify-between transition-colors ${
-                          selectedCategory === cat.id
-                            ? 'bg-[#28383c] text-[#c2a676] font-bold'
-                            : 'text-[#dbe3e5] hover:bg-[#233033] hover:text-white'
-                        }`}
-                      >
-                        <div className="flex items-center gap-2.5">
-                          {getCategoryIcon(cat.id)}
-                          <span>{cat.name}</span>
-                        </div>
-                        <span className="text-[10px] text-[#788a8d]">{cat.count}</span>
-                      </button>
-                    ))}
-                  </div>
-                  <div className="p-2">
+
+                  <div className="pt-2 space-y-1">
                     <button
                       onClick={() => {
                         onOpenGrinderChart();
                         setCategoryDropdownOpen(false);
                       }}
-                      className="w-full text-left px-3 py-2 text-xs font-semibold text-[#c2a676] hover:bg-[#233033] rounded-xl flex items-center gap-2"
+                      className="w-full text-left px-3 py-2 text-xs font-semibold text-[#c2a676] hover:bg-[#233033] rounded-xl flex items-center gap-2 transition-colors"
                     >
                       <SlidersHorizontal className="w-3.5 h-3.5" />
                       <span>Tabel Kalibrasi Klik Grinder</span>
                     </button>
+                    <Link
+                      to="/panduan-seduh"
+                      onClick={() => setCategoryDropdownOpen(false)}
+                      className="w-full text-left px-3 py-2 text-xs font-semibold text-[#dbe3e5] hover:text-white hover:bg-[#233033] rounded-xl flex items-center gap-2 transition-colors"
+                    >
+                      <Coffee className="w-3.5 h-3.5 text-[#c2a676]" />
+                      <span>Resep &amp; Panduan Seduh Sanubari</span>
+                    </Link>
                   </div>
                 </div>
               )}
