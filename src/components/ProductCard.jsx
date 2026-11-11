@@ -3,14 +3,10 @@ import { Link } from 'react-router-dom';
 import { 
   Heart, 
   ShoppingBag, 
-  Eye, 
-  Star, 
   Check, 
-  PhoneCall, 
-  ExternalLink 
+  ChevronRight 
 } from 'lucide-react';
-import { formatRupiah, generateWhatsAppMessage } from '../utils/format';
-import { STORE_INFO } from '../data/products';
+import { formatRupiah } from '../utils/format';
 
 export default function ProductCard({ 
   product, 
@@ -19,37 +15,23 @@ export default function ProductCard({
   isWishlisted, 
   onToggleWishlist 
 }) {
-  const [selectedVariant, setSelectedVariant] = useState(
-    product.variants && product.variants.length > 0 ? product.variants[0] : null
-  );
   const [isHovered, setIsHovered] = useState(false);
 
-  const displayImage = isHovered && product.images.length > 1 
+  const displayImage = isHovered && product.images && product.images.length > 1 
     ? product.images[1] 
     : product.images[0];
 
-  const handleDirectWhatsApp = (e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    const item = {
-      ...product,
-      quantity: 1,
-      selectedVariant: selectedVariant
-    };
-    const waUrl = `https://wa.me/${STORE_INFO.whatsappNumber}?text=${generateWhatsAppMessage([item], `Order Cepat Produk: ${product.name}`)}`;
-    window.open(waUrl, '_blank');
-  };
-
   const productUrl = `/product/${product.slug}`;
+  const hasVariants = product.variants && product.variants.length > 1;
 
   return (
     <div 
-      className="group relative bg-white rounded-3xl border border-slate-200 hover:border-[#0070f3] transition-all duration-300 flex flex-col overflow-hidden shadow-xs hover:shadow-xl hover:shadow-blue-500/10 hover:-translate-y-1"
+      className="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-[#4f46e5]/40 transition-all duration-300 flex flex-col overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-0.5"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* Product Image Area with Link */}
-      <Link to={productUrl} className="relative aspect-square overflow-hidden bg-slate-100 block">
+      {/* Product Image Area */}
+      <Link to={productUrl} className="relative aspect-square overflow-hidden bg-slate-50 block">
         <img
           src={displayImage}
           alt={product.name}
@@ -57,135 +39,95 @@ export default function ProductCard({
           loading="lazy"
         />
 
-        {/* Badges */}
-        <div className="absolute top-3 left-3 flex flex-col gap-1 z-10 pointer-events-none">
-          {product.badge && (
-            <span className="px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider bg-white/95 text-[#0070f3] border border-blue-200 shadow-xs backdrop-blur-sm">
-              {product.badge}
-            </span>
-          )}
-          {product.discountPercent > 0 && (
-            <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-red-600 text-white shadow-xs">
-              HEMAT {product.discountPercent}%
-            </span>
-          )}
+        {/* Top-Left Badge: TERBARU */}
+        <div className="absolute top-2.5 left-2.5 z-10 pointer-events-none">
+          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-[#4f46e5] text-white shadow-xs">
+            {product.badge || 'TERBARU'}
+          </span>
         </div>
 
-        {/* Wishlist Button */}
+        {/* Top-Right Wishlist Button */}
         <button
+          type="button"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             onToggleWishlist(product);
           }}
-          className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-colors z-20 shadow-xs ${
+          className={`absolute top-2.5 right-2.5 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-white/95 backdrop-blur-xs border border-slate-200/80 flex items-center justify-center transition-all z-20 shadow-xs hover:scale-105 active:scale-95 ${
             isWishlisted 
-              ? 'bg-red-500 text-white' 
-              : 'bg-white/80 text-slate-500 hover:text-slate-900 hover:bg-white'
+              ? 'text-red-500 fill-red-500 border-red-200' 
+              : 'text-slate-400 hover:text-red-500 hover:border-slate-300'
           }`}
           title={isWishlisted ? 'Hapus dari Keinginan' : 'Simpan ke Keinginan'}
         >
-          <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
+          <Heart className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isWishlisted ? 'fill-current' : ''}`} />
         </button>
-
-        {/* Quick View Button on Hover */}
-        <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:flex items-center justify-center gap-2 z-10">
-          <span className="w-full py-2.5 px-3 rounded-xl bg-white/95 hover:bg-white text-slate-900 text-xs font-semibold backdrop-blur-md border border-slate-200 flex items-center justify-center gap-1.5 transition-all shadow-lg">
-            <Eye className="w-3.5 h-3.5 text-[#0070f3]" />
-            <span>Buka Link Produk</span>
-          </span>
-        </div>
       </Link>
 
       {/* Content Area */}
-      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
+      <div className="p-3 sm:p-4 flex-1 flex flex-col justify-between">
         <div>
-          {/* Brand & Rating */}
-          <div className="flex items-center justify-between text-xs text-slate-400 mb-1.5">
-            <span className="uppercase tracking-wider font-bold text-[#0070f3]">
-              {product.brand}
-            </span>
-            <div className="flex items-center gap-1">
-              <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              <span className="font-bold text-slate-800">{product.rating}</span>
-              <span className="text-[10px] text-slate-400">({product.reviewCount})</span>
-            </div>
-          </div>
+          {/* Brand Name */}
+          <span className="text-[10px] sm:text-[11px] font-semibold text-slate-400 uppercase tracking-wider block mb-1">
+            {product.brand}
+          </span>
 
-          {/* Title with Link */}
-          <Link to={productUrl} className="block group-hover:text-[#0070f3] transition-colors">
-            <h3 className="text-sm font-bold text-slate-900 line-clamp-2 leading-snug">
+          {/* Title */}
+          <Link to={productUrl} className="block group-hover:text-[#4f46e5] transition-colors">
+            <h3 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2 leading-snug min-h-[2.4rem] sm:min-h-[2.6rem]">
               {product.name}
             </h3>
           </Link>
 
-          {/* Tagline / Subtitle */}
-          <p className="text-xs text-slate-500 line-clamp-1 mt-1 font-normal">
-            {product.tagline}
-          </p>
-
-          {/* Variant Selector Pills */}
-          {product.variants && product.variants.length > 1 && (
-            <div className="mt-3 pt-2.5 border-t border-slate-100 flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-              <span className="text-[10px] text-slate-400 shrink-0 font-medium">Varian:</span>
-              {product.variants.map((v) => (
-                <button
-                  key={v.id}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    setSelectedVariant(v);
-                  }}
-                  className={`text-[10px] px-2 py-0.5 rounded-lg whitespace-nowrap transition-all border ${
-                    selectedVariant?.id === v.id
-                      ? 'bg-blue-50 border-blue-400 text-[#0070f3] font-bold'
-                      : 'bg-slate-50 border-slate-200 text-slate-600 hover:border-slate-300'
-                  }`}
-                >
-                  {v.label}
-                </button>
-              ))}
-            </div>
-          )}
+          {/* Price Section */}
+          <div className="mt-2">
+            <span className="text-sm sm:text-base font-extrabold text-[#4f46e5] block leading-tight">
+              {formatRupiah(product.price)}
+            </span>
+            {product.originalPrice ? (
+              <span className="text-[10px] sm:text-[11px] text-slate-400 line-through block mt-0.5">
+                {formatRupiah(product.originalPrice)}
+              </span>
+            ) : (
+              <span className="text-[10px] sm:text-[11px] text-transparent block mt-0.5 select-none">
+                -
+              </span>
+            )}
+          </div>
         </div>
 
-        {/* Price & Action Row */}
-        <div className="mt-4 pt-3 border-t border-slate-100">
-          <div className="flex items-baseline justify-between mb-3">
-            <div>
-              <span className="text-base sm:text-lg font-extrabold text-slate-900">
-                {formatRupiah(product.price)}
-              </span>
-              {product.originalPrice && (
-                <span className="block text-[11px] text-slate-400 line-through">
-                  {formatRupiah(product.originalPrice)}
-                </span>
-              )}
-            </div>
-            <span className="text-[10px] text-emerald-700 font-semibold bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded-lg">
-              Ready Stock
-            </span>
+        {/* Bottom Status & Action Row */}
+        <div className="mt-3 pt-2.5 flex items-center justify-between gap-2 border-t border-slate-100">
+          {/* Status: ✓ Tersedia */}
+          <div className="flex items-center gap-1 text-[11px] font-medium text-emerald-600">
+            <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[2.5]" />
+            <span>Tersedia</span>
           </div>
 
-          {/* Buttons: Add to Cart & Buy via WA */}
-          <div className="grid grid-cols-2 gap-2">
-            <button
-              onClick={() => onAddToCart(product, selectedVariant)}
-              className="w-full py-2.5 px-3 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-800 text-xs font-bold border border-slate-200 hover:border-slate-300 flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-xs"
+          {/* Action Button: Pilih > or ShoppingBag Circle */}
+          {hasVariants ? (
+            <Link
+              to={productUrl}
+              className="inline-flex items-center gap-0.5 px-3 py-1.5 rounded-full bg-[#4f46e5] hover:bg-[#4338ca] text-white text-xs font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#0070f3]" />
-              <span>+ Keranjang</span>
-            </button>
-
+              <span>Pilih</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </Link>
+          ) : (
             <button
-              onClick={handleDirectWhatsApp}
-              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-md shadow-blue-500/25"
-              title="Pesan via WhatsApp Sanubari"
+              type="button"
+              onClick={(e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                onAddToCart(product);
+              }}
+              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#4f46e5] hover:bg-[#4338ca] text-white flex items-center justify-center transition-all shadow-xs hover:shadow-md active:scale-95"
+              title="Tambah ke Keranjang"
             >
-              <PhoneCall className="w-3.5 h-3.5" />
-              <span>Beli via WA</span>
+              <ShoppingBag className="w-3.5 h-3.5" />
             </button>
-          </div>
+          )}
         </div>
       </div>
     </div>

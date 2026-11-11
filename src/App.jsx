@@ -298,7 +298,29 @@ export default function App() {
           element={<CategoriesHubPage />}
         />
 
-        {/* Dedicated Category Routes */}
+        {/* Dedicated Category & Shop Routes */}
+        <Route
+          path="/shop"
+          element={
+            <CategoryPage
+              onAddToCart={handleAddToCart}
+              wishlist={wishlist}
+              onToggleWishlist={handleToggleWishlist}
+              showToast={showToast}
+            />
+          }
+        />
+        <Route
+          path="/katalog"
+          element={
+            <CategoryPage
+              onAddToCart={handleAddToCart}
+              wishlist={wishlist}
+              onToggleWishlist={handleToggleWishlist}
+              showToast={showToast}
+            />
+          }
+        />
         <Route
           path="/kategori/:categorySlug"
           element={
