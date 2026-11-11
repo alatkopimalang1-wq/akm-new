@@ -280,6 +280,15 @@ export default function Navbar({
     }
   };
 
+  const handleLogoHomeClick = (e) => {
+    setMegaMenuOpen(false);
+    setUserDropdownOpen(false);
+    setNotificationOpen(false);
+    setSearchFocused(false);
+    navigate('/');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <header className="sticky top-0 z-50 w-full bg-[#0b1e36] shadow-md transition-all" ref={navbarRef}>
       
@@ -289,18 +298,19 @@ export default function Navbar({
           
           {/* LEFT: Brand Logo + Name + Kategori Pill */}
           <div className="flex items-center gap-3 sm:gap-4 shrink-0">
-            {/* Brand Logo & Name */}
+            {/* Brand Logo & Name (Tombol Kembali ke Homepage) */}
             <Link 
               to="/" 
-              onClick={() => setMegaMenuOpen(false)}
-              className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none"
+              onClick={handleLogoHomeClick}
+              title="Kembali ke Beranda (Homepage)"
+              className="flex items-center gap-2.5 sm:gap-3 group focus:outline-none cursor-pointer select-none"
             >
               {/* Circular Sanubari Logo Badge */}
-              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-[#10223b] border border-[#1e3a5f] group-hover:border-[#0084ff] transition-colors shrink-0 flex items-center justify-center shadow-md">
+              <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-full overflow-hidden bg-[#10223b] border border-[#1e3a5f] group-hover:border-[#0084ff] group-hover:scale-105 transition-all shrink-0 flex items-center justify-center shadow-md">
                 <img
                   src="/sanubari-logo.png"
                   alt="Sanubari Roastery"
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover group-hover:brightness-110 transition-all"
                   onError={(e) => {
                     e.target.style.display = 'none';
                     e.target.parentElement.innerHTML = '<span class="text-xs font-black text-[#0084ff]">SNB</span>';
@@ -313,7 +323,7 @@ export default function Navbar({
                 <span className="font-extrabold text-base sm:text-lg text-white tracking-tight group-hover:text-[#38bdf8] transition-colors font-sans">
                   Sanubari
                 </span>
-                <span className="text-[11px] sm:text-xs text-[#94a3b8] font-medium tracking-normal">
+                <span className="text-[11px] sm:text-xs text-[#94a3b8] group-hover:text-slate-300 font-medium tracking-normal transition-colors">
                   Roastery Malang
                 </span>
               </div>

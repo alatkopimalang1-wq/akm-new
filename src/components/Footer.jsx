@@ -56,19 +56,24 @@ export default function Footer({ onSelectCategory, onScrollToCalculator, onScrol
           
           {/* Column 1: Brand Info */}
           <div className="lg:col-span-4 space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-[#0e274b] border border-[#1e4274] flex items-center justify-center shadow-sm">
+            <Link 
+              to="/" 
+              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+              title="Kembali ke Beranda (Homepage)"
+              className="flex items-center gap-3 group cursor-pointer select-none"
+            >
+              <div className="w-10 h-10 rounded-xl bg-[#0e274b] border border-[#1e4274] group-hover:border-[#0070f3] group-hover:scale-105 flex items-center justify-center shadow-sm transition-all">
                 <Coffee className="w-5 h-5 text-[#38bdf8]" />
               </div>
               <div>
-                <span className="font-extrabold text-lg text-white tracking-wide block uppercase">
+                <span className="font-extrabold text-lg text-white tracking-wide block uppercase group-hover:text-[#38bdf8] transition-colors">
                   Alat Kopi Malang
                 </span>
                 <span className="text-[10px] uppercase tracking-wider text-[#38bdf8] font-bold">
                   Partner of Sanubari Roastery
                 </span>
               </div>
-            </div>
+            </Link>
 
             <p className="text-xs text-slate-300 leading-relaxed">
               Didirikan di Malang sebagai wujud dedikasi kami dalam menghadirkan pengalaman kopi terbaik. Menyediakan peralatan seduh kopi specialty bermutu tinggi, presisi, dan teruji langsung di meja seduh Sanubari Roastery.
