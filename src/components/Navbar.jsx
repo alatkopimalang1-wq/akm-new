@@ -500,11 +500,32 @@ export default function Navbar({
 
               {userDropdownOpen && (
                 <div className="absolute right-0 top-full mt-2 w-52 bg-[#0c192d] rounded-2xl border border-[#1e3a5f] shadow-2xl py-2 z-50 animate-fade-in divide-y divide-[#172b47] text-left">
-                  <div className="px-4 py-2">
-                    <p className="text-xs font-bold text-white">Winda</p>
-                    <p className="text-[11px] text-[#94a3b8]">Member Sanubari Club</p>
+                  <div className="px-4 py-2.5 flex items-center justify-between border-b border-[#172b47]">
+                    <div>
+                      <p className="text-xs font-bold text-white">Winda Sari</p>
+                      <p className="text-[10px] text-amber-400 font-semibold">Pelanggan Setia</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        navigate('/akun');
+                        setUserDropdownOpen(false);
+                      }}
+                      className="text-[11px] font-bold text-[#38bdf8] hover:underline"
+                    >
+                      Buka
+                    </button>
                   </div>
                   <div className="py-1 text-xs">
+                    <button
+                      onClick={() => {
+                        navigate('/akun');
+                        setUserDropdownOpen(false);
+                      }}
+                      className="w-full text-left px-4 py-2 text-[#cbd5e1] hover:bg-[#10223b] hover:text-white flex items-center gap-2"
+                    >
+                      <User className="w-3.5 h-3.5 text-amber-400" />
+                      <span>Akun Saya</span>
+                    </button>
                     <button
                       onClick={() => {
                         navigate('/lacak-pesanan');

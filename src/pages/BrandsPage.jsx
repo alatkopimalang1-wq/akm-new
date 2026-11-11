@@ -31,7 +31,7 @@ export default function BrandsPage() {
             <Link
               key={brand.id}
               to={`/kategori/all?brand=${encodeURIComponent(brand.name)}`}
-              className="bg-white rounded-2xl sm:rounded-3xl border border-slate-100/90 shadow-xs hover:shadow-md hover:border-[#0070f3]/40 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center text-center cursor-pointer group focus:outline-none"
+              className="bg-white rounded-2xl sm:rounded-3xl border border-slate-100/90 shadow-xs hover:shadow-md hover:border-[#0e1f36]/40 transition-all duration-300 py-8 px-4 flex flex-col items-center justify-center text-center cursor-pointer group focus:outline-none"
               title={`Buka koleksi ${brand.name}`}
             >
               
@@ -68,7 +68,7 @@ export default function BrandsPage() {
               </div>
 
               {/* Brand Name Text */}
-              <span className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#0070f3] transition-colors leading-tight line-clamp-1">
+              <span className="text-xs sm:text-sm font-bold text-slate-900 group-hover:text-[#0e1f36] transition-colors leading-tight line-clamp-1">
                 {brand.name}
               </span>
 

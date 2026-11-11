@@ -76,7 +76,7 @@ export default function ProductDetailPage({
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white font-bold text-xs hover:brightness-110 transition-all shadow-lg shadow-blue-500/25"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0e1f36] hover:bg-[#162f52] text-white font-bold text-xs transition-all shadow-md active:scale-95"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Katalog Alat</span>

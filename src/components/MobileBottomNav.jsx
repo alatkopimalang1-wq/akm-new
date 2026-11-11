@@ -30,9 +30,9 @@ export default function MobileBottomNav({
   const [accountSheetOpen, setAccountSheetOpen] = useState(false);
 
   // Check active state
-  const isHomeActive = location.pathname === '/' && !categorySheetOpen && !accountSheetOpen;
-  const isCategoryActive = (location.pathname.startsWith('/kategori') || location.pathname === '/semua-kategori') && !accountSheetOpen;
-  const isAccountActive = accountSheetOpen;
+  const isHomeActive = location.pathname === '/' && !categorySheetOpen;
+  const isCategoryActive = (location.pathname.startsWith('/kategori') || location.pathname === '/semua-kategori');
+  const isAccountActive = location.pathname === '/akun' || location.pathname === '/account' || location.pathname === '/profil';
 
   // Colors matching user screenshot: active is warm coffee/bronze (#8B5A2B), inactive is slate (#596b82)
   const activeColor = '#8B5A2B';
@@ -63,7 +63,9 @@ export default function MobileBottomNav({
 
   const handleAccountClick = () => {
     setCategorySheetOpen(false);
-    setAccountSheetOpen(!accountSheetOpen);
+    setAccountSheetOpen(false);
+    navigate('/akun');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

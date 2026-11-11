@@ -19,6 +19,7 @@ import BrewGuidesPage from './pages/BrewGuidesPage';
 import WholesalePage from './pages/WholesalePage';
 import BrandsPage from './pages/BrandsPage';
 import CategoriesHubPage from './pages/CategoriesHubPage';
+import AccountPage from './pages/AccountPage';
 import MobileBottomNav from './components/MobileBottomNav';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
@@ -380,6 +381,20 @@ export default function App() {
         <Route
           path="/semua-brand"
           element={<BrandsPage />}
+        />
+
+        {/* Dedicated Account / Profil Page (Sesuai Desain Pengguna) */}
+        <Route
+          path="/akun"
+          element={<AccountPage showToast={showToast} />}
+        />
+        <Route
+          path="/account"
+          element={<AccountPage showToast={showToast} />}
+        />
+        <Route
+          path="/profil"
+          element={<AccountPage showToast={showToast} />}
         />
       </Routes>
 
