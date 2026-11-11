@@ -590,10 +590,10 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
       </div>
 
       {/* ========================================================================= */}
-      {/* BRAND PILIHAN CAROUSEL (Persis Gambar Pengguna) */}
+      {/* BRAND PILIHAN CAROUSEL (Clean / Frameless tanpa background box) */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
-        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-7 shadow-xs">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-14">
+        <div>
           
           {/* Section Header: Title left, "Semua Brand >" right */}
           <div className="flex items-center justify-between mb-5 sm:mb-6">
@@ -602,7 +602,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
             </h3>
             <Link
               to="/brands"
-              className="text-xs sm:text-sm font-bold text-[#0070f3] hover:text-blue-700 flex items-center gap-1 transition-colors"
+              className="text-xs sm:text-sm font-bold text-[#0e1f36] hover:underline flex items-center gap-1 transition-colors"
             >
               <span>Semua Brand</span>
               <ChevronRight className="w-4 h-4 stroke-[2.5]" />
@@ -671,7 +671,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
                   </div>
 
                   {/* Brand Name Label Text below Circle */}
-                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover/brand:text-[#0070f3] transition-colors leading-tight line-clamp-1 truncate max-w-[76px] sm:max-w-[92px]">
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover/brand:text-[#0e1f36] transition-colors leading-tight line-clamp-1 truncate max-w-[76px] sm:max-w-[92px]">
                     {brand.name}
                   </span>
 
