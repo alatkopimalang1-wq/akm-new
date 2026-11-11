@@ -122,12 +122,12 @@ export default function ProductDetailPage({
   const stockCount = product.stock || 20;
 
   return (
-    <div className="min-h-screen bg-slate-50/40 text-slate-900 py-6 sm:py-10 px-4 sm:px-6 lg:px-8 pb-24">
-      <div className="max-w-5xl mx-auto space-y-10">
+    <div className="min-h-screen bg-white text-slate-900 py-4 sm:py-8 px-4 sm:px-6 lg:px-8 pb-24">
+      <div className="max-w-6xl mx-auto space-y-12">
         
-        {/* Main Product Card Container (Persis Screenshot) */}
-        <div className="bg-white rounded-3xl border border-slate-200/90 p-5 sm:p-8 shadow-sm">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-7 lg:gap-10 items-start">
+        {/* Main Product Section (Tanpa background card / line pembungkus luar) */}
+        <div>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
             
             {/* Left Column: Product Photo (Mobile Swipeable Slider & Desktop Zoom Photo) */}
             <div className="md:col-span-5">
@@ -411,7 +411,7 @@ export default function ProductDetailPage({
 
         {/* Related Products Section (Clean & Simple) */}
         {relatedProducts.length > 0 && (
-          <div className="pt-4">
+          <div className="pt-8 border-t border-slate-100">
             <div className="flex items-center justify-between mb-5">
               <div>
                 <span className="text-xs font-bold text-[#4f46e5] uppercase tracking-wider block">
