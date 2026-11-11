@@ -164,36 +164,15 @@ export default function App() {
   // Navigation helpers
   const handleSelectCategory = (catId) => {
     setSelectedCategory(catId);
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate(`/kategori/${catId}`);
   };
 
   const scrollToCatalog = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate('/kategori/all');
   };
 
   const scrollToCalculator = () => {
-    if (location.pathname !== '/') {
-      navigate('/');
-      setTimeout(() => {
-        document.getElementById('kalkulator-seduh')?.scrollIntoView({ behavior: 'smooth' });
-      }, 100);
-    } else {
-      document.getElementById('kalkulator-seduh')?.scrollIntoView({ behavior: 'smooth' });
-    }
+    navigate('/panduan-seduh');
   };
 
   const scrollToShowroom = () => {
@@ -283,18 +262,13 @@ export default function App() {
         <Route
           path="/"
           element={
-            <>
-              {/* Hero Section (5-Slide Image Banner, 4 Trust Badges, Quick Category Chips) */}
-              <Hero
-                onSelectCategory={handleSelectCategory}
-                onScrollToCatalog={scrollToCatalog}
-                onScrollToCalculator={scrollToCalculator}
-                onScrollToShowroom={scrollToShowroom}
-              />
-
-              {/* Showroom & Slow Bar Tlogomas Square Section */}
-              <ShowroomSection />
-            </>
+            /* Hero Section (5-Slide Image Banner, 4 Trust Badges, Quick Category Chips) */
+            <Hero
+              onSelectCategory={handleSelectCategory}
+              onScrollToCatalog={scrollToCatalog}
+              onScrollToCalculator={scrollToCalculator}
+              onScrollToShowroom={scrollToShowroom}
+            />
           }
         />
 

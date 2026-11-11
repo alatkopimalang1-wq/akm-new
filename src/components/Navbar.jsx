@@ -355,11 +355,12 @@ export default function Navbar({
                 onChange={(e) => setSearchQuery(e.target.value)}
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
-                    navigate('/');
                     setSearchFocused(false);
-                    setTimeout(() => {
-                      document.getElementById('katalog-produk')?.scrollIntoView({ behavior: 'smooth' });
-                    }, 100);
+                    if (searchResults.length > 0) {
+                      navigate(`/product/${searchResults[0].slug}`);
+                    } else {
+                      navigate('/kategori/all');
+                    }
                   }
                 }}
                 className="w-full bg-[#060e1a] focus:bg-[#0a1526] border border-[#172b47] focus:border-[#0084ff] text-xs sm:text-sm text-white placeholder-[#64748b] rounded-xl py-2.5 sm:py-3 pl-10 sm:pl-11 pr-4 focus:outline-none transition-all shadow-inner focus:shadow-md"

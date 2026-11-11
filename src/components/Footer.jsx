@@ -15,41 +15,6 @@ export default function Footer({ onSelectCategory, onScrollToCalculator, onScrol
   return (
     <footer className="bg-[#0b1e36] text-slate-300 text-xs">
       
-      {/* Top Value Banner (Deep Sapphire Blue) */}
-      <div className="py-8 bg-[#071426]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-6 text-center md:text-left">
-          <div className="flex items-center justify-center md:justify-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0e274b] border border-[#1e4274] flex items-center justify-center shrink-0 shadow-sm">
-              <ShieldCheck className="w-5 h-5 text-[#38bdf8]" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">Garansi Resmi Distributor</h4>
-              <p className="text-[11px] text-slate-400">Semua alat dijamin 100% original bergaransi resmi.</p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center md:justify-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0e274b] border border-[#1e4274] flex items-center justify-center shrink-0 shadow-sm">
-              <Coffee className="w-5 h-5 text-[#38bdf8]" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">Uji Coba di Slow Bar Malang</h4>
-              <p className="text-[11px] text-slate-400">Test drive grinder &amp; espresso lever langsung sebelum membeli.</p>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center md:justify-start gap-3">
-            <div className="w-10 h-10 rounded-xl bg-[#0e274b] border border-[#1e4274] flex items-center justify-center shrink-0 shadow-sm">
-              <ShoppingBag className="w-5 h-5 text-[#38bdf8]" />
-            </div>
-            <div>
-              <h4 className="text-sm font-bold text-white">Gratis Ongkir se-Jawa</h4>
-              <p className="text-[11px] text-slate-400">Untuk pesanan alat kopi dan bundle di atas Rp 500.000.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Main Footer Links */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
