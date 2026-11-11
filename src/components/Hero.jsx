@@ -11,9 +11,10 @@ import {
   Store, 
   Coffee, 
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Check
 } from 'lucide-react';
-import { STORE_INFO } from '../data/products';
+import { STORE_INFO, OFFICIAL_BRANDS_DATA } from '../data/products';
 
 export const HERO_SLIDES = [
   {
@@ -126,6 +127,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
   const categoryScrollRef = useRef(null);
+  const brandScrollRef = useRef(null);
   const navigate = useNavigate();
 
   // Auto-play timer for hero banner slider (5 seconds)
@@ -167,6 +169,14 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
     if (categoryScrollRef.current) {
       const scrollAmount = direction === 'left' ? -280 : 280;
       categoryScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
+  // Scroll handler for Brand Carousel
+  const scrollBrandCarousel = (direction) => {
+    if (brandScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -260 : 260;
+      brandScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
 
@@ -573,6 +583,109 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               <h4 className="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Free Konsultasi</h4>
               <p className="text-[11px] sm:text-xs text-slate-500 mt-0.5 leading-tight">24 Jam</p>
             </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* ========================================================================= */}
+      {/* BRAND PILIHAN CAROUSEL (Persis Gambar Pengguna) */}
+      {/* ========================================================================= */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 sm:mt-12">
+        <div className="bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-7 shadow-xs">
+          
+          {/* Section Header: Title left, "Semua Brand >" right */}
+          <div className="flex items-center justify-between mb-5 sm:mb-6">
+            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 tracking-tight">
+              Brand Pilihan
+            </h3>
+            <Link
+              to="/brands"
+              className="text-xs sm:text-sm font-bold text-[#0070f3] hover:text-blue-700 flex items-center gap-1 transition-colors"
+            >
+              <span>Semua Brand</span>
+              <ChevronRight className="w-4 h-4 stroke-[2.5]" />
+            </Link>
+          </div>
+
+          {/* Carousel Outer Container with Left & Right Arrow Buttons */}
+          <div className="relative group px-1">
+            
+            {/* Carousel Scroll Left Button */}
+            <button
+              onClick={() => scrollBrandCarousel('left')}
+              className="absolute -left-3 sm:-left-5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+              title="Geser brand ke kiri"
+            >
+              <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
+            {/* Brand Scrollable Track */}
+            <div
+              ref={brandScrollRef}
+              className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar scroll-smooth snap-x snap-mandatory py-2 px-1"
+            >
+              {OFFICIAL_BRANDS_DATA.map((brand) => (
+                <Link
+                  key={brand.id}
+                  to={`/kategori/all?brand=${encodeURIComponent(brand.name)}`}
+                  className="flex flex-col items-center group cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center snap-start focus:outline-none"
+                  title={`Lihat produk resmi ${brand.name}`}
+                >
+                  
+                  {/* Circular Emblem Container with Pastel Ring & Verified Checkmark */}
+                  <div className="relative mb-2.5">
+                    <div
+                      className="w-16 h-16 sm:w-20 sm:h-20 rounded-full flex items-center justify-center font-black tracking-wider uppercase transition-transform duration-300 group-hover:scale-105 shadow-xs"
+                      style={{
+                        backgroundColor: brand.bg,
+                        borderColor: brand.border,
+                        borderWidth: '2.5px',
+                        color: brand.text
+                      }}
+                    >
+                      {brand.logoType === 'akm' ? (
+                        <div className="flex flex-col items-center leading-none text-center p-1">
+                          <Coffee className="w-5 h-5 mb-0.5 text-[#6b21a8]" />
+                          <span className="text-[8px] sm:text-[9px] font-black tracking-tighter">ALAT KOPI</span>
+                          <span className="text-[6px] sm:text-[7px] font-bold tracking-widest text-[#9333ea]">MALANG</span>
+                        </div>
+                      ) : brand.logoType === 'sanubari' ? (
+                        <div className="flex flex-col items-center leading-none text-center p-1">
+                          <span className="text-[9px] sm:text-[10px] font-black tracking-tight text-[#0369a1]">SANUBARI</span>
+                          <span className="text-[6px] sm:text-[7px] font-semibold text-[#0284c7]">ROASTERY</span>
+                        </div>
+                      ) : (
+                        <span className="text-xs sm:text-sm font-black px-1 tracking-tight truncate max-w-full">
+                          {brand.shortName}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Verified Blue Badge Checkmark (Persis Screenshot) */}
+                    <div className="absolute -bottom-0.5 -right-0.5 w-4 h-4 sm:w-5 sm:h-5 rounded-full bg-[#0070f3] border-2 border-white flex items-center justify-center text-white shadow-xs">
+                      <Check className="w-2.5 h-2.5 sm:w-3 sm:h-3 stroke-[3]" />
+                    </div>
+                  </div>
+
+                  {/* Brand Name Label Text below Circle */}
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-[#0070f3] transition-colors leading-tight line-clamp-1 truncate max-w-[76px] sm:max-w-[92px]">
+                    {brand.name}
+                  </span>
+
+                </Link>
+              ))}
+            </div>
+
+            {/* Carousel Scroll Right Button */}
+            <button
+              onClick={() => scrollBrandCarousel('right')}
+              className="absolute -right-3 sm:-right-5 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+              title="Geser brand ke kanan"
+            >
+              <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+            </button>
+
           </div>
 
         </div>

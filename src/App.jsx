@@ -17,6 +17,7 @@ import CategoryPage from './pages/CategoryPage';
 import OrderTrackingPage from './pages/OrderTrackingPage';
 import BrewGuidesPage from './pages/BrewGuidesPage';
 import WholesalePage from './pages/WholesalePage';
+import BrandsPage from './pages/BrandsPage';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
 import { 
@@ -325,6 +326,16 @@ export default function App() {
         <Route
           path="/wholesale"
           element={<WholesalePage />}
+        />
+
+        {/* Dedicated Brands Collection Route */}
+        <Route
+          path="/brands"
+          element={<BrandsPage />}
+        />
+        <Route
+          path="/semua-brand"
+          element={<BrandsPage />}
         />
       </Routes>
 

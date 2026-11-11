@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { 
   ArrowLeft, 
   Share2, 
@@ -28,24 +28,27 @@ export default function CategoryPage({
 }) {
   const { categorySlug } = useParams();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   // Find category by id or slug
   const category = CATEGORIES.find(
     (c) => c.id === categorySlug || c.slug === categorySlug
   );
 
-  const [selectedBrand, setSelectedBrand] = useState('Semua Brand');
+  const initialBrandParam = searchParams.get('brand');
+  const [selectedBrand, setSelectedBrand] = useState(initialBrandParam || 'Semua Brand');
   const [sortBy, setSortBy] = useState('popular');
   const [searchQuery, setSearchQuery] = useState('');
   const [copied, setCopied] = useState(false);
 
-  // Scroll to top when category changes
+  // Scroll to top when category or brand param changes
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    setSelectedBrand('Semua Brand');
+    const brandParam = searchParams.get('brand');
+    setSelectedBrand(brandParam || 'Semua Brand');
     setSearchQuery('');
     setSortBy('popular');
-  }, [categorySlug]);
+  }, [categorySlug, searchParams]);
 
   // Filtered & Sorted products for this category
   const filteredProducts = useMemo(() => {
@@ -57,8 +60,17 @@ export default function CategoryPage({
         return false;
       }
       // Brand match
-      if (selectedBrand !== 'Semua Brand' && item.brand !== selectedBrand) {
-        return false;
+      if (selectedBrand !== 'Semua Brand') {
+        const brandNormalized = selectedBrand.toLowerCase();
+        const itemBrandNormalized = (item.brand || '').toLowerCase();
+        const isMatch = 
+          itemBrandNormalized === brandNormalized ||
+          itemBrandNormalized.includes(brandNormalized) ||
+          brandNormalized.includes(itemBrandNormalized) ||
+          (brandNormalized.includes('alat kopi') && itemBrandNormalized.includes('akm'));
+        if (!isMatch) {
+          return false;
+        }
       }
       // Search query within category
       if (searchQuery.trim()) {
