@@ -44,12 +44,12 @@ export default function ProductCard({
 
   return (
     <div 
-      className="group relative bg-[#1c1917] rounded-2xl border border-[#292524] hover:border-[#c2a676]/40 transition-all duration-300 flex flex-col overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-[#c2a676]/5"
+      className="group relative bg-[#0b172a] rounded-3xl border border-[#172b47] hover:border-[#0084ff]/60 transition-all duration-300 flex flex-col overflow-hidden shadow-lg hover:shadow-2xl hover:shadow-blue-950/40"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       {/* Product Image Area with Link */}
-      <Link to={productUrl} className="relative aspect-square overflow-hidden bg-[#24201d] block">
+      <Link to={productUrl} className="relative aspect-square overflow-hidden bg-[#070e1b] block">
         <img
           src={displayImage}
           alt={product.name}
@@ -60,12 +60,12 @@ export default function ProductCard({
         {/* Badges */}
         <div className="absolute top-3 left-3 flex flex-col gap-1 z-10 pointer-events-none">
           {product.badge && (
-            <span className="px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase tracking-wider bg-[#141211]/90 text-[#c2a676] border border-[#c2a676]/30 backdrop-blur-sm">
+            <span className="px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase tracking-wider bg-[#070e1b]/90 text-[#38bdf8] border border-[#0084ff]/40 backdrop-blur-sm">
               {product.badge}
             </span>
           )}
           {product.discountPercent > 0 && (
-            <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-[#b91c1c] text-white">
+            <span className="px-2 py-0.5 rounded-lg text-[10px] font-bold bg-[#ef4444] text-white shadow-sm">
               HEMAT {product.discountPercent}%
             </span>
           )}
@@ -81,7 +81,7 @@ export default function ProductCard({
           className={`absolute top-3 right-3 p-2 rounded-full backdrop-blur-md transition-colors z-20 ${
             isWishlisted 
               ? 'bg-[#ef4444] text-white' 
-              : 'bg-[#141211]/70 text-[#a8a29e] hover:text-[#f5f5f4] hover:bg-[#141211]'
+              : 'bg-[#070e1b]/70 text-[#94a3b8] hover:text-white hover:bg-[#070e1b]'
           }`}
           title={isWishlisted ? 'Hapus dari Keinginan' : 'Simpan ke Keinginan'}
         >
@@ -90,8 +90,8 @@ export default function ProductCard({
 
         {/* Quick View Button on Hover */}
         <div className="absolute inset-x-3 bottom-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200 hidden sm:flex items-center justify-center gap-2 z-10">
-          <span className="w-full py-2 px-3 rounded-xl bg-[#141211]/90 hover:bg-[#141211] text-[#f5f5f4] text-xs font-semibold backdrop-blur-md border border-[#38332f] flex items-center justify-center gap-1.5 transition-all shadow-lg">
-            <Eye className="w-3.5 h-3.5 text-[#c2a676]" />
+          <span className="w-full py-2.5 px-3 rounded-xl bg-[#070e1b]/95 hover:bg-[#070e1b] text-white text-xs font-semibold backdrop-blur-md border border-[#1e3a5f] flex items-center justify-center gap-1.5 transition-all shadow-xl">
+            <Eye className="w-3.5 h-3.5 text-[#38bdf8]" />
             <span>Buka Link Produk</span>
           </span>
         </div>
@@ -101,33 +101,33 @@ export default function ProductCard({
       <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between">
         <div>
           {/* Brand & Rating */}
-          <div className="flex items-center justify-between text-xs text-[#78716c] mb-1.5">
-            <span className="uppercase tracking-wider font-semibold text-[#c2a676]">
+          <div className="flex items-center justify-between text-xs text-[#64748b] mb-1.5">
+            <span className="uppercase tracking-wider font-semibold text-[#38bdf8]">
               {product.brand}
             </span>
             <div className="flex items-center gap-1">
               <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400" />
-              <span className="font-bold text-[#f5f5f4]">{product.rating}</span>
+              <span className="font-bold text-[#f1f5f9]">{product.rating}</span>
               <span className="text-[10px]">({product.reviewCount})</span>
             </div>
           </div>
 
           {/* Title with Link */}
-          <Link to={productUrl} className="block group-hover:text-[#c2a676] transition-colors">
-            <h3 className="text-sm font-bold text-[#f5f5f4] line-clamp-2 leading-snug">
+          <Link to={productUrl} className="block group-hover:text-[#38bdf8] transition-colors">
+            <h3 className="text-sm font-bold text-[#f8fafc] line-clamp-2 leading-snug">
               {product.name}
             </h3>
           </Link>
 
           {/* Tagline / Subtitle */}
-          <p className="text-xs text-[#a8a29e] line-clamp-1 mt-1 font-normal">
+          <p className="text-xs text-[#94a3b8] line-clamp-1 mt-1 font-normal">
             {product.tagline}
           </p>
 
           {/* Variant Selector Pills */}
           {product.variants && product.variants.length > 1 && (
-            <div className="mt-3 pt-2.5 border-t border-[#292524] flex items-center gap-1.5 overflow-x-auto no-scrollbar">
-              <span className="text-[10px] text-[#78716c] shrink-0 font-medium">Varian:</span>
+            <div className="mt-3 pt-2.5 border-t border-[#172b47] flex items-center gap-1.5 overflow-x-auto no-scrollbar">
+              <span className="text-[10px] text-[#64748b] shrink-0 font-medium">Varian:</span>
               {product.variants.map((v) => (
                 <button
                   key={v.id}
@@ -136,10 +136,10 @@ export default function ProductCard({
                     e.stopPropagation();
                     setSelectedVariant(v);
                   }}
-                  className={`text-[10px] px-2 py-0.5 rounded-md whitespace-nowrap transition-all border ${
+                  className={`text-[10px] px-2 py-0.5 rounded-lg whitespace-nowrap transition-all border ${
                     selectedVariant?.id === v.id
-                      ? 'bg-[#c2a676]/20 border-[#c2a676] text-[#c2a676] font-bold'
-                      : 'bg-[#292524]/60 border-transparent text-[#a8a29e] hover:border-[#38332f]'
+                      ? 'bg-[#0070f3]/25 border-[#0084ff] text-[#38bdf8] font-bold'
+                      : 'bg-[#10223b]/60 border-transparent text-[#94a3b8] hover:border-[#1d3b66]'
                   }`}
                 >
                   {v.label}
@@ -150,19 +150,19 @@ export default function ProductCard({
         </div>
 
         {/* Price & Action Row */}
-        <div className="mt-4 pt-3 border-t border-[#292524]">
+        <div className="mt-4 pt-3 border-t border-[#172b47]">
           <div className="flex items-baseline justify-between mb-3">
             <div>
-              <span className="text-base sm:text-lg font-extrabold text-[#f5f5f4]">
+              <span className="text-base sm:text-lg font-extrabold text-white">
                 {formatRupiah(product.price)}
               </span>
               {product.originalPrice && (
-                <span className="block text-[11px] text-[#78716c] line-through">
+                <span className="block text-[11px] text-[#64748b] line-through">
                   {formatRupiah(product.originalPrice)}
                 </span>
               )}
             </div>
-            <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/40 border border-emerald-800/40 px-2 py-0.5 rounded">
+            <span className="text-[10px] text-cyan-400 font-semibold bg-cyan-950/40 border border-cyan-800/40 px-2 py-0.5 rounded-lg">
               Ready Stock
             </span>
           </div>
@@ -171,15 +171,15 @@ export default function ProductCard({
           <div className="grid grid-cols-2 gap-2">
             <button
               onClick={() => onAddToCart(product, selectedVariant)}
-              className="w-full py-2.5 px-3 rounded-xl bg-[#292524] hover:bg-[#38332f] text-[#f5f5f4] text-xs font-bold border border-[#38332f] hover:border-[#c2a676]/50 flex items-center justify-center gap-1.5 active:scale-95 transition-all"
+              className="w-full py-2.5 px-3 rounded-xl bg-[#10223b] hover:bg-[#162e50] text-[#f8fafc] text-xs font-bold border border-[#1d3b66] hover:border-[#0084ff]/60 flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-sm"
             >
-              <ShoppingBag className="w-3.5 h-3.5 text-[#c2a676]" />
+              <ShoppingBag className="w-3.5 h-3.5 text-[#38bdf8]" />
               <span>+ Keranjang</span>
             </button>
 
             <button
               onClick={handleDirectWhatsApp}
-              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#c2a676] to-[#b45309] hover:brightness-110 text-[#141211] text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-sm"
+              className="w-full py-2.5 px-3 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white text-xs font-bold flex items-center justify-center gap-1 active:scale-95 transition-all shadow-md shadow-[#0070f3]/25"
               title="Pesan via WhatsApp Sanubari"
             >
               <PhoneCall className="w-3.5 h-3.5" />

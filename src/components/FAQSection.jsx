@@ -28,18 +28,18 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState(0);
 
   return (
-    <section className="py-16 sm:py-20 bg-[#181615] border-b border-[#292524]">
+    <section className="py-16 sm:py-20 bg-[#070e1b] border-b border-[#172b47]">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-2">
-            <HelpCircle className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#10223b] text-xs font-bold text-[#38bdf8] tracking-wider uppercase mb-2 border border-[#0084ff]/30">
+            <HelpCircle className="w-3.5 h-3.5 text-[#38bdf8]" />
             <span>FREQUENTLY ASKED QUESTIONS</span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f5f5f4]">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
             Pertanyaan Seputar Alat Kopi &amp; Pemesanan
           </h2>
-          <p className="text-xs sm:text-sm text-[#78716c] mt-1">
+          <p className="text-xs sm:text-sm text-[#64748b] mt-1">
             Jawaban lengkap seputar garansi, pengiriman, kalibrasi, dan showroom.
           </p>
         </div>
@@ -50,18 +50,18 @@ export default function FAQSection() {
             return (
               <div
                 key={index}
-                className="rounded-2xl bg-[#1c1917] border border-[#292524] overflow-hidden transition-all"
+                className="rounded-2xl bg-[#0b172a] border border-[#172b47] overflow-hidden transition-all shadow-md"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? -1 : index)}
-                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-[#f5f5f4] hover:text-[#c2a676] transition-colors"
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-white hover:text-[#38bdf8] transition-colors"
                 >
                   <span>{faq.q}</span>
-                  <ChevronDown className={`w-4 h-4 text-[#c2a676] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                  <ChevronDown className={`w-4 h-4 text-[#38bdf8] shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
                 </button>
 
                 {isOpen && (
-                  <div className="px-4 sm:px-5 pb-5 text-xs text-[#a8a29e] leading-relaxed border-t border-[#292524]/60 pt-3 animate-fade-in">
+                  <div className="px-4 sm:px-5 pb-5 text-xs text-[#94a3b8] leading-relaxed border-t border-[#172b47]/80 pt-3 animate-fade-in">
                     {faq.a}
                   </div>
                 )}
@@ -74,4 +74,3 @@ export default function FAQSection() {
     </section>
   );
 }
-

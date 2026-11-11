@@ -34,7 +34,7 @@ export default function OrderTrackingPage() {
       date: '11 November 2026',
       customerName: 'Pelanggan Alat Kopi Malang',
       courier: 'JNE Reguler (Resi: JNE88291049102)',
-      destination: 'Kota Surabaya, Jawa Timur',
+      destination: 'Kota Malang, Jawa Timur',
       status: 'dikirim', // diproses, dikirim, selesai
       estimatedDelivery: '12 - 13 November 2026',
       items: [
@@ -53,13 +53,13 @@ export default function OrderTrackingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#141211] text-[#f5f5f4] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#070e1b] text-[#f1f5f9] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-3xl mx-auto">
         
         {/* Back Link */}
         <Link 
           to="/" 
-          className="inline-flex items-center gap-2 text-xs font-semibold text-[#a8a29e] hover:text-[#c2a676] mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-[#94a3b8] hover:text-[#38bdf8] mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Katalog Alat Kopi</span>
@@ -67,20 +67,20 @@ export default function OrderTrackingPage() {
 
         {/* Header */}
         <div className="text-center mb-10">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-3">
-            <Truck className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b172a] text-xs font-bold text-[#38bdf8] border border-[#172b47] tracking-wider uppercase mb-3">
+            <Truck className="w-3.5 h-3.5 text-[#0084ff]" />
             <span>REAL-TIME TRACKING</span>
           </div>
-          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#f5f5f4] tracking-tight">
+          <h1 className="text-3xl sm:text-4xl font-extrabold text-[#f1f5f9] tracking-tight">
             Lacak Pesanan &amp; Status Pengiriman
           </h1>
-          <p className="text-xs sm:text-sm text-[#78716c] mt-2 max-w-lg mx-auto leading-relaxed">
+          <p className="text-xs sm:text-sm text-[#94a3b8] mt-2 max-w-lg mx-auto leading-relaxed">
             Masukkan Nomor Invoice pesanan Anda (contoh: <strong>INV-AKM-849201</strong>) atau nomor WhatsApp yang digunakan saat memesan.
           </p>
         </div>
 
         {/* Tracking Input Card */}
-        <div className="p-6 sm:p-8 rounded-3xl bg-[#1c1917] border border-[#292524] shadow-2xl mb-8">
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#0b172a] border border-[#172b47] shadow-2xl mb-8">
           <form onSubmit={handleTrack} className="flex flex-col sm:flex-row gap-3">
             <div className="relative flex-1">
               <input
@@ -89,122 +89,128 @@ export default function OrderTrackingPage() {
                 value={invoiceQuery}
                 onChange={(e) => setInvoiceQuery(e.target.value)}
                 required
-                className="w-full bg-[#292524] border border-[#38332f] focus:border-[#c2a676] text-sm text-[#f5f5f4] placeholder-[#78716c] rounded-2xl py-3.5 pl-11 pr-4 focus:outline-none transition-all uppercase"
+                className="w-full bg-[#070e1b] border border-[#172b47] focus:border-[#0084ff] text-sm text-[#f1f5f9] placeholder-[#64748b] rounded-2xl py-3.5 pl-11 pr-4 focus:outline-none transition-all uppercase"
               />
-              <Search className="w-4 h-4 text-[#78716c] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
+              <Search className="w-4 h-4 text-[#64748b] absolute left-4 top-1/2 -translate-y-1/2 pointer-events-none" />
             </div>
 
             <button
               type="submit"
-              className="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#c2a676] to-[#b45309] text-[#141211] font-bold text-xs uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-md shrink-0 flex items-center justify-center gap-2"
+              className="py-3.5 px-6 rounded-2xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white font-bold text-xs uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all shadow-md shadow-[#0070f3]/25 shrink-0 flex items-center justify-center gap-2"
             >
-              <Search className="w-4 h-4" />
-              <span>Lacak Pesanan</span>
+              <span>Lacak Paket</span>
             </button>
           </form>
 
-          <div className="mt-4 flex items-center justify-between text-[11px] text-[#78716c]">
-            <span>Format invoice otomatis terbit saat checkout</span>
-            <a
-              href={`https://wa.me/${STORE_INFO.whatsappNumber}?text=Halo%20admin,%20saya%20ingin%20cek%20status%20pesanan%20saya`}
-              target="_blank"
-              rel="noreferrer"
-              className="text-[#c2a676] hover:underline"
-            >
-              Lupa No. Invoice? Hubungi CS WA ↗
-            </a>
+          <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-[#64748b]">
+            <span>Contoh pencarian cepat:</span>
+            {['INV-AKM-8821', 'INV-AKM-7402', 'INV-AKM-9914'].map((sample) => (
+              <button
+                key={sample}
+                type="button"
+                onClick={() => setInvoiceQuery(sample)}
+                className="px-2.5 py-1 rounded-lg bg-[#070e1b] hover:bg-[#112240] text-[#38bdf8] border border-[#172b47] font-mono text-[11px] transition-colors"
+              >
+                {sample}
+              </button>
+            ))}
           </div>
         </div>
 
-        {/* Result Area */}
+        {/* Tracking Result View */}
         {hasSearched && trackedOrder && (
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#1c1917] border border-[#38332f] shadow-2xl space-y-6 animate-fade-in">
-            
-            {/* Top Status Banner */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between pb-6 border-b border-[#292524] gap-4">
-              <div>
-                <span className="text-[11px] uppercase tracking-wider text-[#78716c] font-semibold">Nomor Invoice</span>
-                <h3 className="text-xl font-extrabold text-[#f5f5f4]">{trackedOrder.invoiceNumber}</h3>
-                <span className="text-xs text-[#a8a29e] mt-0.5 block">Tanggal Order: {trackedOrder.date}</span>
+          <div className="space-y-6 animate-fade-in">
+            {/* Status Card */}
+            <div className="p-6 sm:p-8 rounded-3xl bg-[#0b172a] border border-[#172b47] shadow-xl">
+              <div className="flex flex-wrap items-center justify-between gap-4 border-b border-[#172b47] pb-6">
+                <div>
+                  <span className="text-xs text-[#64748b] font-medium block">Nomor Invoice</span>
+                  <strong className="text-lg sm:text-xl font-mono text-[#38bdf8]">
+                    {trackedOrder.invoiceNumber}
+                  </strong>
+                </div>
+
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#0070f3]/15 text-[#38bdf8] border border-[#0070f3]/30 text-xs font-bold uppercase tracking-wider">
+                  <span className="w-2 h-2 rounded-full bg-[#0084ff] animate-ping" />
+                  <span>Sedang Dikirim Kurir</span>
+                </div>
               </div>
 
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-emerald-950/60 border border-emerald-800/60 text-xs font-bold text-emerald-400 self-start sm:self-auto">
-                <Truck className="w-4 h-4" />
-                <span className="uppercase tracking-wider">Sedang Dalam Pengiriman</span>
+              {/* Order Meta details */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 py-6 border-b border-[#172b47] text-xs">
+                <div>
+                  <span className="text-[#64748b] block mb-1">Kurir &amp; Resi:</span>
+                  <strong className="text-[#f1f5f9]">{trackedOrder.courier}</strong>
+                </div>
+                <div>
+                  <span className="text-[#64748b] block mb-1">Destinasi:</span>
+                  <strong className="text-[#f1f5f9] flex items-center gap-1">
+                    <MapPin className="w-3.5 h-3.5 text-[#38bdf8]" />
+                    <span>{trackedOrder.destination}</span>
+                  </strong>
+                </div>
+                <div>
+                  <span className="text-[#64748b] block mb-1">Estimasi Tiba:</span>
+                  <strong className="text-emerald-400 flex items-center gap-1">
+                    <Clock className="w-3.5 h-3.5" />
+                    <span>{trackedOrder.estimatedDelivery}</span>
+                  </strong>
+                </div>
               </div>
-            </div>
 
-            {/* Courier & Destination Info */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
-              <div className="p-4 rounded-2xl bg-[#292524]/50 border border-[#292524]">
-                <span className="text-[#78716c] block mb-1">Kurir &amp; No. Resi:</span>
-                <strong className="text-[#f5f5f4] font-bold text-sm block">{trackedOrder.courier}</strong>
-                <span className="text-[#a8a29e] text-[11px]">Estimasi Tiba: {trackedOrder.estimatedDelivery}</span>
-              </div>
-
-              <div className="p-4 rounded-2xl bg-[#292524]/50 border border-[#292524]">
-                <span className="text-[#78716c] block mb-1">Alamat Tujuan:</span>
-                <strong className="text-[#f5f5f4] font-bold text-sm block">{trackedOrder.destination}</strong>
-                <span className="text-[#a8a29e] text-[11px]">Penerima: {trackedOrder.customerName}</span>
-              </div>
-            </div>
-
-            {/* Tracking Timeline */}
-            <div>
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#c2a676] mb-4 flex items-center gap-1.5">
-                <Clock className="w-4 h-4" />
-                <span>Riwayat Perjalanan Paket</span>
-              </h4>
-              <div className="space-y-4 relative pl-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#38332f]">
-                {trackedOrder.timeline.map((step, idx) => (
-                  <div key={idx} className="relative">
-                    <span className="absolute -left-6 top-1 w-2.5 h-2.5 rounded-full bg-[#c2a676] border-2 border-[#1c1917]" />
-                    <span className="text-[10px] text-[#78716c] font-mono">{step.time}</span>
-                    <h5 className="text-xs font-bold text-[#f5f5f4]">{step.title}</h5>
-                    <p className="text-xs text-[#a8a29e]">{step.desc}</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Item Summary */}
-            <div className="pt-4 border-t border-[#292524]">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#a8a29e] mb-3 flex items-center gap-1.5">
-                <FileText className="w-4 h-4 text-[#c2a676]" />
-                <span>Rincian Barang yang Dipesan</span>
-              </h4>
-              <div className="space-y-2 text-xs divide-y divide-[#292524]">
-                {trackedOrder.items.map((item, i) => (
-                  <div key={i} className="pt-2 flex justify-between items-center">
-                    <div>
-                      <p className="font-semibold text-[#f5f5f4]">{item.name}</p>
-                      <span className="text-[11px] text-[#78716c]">{item.qty} pcs x {formatRupiah(item.price)}</span>
+              {/* Delivery Timeline */}
+              <div className="pt-6">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#38bdf8] mb-4">
+                  Riwayat Perjalanan Paket
+                </h4>
+                <div className="relative pl-6 space-y-6 before:content-[''] before:absolute before:left-2 before:top-2 before:bottom-2 before:w-0.5 before:bg-[#172b47]">
+                  {trackedOrder.timeline.map((step, idx) => (
+                    <div key={idx} className="relative">
+                      <div className="absolute -left-[27px] top-0 w-3.5 h-3.5 rounded-full bg-[#0070f3] border-2 border-[#070e1b] shadow-sm" />
+                      <div className="text-xs text-[#64748b]">{step.time}</div>
+                      <div className="text-sm font-bold text-[#f1f5f9] mt-0.5">{step.title}</div>
+                      <div className="text-xs text-[#94a3b8] mt-0.5">{step.desc}</div>
                     </div>
-                    <strong className="text-[#c2a676]">{formatRupiah(item.qty * item.price)}</strong>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
 
-              <div className="mt-4 pt-3 border-t border-[#292524] flex justify-between items-center text-sm font-extrabold">
-                <span className="text-[#f5f5f4]">Total Pembayaran:</span>
-                <span className="text-[#c2a676] text-base">{formatRupiah(trackedOrder.total)}</span>
+              {/* Items List */}
+              <div className="pt-6 mt-6 border-t border-[#172b47]">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-[#94a3b8] mb-3">
+                  Barang yang Dikirim:
+                </h4>
+                <div className="space-y-2">
+                  {trackedOrder.items.map((it, idx) => (
+                    <div key={idx} className="flex justify-between items-center text-xs p-3 rounded-xl bg-[#070e1b] border border-[#172b47]">
+                      <div>
+                        <div className="font-semibold text-[#f1f5f9]">{it.name}</div>
+                        <div className="text-[11px] text-[#64748b]">Jumlah: {it.qty} unit</div>
+                      </div>
+                      <div className="font-bold text-[#38bdf8]">{formatRupiah(it.price * it.qty)}</div>
+                    </div>
+                  ))}
+                </div>
               </div>
+
             </div>
 
-            {/* Help Call to action */}
-            <div className="p-4 rounded-2xl bg-[#292524]/60 border border-[#38332f] flex flex-col sm:flex-row items-center justify-between gap-3 text-xs">
-              <span className="text-[#a8a29e]">Ada pertanyaan terkait pengiriman atau packing?</span>
+            {/* Need Help Box */}
+            <div className="p-5 rounded-2xl bg-[#0b172a] border border-[#172b47] flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#94a3b8]">
+              <div>
+                <strong className="text-[#f1f5f9] block text-sm">Ada pertanyaan terkait kiriman paket Anda?</strong>
+                <span>Tim ekspedisi &amp; customer care Sanubari siap membantu cek posisi langsung ke kurir.</span>
+              </div>
               <a
-                href={`https://wa.me/${STORE_INFO.whatsappNumber}?text=Halo%20CS%20AKM,%20saya%20mau%20tanya%20paket%20dengan%20no%20invoice%20${trackedOrder.invoiceNumber}`}
+                href={`https://wa.me/${STORE_INFO.whatsappNumber}?text=Halo%20Admin%20AKM%2C%20mau%20konfirmasi%20resi%20invoice%20${trackedOrder.invoiceNumber}`}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#c2a676] text-[#141211] font-bold hover:brightness-110 transition-all shrink-0"
+                className="px-5 py-2.5 rounded-xl bg-[#112240] hover:bg-[#1e3a5f] text-[#38bdf8] font-bold border border-[#1e3a5f] hover:border-[#0084ff] transition-all flex items-center gap-2 shrink-0"
               >
-                <PhoneCall className="w-3.5 h-3.5" />
-                <span>Hubungi CS Pengiriman</span>
+                <PhoneCall className="w-4 h-4" />
+                <span>Chat Admin Ekspedisi</span>
               </a>
             </div>
-
           </div>
         )}
 
@@ -212,4 +218,3 @@ export default function OrderTrackingPage() {
     </div>
   );
 }
-

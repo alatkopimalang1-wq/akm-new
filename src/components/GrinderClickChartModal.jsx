@@ -42,75 +42,78 @@ export default function GrinderClickChartModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 animate-fade-in">
       <div 
-        className="w-full max-w-3xl bg-[#1c1917] rounded-3xl border border-[#38332f] shadow-2xl p-6 sm:p-8 relative my-8"
+        className="w-full max-w-3xl bg-[#0b172a] rounded-3xl border border-[#172b47] shadow-2xl p-6 sm:p-8 relative my-8"
         onClick={(e) => e.stopPropagation()}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 rounded-full text-[#a8a29e] hover:text-[#f5f5f4] bg-[#292524] transition-colors"
+          className="absolute top-4 right-4 p-2 rounded-full text-[#94a3b8] hover:text-[#f1f5f9] bg-[#070e1b] border border-[#172b47] transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
         <div className="mb-6">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-2">
-            <Cog className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#070e1b] text-xs font-bold text-[#38bdf8] border border-[#172b47] tracking-wider uppercase mb-2">
+            <Cog className="w-3.5 h-3.5 text-[#0084ff]" />
             <span>BARISTA CALIBRATION REFERENCE</span>
           </div>
-          <h3 className="text-xl sm:text-2xl font-extrabold text-[#f5f5f4]">
-            Tabel Kalibrasi Klik Grinder (Grind Size Chart)
+          <h3 className="text-2xl font-bold text-[#f1f5f9]">
+            Tabel Kalibrasi Klik Grinder Kopi
           </h3>
-          <p className="text-xs text-[#78716c] mt-1">
-            Panduan setelan klik gilingan terkalibrasi langsung dari uji coba slow bar Sanubari Roastery Malang.
+          <p className="text-xs text-[#94a3b8] mt-1">
+            Panduan setelan klik gilingan resmi dari barista Slow Bar Sanubari Roastery Malang.
           </p>
         </div>
 
-        {/* Grinder Model Switcher */}
-        <div className="flex gap-2 mb-5 overflow-x-auto no-scrollbar pb-1">
+        {/* Grinder selector tabs */}
+        <div className="flex gap-2 mb-6 border-b border-[#172b47] pb-3 overflow-x-auto no-scrollbar">
           {GRINDER_GUIDES.map((g, idx) => (
             <button
               key={idx}
               onClick={() => setSelectedGrinderIndex(idx)}
-              className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
+              className={`px-4 py-2 rounded-xl text-xs font-bold transition-all border ${
                 selectedGrinderIndex === idx
-                  ? 'bg-[#c2a676] text-[#141211] border-[#c2a676]'
-                  : 'bg-[#292524] text-[#a8a29e] border-[#38332f] hover:text-[#f5f5f4]'
+                  ? 'bg-[#0070f3] text-white border-[#0084ff] shadow-md shadow-[#0070f3]/25'
+                  : 'bg-[#070e1b] text-[#94a3b8] border-[#172b47] hover:border-[#0070f3]/40'
               }`}
             >
-              {g.brand.split('(')[0]}
+              {g.brand}
             </button>
           ))}
         </div>
 
-        {/* Note on zero point */}
-        <div className="p-3.5 rounded-xl bg-[#292524]/50 border border-[#38332f] text-xs text-[#a8a29e] mb-4 flex items-start gap-2.5">
-          <HelpCircle className="w-4 h-4 text-[#c2a676] shrink-0 mt-0.5" />
-          <span>{currentGuide.rotationsNote}</span>
+        {/* Note Box */}
+        <div className="p-4 rounded-xl bg-[#070e1b] border border-[#172b47] flex items-start gap-3 mb-6 text-xs text-[#94a3b8]">
+          <HelpCircle className="w-5 h-5 text-[#38bdf8] shrink-0 mt-0.5" />
+          <div>
+            <strong className="text-[#f1f5f9] block">Cara Kalibrasi Awal:</strong>
+            {currentGuide.rotationsNote}
+          </div>
         </div>
 
-        {/* Click Table */}
-        <div className="overflow-hidden rounded-2xl border border-[#292524] bg-[#141211]">
+        {/* Clicks Table */}
+        <div className="overflow-hidden rounded-2xl border border-[#172b47] bg-[#070e1b]">
           <table className="w-full text-xs text-left">
-            <thead className="bg-[#24201d] text-[#c2a676] uppercase font-bold text-[10px] tracking-wider">
+            <thead className="bg-[#112240] text-[#38bdf8] uppercase font-bold border-b border-[#172b47]">
               <tr>
                 <th className="py-3 px-4">Metode Seduh</th>
-                <th className="py-3 px-4">Rekomendasi Klik</th>
-                <th className="py-3 px-4">Karakter Bubuk</th>
+                <th className="py-3 px-4">Rekomendasi Clicks</th>
+                <th className="py-3 px-4 hidden sm:table-cell">Catatan Barista</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#292524] text-[#a8a29e]">
-              {currentGuide.settings.map((item, index) => (
-                <tr key={index} className="hover:bg-[#1c1917] transition-colors">
-                  <td className="py-3 px-4 font-semibold text-[#f5f5f4] flex items-center gap-2">
-                    <Coffee className="w-3.5 h-3.5 text-[#c2a676]" />
-                    <span>{item.method}</span>
+            <tbody className="divide-y divide-[#172b47]">
+              {currentGuide.settings.map((s, idx) => (
+                <tr key={idx} className="hover:bg-[#112240]/40 transition-colors">
+                  <td className="py-3 px-4 font-semibold text-[#f1f5f9] flex items-center gap-2">
+                    <Coffee className="w-3.5 h-3.5 text-[#38bdf8]" />
+                    <span>{s.method}</span>
                   </td>
-                  <td className="py-3 px-4 font-extrabold text-[#c2a676]">
-                    {item.clicks}
+                  <td className="py-3 px-4 font-bold text-[#38bdf8] font-mono whitespace-nowrap">
+                    {s.clicks}
                   </td>
-                  <td className="py-3 px-4 text-[#78716c]">
-                    {item.note}
+                  <td className="py-3 px-4 text-[#94a3b8] hidden sm:table-cell">
+                    {s.note}
                   </td>
                 </tr>
               ))}
@@ -119,18 +122,16 @@ export default function GrinderClickChartModal({ isOpen, onClose }) {
         </div>
 
         {/* Footer info */}
-        <div className="mt-5 pt-4 border-t border-[#292524] flex items-center justify-between text-xs text-[#78716c]">
-          <span>*Catatan: Setiap batch biji kopi &amp; tingkat sangrai dapat memerlukan mikro-adjust 1-2 klik.</span>
+        <div className="mt-6 flex items-center justify-between text-xs text-[#64748b]">
+          <span>*Setelan dapat bervariasi bergantung roast profile dan kepadatan bean.</span>
           <button
             onClick={onClose}
-            className="px-4 py-2 rounded-xl bg-[#292524] hover:bg-[#38332f] text-[#f5f5f4] font-bold"
+            className="px-4 py-2 rounded-xl bg-[#112240] hover:bg-[#1e3a5f] text-[#38bdf8] font-bold border border-[#1e3a5f]"
           >
-            Tutup Panduan
+            Tutup
           </button>
         </div>
-
       </div>
     </div>
   );
 }
-

@@ -23,13 +23,13 @@ export default function BrewGuidesPage() {
   const recommendedProducts = PRODUCTS.filter((p) => currentMethod.recommendedGearIds.includes(p.id));
 
   return (
-    <div className="min-h-screen bg-[#141211] text-[#f5f5f4] py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-[#070e1b] text-[#f1f5f9] py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         
         {/* Back Link */}
         <Link 
           to="/" 
-          className="inline-flex items-center gap-2 text-xs font-semibold text-[#a8a29e] hover:text-[#c2a676] mb-8 transition-colors"
+          className="inline-flex items-center gap-2 text-xs font-semibold text-[#94a3b8] hover:text-[#38bdf8] mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Katalog Alat Kopi</span>
@@ -37,14 +37,14 @@ export default function BrewGuidesPage() {
 
         {/* Header */}
         <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-3">
-            <BookOpen className="w-3.5 h-3.5" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#0b172a] text-xs font-bold text-[#38bdf8] border border-[#172b47] tracking-wider uppercase mb-3">
+            <BookOpen className="w-3.5 h-3.5 text-[#0084ff]" />
             <span>SANUBARI ROASTERY BREWING LAB</span>
           </div>
-          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#f5f5f4] tracking-tight">
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#f1f5f9] tracking-tight">
             Resep &amp; Panduan Seduh Kopi
           </h1>
-          <p className="text-xs sm:text-base text-[#a8a29e] mt-3 max-w-2xl mx-auto leading-relaxed font-normal">
+          <p className="text-xs sm:text-base text-[#94a3b8] mt-3 max-w-2xl mx-auto leading-relaxed font-normal">
             Kumpulan resep dan standar ekstraksi seduh manual yang dipraktikkan langsung oleh para barista di Slow Bar Sanubari Roastery Malang.
           </p>
         </div>
@@ -57,8 +57,8 @@ export default function BrewGuidesPage() {
               onClick={() => setSelectedMethodId(m.id)}
               className={`px-5 py-3 rounded-2xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border ${
                 selectedMethodId === m.id
-                  ? 'bg-gradient-to-r from-[#c2a676] to-[#b45309] text-[#141211] border-[#c2a676] shadow-lg shadow-[#c2a676]/20'
-                  : 'bg-[#1c1917] text-[#a8a29e] border-[#292524] hover:text-[#f5f5f4] hover:bg-[#292524]'
+                  ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white border-[#0084ff] shadow-lg shadow-[#0070f3]/25'
+                  : 'bg-[#0b172a] text-[#94a3b8] border-[#172b47] hover:border-[#0070f3]/50 hover:text-[#f1f5f9]'
               }`}
             >
               {m.name}
@@ -66,138 +66,147 @@ export default function BrewGuidesPage() {
           ))}
         </div>
 
-        {/* Recipe Content Box */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        {/* Active Method Detail Card */}
+        <div className="rounded-3xl bg-[#0b172a] border border-[#172b47] shadow-2xl p-6 sm:p-10 mb-12">
           
-          {/* Left: Recipe Details */}
-          <div className="lg:col-span-7 bg-[#1c1917] rounded-3xl border border-[#292524] p-6 sm:p-8 space-y-6 shadow-2xl">
-            <div>
-              <span className="text-xs font-bold uppercase tracking-widest text-[#c2a676]">Metode Seduh Resmi</span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f5f5f4] mt-1">{currentMethod.name}</h2>
-              <p className="text-xs sm:text-sm text-[#a8a29e] mt-1 leading-relaxed">
-                Karakter Seduhan: <strong className="text-[#f5f5f4]">{currentMethod.tastingNote}</strong>
-              </p>
+          <div className="border-b border-[#172b47] pb-8 mb-8">
+            <div className="flex flex-wrap items-center justify-between gap-4">
+              <div>
+                <span className="text-xs font-extrabold uppercase tracking-widest text-[#38bdf8]">
+                  Metode Ekstraksi
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f1f5f9] mt-1">
+                  {currentMethod.name}
+                </h2>
+                <p className="text-xs sm:text-sm text-[#94a3b8] mt-2 max-w-xl">
+                  {currentMethod.tagline}
+                </p>
+              </div>
+
+              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47] flex items-center gap-3">
+                <Sparkles className="w-5 h-5 text-[#38bdf8]" />
+                <div className="text-xs">
+                  <div className="text-[#64748b]">Karakter Rasa:</div>
+                  <strong className="text-[#f1f5f9]">{currentMethod.flavorProfile}</strong>
+                </div>
+              </div>
             </div>
 
             {/* Quick Metrics */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
-              <div className="p-3.5 rounded-2xl bg-[#292524]/60 border border-[#38332f] text-center">
-                <Coffee className="w-5 h-5 text-[#c2a676] mx-auto mb-1" />
-                <span className="text-[10px] uppercase text-[#78716c] block">Kopi (Dose)</span>
-                <strong className="text-sm font-bold text-[#f5f5f4]">{currentMethod.defaultDose}g</strong>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-8">
+              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
+                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
+                  <Coffee className="w-4 h-4 text-[#38bdf8]" />
+                  <span>Dosis &amp; Rasio</span>
+                </div>
+                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.ratio}</div>
+                <div className="text-[11px] text-[#94a3b8]">{currentMethod.dose} Kopi / {currentMethod.water} Air</div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#292524]/60 border border-[#38332f] text-center">
-                <Droplets className="w-5 h-5 text-[#c2a676] mx-auto mb-1" />
-                <span className="text-[10px] uppercase text-[#78716c] block">Rasio Air</span>
-                <strong className="text-sm font-bold text-[#f5f5f4]">1 : {currentMethod.defaultRatio}</strong>
+              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
+                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
+                  <Thermometer className="w-4 h-4 text-rose-400" />
+                  <span>Suhu Air</span>
+                </div>
+                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.temperature}</div>
+                <div className="text-[11px] text-[#94a3b8]">Rekomendasi Kettle Leher Angsa</div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#292524]/60 border border-[#38332f] text-center">
-                <Thermometer className="w-5 h-5 text-[#c2a676] mx-auto mb-1" />
-                <span className="text-[10px] uppercase text-[#78716c] block">Suhu Air</span>
-                <strong className="text-sm font-bold text-[#f5f5f4]">{currentMethod.temp}</strong>
+              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
+                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
+                  <Timer className="w-4 h-4 text-emerald-400" />
+                  <span>Waktu Seduh</span>
+                </div>
+                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.time}</div>
+                <div className="text-[11px] text-[#94a3b8]">Termasuk fase blooming</div>
               </div>
 
-              <div className="p-3.5 rounded-2xl bg-[#292524]/60 border border-[#38332f] text-center">
-                <Timer className="w-5 h-5 text-[#c2a676] mx-auto mb-1" />
-                <span className="text-[10px] uppercase text-[#78716c] block">Waktu</span>
-                <strong className="text-sm font-bold text-[#f5f5f4]">{currentMethod.time}</strong>
+              <div className="p-4 rounded-2xl bg-[#070e1b] border border-[#172b47]">
+                <div className="flex items-center gap-2 text-xs text-[#64748b] mb-1">
+                  <Sliders className="w-4 h-4 text-[#38bdf8]" />
+                  <span>Gilingan (Grind)</span>
+                </div>
+                <div className="text-lg font-bold text-[#f1f5f9]">{currentMethod.grindSize}</div>
+                <div className="text-[11px] text-[#94a3b8]">Burr kalibrasi manual</div>
               </div>
-            </div>
-
-            {/* Grind Size Advice */}
-            <div className="p-4 rounded-2xl bg-[#292524]/40 border border-[#38332f] text-xs">
-              <span className="text-[#78716c] block mb-0.5 font-semibold">Tingkat Kehalusan (Grind Size):</span>
-              <strong className="text-[#c2a676] font-bold text-sm">{currentMethod.grindSize}</strong>
-            </div>
-
-            {/* Step by step pouring instructions */}
-            <div className="pt-2">
-              <h3 className="text-xs font-bold uppercase tracking-wider text-[#c2a676] mb-4 flex items-center gap-2">
-                <CheckCircle2 className="w-4 h-4" />
-                <span>Instruksi Langkah Demi Langkah:</span>
-              </h3>
-              <ol className="space-y-3 text-xs leading-relaxed">
-                {currentMethod.steps.map((step, idx) => (
-                  <li key={idx} className="flex items-start gap-3 p-3 rounded-xl bg-[#24201d] border border-[#292524]">
-                    <span className="w-6 h-6 rounded-lg bg-[#292524] text-[#c2a676] font-extrabold flex items-center justify-center shrink-0 text-xs">
-                      {idx + 1}
-                    </span>
-                    <span className="text-[#f5f5f4] pt-0.5">{step}</span>
-                  </li>
-                ))}
-              </ol>
             </div>
           </div>
 
-          {/* Right: Recommended Tools for this recipe */}
-          <div className="lg:col-span-5 space-y-6">
-            <div className="bg-[#1c1917] rounded-3xl border border-[#292524] p-6 sm:p-8 space-y-4 shadow-2xl">
-              <div>
-                <span className="text-[11px] font-bold uppercase tracking-wider text-[#c2a676]">Peralatan yang Digunakan</span>
-                <h3 className="text-lg font-bold text-[#f5f5f4] mt-0.5">Alat Rekomendasi Barista</h3>
-              </div>
+          {/* Step-by-Step Instructions */}
+          <div className="space-y-6">
+            <h3 className="text-sm font-bold uppercase tracking-wider text-[#38bdf8]">
+              Langkah Demi Langkah Seduh Sempurna:
+            </h3>
 
-              <div className="space-y-3">
-                {recommendedProducts.map((item) => (
-                  <Link
-                    key={item.id}
-                    to={`/product/${item.slug}`}
-                    className="flex items-center gap-3 p-3 rounded-2xl bg-[#292524]/60 border border-[#38332f] hover:border-[#c2a676]/60 transition-all group"
-                  >
-                    <img
-                      src={item.images[0]}
-                      alt={item.name}
-                      className="w-16 h-16 rounded-xl object-cover shrink-0"
-                    />
-                    <div className="flex-1 min-w-0">
-                      <span className="text-[10px] uppercase font-bold text-[#c2a676]">{item.brand}</span>
-                      <h4 className="text-xs font-bold text-[#f5f5f4] group-hover:text-[#c2a676] truncate transition-colors">
-                        {item.name}
-                      </h4>
-                      <span className="text-xs font-extrabold text-[#f5f5f4] block mt-0.5">
-                        {formatRupiah(item.price)}
-                      </span>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-[#78716c] group-hover:text-[#c2a676] group-hover:translate-x-1 transition-all shrink-0" />
-                  </Link>
-                ))}
-              </div>
-
-              <div className="pt-2">
-                <Link
-                  to="/"
-                  className="block w-full py-3 rounded-xl bg-[#292524] hover:bg-[#38332f] text-center text-xs font-bold text-[#c2a676] border border-[#38332f] transition-colors"
+            <div className="space-y-4">
+              {currentMethod.steps.map((step, idx) => (
+                <div 
+                  key={idx} 
+                  className="flex items-start gap-4 p-4 rounded-2xl bg-[#070e1b] border border-[#172b47] hover:border-[#0070f3]/40 transition-colors"
                 >
-                  Jelajahi Semua Koleksi Alat Seduh
-                </Link>
-              </div>
-            </div>
-
-            {/* Coffee beans companion */}
-            <div className="p-6 rounded-3xl bg-gradient-to-br from-[#292524] to-[#1c1917] border border-[#c2a676]/30 text-xs space-y-3">
-              <span className="text-[10px] font-bold uppercase text-[#c2a676] tracking-wider block">Biji Kopi Pasangan Terbaik</span>
-              <h4 className="text-sm font-bold text-[#f5f5f4]">Biji Kopi Gunung Kawi Series — Sanubari Roastery</h4>
-              <p className="text-[#a8a29e] leading-relaxed">
-                Gunakan biji kopi single origin dengan profil sangrai Light to Medium untuk mengekstraksi aroma floral dan rasa buah yang optimal.
-              </p>
-              <a
-                href="https://sanubariroastery.co.id"
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-1.5 text-xs font-bold text-[#c2a676] hover:underline"
-              >
-                <span>Lihat Koleksi Biji Kopi Sanubari</span>
-                <ArrowRight className="w-3.5 h-3.5" />
-              </a>
+                  <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#0070f3] to-[#0052cc] text-white flex items-center justify-center font-bold text-xs shrink-0 shadow-md">
+                    {idx + 1}
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-baseline justify-between gap-2">
+                      <h4 className="text-sm font-bold text-[#f1f5f9]">{step.title}</h4>
+                      {step.timing && (
+                        <span className="text-[11px] font-mono text-[#38bdf8] bg-[#112240] px-2 py-0.5 rounded-md border border-[#1e3a5f]">
+                          {step.timing}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-xs text-[#94a3b8] mt-1 leading-relaxed">
+                      {step.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
         </div>
 
+        {/* Recommended Gear For This Method */}
+        {recommendedProducts.length > 0 && (
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <div>
+                <span className="text-xs font-bold uppercase tracking-wider text-[#38bdf8]">
+                  PERALATAN YANG DIREKOMENDASIKAN
+                </span>
+                <h3 className="text-xl sm:text-2xl font-extrabold text-[#f1f5f9] mt-1">
+                  Gear Resmi untuk Seduh {currentMethod.name}
+                </h3>
+              </div>
+              <Link to="/" className="text-xs font-bold text-[#38bdf8] hover:underline flex items-center gap-1">
+                <span>Lihat Semua</span>
+                <ArrowRight className="w-3.5 h-3.5" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {recommendedProducts.map((p) => (
+                <Link
+                  key={p.id}
+                  to={`/product/${p.slug}`}
+                  className="p-4 rounded-2xl bg-[#0b172a] border border-[#172b47] hover:border-[#0070f3] transition-all group flex gap-4 items-center"
+                >
+                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-[#070e1b] shrink-0 border border-[#172b47]">
+                    <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <span className="text-[10px] font-extrabold text-[#38bdf8] uppercase tracking-wider block">{p.brand}</span>
+                    <h4 className="text-xs font-bold text-[#f1f5f9] truncate mt-0.5 group-hover:text-[#38bdf8] transition-colors">{p.name}</h4>
+                    <div className="text-xs font-extrabold text-[#38bdf8] mt-1.5">{formatRupiah(p.price)}</div>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        )}
+
       </div>
     </div>
   );
 }
-

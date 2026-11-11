@@ -13,6 +13,9 @@ import CartDrawer from './components/CartDrawer';
 import WishlistDrawer from './components/WishlistDrawer';
 import Footer from './components/Footer';
 import ProductDetailPage from './pages/ProductDetailPage';
+import OrderTrackingPage from './pages/OrderTrackingPage';
+import BrewGuidesPage from './pages/BrewGuidesPage';
+import WholesalePage from './pages/WholesalePage';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
 import { 
@@ -235,25 +238,25 @@ export default function App() {
   const spotlightItem = PRODUCTS.find((p) => p.id === 'akm-flair-58') || PRODUCTS[0];
 
   return (
-    <div className="min-h-screen bg-[#141211] text-[#f5f5f4] flex flex-col font-sans selection:bg-[#c2a676] selection:text-[#141211]">
+    <div className="min-h-screen bg-[#070e1b] text-[#f1f5f9] flex flex-col font-sans selection:bg-[#0084ff] selection:text-white">
       
       {/* Toast Notification */}
       {toastMessage && (
-        <div className="fixed bottom-6 right-6 z-50 bg-[#1c1917] border border-[#c2a676] text-[#f5f5f4] px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2.5 animate-fade-in text-xs font-semibold">
-          <CheckCircle className="w-4 h-4 text-[#c2a676]" />
+        <div className="fixed bottom-6 right-6 z-50 bg-[#0b172a] border border-[#0084ff] text-white px-4 py-3 rounded-2xl shadow-2xl shadow-blue-950/60 flex items-center gap-2.5 animate-fade-in text-xs font-semibold">
+          <CheckCircle className="w-4 h-4 text-[#38bdf8]" />
           <span>{toastMessage}</span>
         </div>
       )}
 
-      {/* Floating WhatsApp Quick Consultation Button */}
+      {/* Floating WhatsApp Quick Consultation Button (Azure Sapphire Style) */}
       <a
         href={`https://wa.me/${STORE_INFO.whatsappNumber}?text=Halo%20barista%20Sanubari%20x%20Alat%20Kopi%20Malang!%20Saya%20ingin%20tanya%20rekomendasi%20alat`}
         target="_blank"
         rel="noreferrer"
-        className="fixed bottom-6 left-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs shadow-2xl shadow-emerald-900/50 hover:scale-105 active:scale-95 transition-all group"
+        className="fixed bottom-6 left-6 z-40 flex items-center gap-2.5 px-4 py-3 rounded-full bg-gradient-to-r from-[#0070f3] to-[#0052cc] hover:brightness-110 text-white font-bold text-xs shadow-2xl shadow-[#0070f3]/40 hover:scale-105 active:scale-95 transition-all group"
         title="Chat Barista via WhatsApp"
       >
-        <span className="w-2.5 h-2.5 rounded-full bg-white animate-ping"></span>
+        <span className="w-2.5 h-2.5 rounded-full bg-cyan-300 animate-ping"></span>
         <PhoneCall className="w-4 h-4" />
         <span className="hidden sm:inline">Konsultasi Barista</span>
       </a>
@@ -273,7 +276,7 @@ export default function App() {
         onScrollToShowroom={scrollToShowroom}
       />
 
-      {/* Routing between Homepage and Product Detail Page */}
+      {/* Routing between Homepage, Product Detail, Tracking, Guides, Wholesale */}
       <Routes>
         {/* Homepage Route */}
         <Route
@@ -301,15 +304,15 @@ export default function App() {
                 {/* Section Header */}
                 <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
                   <div>
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#292524] text-xs font-bold text-[#c2a676] tracking-wider uppercase mb-2">
+                    <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0d1e38] text-xs font-bold text-[#38bdf8] tracking-wider uppercase mb-2 border border-[#0084ff]/30">
                       <Coffee className="w-3.5 h-3.5" />
-                      <span>KATALOG ALAT SEDUH</span>
+                      <span>KATALOG ALAT &amp; BIJI KOPI</span>
                     </div>
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-[#f5f5f4] tracking-tight">
+                    <h2 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
                       Peralatan Kopi Specialty Pilihan
                     </h2>
-                    <p className="text-xs sm:text-sm text-[#78716c] mt-1">
-                      Menampilkan {filteredProducts.length} dari {PRODUCTS.length} alat kopi pilihan — Klik produk untuk membuka link &amp; spesifikasi lengkap
+                    <p className="text-xs sm:text-sm text-[#94a3b8] mt-1">
+                      Menampilkan {filteredProducts.length} dari {PRODUCTS.length} pilihan — Klik produk untuk membuka link &amp; spesifikasi lengkap
                     </p>
                   </div>
 
@@ -317,21 +320,21 @@ export default function App() {
                   <div className="flex flex-wrap items-center gap-3 self-start md:self-auto">
                     <button
                       onClick={() => setIsGrinderChartOpen(true)}
-                      className="px-3.5 py-2 rounded-xl bg-[#1c1917] hover:bg-[#292524] text-xs font-semibold text-[#c2a676] border border-[#38332f] flex items-center gap-1.5 transition-all"
+                      className="px-3.5 py-2 rounded-xl bg-[#0b172a] hover:bg-[#10223b] text-xs font-semibold text-[#38bdf8] border border-[#1e3a5f] flex items-center gap-1.5 transition-all shadow-sm"
                     >
                       <SlidersHorizontal className="w-3.5 h-3.5" />
                       <span>Tabel Klik Grinder</span>
                     </button>
 
                     <div className="flex items-center gap-2">
-                      <span className="text-xs text-[#78716c] flex items-center gap-1">
+                      <span className="text-xs text-[#64748b] flex items-center gap-1">
                         <ArrowUpDown className="w-3.5 h-3.5" />
                         <span>Urutkan:</span>
                       </span>
                       <select
                         value={sortBy}
                         onChange={(e) => setSortBy(e.target.value)}
-                        className="bg-[#1c1917] border border-[#292524] text-xs text-[#f5f5f4] rounded-xl px-3 py-2 focus:border-[#c2a676] focus:outline-none"
+                        className="bg-[#0b172a] border border-[#172b47] text-xs text-white rounded-xl px-3 py-2 focus:border-[#0084ff] focus:outline-none"
                       >
                         <option value="popular">Paling Populer</option>
                         <option value="price-low">Harga Terendah</option>
@@ -353,8 +356,8 @@ export default function App() {
                         onClick={() => setSelectedCategory(cat.id)}
                         className={`px-4 py-2.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                           selectedCategory === cat.id
-                            ? 'bg-[#c2a676] text-[#141211] border-[#c2a676] shadow-md shadow-[#c2a676]/20'
-                            : 'bg-[#1c1917] text-[#a8a29e] border-[#292524] hover:text-[#f5f5f4] hover:bg-[#292524]'
+                            ? 'bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white border-[#0084ff] shadow-md shadow-[#0070f3]/30'
+                            : 'bg-[#0b172a] text-[#94a3b8] border-[#172b47] hover:text-white hover:bg-[#10223b]'
                         }`}
                       >
                         {cat.name}
@@ -364,7 +367,7 @@ export default function App() {
 
                   {/* Brand Filter Chips */}
                   <div className="flex items-center gap-2 overflow-x-auto no-scrollbar text-xs">
-                    <span className="text-[#78716c] text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1">
+                    <span className="text-[#64748b] text-[11px] font-semibold uppercase tracking-wider shrink-0 mr-1">
                       Brand:
                     </span>
                     {BRANDS.map((brand) => (
@@ -373,8 +376,8 @@ export default function App() {
                         onClick={() => setSelectedBrand(brand)}
                         className={`px-3 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all border ${
                           selectedBrand === brand
-                            ? 'bg-[#292524] text-[#c2a676] border-[#c2a676]'
-                            : 'bg-[#1c1917]/70 text-[#78716c] border-[#292524] hover:text-[#a8a29e]'
+                            ? 'bg-[#10223b] text-[#38bdf8] border-[#0084ff]'
+                            : 'bg-[#0b172a]/70 text-[#64748b] border-[#172b47] hover:text-[#94a3b8]'
                         }`}
                       >
                         {brand}
@@ -400,11 +403,11 @@ export default function App() {
 
                 {/* Product Grid */}
                 {filteredProducts.length === 0 ? (
-                  <div className="text-center py-20 rounded-3xl bg-[#1c1917] border border-[#292524] p-8 space-y-4">
-                    <Coffee className="w-12 h-12 text-[#78716c] mx-auto opacity-50" />
-                    <h3 className="text-lg font-bold text-[#f5f5f4]">Produk Tidak Ditemukan</h3>
-                    <p className="text-xs text-[#78716c] max-w-sm mx-auto">
-                      Tidak ada alat kopi yang cocok dengan kata kunci "{searchQuery}" atau filter yang dipilih. Silakan coba filter lainnya.
+                  <div className="text-center py-20 rounded-3xl bg-[#0b172a] border border-[#172b47] p-8 space-y-4">
+                    <Coffee className="w-12 h-12 text-[#64748b] mx-auto opacity-50" />
+                    <h3 className="text-lg font-bold text-white">Produk Tidak Ditemukan</h3>
+                    <p className="text-xs text-[#64748b] max-w-sm mx-auto">
+                      Tidak ada alat atau biji kopi yang cocok dengan kata kunci "{searchQuery}" atau filter yang dipilih. Silakan coba filter lainnya.
                     </p>
                     <button
                       onClick={() => {
@@ -412,7 +415,7 @@ export default function App() {
                         setSelectedBrand('Semua Brand');
                         setSearchQuery('');
                       }}
-                      className="px-5 py-2.5 rounded-xl bg-[#c2a676] text-[#141211] font-bold text-xs hover:brightness-110"
+                      className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white font-bold text-xs hover:brightness-110 shadow-md"
                     >
                       Tampilkan Semua Produk
                     </button>
@@ -461,9 +464,27 @@ export default function App() {
             />
           }
         />
+
+        {/* Dedicated Order Tracking Route */}
+        <Route
+          path="/lacak-pesanan"
+          element={<OrderTrackingPage />}
+        />
+
+        {/* Dedicated Brew Guides Route */}
+        <Route
+          path="/panduan-seduh"
+          element={<BrewGuidesPage />}
+        />
+
+        {/* Dedicated Wholesale Partnership Route */}
+        <Route
+          path="/wholesale"
+          element={<WholesalePage />}
+        />
       </Routes>
 
-      {/* Footer (Available across all pages) */}
+      {/* Footer */}
       <Footer
         onSelectCategory={handleSelectCategory}
         onScrollToCalculator={scrollToCalculator}
