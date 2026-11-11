@@ -80,7 +80,7 @@ export default function CategoryPage({
         </p>
         <Link
           to="/"
-          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0070f3] hover:bg-[#0052cc] text-white font-bold text-xs transition-all shadow-lg shadow-blue-500/20"
+          className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#0e1f36] hover:bg-[#152e50] text-white font-bold text-xs transition-all shadow-md shadow-slate-900/15"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Kembali ke Katalog Utama</span>
@@ -112,7 +112,7 @@ export default function CategoryPage({
                   to={`/kategori/${cat.slug}`}
                   className={`px-3.5 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all border ${
                     category.id === cat.id
-                      ? 'bg-[#0070f3] text-white border-[#0070f3] shadow-md shadow-blue-500/20'
+                      ? 'bg-[#0e1f36] text-white border-[#0e1f36] shadow-sm'
                       : 'bg-white text-slate-600 border-slate-200 hover:text-slate-900 hover:bg-slate-50'
                   }`}
                 >
@@ -140,7 +140,7 @@ export default function CategoryPage({
                 onClick={() => setSelectedBrand(brand)}
                 className={`px-3 py-1.5 rounded-lg text-[11px] font-medium whitespace-nowrap transition-all border ${
                   selectedBrand === brand
-                    ? 'bg-blue-50 text-[#0070f3] border-blue-300 font-semibold shadow-xs'
+                    ? 'bg-slate-100 text-[#0e1f36] border-[#0e1f36]/40 font-bold shadow-xs'
                     : 'bg-white text-slate-500 border-slate-200 hover:text-slate-800 hover:bg-slate-50'
                 }`}
               >
@@ -170,7 +170,7 @@ export default function CategoryPage({
             </p>
             <button
               onClick={() => setSelectedBrand('Semua Brand')}
-              className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#0070f3] to-[#0052cc] text-white font-bold text-xs hover:brightness-110 shadow-md shadow-blue-500/20"
+              className="px-5 py-2.5 rounded-xl bg-[#0e1f36] hover:bg-[#152e50] text-white font-bold text-xs shadow-md shadow-slate-900/15"
             >
               Reset Filter Kategori
             </button>
