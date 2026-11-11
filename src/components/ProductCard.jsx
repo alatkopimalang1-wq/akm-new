@@ -70,8 +70,8 @@ export default function ProductCard({
           </span>
 
           {/* Title */}
-          <Link to={productUrl} className="block group-hover:text-[#0e1f36] transition-colors">
-            <h3 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-2 leading-snug min-h-[2.4rem] sm:min-h-[2.6rem]">
+          <Link to={productUrl} className="block group-hover:text-[#0e1f36] transition-colors min-h-[3rem] sm:min-h-[2.6rem]">
+            <h3 className="text-xs sm:text-sm font-bold text-slate-900 line-clamp-3 sm:line-clamp-2 leading-snug">
               {product.name}
             </h3>
           </Link>
