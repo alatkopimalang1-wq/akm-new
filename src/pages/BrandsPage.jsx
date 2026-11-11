@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, Coffee } from 'lucide-react';
+import { Coffee } from 'lucide-react';
 import { OFFICIAL_BRANDS_DATA } from '../data/products';
 
 export default function BrandsPage() {
@@ -10,21 +10,10 @@ export default function BrandsPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-slate-900 py-8 sm:py-14 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white text-slate-900 py-10 sm:py-16 px-4 sm:px-6 lg:px-8">
       
       {/* Container matching screenshot max-width */}
       <div className="max-w-6xl mx-auto">
-        
-        {/* Discreet Back to Home link */}
-        <div className="mb-6 sm:mb-8">
-          <Link 
-            to="/" 
-            className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-400 hover:text-[#0070f3] transition-colors"
-          >
-            <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Kembali ke Beranda</span>
-          </Link>
-        </div>
 
         {/* Section Header: Centered Title & Subtitle */}
         <div className="text-center mb-10 sm:mb-14">

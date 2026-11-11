@@ -105,34 +105,6 @@ export default function ProductDetailPage({
   return (
     <div className="min-h-screen bg-white text-slate-900 pb-24">
       
-      {/* Top Breadcrumb Bar */}
-      <div className="bg-slate-50/80 backdrop-blur-sm py-3 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-7xl mx-auto flex items-center justify-between text-xs text-slate-500">
-          <div className="flex items-center gap-2 flex-wrap">
-            <Link to="/" className="hover:text-[#0070f3] transition-colors flex items-center gap-1">
-              <ArrowLeft className="w-3.5 h-3.5" />
-              <span>Katalog Alat</span>
-            </Link>
-            <span className="text-slate-300">/</span>
-            <Link to={`/kategori/${categoryObj?.slug || product.category}`} className="text-slate-600 hover:text-[#0070f3] transition-colors">
-              {categoryObj?.name || 'Alat Kopi'}
-            </Link>
-            <span className="text-slate-300">/</span>
-            <span className="text-[#0070f3] font-medium truncate max-w-xs">{product.name}</span>
-          </div>
-
-          {/* Share Button */}
-          <button
-            onClick={handleCopyLink}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white hover:bg-slate-100 text-[#0070f3] text-xs font-semibold border border-slate-200 transition-all shadow-xs"
-            title="Salin Link Produk Ini"
-          >
-            {copied ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-            <span>{copied ? 'Tersalin!' : 'Bagikan Link'}</span>
-          </button>
-        </div>
-      </div>
-
       {/* Main Product Hero Details Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
@@ -229,14 +201,24 @@ export default function ProductDetailPage({
             
             <div>
               {/* Brand & Rating */}
-              <div className="flex items-center justify-between text-xs mb-2">
+              <div className="flex flex-wrap items-center justify-between gap-2 text-xs mb-2">
                 <span className="uppercase tracking-widest font-extrabold text-[#0070f3] text-sm">
                   {product.brand}
                 </span>
-                <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
-                  <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
-                  <span className="font-extrabold text-slate-900">{product.rating}</span>
-                  <span className="text-slate-500">({product.reviewCount} ulasan barista)</span>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={handleCopyLink}
+                    className="flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-50 hover:bg-slate-100 text-[#0070f3] text-xs font-semibold border border-slate-200 transition-all shadow-2xs"
+                    title="Salin Link Produk Ini"
+                  >
+                    {copied ? <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                    <span>{copied ? 'Tersalin!' : 'Bagikan'}</span>
+                  </button>
+                  <div className="flex items-center gap-1.5 bg-slate-50 px-3 py-1 rounded-full border border-slate-200">
+                    <Star className="w-4 h-4 text-amber-400 fill-amber-400" />
+                    <span className="font-extrabold text-slate-900">{product.rating}</span>
+                    <span className="text-slate-500">({product.reviewCount} ulasan)</span>
+                  </div>
                 </div>
               </div>
 

@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Building2, 
-  ArrowLeft, 
   CheckCircle2, 
   PhoneCall, 
   ShieldCheck, 
@@ -17,16 +16,6 @@ export default function WholesalePage() {
   return (
     <div className="min-h-screen bg-white text-slate-900 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        
-        {/* Back Link */}
-        <Link 
-          to="/" 
-          className="inline-flex items-center gap-2 text-xs font-semibold text-slate-500 hover:text-[#0070f3] mb-8 transition-colors"
-        >
-          <ArrowLeft className="w-4 h-4" />
-          <span>Kembali ke Katalog Alat Kopi</span>
-        </Link>
-
         {/* Header */}
         <div className="text-center mb-12">
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-xs font-bold text-[#0070f3] border border-blue-200 tracking-wider uppercase mb-3">
