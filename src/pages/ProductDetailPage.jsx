@@ -30,6 +30,15 @@ export default function ProductDetailPage({
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [quantity, setQuantity] = useState(1);
+  const [isZoomed, setIsZoomed] = useState(false);
+  const [zoomPos, setZoomPos] = useState({ x: 50, y: 50 });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = Math.max(0, Math.min(100, ((e.clientX - rect.left) / rect.width) * 100));
+    const y = Math.max(0, Math.min(100, ((e.clientY - rect.top) / rect.height) * 100));
+    setZoomPos({ x, y });
+  };
 
   // Set default variant on product change & scroll to top
   useEffect(() => {
@@ -107,11 +116,24 @@ export default function ProductDetailPage({
             
             {/* Left Column: Product Photo & Badges */}
             <div className="md:col-span-5 space-y-3">
-              <div className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-xs">
+              {/* Main Photo with Cursor Zoom */}
+              <div 
+                className="relative aspect-square sm:aspect-[4/3] md:aspect-square rounded-2xl overflow-hidden bg-slate-100 border border-slate-100 shadow-xs cursor-zoom-in group/photo"
+                onMouseEnter={() => setIsZoomed(true)}
+                onMouseLeave={() => {
+                  setIsZoomed(false);
+                  setZoomPos({ x: 50, y: 50 });
+                }}
+                onMouseMove={handleMouseMove}
+              >
                 <img
                   src={product.images[activeImageIndex] || product.images[0]}
                   alt={product.name}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-transform duration-200 ease-out pointer-events-none select-none"
+                  style={{
+                    transformOrigin: `${zoomPos.x}% ${zoomPos.y}%`,
+                    transform: isZoomed ? 'scale(1.8)' : 'scale(1)'
+                  }}
                 />
 
                 {/* Top-Left Discount Badge: HEMAT XX% */}
