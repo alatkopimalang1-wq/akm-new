@@ -8,10 +8,9 @@ import {
   Store, 
   Coffee, 
   Sparkles,
-  Flame,
   ArrowRight
 } from 'lucide-react';
-import { CATEGORIES } from '../data/products';
+import { STORE_INFO } from '../data/products';
 
 export const HERO_SLIDES = [
   {
@@ -47,14 +46,86 @@ export const HERO_SLIDES = [
   }
 ];
 
+// Data Kategori Pilihan (Diselaraskan Persis dengan Kategori Produk yang Sudah Ada di Toko)
+export const KATEGORI_PILIHAN_ITEMS = [
+  {
+    id: 'filter-beans',
+    name: 'Filter Beans',
+    link: '/kategori/filter-beans',
+    iconType: 'filter-beans'
+  },
+  {
+    id: 'espresso-beans',
+    name: 'Espresso Beans',
+    link: '/kategori/espresso-beans',
+    iconType: 'espresso-beans'
+  },
+  {
+    id: 'manual-brew',
+    name: 'Manual Brew',
+    link: '/kategori/manual-brew',
+    iconType: 'manual-brew'
+  },
+  {
+    id: 'grinder',
+    name: 'Grinder Kopi',
+    link: '/kategori/grinder',
+    iconType: 'grinder'
+  },
+  {
+    id: 'espresso-tools',
+    name: 'Espresso & Lever',
+    link: '/kategori/espresso-tools',
+    iconType: 'lever'
+  },
+  {
+    id: 'kettle',
+    name: 'Kettle Gooseneck',
+    link: '/kategori/kettle',
+    iconType: 'kettle'
+  },
+  {
+    id: 'scale',
+    name: 'Scale & Timer',
+    link: '/kategori/scale',
+    iconType: 'scale'
+  },
+  {
+    id: 'accessories',
+    name: 'Aksesoris & Filter',
+    link: '/kategori/accessories',
+    iconType: 'accessories'
+  },
+  {
+    id: 'bundles',
+    name: 'Paket Starter Kit',
+    badge: 'HEMAT',
+    link: '/kategori/bundles',
+    iconType: 'bundle'
+  },
+  {
+    id: 'panduan-seduh',
+    name: 'Panduan Seduh',
+    link: '/panduan-seduh',
+    iconType: 'guide'
+  },
+  {
+    id: 'wholesale',
+    name: 'Kemitraan B2B',
+    link: '/wholesale',
+    iconType: 'b2b'
+  }
+];
+
 export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCalculator, onScrollToShowroom }) {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const touchStartX = useRef(0);
   const touchEndX = useRef(0);
+  const categoryScrollRef = useRef(null);
   const navigate = useNavigate();
 
-  // Auto-play timer (5 seconds)
+  // Auto-play timer for hero banner slider (5 seconds)
   useEffect(() => {
     if (isPaused) return;
     const interval = setInterval(() => {
@@ -88,17 +159,149 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
     }
   };
 
+  // Scroll handler for Category Carousel
+  const scrollCategoryCarousel = (direction) => {
+    if (categoryScrollRef.current) {
+      const scrollAmount = direction === 'left' ? -280 : 280;
+      categoryScrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+  };
+
   const activeSlideData = HERO_SLIDES[currentSlide];
 
   // Helper index for left and right peeking slides
   const prevSlideIndex = (currentSlide - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
   const nextSlideIndex = (currentSlide + 1) % HERO_SLIDES.length;
 
+  // Render circular icon emblems matching the user's screenshot
+  const renderCategoryEmblem = (type) => {
+    switch (type) {
+      case 'filter-beans':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M17 8h1a4 4 0 1 1 0 8h-1" />
+            <path d="M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4Z" fill="currentColor" fillOpacity="0.15" />
+            <path d="M6 2v2M10 2v2M14 2v2" strokeLinecap="round" />
+            <ellipse cx="19" cy="19" rx="2.5" ry="3.5" transform="rotate(30 19 19)" fill="currentColor" />
+          </svg>
+        );
+      case 'espresso-beans':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <circle cx="9" cy="9" r="6" stroke="currentColor" />
+            <path d="M13.5 13.5L20 20" strokeWidth="2.5" strokeLinecap="round" />
+            <ellipse cx="8" cy="8" rx="2" ry="3.5" transform="rotate(-30 8 8)" fill="currentColor" />
+            <circle cx="16" cy="6" r="2.5" fill="currentColor" />
+            <circle cx="19" cy="10" r="2" fill="currentColor" />
+          </svg>
+        );
+      case 'robusta':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M4 18c2-3 4-8 4-13M20 18c-2-3-4-8-4-13" strokeLinecap="round" />
+            <path d="M5 13c3-1 4-2 4-2M19 13c-3-1-4-2-4-2" />
+            <path d="M8 8l4-3 4 3-2 3H10z" fill="currentColor" />
+            <ellipse cx="12" cy="15" rx="2.8" ry="4.5" fill="currentColor" stroke="currentColor" />
+            <path d="M12 12c.5 1.5 1 3.5 1 6" stroke="#000" strokeWidth="1.2" />
+          </svg>
+        );
+      case 'cybr':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M6 3h12l-4 7v6l-4 2v-8z" fill="currentColor" fillOpacity="0.2" />
+            <text x="12" y="14" textAnchor="middle" fill="currentColor" fontSize="6" fontWeight="bold" fontFamily="sans-serif">CY</text>
+            <text x="12" y="20" textAnchor="middle" fill="currentColor" fontSize="5" fontWeight="bold" fontFamily="sans-serif">BR</text>
+          </svg>
+        );
+      case 'b2b':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M11 17l-5-5 5-5M13 7l5 5-5 5" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="12" cy="7" r="2" fill="currentColor" />
+            <circle cx="7" cy="12" r="2" fill="currentColor" />
+            <circle cx="17" cy="12" r="2" fill="currentColor" />
+            <path d="M7 17l3-3 4 4 3-3" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        );
+      case 'roasting':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="5" y="4" width="14" height="10" rx="3" fill="currentColor" fillOpacity="0.2" />
+            <circle cx="12" cy="9" r="3" stroke="currentColor" />
+            <path d="M8 17c1 2 2 3 4 3s3-1 4-3" strokeLinecap="round" />
+            <path d="M12 14c-1 1-1 2 0 3s1-1 0-3" fill="currentColor" />
+            <path d="M9 20h6" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        );
+      case 'guide':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z" />
+            <path d="M6 6h10M6 10h10M6 14h6" strokeLinecap="round" />
+            <circle cx="15" cy="14" r="2" fill="currentColor" />
+          </svg>
+        );
+      case 'manual-brew':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M5 4h14l-4 7v6a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2v-6z" fill="currentColor" fillOpacity="0.2" />
+            <path d="M3 4h18" strokeLinecap="round" />
+          </svg>
+        );
+      case 'grinder':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="8" y="7" width="8" height="13" rx="2" fill="currentColor" fillOpacity="0.2" />
+            <path d="M12 7V3l6-1" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="18" cy="2" r="1.5" fill="currentColor" />
+            <path d="M8 13h8" strokeLinecap="round" />
+          </svg>
+        );
+      case 'lever':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M6 19h12M12 19V7M8 4l4 3 4-3" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="12" cy="7" r="3" fill="currentColor" fillOpacity="0.3" />
+          </svg>
+        );
+      case 'kettle':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <path d="M6 9h12v9a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V9Z" fill="currentColor" fillOpacity="0.2" />
+            <path d="M18 12c3-1 4-5 2-8M6 14c-4-2-4-8-1-10" strokeLinecap="round" />
+            <path d="M9 5h6" strokeLinecap="round" />
+          </svg>
+        );
+      case 'scale':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="4" y="5" width="16" height="14" rx="3" fill="currentColor" fillOpacity="0.2" />
+            <rect x="8" y="8" width="8" height="4" rx="1" stroke="currentColor" />
+            <circle cx="12" cy="15" r="1.5" fill="currentColor" />
+          </svg>
+        );
+      case 'accessories':
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" strokeLinecap="round" strokeLinejoin="round" fill="currentColor" fillOpacity="0.2" />
+          </svg>
+        );
+      default:
+        return (
+          <svg className="w-6 h-6 sm:w-7 sm:h-7 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+            <rect x="3" y="8" width="18" height="12" rx="2" fill="currentColor" fillOpacity="0.2" />
+            <path d="M12 8v12M3 13h18" />
+            <path d="M12 8a3 3 0 0 0-3-3H7v3M12 8a3 3 0 0 1 3-3h2v3" />
+          </svg>
+        );
+    }
+  };
+
   return (
     <section className="relative overflow-hidden bg-white pt-4 pb-12 sm:pt-6 sm:pb-16">
       
       {/* ========================================================================= */}
-      {/* IMAGE SLIDER CAROUSEL (Persis Gambar ke-2 dengan 5 Slide & Efek Peeking) */}
+      {/* HERO BANNER SLIDER (5 Slide Bersih Tanpa Teks Overlay) */}
       {/* ========================================================================= */}
       <div 
         className="relative w-full max-w-[1400px] mx-auto px-2 sm:px-4 lg:px-6"
@@ -133,7 +336,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           {/* MAIN ACTIVE CENTER SLIDE (Hanya Menampilkan Gambar Bersih) */}
           <div className="relative w-full max-w-5xl h-[300px] sm:h-[380px] lg:h-[420px] rounded-2xl sm:rounded-3xl overflow-hidden shadow-2xl shadow-slate-900/15 z-20 transition-all duration-500 ease-out group">
             
-            {/* Clickable Banner Image (Tanpa Teks / Judul / Deskripsi) */}
+            {/* Clickable Banner Image */}
             <Link 
               to={activeSlideData.ctaLink} 
               className="block w-full h-full cursor-pointer overflow-hidden focus:outline-none"
@@ -197,9 +400,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
 
         </div>
 
-        {/* ========================================================================= */}
-        {/* 5 INDICATOR DOTS (Persis Gambar ke-2 dengan Elongated Active Pill) */}
-        {/* ========================================================================= */}
+        {/* 5 INDICATOR DOTS (Elongated Active Pill) */}
         <div className="flex items-center justify-center gap-2 mt-4 sm:mt-6">
           {HERO_SLIDES.map((_, index) => {
             const isActive = currentSlide === index;
@@ -207,7 +408,7 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
               <button
                 key={index}
                 onClick={() => setCurrentSlide(index)}
-                className={`transition-all duration-300 rounded-full outline-none focus:outline-none ${
+                className={`transition-all duration-300 rounded-full outline-none focus:outline-none cursor-pointer ${
                   isActive
                     ? 'w-7 sm:w-8 h-2 sm:h-2.5 bg-[#0b1e36] shadow-sm'
                     : 'w-2 sm:w-2.5 h-2 sm:h-2.5 bg-slate-300 hover:bg-slate-400'
@@ -221,9 +422,110 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
       </div>
 
       {/* ========================================================================= */}
+      {/* KATEGORI PILIHAN CAROUSEL (Persis Gambar yang Diunggah Pengguna) */}
+      {/* ========================================================================= */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-16">
+        
+        {/* Section Title */}
+        <div className="text-center mb-8">
+          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+            Kategori Pilihan
+          </h2>
+        </div>
+
+        {/* Carousel Outer Container with Left & Right Arrow Buttons */}
+        <div className="relative group px-1 sm:px-2">
+          
+          {/* Carousel Scroll Left Button */}
+          <button
+            onClick={() => scrollCategoryCarousel('left')}
+            className="absolute -left-2 sm:-left-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+            title="Geser kategori ke kiri"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {/* Carousel Scrollable Track */}
+          <div
+            ref={categoryScrollRef}
+            className="flex items-start gap-6 sm:gap-10 overflow-x-auto no-scrollbar scroll-smooth py-3 px-3 sm:px-4"
+          >
+            {KATEGORI_PILIHAN_ITEMS.map((item) => {
+              const content = (
+                <div className="flex flex-col items-center group cursor-pointer shrink-0 select-none w-20 sm:w-24 text-center">
+                  
+                  {/* Circular Emblem Container with Badge */}
+                  <div className="relative mb-2.5">
+                    
+                    {/* Badge "BARU" for C.Y.B.R */}
+                    {item.badge && (
+                      <span className="absolute -top-2 left-1/2 -translate-x-1/2 px-2 py-0.5 rounded-full bg-[#8B5A2B] text-white text-[9px] font-black uppercase tracking-wider shadow-sm z-10 whitespace-nowrap">
+                        {item.badge}
+                      </span>
+                    )}
+
+                    {/* Outer Light Gray Circle */}
+                    <div className="w-16 h-16 sm:w-18 sm:h-18 rounded-full bg-slate-100 group-hover:bg-blue-50 flex items-center justify-center transition-all duration-300 group-hover:scale-105 shadow-xs border border-slate-200/60 group-hover:border-[#0070f3]/40">
+                      
+                      {/* Inner Dark / Black Circle */}
+                      <div className="w-12 h-12 sm:w-13 sm:h-13 rounded-full bg-[#111827] group-hover:bg-[#0b1e36] flex items-center justify-center transition-colors shadow-sm">
+                        {renderCategoryEmblem(item.iconType)}
+                      </div>
+
+                    </div>
+                  </div>
+
+                  {/* Label Text */}
+                  <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-[#0070f3] transition-colors leading-tight line-clamp-2">
+                    {item.name}
+                  </span>
+
+                </div>
+              );
+
+              if (item.isExternal) {
+                return (
+                  <a
+                    key={item.id}
+                    href={item.link}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="focus:outline-none"
+                  >
+                    {content}
+                  </a>
+                );
+              }
+
+              return (
+                <Link
+                  key={item.id}
+                  to={item.link}
+                  className="focus:outline-none"
+                >
+                  {content}
+                </Link>
+              );
+            })}
+          </div>
+
+          {/* Carousel Scroll Right Button */}
+          <button
+            onClick={() => scrollCategoryCarousel('right')}
+            className="absolute -right-2 sm:-right-4 top-1/2 -translate-y-1/2 w-9 h-9 sm:w-10 sm:h-10 rounded-full bg-white border border-slate-200 text-slate-700 shadow-md hover:bg-slate-50 hover:text-[#0070f3] flex items-center justify-center transition-all z-20 hover:scale-110 active:scale-95 cursor-pointer outline-none focus:outline-none"
+            title="Geser kategori ke kanan"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+
+        </div>
+
+      </div>
+
+      {/* ========================================================================= */}
       {/* 4 TRUST BADGES (Keaslian, Garansi, Showroom & Konsultasi) */}
       {/* ========================================================================= */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 sm:mt-14">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 py-6 px-6 sm:px-8 rounded-2xl bg-slate-50 border border-slate-200/80 shadow-xs">
           
           <div className="flex items-center gap-3">
@@ -267,40 +569,6 @@ export default function Hero({ onSelectCategory, onScrollToCatalog, onScrollToCa
           </div>
 
         </div>
-
-        {/* Quick Category Chips */}
-        <div className="mt-8 pt-6 border-t border-slate-100">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-2">
-              <Sparkles className="w-4 h-4 text-[#0070f3]" />
-              <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700">
-                Kategori Pilihan Cepat
-              </h3>
-            </div>
-            <span className="text-xs text-slate-400">Pilih kategori untuk filter katalog</span>
-          </div>
-
-          <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-3">
-            {CATEGORIES.filter(c => c.id !== 'all').map((cat) => (
-              <Link
-                key={cat.id}
-                to={`/kategori/${cat.slug}`}
-                className="flex flex-col items-center justify-center p-3 rounded-2xl bg-white hover:bg-blue-50/50 border border-slate-200/80 hover:border-[#0070f3] transition-all text-center group active:scale-95 shadow-xs"
-              >
-                <div className="w-8 h-8 rounded-xl bg-blue-50 group-hover:bg-blue-100/70 flex items-center justify-center mb-1.5 transition-colors">
-                  <Coffee className="w-4 h-4 text-[#0070f3]" />
-                </div>
-                <span className="text-xs font-semibold text-slate-800 group-hover:text-[#0070f3] transition-colors line-clamp-1">
-                  {cat.name}
-                </span>
-                <span className="text-[10px] text-slate-400">
-                  {cat.count} Produk
-                </span>
-              </Link>
-            ))}
-          </div>
-        </div>
-
       </div>
 
     </section>
