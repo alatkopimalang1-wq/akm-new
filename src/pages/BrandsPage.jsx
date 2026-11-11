@@ -4,9 +4,9 @@ import { Coffee } from 'lucide-react';
 import { OFFICIAL_BRANDS_DATA } from '../data/products';
 
 export default function BrandsPage() {
-  // Always scroll to top on page load
+  // Always scroll to top instantly on page load
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   }, []);
 
   return (

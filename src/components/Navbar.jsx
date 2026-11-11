@@ -297,7 +297,7 @@ export default function Navbar({
     setNotificationOpen(false);
     setSearchFocused(false);
     navigate('/');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
   };
 
   return (

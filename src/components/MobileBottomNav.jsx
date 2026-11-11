@@ -42,7 +42,7 @@ export default function MobileBottomNav({
     setCategorySheetOpen(false);
     setAccountSheetOpen(false);
     if (location.pathname === '/') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo(0, 0);
     } else {
       navigate('/');
     }
@@ -52,7 +52,6 @@ export default function MobileBottomNav({
     setAccountSheetOpen(false);
     setCategorySheetOpen(false);
     navigate('/kategori');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handleCartClick = () => {
@@ -65,7 +64,6 @@ export default function MobileBottomNav({
     setCategorySheetOpen(false);
     setAccountSheetOpen(false);
     navigate('/akun');
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (

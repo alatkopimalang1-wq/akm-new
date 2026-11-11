@@ -28,9 +28,9 @@ export default function CategoryPage({
   const [selectedBrand, setSelectedBrand] = useState(initialBrandParam || 'Semua Brand');
   const searchQueryParam = (searchParams.get('q') || searchParams.get('search') || '').trim();
 
-  // Scroll to top when category or brand param changes
+  // Scroll to top instantly when category or brand param changes
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo(0, 0);
     const brandParam = searchParams.get('brand');
     setSelectedBrand(brandParam || 'Semua Brand');
   }, [categorySlug, searchParams]);
