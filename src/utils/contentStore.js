@@ -165,7 +165,22 @@ export function notifyContentUpdate() {
 export function getStoredProducts() {
   try {
     const saved = localStorage.getItem('akm_products');
-    if (saved) return JSON.parse(saved);
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        // Gabungkan produk bawaan jika ada produk baru yang belum tersimpan di cache
+        const existingIds = new Set(parsed.map(p => p.id));
+        const missing = PRODUCTS.filter(p => !existingIds.has(p.id));
+        if (missing.length > 0) {
+          const merged = [...parsed, ...missing];
+          try {
+            localStorage.setItem('akm_products', JSON.stringify(merged));
+          } catch (_) {}
+          return merged;
+        }
+        return parsed;
+      }
+    }
   } catch (e) {
     console.error('Error loading products from storage', e);
   }

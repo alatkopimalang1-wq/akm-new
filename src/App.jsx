@@ -302,11 +302,12 @@ export default function App() {
           }
         />
 
-        {/* Dedicated Product Detail Route */}
+        {/* Dedicated Product Detail Route - key memaksa remounting instan setiap kali produk berganti */}
         <Route
           path="/product/:slug"
           element={
             <ProductDetailPage
+              key={location.pathname}
               onAddToCart={handleAddToCart}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
@@ -319,11 +320,11 @@ export default function App() {
         {/* Dedicated All Categories Hub Route (Persis Screenshot) */}
         <Route
           path="/kategori"
-          element={<CategoriesHubPage />}
+          element={<CategoriesHubPage key={location.pathname} />}
         />
         <Route
           path="/semua-kategori"
-          element={<CategoriesHubPage />}
+          element={<CategoriesHubPage key={location.pathname} />}
         />
 
         {/* Dedicated Category & Shop Routes */}
@@ -331,6 +332,7 @@ export default function App() {
           path="/shop"
           element={
             <CategoryPage
+              key={location.pathname}
               onAddToCart={handleAddToCart}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
@@ -342,6 +344,7 @@ export default function App() {
           path="/katalog"
           element={
             <CategoryPage
+              key={location.pathname}
               onAddToCart={handleAddToCart}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
@@ -353,6 +356,7 @@ export default function App() {
           path="/kategori/:categorySlug"
           element={
             <CategoryPage
+              key={location.pathname}
               onAddToCart={handleAddToCart}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}
@@ -364,6 +368,7 @@ export default function App() {
           path="/category/:categorySlug"
           element={
             <CategoryPage
+              key={location.pathname}
               onAddToCart={handleAddToCart}
               wishlist={wishlist}
               onToggleWishlist={handleToggleWishlist}

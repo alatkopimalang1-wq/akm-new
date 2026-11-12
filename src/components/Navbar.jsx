@@ -116,6 +116,9 @@ export default function Navbar({
   const activeParent = MEGA_MENU_CATEGORIES.find(c => c.id === activeParentCategoryId) || MEGA_MENU_CATEGORIES[0];
 
   const handleSubcategoryClick = (sub) => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     if (sub.action === 'calc') {
       onScrollToCalculator();
     } else if (sub.action === 'grinder-chart') {
@@ -300,9 +303,13 @@ export default function Navbar({
   };
 
   const handleLogoHomeClick = (e) => {
+    e.preventDefault();
     setMegaMenuOpen(false);
     setNotificationOpen(false);
     setSearchFocused(false);
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
     if (location.pathname !== '/') {
       navigate('/');
     }
@@ -417,6 +424,9 @@ export default function Navbar({
                         onClick={() => {
                           setSearchFocused(false);
                           setSearchQuery('');
+                          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                          document.documentElement.scrollTop = 0;
+                          document.body.scrollTop = 0;
                         }}
                         className="p-3 hover:bg-slate-50 flex items-center gap-3 transition-colors group"
                       >

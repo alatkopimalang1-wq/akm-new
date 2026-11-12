@@ -27,7 +27,15 @@ export default function ProductCard({
       className="group relative bg-white rounded-2xl border border-slate-200/90 hover:border-[#0e1f36]/40 transition-all duration-300 flex flex-col overflow-hidden shadow-xs hover:shadow-lg hover:-translate-y-0.5"
     >
       {/* Product Image Area with smooth zoom effect on hover */}
-      <Link to={productUrl} className="relative aspect-square overflow-hidden bg-slate-50 block">
+      <Link 
+        to={productUrl} 
+        onClick={() => {
+          window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+          document.documentElement.scrollTop = 0;
+          document.body.scrollTop = 0;
+        }}
+        className="relative aspect-square overflow-hidden bg-slate-50 block"
+      >
         <img
           src={displayImage}
           alt={product.name}
@@ -70,7 +78,15 @@ export default function ProductCard({
           </span>
 
           {/* Title */}
-          <Link to={productUrl} className="block group-hover:text-[#0e1f36] transition-colors min-h-[3.2rem] sm:min-h-[2.8rem]">
+          <Link 
+            to={productUrl} 
+            onClick={() => {
+              window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+              document.documentElement.scrollTop = 0;
+              document.body.scrollTop = 0;
+            }}
+            className="block group-hover:text-[#0e1f36] transition-colors min-h-[3.2rem] sm:min-h-[2.8rem]"
+          >
             <h3 className="text-[13px] sm:text-sm font-bold text-slate-900 line-clamp-3 sm:line-clamp-2 leading-snug">
               {product.name}
             </h3>
@@ -105,6 +121,11 @@ export default function ProductCard({
           {hasVariants ? (
             <Link
               to={productUrl}
+              onClick={() => {
+                window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+                document.documentElement.scrollTop = 0;
+                document.body.scrollTop = 0;
+              }}
               className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-full bg-[#0e1f36] hover:bg-[#152e50] text-white text-xs sm:text-sm font-bold transition-all shadow-xs hover:shadow-md active:scale-95"
             >
               <span>Pilih</span>

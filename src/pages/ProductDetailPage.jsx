@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { 
   ArrowLeft, 
@@ -51,6 +51,13 @@ export default function ProductDetailPage({
       setMobileImageIndex(idx);
     }
   };
+
+  // Reset scroll instantly ke paling atas saat halaman produk dibuka
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }, [slug]);
 
   // Set default variant on product change
   useEffect(() => {
