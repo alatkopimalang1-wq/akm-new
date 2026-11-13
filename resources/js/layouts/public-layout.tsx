@@ -295,56 +295,6 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 <meta head-key="og-image" property="og:image" content="/brand/logo-circle.png?v=20261105c" />
             </Head>
 
-            {/* Artatix Top Utility Bar (Desktop) */}
-            <div className="w-full hidden md:block bg-brand-950 text-white px-4 sm:px-6 lg:px-8 py-2.5 border-b border-brand-900/60 relative z-50">
-                <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
-                    {/* Left: Roastery Hours */}
-                    <div className="flex-1 min-w-0 flex items-center gap-2 text-xs text-brand-300">
-                        <span className="w-2 h-2 rounded-full bg-accent-copper flex-shrink-0" />
-                        <span className="truncate">
-                            {isEn
-                                ? 'Roastery & Showroom: Daily 09.00 – 23.00 WIB'
-                                : 'Roastery & Showroom: Buka Setiap Hari 09.00 – 23.00 WIB'}
-                        </span>
-                    </div>
-
-                    {/* Center: Utility Navigation Links (Artatix Pattern) */}
-                    <div className="flex items-center gap-6 text-xs font-semibold text-brand-200">
-                        <Link href="/tentang" className="hover:text-white transition-colors">
-                            {isEn ? 'Our Story' : 'Cerita Kami'}
-                        </Link>
-                        <Link href="/wholesale" className="hover:text-white transition-colors">
-                            {isEn ? 'Wholesale B2B' : 'Kemitraan Kedai'}
-                        </Link>
-                        <Link href="/kunjungi" className="hover:text-white transition-colors">
-                            {isEn ? 'Showroom Malang' : 'Showroom Malang'}
-                        </Link>
-                        <Link href={isEn ? '/en/booking' : '/booking-tempat'} className="hover:text-white transition-colors">
-                            {isEn ? 'Space Booking' : 'Booking Tempat'}
-                        </Link>
-                        <Link href={isEn ? '/en/coffee-catering' : '/coffee-catering'} className="hover:text-white transition-colors">
-                            {isEn ? 'Coffee Catering' : 'Coffee Catering'}
-                        </Link>
-                        <Link href="/panduan-seduh" className="hover:text-white transition-colors">
-                            {isEn ? 'Brew Guides & FAQ' : 'Panduan & FAQ'}
-                        </Link>
-                    </div>
-
-                    {/* Right: Location Link */}
-                    <div className="flex-1 flex items-center justify-end">
-                        <a
-                            href={settings?.maps_url || 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7'}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-xs text-brand-300 hover:text-white transition-colors font-medium"
-                        >
-                            <MapPin className="w-3.5 h-3.5 text-accent-copper" />
-                            <span>Malang, Jawa Timur</span>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
             {/* Announcement Ticker Bar */}
             {announcementVisible && settings?.announcement_enabled && (settings?.announcement_text_id || settings?.announcement_text_en) && (
                 <div className="bg-accent-copper text-white px-4 py-2 text-xs font-semibold flex items-center justify-between text-center relative z-50 shadow-xs">
