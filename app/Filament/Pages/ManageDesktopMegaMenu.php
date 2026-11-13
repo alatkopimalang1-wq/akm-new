@@ -231,47 +231,12 @@ class ManageDesktopMegaMenu extends Page
 
     public static function getPresetUrlOptions(): array
     {
-        return [
-            '/shop?category=filter-beans' => 'Katalog: Filter Beans (/shop?category=filter-beans)',
-            '/shop?category=espresso-beans' => 'Katalog: Espresso Beans (/shop?category=espresso-beans)',
-            '/shop?category=capsule' => 'Katalog: Capsule Coffee (/shop?category=capsule)',
-            '/shop?category=drip-bag' => 'Katalog: Drip Bag Coffee (/shop?category=drip-bag)',
-            '/shop?category=cold-brew' => 'Katalog: Cold Brew & RTD (/shop?category=cold-brew)',
-            '/shop?category=co-ferment' => 'Katalog: Co-Ferment Eksperimental (/shop?category=co-ferment)',
-            '/shop?category=green-bean' => 'Katalog: Green Bean Mentah (/shop?category=green-bean)',
-            '/shop?category=experimental' => 'Katalog: Specialty Micro-lot (/shop?category=experimental)',
-            '/shop?category=tea' => 'Katalog: Specialty Artisan Tea (/shop?category=tea)',
-            '/shop?category=powder' => 'Katalog: Matcha & Cocoa Powder (/shop?category=powder)',
-            '/shop?category=manual-brew' => 'Alat Kopi: Manual Brew Tools (/shop?category=manual-brew)',
-            '/shop?category=dripper' => 'Alat Kopi: Dripper & Pour Over V60 (/shop?category=dripper)',
-            '/shop?category=server' => 'Alat Kopi: Server & Carafe (/shop?category=server)',
-            '/shop?category=grinders' => 'Alat Kopi: Semua Grinder (/shop?category=grinders)',
-            '/shop?category=hand-grinder' => 'Alat Kopi: Manual Hand Grinder (/shop?category=hand-grinder)',
-            '/shop?category=electric-grinder' => 'Alat Kopi: Electric Grinder (/shop?category=electric-grinder)',
-            '/shop?category=espresso-machines' => 'Alat Kopi: Semua Mesin Espresso (/shop?category=espresso-machines)',
-            '/shop?category=home-espresso' => 'Alat Kopi: Home Espresso Machine (/shop?category=home-espresso)',
-            '/shop?category=commercial-espresso' => 'Alat Kopi: Commercial Espresso (/shop?category=commercial-espresso)',
-            '/shop?category=barista-tools' => 'Alat Kopi: Barista Accessories (/shop?category=barista-tools)',
-            '/shop?category=grinder-tools' => 'Alat Kopi: Perawatan Grinder (/shop?category=grinder-tools)',
-            '/shop?series=kawi' => 'Koleksi: Gunung Kawi Series (/shop?series=kawi)',
-            '/shop?series=co-ferment' => 'Koleksi: Co-Ferment Series (/shop?series=co-ferment)',
-            '/shop' => 'Semua Produk Toko (/shop)',
-            '/cybr' => 'Studio Racik C.Y.B.R Mandiri (/cybr)',
-            '/training-barista' => 'Kelas & Training Barista (/training-barista)',
-            '/acara' => 'Jadwal Acara & Workshop (/acara)',
-            '/wholesale' => 'Wholesale & B2B Kemitraan (/wholesale)',
-            '/jasa-roasting' => 'Layanan Jasa Roasting (/jasa-roasting)',
-            '/kunjungi' => 'Showroom & Slow Bar Malang (/kunjungi)',
-            '/tentang' => 'Tentang Alat Kopi Malang (/tentang)',
-            '/panduan-seduh' => 'Panduan Seduh Resep Kopi (/panduan-seduh)',
-            '/blog' => 'Jurnal & Artikel Kopi (/blog)',
-        ];
+        return [];
     }
 
     public function mount(): void
     {
         $existing = Setting::get('desktop_mega_menu_categories');
-        $presetOptions = static::getPresetUrlOptions();
 
         $categories = ! empty($existing) && is_array($existing) ? $existing : static::getDefaultCategories();
 
@@ -286,25 +251,11 @@ class ManageDesktopMegaMenu extends Page
                         $sub['image'] = [$sub['image'] => $sub['image']];
                     }
 
-                    $existingUrl = $sub['url'] ?? '';
-                    if (empty($sub['link_type'])) {
-                        if (! empty($existingUrl) && array_key_exists($existingUrl, $presetOptions)) {
-                            $sub['link_type'] = 'preset';
-                            $sub['preset_url'] = $existingUrl;
-                            $sub['custom_url'] = $existingUrl;
-                        } else {
-                            $sub['link_type'] = 'custom';
-                            $sub['custom_url'] = ! empty($existingUrl) ? $existingUrl : '/shop';
-                            $sub['preset_url'] = '/shop';
-                        }
-                    } else {
-                        if (empty($sub['custom_url'])) {
-                            $sub['custom_url'] = ! empty($existingUrl) ? $existingUrl : '/shop';
-                        }
-                        if (empty($sub['preset_url'])) {
-                            $sub['preset_url'] = (! empty($existingUrl) && array_key_exists($existingUrl, $presetOptions)) ? $existingUrl : '/shop';
-                        }
-                    }
+                    $existingUrl = $sub['custom_url'] ?? $sub['url'] ?? $sub['preset_url'] ?? '/shop';
+                    $sub['link_type'] = 'custom';
+                    $sub['custom_url'] = ! empty($existingUrl) ? $existingUrl : '/shop';
+                    $sub['preset_url'] = null;
+                    $sub['url'] = $sub['custom_url'];
                 }
                 unset($sub);
             }
@@ -409,31 +360,13 @@ class ManageDesktopMegaMenu extends Page
                                                     ->placeholder('Misal: coffee-beans')
                                                     ->required(),
 
-                                                Grid::make(2)->schema([
-                                                    Select::make('link_type')
-                                                        ->label('Tujuan Tautan URL')
-                                                        ->options([
-                                                            'custom' => 'Tautan Kustom Sendiri (URL Custom)',
-                                                            'preset' => 'Pilih Halaman Alat Kopi Malang (Preset)',
-                                                        ])
-                                                        ->default('custom')
-                                                        ->live(),
-
-                                                    Select::make('preset_url')
-                                                        ->label('Pilih Halaman Target (Preset)')
-                                                        ->visible(fn ($get) => ($get('link_type') ?? 'custom') === 'preset')
-                                                        ->searchable()
-                                                        ->options(static::getPresetUrlOptions())
-                                                        ->default('/shop')
-                                                        ->required(fn ($get) => ($get('link_type') ?? 'custom') === 'preset' && empty($get('url'))),
-
+                                                Grid::make(1)->schema([
                                                     TextInput::make('custom_url')
-                                                        ->label('Tautan Kustom (URL)')
-                                                        ->visible(fn ($get) => ($get('link_type') ?? 'custom') === 'custom')
-                                                        ->placeholder('Misal: /shop?category=filter-beans atau https://...')
-                                                        ->helperText('Bisa berupa URL internal website (/shop?...) atau tautan eksternal (https://...)')
+                                                        ->label('Tautan Tujuan (URL)')
+                                                        ->placeholder('Misal: /shop atau https://...')
+                                                        ->helperText('Bisa berupa URL internal website (/shop) atau tautan eksternal (https://...)')
                                                         ->default('/shop')
-                                                        ->required(fn ($get) => ($get('link_type') ?? 'custom') === 'custom' && empty($get('url'))),
+                                                        ->required(),
 
                                                     Hidden::make('url'),
                                                 ])->columnSpanFull(),
@@ -481,14 +414,13 @@ class ManageDesktopMegaMenu extends Page
     public function resetToDefault(): void
     {
         $defaults = static::getDefaultCategories();
-        $presetOptions = static::getPresetUrlOptions();
 
         foreach ($defaults as &$cat) {
             if (! empty($cat['subcategories']) && is_array($cat['subcategories'])) {
                 foreach ($cat['subcategories'] as &$sub) {
-                    $existingUrl = $sub['url'] ?? '';
-                    $sub['link_type'] = array_key_exists($existingUrl, $presetOptions) ? 'preset' : 'custom';
-                    $sub['preset_url'] = array_key_exists($existingUrl, $presetOptions) ? $existingUrl : '/shop';
+                    $existingUrl = $sub['url'] ?? '/shop';
+                    $sub['link_type'] = 'custom';
+                    $sub['preset_url'] = null;
                     $sub['custom_url'] = $existingUrl;
                 }
                 unset($sub);
@@ -524,18 +456,15 @@ class ManageDesktopMegaMenu extends Page
                         $imagePath = is_array($sub['image']) ? array_values($sub['image'])[0] : $sub['image'];
                     }
 
-                    $linkType = $sub['link_type'] ?? 'custom';
-                    $resolvedUrl = $linkType === 'preset'
-                        ? ($sub['preset_url'] ?? $sub['url'] ?? '/shop')
-                        : ($sub['custom_url'] ?? $sub['url'] ?? '/shop');
+                    $resolvedUrl = $sub['custom_url'] ?? $sub['url'] ?? $sub['preset_url'] ?? '/shop';
 
                     $subcategories[] = [
                         'id' => ! empty($sub['id']) ? Str::slug($sub['id']) : ('sub-' . ($sIndex + 1)),
                         'name' => trim($sub['name'] ?? ''),
                         'url' => trim($resolvedUrl),
-                        'link_type' => $linkType,
-                        'preset_url' => $sub['preset_url'] ?? null,
-                        'custom_url' => $sub['custom_url'] ?? $resolvedUrl,
+                        'link_type' => 'custom',
+                        'preset_url' => null,
+                        'custom_url' => trim($resolvedUrl),
                         'visual_type' => $sub['visual_type'] ?? (! empty($imagePath) ? 'image' : 'icon'),
                         'icon' => $sub['icon'] ?? 'coffee-beans',
                         'image' => $imagePath,

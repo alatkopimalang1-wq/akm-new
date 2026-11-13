@@ -108,34 +108,28 @@ class ManageHeroSlider extends Page
                 $customUrl = $slide['link_custom_url'] ?? null;
                 $openInNewTab = (bool) ($slide['open_in_new_tab'] ?? false);
 
-                if (! $linkType) {
-                    $href = $slide['url'] ?? $slide['ctaHref'] ?? null;
-                    if (! $href || $href === '#') {
-                        $linkType = 'none';
-                    } elseif (in_array($href, ['/shop', '/cybr', '/shop/cybr', '/shop/byob', '/wholesale', '/jasa-roasting', '/roasting', '/training-barista', '/kursus-barista', '/kunjungi', '/panduan-seduh', '/blog', '/acara', '/tentang'])) {
-                        $linkType = 'page';
-                        $targetPage = $href;
-                    } elseif (str_starts_with($href, '/shop?category=') || str_starts_with($href, '/shop?series=')) {
-                        $linkType = 'category';
-                        $targetCategory = str_replace(['/shop?category=', '/shop?series='], '', $href);
-                    } else {
-                        $linkType = 'custom';
-                        $customUrl = $href;
-                        if (str_starts_with($href, 'http')) {
-                            $openInNewTab = true;
-                        }
-                    }
+                $href = $slide['url'] ?? $slide['ctaHref'] ?? $customUrl ?? $targetPage ?? null;
+                if (! $href && $targetCategory) {
+                    $href = '/shop?category=' . $targetCategory;
+                }
+
+                if ($linkType === 'none' || (! $linkType && (! $href || $href === '#'))) {
+                    $linkType = 'none';
+                    $customUrl = null;
+                } else {
+                    $linkType = 'custom';
+                    $customUrl = $customUrl ?: ($href ?: '/shop');
                 }
 
                 $normalizedSlides[] = [
                     'id' => $slide['id'] ?? ('slide-' . uniqid()),
                     'title' => $slide['title'] ?? '',
                     'image' => $image,
-                    'link_type' => $linkType ?? 'page',
-                    'link_target_page' => $targetPage ?? '/shop',
-                    'link_target_category' => $targetCategory ?? null,
-                    'link_target_product' => $targetProduct ?? null,
-                    'link_custom_url' => $customUrl ?? null,
+                    'link_type' => $linkType,
+                    'link_target_page' => null,
+                    'link_target_category' => null,
+                    'link_target_product' => null,
+                    'link_custom_url' => $customUrl,
                     'open_in_new_tab' => $openInNewTab,
                 ];
             }
@@ -254,50 +248,14 @@ class ManageHeroSlider extends Page
                                         ->label('Tujuan Tautan (URL Target)')
                                         ->options([
                                             'none' => 'Tanpa Tautan (Hanya Banner Visual)',
-                                            'page' => 'Halaman Utama (Shop, Wholesale, Showroom, dll)',
-                                            'category' => 'Kategori Produk',
-                                            'product' => 'Produk Tertentu',
-                                            'custom' => 'URL Kustom / Tautan Luar',
+                                            'custom' => 'Tautan URL Tujuan',
                                         ])
-                                        ->default('page')
+                                        ->default('custom')
                                         ->live()
                                         ->required(),
-                                    Select::make('link_target_page')
-                                        ->label('Pilih Halaman')
-                                        ->options([
-                                            '/shop' => 'Katalog Beli Kopi (/shop)',
-                                            '/cybr' => 'Studio Racik Blend C.Y.B.R (/cybr)',
-                                            '/shop/cybr' => 'Studio Racik Blend C.Y.B.R (/shop/cybr)',
-                                            '/shop/byob' => 'Studio Racik Blend C.Y.B.R (Legacy /shop/byob)',
-                                            '/wholesale' => 'Grosir & Kemitraan Kedai (/wholesale)',
-                                            '/jasa-roasting' => 'Jasa Roasting Kopi Presisi (/jasa-roasting)',
-                                            '/training-barista' => 'Training Barista & Sertifikasi (/training-barista)',
-                                            '/kunjungi' => 'Roastery & Showroom Malang (/kunjungi)',
-                                            '/panduan-seduh' => 'Panduan Seduh (/panduan-seduh)',
-                                            '/blog' => 'Artikel Blog & Catatan Roaster (/blog)',
-                                            '/acara' => 'Jadwal Acara & Cupping (/acara)',
-                                            '/tentang' => 'Tentang Alat Kopi Malang (/tentang)',
-                                        ])
-                                        ->default('/shop')
-                                        ->visible(fn ($get) => $get('link_type') === 'page')
-                                        ->required(fn ($get) => $get('link_type') === 'page'),
-                                    Select::make('link_target_category')
-                                        ->label('Pilih Kategori Produk')
-                                        ->options(fn () => Category::pluck('slug', 'slug')->mapWithKeys(function ($slug) {
-                                            return [$slug => ucwords(str_replace('-', ' ', $slug))];
-                                        })->toArray())
-                                        ->searchable()
-                                        ->visible(fn ($get) => $get('link_type') === 'category')
-                                        ->required(fn ($get) => $get('link_type') === 'category'),
-                                    Select::make('link_target_product')
-                                        ->label('Pilih Produk Spesifik')
-                                        ->options(fn () => Product::active()->pluck('name', 'slug')->toArray())
-                                        ->searchable()
-                                        ->visible(fn ($get) => $get('link_type') === 'product')
-                                        ->required(fn ($get) => $get('link_type') === 'product'),
                                     TextInput::make('link_custom_url')
-                                        ->label('Ketik URL Kustom')
-                                        ->placeholder('e.g. /shop?series=kawi atau https://instagram.com/Alat Kopi Malang.roastery')
+                                        ->label('Ketik URL Tujuan')
+                                        ->placeholder('e.g. /shop atau https://instagram.com/alatkopimalang')
                                         ->visible(fn ($get) => $get('link_type') === 'custom')
                                         ->required(fn ($get) => $get('link_type') === 'custom'),
                                 ]),
@@ -318,15 +276,7 @@ class ManageHeroSlider extends Page
             foreach ($data['home_hero_slides'] as $slide) {
                 $linkType = $slide['link_type'] ?? 'none';
                 $url = null;
-                if ($linkType === 'page') {
-                    $url = $slide['link_target_page'] ?? '/shop';
-                } elseif ($linkType === 'category') {
-                    $url = '/shop?category=' . ($slide['link_target_category'] ?? '');
-                } elseif ($linkType === 'product') {
-                    $productSlug = $slide['link_target_product'] ?? '';
-                    $product = $productSlug ? Product::where('slug', $productSlug)->first() : null;
-                    $url = $product ? "/shop/{$product->series}/{$product->slug}" : ($productSlug ? "/shop/kawi/{$productSlug}" : '/shop');
-                } elseif ($linkType === 'custom') {
+                if ($linkType === 'custom') {
                     $url = $slide['link_custom_url'] ?? null;
                 }
 

@@ -47,9 +47,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-droplet',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/shop?category=filter-beans',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/shop?category=filter-beans',
                 'badge' => null,
             ],
             [
@@ -57,9 +57,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-flame',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/shop?category=espresso-beans',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/shop?category=espresso-beans',
                 'badge' => null,
             ],
             [
@@ -67,9 +67,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-mountain',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/shop?series=kawi',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/shop?series=kawi',
                 'badge' => null,
             ],
             [
@@ -77,9 +77,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-sliders-horizontal',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/cybr',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/cybr',
                 'badge' => 'Baru',
             ],
             [
@@ -87,9 +87,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-book-open',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/panduan-seduh',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/panduan-seduh',
                 'badge' => null,
             ],
             [
@@ -97,9 +97,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-truck',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/wholesale',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/wholesale',
                 'badge' => null,
             ],
             [
@@ -107,9 +107,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => 'icon',
                 'icon' => 'lucide-map-pin',
                 'image' => null,
-                'link_type' => 'preset',
-                'preset_url' => '/kunjungi',
-                'custom_url' => null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => '/kunjungi',
                 'badge' => null,
             ],
         ];
@@ -120,6 +120,9 @@ class ManageCategoryMenu extends Page
                 if (! empty($existingItem['icon']) && ! str_contains($existingItem['icon'], '-')) {
                     $existingItem['icon'] = 'lucide-' . $existingItem['icon'];
                 }
+                $existingItem['custom_url'] = $existingItem['custom_url'] ?? $existingItem['url'] ?? $existingItem['preset_url'] ?? '/shop';
+                $existingItem['link_type'] = 'custom';
+                $existingItem['preset_url'] = null;
             }
             unset($existingItem);
         }
@@ -210,44 +213,13 @@ class ManageCategoryMenu extends Page
                                         ->helperText('Format PNG/JPG transparan persegi 1:1, maks 2MB.'),
                                 ]),
 
-                                Grid::make(2)->schema([
-                                    Select::make('link_type')
-                                        ->label('Tujuan Tautan')
-                                        ->options([
-                                            'preset' => 'Pilih Halaman Alat Kopi Malang',
-                                            'custom' => 'Tautan Kustom Sendiri',
-                                        ])
-                                        ->default('preset')
-                                        ->live(),
-
-                                    Select::make('preset_url')
-                                        ->label('Pilih Halaman Target')
-                                        ->visible(fn ($get) => ($get('link_type') ?? 'preset') === 'preset')
-                                        ->searchable()
-                                        ->options([
-                                            '/shop?category=filter-beans' => 'Katalog: Filter Beans',
-                                            '/shop?category=espresso-beans' => 'Katalog: Espresso Beans',
-                                            '/shop?series=kawi' => 'Katalog: Koleksi Gunung Kawi',
-                                            '/shop?series=co-ferment' => 'Katalog: CO-Ferment Eksperimental',
-                                            '/cybr' => 'Studio C.Y.B.R: Racik Blend Kopi Mandiri (/cybr)',
-                                            '/shop/cybr' => 'Studio C.Y.B.R (/shop/cybr)',
-                                            '/shop/byob' => 'Studio C.Y.B.R (Legacy /shop/byob)',
-                                            '/panduan-seduh' => 'Panduan Seduh: Resep & Teknik',
-                                            '/wholesale' => 'Grosir B2B: Kemitraan & Pasokan Kafe',
-                                            '/jasa-roasting' => 'Jasa Roasting: Layanan Sangrai Kopi (/jasa-roasting)',
-                                            '/training-barista' => 'Training Barista: Kursus & Sertifikasi (/training-barista)',
-                                            '/kunjungi' => 'Showroom: Kunjungan & Slow Bar Malang',
-                                            '/shop' => 'Semua Katalog Kopi',
-                                            '/tentang' => 'Tentang Alat Kopi Malang (/tentang)',
-                                            '/tentang-kami' => 'Tentang Alat Kopi Malang (Legacy)',
-                                        ])
-                                        ->default('/shop'),
-
+                                Grid::make(1)->schema([
                                     TextInput::make('custom_url')
-                                        ->label('Ketik Alamat URL Tujuan')
-                                        ->visible(fn ($get) => ($get('link_type') ?? 'preset') === 'custom')
-                                        ->placeholder('/shop?series=... atau https://...')
-                                        ->helperText('Bisa berupa path internal (mis: /shop) atau tautan luar (mis: https://wa.me/...)'),
+                                        ->label('Alamat URL Tujuan')
+                                        ->placeholder('/shop atau https://...')
+                                        ->helperText('Bisa berupa path internal (mis: /shop) atau tautan luar (mis: https://wa.me/...)')
+                                        ->default('/shop')
+                                        ->required(),
                                 ]),
                             ]),
                     ]),
@@ -266,9 +238,7 @@ class ManageCategoryMenu extends Page
                 $imagePath = is_array($item['image']) ? array_values($item['image'])[0] : $item['image'];
             }
 
-            $resolvedUrl = ($item['link_type'] ?? 'preset') === 'preset'
-                ? ($item['preset_url'] ?? '/shop')
-                : ($item['custom_url'] ?? '/shop');
+            $resolvedUrl = $item['custom_url'] ?? $item['url'] ?? $item['preset_url'] ?? '/shop';
 
             $badge = ! empty($item['badge']) ? trim($item['badge']) : null;
 
@@ -278,9 +248,9 @@ class ManageCategoryMenu extends Page
                 'visual_type' => $item['visual_type'] ?? 'icon',
                 'icon' => $item['icon'] ?? 'lucide-coffee',
                 'image' => $imagePath,
-                'link_type' => $item['link_type'] ?? 'preset',
-                'preset_url' => $item['preset_url'] ?? null,
-                'custom_url' => $item['custom_url'] ?? null,
+                'link_type' => 'custom',
+                'preset_url' => null,
+                'custom_url' => $resolvedUrl,
                 'url' => $resolvedUrl,
                 'badge' => $badge,
             ];
