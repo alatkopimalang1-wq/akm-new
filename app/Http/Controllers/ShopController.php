@@ -133,9 +133,16 @@ class ShopController extends Controller
             ->take(4)
             ->get();
 
+        $savedPreorderTerms = Setting::get('page_preorder_terms', []);
+        $preorderTerms = array_merge(
+            \App\Filament\Pages\ManagePreOrderTerms::defaultPreOrderTerms(),
+            is_array($savedPreorderTerms) ? $savedPreorderTerms : []
+        );
+
         return Inertia::render('shop/show', [
             'product' => $product,
             'relatedProducts' => $relatedProducts,
+            'preorderTerms' => $preorderTerms,
             'marketplaceDefaults' => [
                 'tokopedia' => Setting::get('tokopedia', 'https://www.tokopedia.com/alatkopimalang'),
                 'shopee' => Setting::get('shopee', 'https://shopee.co.id/alatkopimalang'),

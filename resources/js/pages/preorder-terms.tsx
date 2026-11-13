@@ -205,3 +205,4 @@ export default function PreorderTermsPage({ page }: PreOrderTermsPageProps) {
         </PublicLayout>
     );
 }
+

@@ -3,11 +3,14 @@ import { Head, Link } from '@inertiajs/react';
 import {
     ArrowLeft,
     CheckCircle2,
+    ChevronDown,
     ChevronLeft,
     ChevronRight,
     Clock,
     Coffee,
     Droplet,
+    ExternalLink,
+    FileCheck2,
     Flame,
     Heart,
     Info,
@@ -40,6 +43,11 @@ import {
 interface ProductShowProps {
     product: Product;
     relatedProducts: Product[];
+    preorderTerms?: {
+        hero_title?: string;
+        intro_text?: string;
+        sections?: Array<{ title: string; content: string }>;
+    };
     marketplaceDefaults?: {
         tokopedia?: string;
         shopee?: string;
@@ -104,6 +112,7 @@ const resolveImageUrl = (path: string | undefined | null) => {
 export default function ProductShow({
     product,
     relatedProducts = [],
+    preorderTerms,
     marketplaceDefaults,
 }: ProductShowProps) {
     const { addItem } = useCart();
@@ -251,6 +260,13 @@ export default function ProductShow({
         : null;
 
     const [isAdded, setIsAdded] = useState(false);
+    const [isPoTermsOpen, setIsPoTermsOpen] = useState(false);
+
+    const isPreOrderProduct = Boolean(
+        product.is_preorder ||
+        product.stock_status === 'pre_order' ||
+        selectedVariant.stock_status === 'pre_order'
+    );
 
     const isProductOutOfStock = Boolean(
         product.is_out_of_stock ||
@@ -669,6 +685,73 @@ export default function ProductShow({
                                 <span>{isCurrentVariantOutOfStock ? 'Tanyakan Restock via WhatsApp' : 'Pesan Langsung via WhatsApp'}</span>
                             </a>
                         </div>
+
+                        {/* Ketentuan PO Menu (Only shown when product has Pre-Order stock status) */}
+                        {isPreOrderProduct && (
+                            <div className="pt-5 border-t border-sand-200">
+                                <div className="rounded-2xl border border-amber-300/80 bg-amber-50/60 overflow-hidden shadow-2xs">
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsPoTermsOpen((prev) => !prev)}
+                                        className="w-full flex items-center justify-between gap-3 px-4 py-3.5 sm:px-5 sm:py-4 text-left hover:bg-amber-100/50 transition-colors cursor-pointer"
+                                    >
+                                        <div className="flex items-center gap-2.5">
+                                            <span className="w-8 h-8 rounded-xl bg-amber-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+                                                <FileCheck2 className="w-4 h-4" />
+                                            </span>
+                                            <div>
+                                                <span className="block text-sm sm:text-base font-extrabold uppercase tracking-wider text-brand-950">
+                                                    Ketentuan PO
+                                                </span>
+                                                <span className="block text-[11px] sm:text-xs text-brand-600 font-medium">
+                                                    Klik untuk membaca syarat & ketentuan pemesanan Pre-Order
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <ChevronDown
+                                            className={`w-5 h-5 text-brand-700 shrink-0 transition-transform duration-200 ${
+                                                isPoTermsOpen ? 'rotate-180' : ''
+                                            }`}
+                                        />
+                                    </button>
+
+                                    {isPoTermsOpen && (
+                                        <div className="px-4 pb-4 pt-2 sm:px-5 sm:pb-5 border-t border-amber-200/70 bg-white space-y-3.5 text-xs sm:text-sm text-brand-800">
+                                            {preorderTerms?.intro_text && (
+                                                <p className="text-brand-700 leading-relaxed bg-amber-50/70 p-3 rounded-xl border border-amber-200/60">
+                                                    {preorderTerms.intro_text}
+                                                </p>
+                                            )}
+
+                                            {preorderTerms?.sections && preorderTerms.sections.length > 0 && (
+                                                <div className="space-y-3">
+                                                    {preorderTerms.sections.map((sec, idx) => (
+                                                        <div key={idx} className="space-y-1">
+                                                            <h4 className="font-extrabold text-brand-950 text-xs sm:text-sm">
+                                                                {sec.title}
+                                                            </h4>
+                                                            <p className="text-brand-700 leading-relaxed whitespace-pre-line text-xs sm:text-[13px]">
+                                                                {sec.content}
+                                                            </p>
+                                                        </div>
+                                                    ))}
+                                                </div>
+                                            )}
+
+                                            <div className="pt-2 border-t border-sand-200 flex items-center justify-between">
+                                                <Link
+                                                    href="/syarat-ketentuan-pre-order"
+                                                    className="inline-flex items-center gap-1.5 text-xs font-extrabold text-amber-700 hover:text-amber-800 uppercase tracking-wider"
+                                                >
+                                                    <span>Buka Halaman Lengkap Syarat & Ketentuan Pre-Order</span>
+                                                    <ExternalLink className="w-3.5 h-3.5" />
+                                                </Link>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )}
 
                         {/* Description Text */}
                         {product.description && (
