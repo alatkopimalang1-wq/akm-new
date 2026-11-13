@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\Admin\HelixGalleryController;
 use App\Http\Controllers\Admin\VideoReelController;
 use App\Http\Controllers\Auth\GoogleAuthController;
 use App\Http\Controllers\CartController;
@@ -199,14 +198,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/dashboard/reels', [VideoReelController::class, 'store'])->name('dashboard.reels.store');
     Route::put('/dashboard/reels/{reel}', [VideoReelController::class, 'update'])->name('dashboard.reels.update');
     Route::delete('/dashboard/reels/{reel}', [VideoReelController::class, 'destroy'])->name('dashboard.reels.destroy');
-
-    // 3D Helix Ribbon Gallery Settings & Product Management
-    Route::get('/dashboard/helix-gallery', [HelixGalleryController::class, 'index'])->name('dashboard.helix-gallery.index');
-    Route::post('/dashboard/helix-gallery/settings', [HelixGalleryController::class, 'updateSettings'])->name('dashboard.helix-gallery.settings');
-    Route::post('/dashboard/helix-gallery/items', [HelixGalleryController::class, 'storeItem'])->name('dashboard.helix-gallery.items.store');
-    Route::put('/dashboard/helix-gallery/items/{id}', [HelixGalleryController::class, 'updateItem'])->name('dashboard.helix-gallery.items.update');
-    Route::delete('/dashboard/helix-gallery/items/{id}', [HelixGalleryController::class, 'destroyItem'])->name('dashboard.helix-gallery.items.destroy');
-    Route::post('/dashboard/helix-gallery/reset', [HelixGalleryController::class, 'resetDefaults'])->name('dashboard.helix-gallery.reset');
 });
 
 require __DIR__.'/settings.php';

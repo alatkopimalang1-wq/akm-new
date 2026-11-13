@@ -1,5 +1,5 @@
 import { Head, Link } from '@inertiajs/react';
-import { Film, ShoppingBag, Eye, ArrowUpRight, Layers } from 'lucide-react';
+import { Film, ShoppingBag, Eye, ArrowUpRight } from 'lucide-react';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
 
@@ -8,39 +8,7 @@ export default function Dashboard() {
         <>
             <Head title="Dashboard - Sanubari Admin" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-                <div className="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-4">
-                    {/* Galeri 3D Helix Card */}
-                    <div className="relative overflow-hidden rounded-2xl border border-sidebar-border bg-white dark:bg-neutral-900 p-5 shadow-xs flex flex-col justify-between">
-                        <div className="flex items-center justify-between">
-                            <div className="w-10 h-10 rounded-xl bg-accent-copper/15 flex items-center justify-center text-accent-copper">
-                                <Layers className="w-5 h-5" />
-                            </div>
-                            <Link
-                                href="/dashboard/helix-gallery"
-                                className="w-8 h-8 rounded-lg bg-neutral-100 hover:bg-neutral-200 dark:bg-neutral-800 dark:hover:bg-neutral-700 flex items-center justify-center text-neutral-700 dark:text-neutral-300 transition-colors"
-                            >
-                                <ArrowUpRight className="w-4 h-4" />
-                            </Link>
-                        </div>
-                        <div className="mt-4 space-y-1">
-                            <h3 className="text-base font-bold text-neutral-900 dark:text-neutral-100">
-                                Galeri 3D Helix
-                            </h3>
-                            <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                                Kelola produk, upload foto, atur rotasi otomatis, dan jumlah grid kolom gambar 3D.
-                            </p>
-                        </div>
-                        <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-neutral-800">
-                            <Link
-                                href="/dashboard/helix-gallery"
-                                className="text-xs font-bold text-accent-copper hover:underline flex items-center gap-1"
-                            >
-                                <span>Kelola Galeri 3D</span>
-                                <ArrowUpRight className="w-3.5 h-3.5" />
-                            </Link>
-                        </div>
-                    </div>
-
+                <div className="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {/* Video Reels Card */}
                     <div className="relative overflow-hidden rounded-2xl border border-sidebar-border bg-white dark:bg-neutral-900 p-5 shadow-xs flex flex-col justify-between">
                         <div className="flex items-center justify-between">

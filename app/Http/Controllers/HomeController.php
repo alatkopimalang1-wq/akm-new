@@ -132,13 +132,6 @@ class HomeController extends Controller
             $backInStockProducts = [];
         }
 
-        $rawHelixItems = Setting::get('home_helix_gallery_items', []);
-        if (empty($rawHelixItems) || !is_array($rawHelixItems)) {
-            $rawHelixItems = \App\Support\HelixGalleryDefaults::getDefaultItems();
-        }
-        $activeHelixItems = array_values(array_filter($rawHelixItems, fn ($it) => ($it['is_active'] ?? true) !== false));
-        usort($activeHelixItems, fn ($a, $b) => ($a['sort_order'] ?? 0) <=> ($b['sort_order'] ?? 0));
-
         return Inertia::render('welcome', [
             'featuredProducts' => [],
             'newArrivals' => [],
@@ -154,7 +147,6 @@ class HomeController extends Controller
             'upcomingEvents' => [],
             'spotlightProduct' => null,
             'videoReels' => VideoReel::active()->ordered()->get(),
-            'helixGalleryImages' => !empty($activeHelixItems) ? $activeHelixItems : \App\Support\HelixGalleryDefaults::getDefaultItems(),
         ]);
     }
 }

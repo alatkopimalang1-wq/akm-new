@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { BookOpen, Film, FolderGit2, LayoutGrid, Layers } from 'lucide-react';
+import { BookOpen, Film, FolderGit2, LayoutGrid } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
@@ -26,11 +26,6 @@ const mainNavItems: NavItem[] = [
         title: 'Video Reels',
         href: '/dashboard/reels',
         icon: Film,
-    },
-    {
-        title: 'Galeri 3D Helix',
-        href: '/dashboard/helix-gallery',
-        icon: Layers,
     },
 ];
 
