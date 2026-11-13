@@ -179,19 +179,13 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
     };
 
     return (
-        <PublicLayout title="Katalog Produk">
+        <PublicLayout title="Katalog Produk Alat Kopi Malang">
             {/* Header Banner */}
-            <div className="bg-brand-950 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-brand-900">
-                <div className="max-w-7xl mx-auto space-y-3">
+            <div className="bg-brand-950 text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-brand-900">
+                <div className="max-w-7xl mx-auto">
                     <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                        Katalog Produk{' '}
-                        <span className="font-serif-italic italic font-normal text-accent-copper">
-                            Alat Kopi Malang
-                        </span>
+                        Katalog Produk Alat Kopi Malang
                     </h1>
-                    <p className="text-xs sm:text-sm text-brand-300 max-w-2xl">
-                        Eksplorasi seluruh koleksi produk, peralatan kopi, mesin espresso, grinder, dan perlengkapan barista pilihan Alat Kopi Malang.
-                    </p>
                 </div>
             </div>
 
