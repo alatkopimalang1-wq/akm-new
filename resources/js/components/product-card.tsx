@@ -72,10 +72,14 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     </div>
                 )}
 
-                {/* Top-Left Badge (SOLD OUT / Discount / Flash Sale / Best Seller) */}
+                {/* Top-Left Badge (SOLD OUT / Pre-Order / Discount / Flash Sale / Best Seller) */}
                 {isOutOfStock ? (
                     <span className="absolute top-2 left-2 z-20 px-2 py-0.5 text-[10px] font-black bg-black text-white rounded-md shadow-xs border border-white/20 tracking-wider">
                         SOLD OUT
+                    </span>
+                ) : (product.is_preorder || product.stock_status === 'pre_order') ? (
+                    <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-amber-600 text-white rounded-md shadow-xs uppercase tracking-wider">
+                        Pre-Order
                     </span>
                 ) : product.is_flash_sale ? (
                     <span className="absolute top-2 left-2 px-2 py-0.5 text-[10px] font-bold bg-[#e03131] text-white rounded-md shadow-xs">
@@ -188,6 +192,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     {isOutOfStock ? (
                         <span className="absolute top-3 left-3 z-20 px-3 py-1 text-[12px] font-black bg-black text-white rounded-full shadow-xs border border-white/20 tracking-wider">
                             SOLD OUT
+                        </span>
+                    ) : (product.is_preorder || product.stock_status === 'pre_order') ? (
+                        <span className="absolute top-3 left-3 px-3 py-1 text-[12px] font-bold bg-amber-600 text-white rounded-full shadow-xs uppercase tracking-wider">
+                            Pre-Order
                         </span>
                     ) : product.is_flash_sale ? (
                         <span className="absolute top-3 left-3 px-3 py-1 text-[13px] font-bold bg-[#e03131] text-white rounded-full shadow-xs">

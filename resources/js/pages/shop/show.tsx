@@ -479,14 +479,21 @@ export default function ProductShow({
                                 </div>
                             )}
 
-                            {isProductOutOfStock && (
+                            {isProductOutOfStock ? (
                                 <div className="mb-2.5">
                                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-black text-white rounded-md text-xs font-black uppercase tracking-widest border border-white/20 shadow-xs">
                                         <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
                                         <span>STOK HABIS (SOLD OUT)</span>
                                     </span>
                                 </div>
-                            )}
+                            ) : (product.is_preorder || product.stock_status === 'pre_order') ? (
+                                <div className="mb-2.5">
+                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-600 text-white rounded-md text-xs font-black uppercase tracking-widest shadow-xs">
+                                        <span className="w-2 h-2 rounded-full bg-amber-200 animate-pulse" />
+                                        <span>PRE-ORDER</span>
+                                    </span>
+                                </div>
+                            ) : null}
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-950 tracking-tight leading-tight">
                                 {product.name}
                             </h1>

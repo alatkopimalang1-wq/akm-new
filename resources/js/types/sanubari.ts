@@ -59,6 +59,7 @@ export interface Product {
     price_per_10g?: number | null;
     is_featured: boolean;
     is_new: boolean;
+    is_preorder?: boolean;
     is_flash_sale?: boolean;
     tokopedia_url?: string | null;
     shopee_url?: string | null;

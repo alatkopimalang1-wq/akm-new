@@ -119,11 +119,13 @@ class ProductForm
                                 ->label('Tanggal Rilis')
                                 ->default(now()),
                         ]),
-                        Grid::make(2)->schema([
+                        Grid::make(3)->schema([
                             Toggle::make('is_featured')
                                 ->label('Produk Unggulan (Best Seller)'),
                             Toggle::make('is_new')
                                 ->label('Tandai Sebagai Produk Baru'),
+                            Toggle::make('is_preorder')
+                                ->label('Pre-Order'),
                         ]),
                     ]),
 
