@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Filament\Pages\ManageDesktopMegaMenu;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
@@ -15,7 +14,7 @@ class ShopController extends Controller
     public function categories(): Response
     {
         $settings = Setting::all()->pluck('value', 'key')->toArray();
-        $navCategories = $settings['desktop_mega_menu_categories'] 
+        $navCategories = $settings['desktop_mega_menu_categories']
             ?? \App\Filament\Pages\ManageDesktopMegaMenu::getDefaultCategories();
 
         return Inertia::render('categories/index', [
@@ -110,121 +109,6 @@ class ShopController extends Controller
         ]);
     }
 
-    public function byob(Request $request): Response
-    {
-        $settings = Setting::all()->pluck('value', 'key')->toArray();
-        $byobSettings = $settings['byob_settings'] ?? null;
-
-        // Ensure base BYOB product exists in DB for cart checkout & variant ID validation
-        $byobProduct = Product::firstOrCreate(
-            ['slug' => 'byob'],
-            [
-                'name' => $byobSettings['hero_title'] ?? 'C.Y.B.R - Custom Your Blend Ratio',
-                'series' => 'custom-blend',
-                'tagline' => 'Racik profil sangrai dan paduan biji kopi favorit Anda sendiri',
-                'description' => $byobSettings['hero_description'] ?? 'Layanan racik blend kustom Alat Kopi Malang. Pilih 2 hingga 3 komponen biji kopi pilihan dengan rasio presisi sesuai selera seduh Anda.',
-                'tasting_notes' => 'Custom Tasting Profile',
-                'origin' => 'Malang & Nusantara',
-                'process' => 'Custom Blend Process',
-                'roast_level' => 'Medium Roast',
-                'min_price' => 65000,
-                'max_price' => 275000,
-                'is_featured' => true,
-                'status' => 'published',
-                'released_at' => now(),
-            ]
-        );
-
-        // Ensure packaging variants exist and match admin dashboard settings
-        if (!empty($byobSettings['byob_variants']) && is_array($byobSettings['byob_variants'])) {
-            foreach ($byobSettings['byob_variants'] as $v) {
-                $weight = (int) ($v['weight_grams'] ?? 200);
-                $byobProduct->variants()->updateOrCreate(
-                    ['weight_grams' => $weight],
-                    [
-                        'label' => $v['label'] ?? ($weight . 'g'),
-                        'price' => 0,
-                        'sku' => 'BYOB-' . $weight,
-                        'stock_status' => 'in_stock',
-                    ]
-                );
-            }
-        } else {
-            // Standard packaging variants: 200g, 500g, 1 kg
-            $standardVariants = [
-                ['label' => '200g', 'weight_grams' => 200, 'price' => 65000],
-                ['label' => '500g', 'weight_grams' => 500, 'price' => 150000],
-                ['label' => '1 kg', 'weight_grams' => 1000, 'price' => 275000],
-            ];
-
-            foreach ($standardVariants as $v) {
-                $byobProduct->variants()->updateOrCreate(
-                    ['weight_grams' => $v['weight_grams']],
-                    [
-                        'label' => $v['label'],
-                        'price' => $v['price'],
-                        'sku' => 'BYOB-' . $v['weight_grams'],
-                        'stock_status' => 'in_stock',
-                    ]
-                );
-            }
-        }
-
-        $byobProduct->load('variants');
-
-        // Strictly order variants according to the order set in admin dashboard
-        if (!empty($byobSettings['byob_variants']) && is_array($byobSettings['byob_variants'])) {
-            $orderMap = [];
-            foreach (array_values($byobSettings['byob_variants']) as $idx => $v) {
-                $w = (int) ($v['weight_grams'] ?? 0);
-                $orderMap[$w] = $idx;
-            }
-
-            $sortedVariants = $byobProduct->variants->sortBy(function ($variant) use ($orderMap) {
-                return $orderMap[$variant->weight_grams] ?? 999;
-            })->values();
-
-            $byobProduct->setRelation('variants', $sortedVariants);
-        }
-
-        // Coffee beans suitable for custom blending:
-        // If admin customized byob_beans, use the active custom beans
-        if (!empty($byobSettings['byob_beans']) && is_array($byobSettings['byob_beans'])) {
-            $beans = collect($byobSettings['byob_beans'])
-                ->where('is_active', true)
-                ->values()
-                ->map(function ($b, $index) {
-                    return [
-                        'id' => $b['product_id'] ?? ($index + 1),
-                        'name' => $b['name'],
-                        'origin' => $b['origin'] ?? '',
-                        'process' => $b['process'] ?? '',
-                        'price_per_10g' => (float) ($b['price_per_10g'] ?? 3500),
-                        'tasting_notes' => $b['tasting_notes'] ?? '',
-                        'images' => [],
-                        'variants' => [],
-                    ];
-                })
-                ->all();
-        } else {
-            $beans = Product::active()
-                ->where('slug', '!=', 'byob')
-                ->where(function ($q) {
-                    $q->whereNull('series')
-                      ->orWhere('series', '!=', 'equipment');
-                })
-                ->with(['variants', 'images'])
-                ->orderBy('name')
-                ->get();
-        }
-
-        return Inertia::render('shop/byob', [
-            'beans' => $beans,
-            'byobProduct' => $byobProduct,
-            'byobSettings' => $byobSettings,
-        ]);
-    }
-
     public function show(string $slug): Response
     {
         $product = Product::active()
@@ -261,15 +145,7 @@ class ShopController extends Controller
                 ->get();
 
             return response()->json([
-                'trending' => [
-                    'Gunung Kawi Anaerobic',
-                    'Espresso Houseblend',
-                    'Gayo Wine Natural',
-                    'Flores Bajawa',
-                    'C.Y.B.R Custom Blend',
-                    'V60 Pour Over',
-                    'Drip Bag Kawi',
-                ],
+                'trending' => [],
                 'recommended' => $recommended,
                 'products' => [],
                 'guides' => [],
@@ -288,15 +164,10 @@ class ShopController extends Controller
             ->take(8)
             ->get();
 
-        $guides = \App\Models\BrewGuide::where('title', 'like', "%{$q}%")
-            ->orWhere('brew_method', 'like', "%{$q}%")
-            ->take(3)
-            ->get();
-
         return response()->json([
             'query' => $q,
             'products' => $products,
-            'guides' => $guides,
+            'guides' => [],
         ]);
     }
 }

@@ -20,40 +20,7 @@ export interface HeroSlide {
     themeGradient?: string;
 }
 
-const DEFAULT_SLIDES: HeroSlide[] = [
-    {
-        id: 'kawi-terroir',
-        title: 'Roastery Kopi Spesialti Asli Malang',
-        image: 'banners/slide-1.jpg',
-        bgImage: '/storage/banners/slide-1.jpg',
-        url: '/shop',
-        ctaHref: '/shop',
-    },
-    {
-        id: 'byob-custom',
-        title: 'C.Y.B.R: Custom Coffee Blend Studio',
-        image: 'banners/slide-2.jpg',
-        bgImage: '/storage/banners/slide-2.jpg',
-        url: '/cybr',
-        ctaHref: '/cybr',
-    },
-    {
-        id: 'wholesale-b2b',
-        title: 'Pasokan Biji Grosir & Alat Kopi Malang',
-        image: 'banners/slide-3.jpg',
-        bgImage: '/storage/banners/slide-3.jpg',
-        url: '/wholesale',
-        ctaHref: '/wholesale',
-    },
-    {
-        id: 'co-ferment',
-        title: 'CO-Ferment & Fruit Infused',
-        image: 'banners/slide-4.jpg',
-        bgImage: '/storage/banners/slide-4.jpg',
-        url: '/shop?series=co-ferment',
-        ctaHref: '/shop?series=co-ferment',
-    },
-];
+const DEFAULT_SLIDES: HeroSlide[] = [];
 
 interface HeroSliderProps {
     slides?: HeroSlide[];
@@ -138,7 +105,30 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({
         return src;
     };
 
-    if (total === 0) return null;
+    if (total === 0) {
+        return (
+            <section
+                data-ui="hero-slider"
+                className="relative w-full overflow-hidden select-none py-3 sm:py-5 lg:py-6"
+            >
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="relative w-full aspect-[1800/680] rounded-xl sm:rounded-2xl lg:rounded-3xl bg-brand-900 border border-brand-800/60 shadow-md flex flex-col items-center justify-center p-6 text-center text-white">
+                        <img
+                            src="/brand/logo-akm.png?v=20261113b"
+                            alt="Alat Kopi Malang"
+                            className="w-16 h-16 sm:w-24 sm:h-24 rounded-full object-contain mb-3"
+                        />
+                        <h1 className="text-lg sm:text-2xl lg:text-3xl font-extrabold tracking-tight">
+                            Alat Kopi Malang
+                        </h1>
+                        <p className="text-xs sm:text-sm text-brand-200 mt-1">
+                            Your Trusted Coffee Business Partner • Est. 2017
+                        </p>
+                    </div>
+                </div>
+            </section>
+        );
+    }
 
     return (
         <section

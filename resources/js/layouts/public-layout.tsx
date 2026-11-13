@@ -116,7 +116,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
     const [announcementVisible, setAnnouncementVisible] = useState(true);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
-    const [unreadNotificationCount, setUnreadNotificationCount] = useState<number>(3);
+    const [unreadNotificationCount, setUnreadNotificationCount] = useState<number>(0);
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
@@ -131,13 +131,18 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
     useEffect(() => {
         try {
             const readIds: string[] = JSON.parse(localStorage.getItem('sanubari_read_notifications_v1') || '[]');
-            const totalNotifs = 5;
-            const remaining = Math.max(0, totalNotifs - readIds.length);
+            const recentOrders: any[] = JSON.parse(localStorage.getItem('Alat Kopi Malang_recent_orders') || '[]');
+            const hasAnnouncement = Boolean(settings?.announcement_text_id);
+            const notifIds: string[] = [
+                ...(hasAnnouncement ? ['admin-broadcast-banner'] : []),
+                ...recentOrders.map((o: any) => `order-status-${o.order_number}`),
+            ];
+            const remaining = notifIds.filter((id) => !readIds.includes(id)).length;
             setUnreadNotificationCount(remaining);
         } catch {
-            setUnreadNotificationCount(3);
+            setUnreadNotificationCount(0);
         }
-    }, [isNotificationOpen]);
+    }, [isNotificationOpen, settings?.announcement_text_id]);
 
     const [headerSearch, setHeaderSearch] = useState(() => {
         if (typeof window !== 'undefined') {
@@ -415,13 +420,9 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                             title="Keranjang Belanja"
                         >
                             <ShoppingBag className="w-5 h-5" />
-                            {itemCount > 0 ? (
+                            {itemCount > 0 && (
                                 <span className="absolute top-1 right-1 bg-red-500 text-white text-[9px] font-extrabold min-w-4 h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
                                     {itemCount > 99 ? '99+' : itemCount}
-                                </span>
-                            ) : (
-                                <span className="absolute top-1 right-1 bg-red-500 text-white text-[9px] font-extrabold min-w-4 h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
-                                    2
                                 </span>
                             )}
                         </button>
@@ -441,7 +442,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                     </div>
                 </div>
 
-                {/* Mobile Drawer Navigation (Organized by 3 Root Categories) */}
+                {/* Mobile Drawer Navigation */}
                 <AnimatePresence>
                     {mobileMenuOpen && (
                         <motion.div
@@ -458,10 +459,10 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                 </span>
                             </div>
 
-                            {/* Section 1: Katalog Kopi */}
+                            {/* Section 1: Katalog & Produk */}
                             <div className="space-y-2">
                                 <span className="text-xs uppercase font-extrabold tracking-wider text-brand-600 block">
-                                    1. {isEn ? 'Coffee Catalog' : 'Katalog Kopi'}
+                                    1. {isEn ? 'Catalog & Categories' : 'Katalog & Kategori'}
                                 </span>
                                 <div className="space-y-1 pl-2">
                                     <Link
@@ -469,97 +470,24 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                         onClick={() => setMobileMenuOpen(false)}
                                         className="block py-1.5 text-base font-bold text-brand-950"
                                     >
-                                        {isEn ? 'All Coffees' : 'Semua Katalog Kopi'}
+                                        {isEn ? 'All Products' : 'Semua Katalog Produk'}
                                     </Link>
                                     <Link
-                                        href="/shop?series=kawi"
+                                        href="/kategori"
                                         onClick={() => setMobileMenuOpen(false)}
                                         className="block py-1 text-sm font-medium text-brand-800"
                                     >
-                                        Koleksi Gunung Kawi
-                                    </Link>
-                                    <Link
-                                        href="/shop?category=filter-beans"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-medium text-brand-800"
-                                    >
-                                        Filter Beans (Classic & Experimental)
-                                    </Link>
-                                    <Link
-                                        href="/shop?category=espresso-beans"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-medium text-brand-800"
-                                    >
-                                        Espresso Beans & Houseblend
-                                    </Link>
-                                    <Link
-                                        href="/cybr"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="flex items-center justify-between py-1.5 text-sm font-bold text-accent-copper"
-                                    >
-                                        <span>C.Y.B.R (Custom Blend)</span>
-                                        <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-accent-copper text-white uppercase font-extrabold">Baru</span>
+                                        {isEn ? 'All Categories' : 'Semua Kategori'}
                                     </Link>
                                 </div>
                             </div>
 
-                            {/* Section 2: Kemitraan & Bisnis */}
+                            {/* Section 2: Informasi Toko */}
                             <div className="space-y-2">
                                 <span className="text-xs uppercase font-extrabold tracking-wider text-brand-600 block">
-                                    2. {isEn ? 'Partnership & B2B' : 'Kemitraan & Bisnis'}
+                                    2. {isEn ? 'Store Info' : 'Informasi Toko'}
                                 </span>
                                 <div className="space-y-1 pl-2">
-                                    <Link
-                                        href="/wholesale"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1.5 text-base font-bold text-brand-950"
-                                    >
-                                        Wholesale Biji Kopi Grosir
-                                    </Link>
-                                    <Link
-                                        href="/wholesale"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-medium text-brand-800"
-                                    >
-                                        Minta Sample Tester Kedai (Gratis)
-                                    </Link>
-                                    <Link
-                                        href="/kunjungi"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-medium text-brand-800"
-                                    >
-                                        Showroom Mesin Alat Kopi Malang
-                                    </Link>
-                                    <Link
-                                        href="/booking-tempat"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-bold text-accent-copper"
-                                    >
-                                        Booking Tempat Acara (50+ Orang)
-                                    </Link>
-                                    <Link
-                                        href="/coffee-catering"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-bold text-accent-copper"
-                                    >
-                                        Coffee Catering (Min. 200 Cup)
-                                    </Link>
-                                </div>
-                            </div>
-
-                            {/* Section 3: Cerita & Panduan */}
-                            <div className="space-y-2">
-                                <span className="text-xs uppercase font-extrabold tracking-wider text-brand-600 block">
-                                    3. {isEn ? 'Story & Brew Guides' : 'Cerita & Panduan'}
-                                </span>
-                                <div className="space-y-1 pl-2">
-                                    <Link
-                                        href="/panduan-seduh"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1.5 text-base font-bold text-brand-950"
-                                    >
-                                        Panduan Resep Seduh (V60, Espresso, Cold Brew)
-                                    </Link>
                                     <Link
                                         href="/tentang"
                                         onClick={() => setMobileMenuOpen(false)}
@@ -568,18 +496,18 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                         Tentang Alat Kopi Malang
                                     </Link>
                                     <Link
-                                        href="/blog"
-                                        onClick={() => setMobileMenuOpen(false)}
-                                        className="block py-1 text-sm font-medium text-brand-800"
-                                    >
-                                        Jejak Rasa Journal
-                                    </Link>
-                                    <Link
                                         href="/kunjungi"
                                         onClick={() => setMobileMenuOpen(false)}
                                         className="block py-1 text-sm font-medium text-brand-800"
                                     >
-                                        Kunjungi Roastery Malang
+                                        Showroom Alat Kopi Malang
+                                    </Link>
+                                    <Link
+                                        href="/lacak-pesanan"
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="block py-1 text-sm font-medium text-brand-800"
+                                    >
+                                        Lacak Pesanan & Pembayaran
                                     </Link>
                                 </div>
                             </div>
@@ -740,21 +668,38 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
             {(() => {
                 const footerSettings = (props.footerSettings || (settings as any)?.footer_settings || {}) as Record<string, any>;
 
+                const deletedPaths = [
+                    '/wholesale', '/en/wholesale',
+                    '/blog', '/en/blog',
+                    '/panduan-seduh', '/en/brew-guide', '/resep-seduh',
+                    '/cybr', '/byob', '/shop/cybr', '/shop/byob',
+                    '/flash-sale', '/en/flash-sale',
+                    '/new-release', '/en/new-release',
+                    '/back-in-stock', '/en/back-in-stock',
+                    '/acara', '/en/events',
+                    '/booking-tempat', '/booking', '/sewa-tempat', '/en/booking',
+                    '/coffee-catering', '/catering', '/catering-kopi', '/en/coffee-catering',
+                    '/jasa-roasting', '/roasting', '/en/roasting',
+                    '/training-barista', '/kursus-barista', '/barista-training', '/en/barista-training',
+                    '/video', '/reels', '/en/videos', '/en/reels',
+                ];
+
+                const isValidFooterLink = (l: any) => {
+                    if (l?.is_active === false) return false;
+                    const u = String(l?.url || '').trim();
+                    if (!u) return false;
+                    return !deletedPaths.some((dp) => u === dp || u.startsWith(`${dp}/`) || u.startsWith(`${dp}?`));
+                };
+
                 const defaultCol2Links = [
                     { label: isEn ? 'About Us' : 'Tentang Kami', url: isEn ? '/en/about' : '/tentang', is_external: false, is_active: true },
-                    { label: isEn ? 'Wholesale Partnership' : 'Kemitraan Kedai', url: isEn ? '/en/wholesale' : '/wholesale', is_external: false, is_active: true },
-                    { label: isEn ? 'Alat Kopi Malang Articles' : 'Artikel Alat Kopi Malang', url: isEn ? '/en/blog' : '/blog', is_external: false, is_active: true },
                     { label: isEn ? 'Track Order & Payment' : 'Lacak Pesanan & Pembayaran', url: isEn ? '/en/track-order' : '/lacak-pesanan', is_external: false, is_active: true },
                 ];
 
                 const defaultCol3Links = [
-                    { label: 'Resep & Panduan Seduh', url: isEn ? '/en/brew-guide' : '/panduan-seduh', is_external: false, is_active: true },
-                    { label: 'C.Y.B.R Custom Blend', url: '/cybr', is_external: false, is_active: true },
-                    { label: 'Flash Sale Kopi Pilihan', url: isEn ? '/en/flash-sale' : '/flash-sale', is_external: false, is_active: true },
-                    { label: 'Public Cupping & Workshop', url: isEn ? '/en/events' : '/acara', is_external: false, is_active: true },
-                    { label: isEn ? 'Space & Venue Booking' : 'Booking Tempat Acara (50+ Orang)', url: isEn ? '/en/booking' : '/booking-tempat', is_external: false, is_active: true },
-                    { label: isEn ? 'Coffee Catering (Min. 200 Cups)' : 'Coffee Catering (Min. 200 Cup)', url: isEn ? '/en/coffee-catering' : '/coffee-catering', is_external: false, is_active: true },
-                    { label: 'Kunjungi Slow Bar & Roastery', url: isEn ? '/en/visit' : '/kunjungi', is_external: false, is_active: true },
+                    { label: isEn ? 'Product Catalog' : 'Katalog Produk', url: isEn ? '/en/shop' : '/shop', is_external: false, is_active: true },
+                    { label: isEn ? 'All Categories' : 'Semua Kategori', url: isEn ? '/en/categories' : '/kategori', is_external: false, is_active: true },
+                    { label: isEn ? 'Visit Showroom' : 'Kunjungi Showroom', url: isEn ? '/en/visit' : '/kunjungi', is_external: false, is_active: true },
                 ];
 
                 const defaultLegalLinks = [
@@ -772,14 +717,16 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 const showroomAddress = footerSettings.showroom_address || settings?.address || 'Jl. Terusan Kawi No. 12, Klojen, Malang';
 
                 const col2Title = footerSettings.column_2_title || 'Alat Kopi Malang';
-                const col2Links = (Array.isArray(footerSettings.column_2_links) && footerSettings.column_2_links.length > 0)
-                    ? footerSettings.column_2_links.filter((l: any) => l.is_active !== false)
-                    : defaultCol2Links;
+                const filteredCol2 = Array.isArray(footerSettings.column_2_links)
+                    ? footerSettings.column_2_links.filter(isValidFooterLink)
+                    : [];
+                const col2Links = filteredCol2.length > 0 ? filteredCol2 : defaultCol2Links;
 
-                const col3Title = footerSettings.column_3_title || 'Eksplorasi & Seduh';
-                const col3Links = (Array.isArray(footerSettings.column_3_links) && footerSettings.column_3_links.length > 0)
-                    ? footerSettings.column_3_links.filter((l: any) => l.is_active !== false)
-                    : defaultCol3Links;
+                const col3Title = footerSettings.column_3_title || 'Katalog & Showroom';
+                const filteredCol3 = Array.isArray(footerSettings.column_3_links)
+                    ? footerSettings.column_3_links.filter(isValidFooterLink)
+                    : [];
+                const col3Links = filteredCol3.length > 0 ? filteredCol3 : defaultCol3Links;
 
                 const col4Title = footerSettings.column_4_title || 'Jam Operasional & Kontak';
                 const col4Hours = footerSettings.hours || settings?.hours || 'Buka setiap hari: 09.00 – 23.00 WIB';

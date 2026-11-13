@@ -113,44 +113,9 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
         };
     }, [isOpen]);
 
-    // Build notification list
+    // Build notification list (Real Announcements & Orders only)
     const notificationsList: NotificationItem[] = [
-        // 1. Broadcast Promos
-        {
-            id: 'promo-flash-sale-2026',
-            type: 'promo',
-            title: '🔥 Flash Sale Kopi Pilihan Sedang Berlangsung!',
-            message: 'Dapatkan potongan harga spesial hingga 35% untuk varian single origin lereng Kawi dan blend espresso favorit. Stok terbatas hari ini!',
-            timestamp: 'Baru Saja',
-            isRead: readIds.includes('promo-flash-sale-2026'),
-            href: '/flash-sale',
-            badge: 'Diskon s/d 35%',
-            badgeColor: 'red',
-        },
-        {
-            id: 'promo-free-shipping-java',
-            type: 'promo',
-            title: '🚚 Promo Bebas Ongkos Kirim Se-Jawa',
-            message: 'Nikmati Gratis Ongkir ke seluruh Pulau Jawa untuk setiap pembelian biji kopi minimal Rp 250.000 dengan kurir terhubung (J&T, JNE, SiCepat).',
-            timestamp: 'Aktif Setiap Hari',
-            isRead: readIds.includes('promo-free-shipping-java'),
-            href: '/shop',
-            badge: 'Gratis Ongkir',
-            badgeColor: 'emerald',
-        },
-        {
-            id: 'promo-byob-blend',
-            type: 'promo',
-            title: '✨ C.Y.B.R Custom Blend',
-            message: 'Buat formula kopi houseblend kedai atau seduhan personal Anda sendiri dengan racikan persentase origin dan roast level sesuai selera.',
-            timestamp: 'Layanan Eksklusif',
-            isRead: readIds.includes('promo-byob-blend'),
-            href: '/cybr',
-            badge: 'Signature Blend',
-            badgeColor: 'purple',
-        },
-
-        // 2. Announcements from Admin if available
+        // 1. Announcements from Admin if available
         ...(announcementText
             ? [
                   {
@@ -167,7 +132,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
               ]
             : []),
 
-        // 3. Order Status Notifications (Real from localStorage or Demo guides)
+        // 2. Order Status Notifications (Real from localStorage)
         ...(recentOrders.length > 0
             ? recentOrders.map((ord: any) => ({
                   id: `order-status-${ord.order_number}`,
@@ -185,43 +150,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
                       courier: ord.shipping_courier,
                   },
               }))
-            : [
-                  {
-                      id: 'order-sample-notice',
-                      type: 'order' as const,
-                      title: '📦 Lacak Status & Resi Pesanan Anda',
-                      message: 'Sudah melakukan pemesanan? Anda dapat melacak nomor pesanan, mengecek status pembayaran QRIS/Transfer Bank, dan melihat resi kurir kapan saja.',
-                      timestamp: 'Bantuan Pesanan',
-                      isRead: readIds.includes('order-sample-notice'),
-                      href: '/lacak-pesanan',
-                      badge: 'Lacak Pesanan',
-                      badgeColor: 'blue' as const,
-                  },
-              ]),
-
-        // 4. Roastery News & Events
-        {
-            id: 'event-cupping-session',
-            type: 'event',
-            title: '☕ Public Cupping Session di Roastery Malang',
-            message: 'Eksplorasi sensorik profil rasa panen lereng Gunung Kawi bersama head roaster Alat Kopi Malang. Terbuka untuk umum & home brewer.',
-            timestamp: 'Sabtu Ini',
-            isRead: readIds.includes('event-cupping-session'),
-            href: '/acara',
-            badge: 'Workshop Kopi',
-            badgeColor: 'blue',
-        },
-        {
-            id: 'guide-brew-v60',
-            type: 'event',
-            title: '📖 Panduan Seduh: Ekstraksi Manis Madu Kawi',
-            message: 'Simak resep pour-over V60 dengan rasio 1:15 dan suhu 92°C untuk menonjolkan aroma floral dan aftertaste manis madu alami.',
-            timestamp: 'Jurnal Edukasi',
-            isRead: readIds.includes('guide-brew-v60'),
-            href: '/panduan-seduh',
-            badge: 'Panduan Seduh',
-            badgeColor: 'amber',
-        },
+            : []),
     ];
 
     // Filter by Tab

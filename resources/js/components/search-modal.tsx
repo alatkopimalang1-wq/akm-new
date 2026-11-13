@@ -226,32 +226,34 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                     {!query.trim() && (
                         <>
                             {/* Trending Search Tags (Artatix Pattern) */}
-                            <div>
-                                <div className="flex items-center gap-2 mb-3 text-xs font-bold text-brand-700">
-                                    <TrendingUp className="w-4 h-4 text-accent-copper" />
-                                    <span>Pencarian Populer</span>
+                            {trending.length > 0 && (
+                                <div>
+                                    <div className="flex items-center gap-2 mb-3 text-xs font-bold text-brand-700">
+                                        <TrendingUp className="w-4 h-4 text-accent-copper" />
+                                        <span>Pencarian Populer</span>
+                                    </div>
+                                    <div className="flex flex-wrap gap-2">
+                                        {trending.map((item) => (
+                                            <button
+                                                key={item}
+                                                type="button"
+                                                onClick={() => handleSelectTag(item)}
+                                                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sand-100 hover:bg-sand-200 text-brand-900 text-xs sm:text-sm font-medium transition-transform duration-100 active:scale-[0.97]"
+                                            >
+                                                <ArrowUpRight className="w-3.5 h-3.5 text-accent-copper flex-shrink-0" />
+                                                <span>{item}</span>
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                                <div className="flex flex-wrap gap-2">
-                                    {trending.map((item) => (
-                                        <button
-                                            key={item}
-                                            type="button"
-                                            onClick={() => handleSelectTag(item)}
-                                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-sand-100 hover:bg-sand-200 text-brand-900 text-xs sm:text-sm font-medium transition-transform duration-100 active:scale-[0.97]"
-                                        >
-                                            <ArrowUpRight className="w-3.5 h-3.5 text-accent-copper flex-shrink-0" />
-                                            <span>{item}</span>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
+                            )}
 
-                            {/* Rekomendasi Kopi (Artatix 'Rekomendasi Event' Pattern) */}
-                            {recommended.length > 0 && (
+                            {/* Rekomendasi Produk */}
+                            {recommended.length > 0 ? (
                                 <div>
                                     <div className="flex items-center justify-between mb-3">
                                         <div className="text-xs font-bold text-brand-700">
-                                            <span>Rekomendasi Roaster Pekan Ini</span>
+                                            <span>Rekomendasi Produk</span>
                                         </div>
                                         <Link
                                             href="/shop"
@@ -299,27 +301,11 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                                         ))}
                                     </div>
                                 </div>
-                            )}
-
-                            {/* Quick Shortcut to BYOB (Build Your Own Blend) */}
-                            <div className="p-3.5 rounded-xl bg-sand-100 flex items-center justify-between gap-3">
-                                <div className="flex items-center gap-2.5">
-                                    <div className="w-8 h-8 rounded-full bg-accent-copper text-white flex items-center justify-center flex-shrink-0">
-                                        <SlidersHorizontal className="w-4 h-4" />
-                                    </div>
-                                    <div>
-                                        <p className="text-xs font-bold text-brand-950">Ingin custom blend kopi sendiri?</p>
-                                        <p className="text-[11px] text-brand-700">C.Y.B.R Studio: Padukan 2 biji kopi dengan slider persentase.</p>
-                                    </div>
+                            ) : (
+                                <div className="py-8 text-center text-xs sm:text-sm text-brand-600">
+                                    Ketik nama produk atau kategori untuk mulai mencari di katalog Alat Kopi Malang.
                                 </div>
-                                <Link
-                                    href="/cybr"
-                                    onClick={onClose}
-                                    className="px-3 py-1.5 rounded-full bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold transition-transform duration-100 active:scale-95 flex-shrink-0"
-                                >
-                                    C.Y.B.R Studio
-                                </Link>
-                            </div>
+                            )}
                         </>
                     )}
 

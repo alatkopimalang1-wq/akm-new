@@ -26,9 +26,9 @@ class ManageVideoStats extends Page
 
     protected static string|\UnitEnum|null $navigationGroup = 'Halaman Awal';
 
-    protected static ?string $navigationLabel = 'Video & Statistik';
+    protected static ?string $navigationLabel = 'Statistik Angka';
 
-    protected static ?string $title = 'Pengaturan Video Studio & Statistik Terroir';
+    protected static ?string $title = 'Pengaturan Statistik Angka Halaman Awal';
 
     protected static ?int $navigationSort = 4;
 

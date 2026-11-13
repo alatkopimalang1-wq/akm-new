@@ -31,9 +31,9 @@ class ManageContentPages extends Page
 
     protected static string|\UnitEnum|null $navigationGroup = 'Pengaturan';
 
-    protected static ?string $navigationLabel = 'Halaman Konten (Tentang, Wholesale, Roasting, Kunjungi, Blog)';
+    protected static ?string $navigationLabel = 'Halaman Konten (Tentang & Kunjungi)';
 
-    protected static ?string $title = 'Pengaturan Halaman Konten (Tentang, Wholesale, Roasting, Kunjungi, Blog)';
+    protected static ?string $title = 'Pengaturan Halaman Konten (Tentang & Kunjungi)';
 
     protected static ?int $navigationSort = 12;
 
