@@ -490,20 +490,6 @@ export default function ProductShow({
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-950 tracking-tight leading-tight">
                                 {product.name}
                             </h1>
-
-                            {/* Feature Highlights */}
-                            {product.tasting_notes && (
-                                <div className="mt-2 sm:mt-3 flex flex-wrap gap-1.5">
-                                    {product.tasting_notes.split(',').map((note, i) => (
-                                        <span
-                                            key={i}
-                                            className="px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full bg-sand-200/60 text-[11px] sm:text-xs font-medium text-brand-900 border border-sand-200/50"
-                                        >
-                                            {note.trim()}
-                                        </span>
-                                    ))}
-                                </div>
-                            )}
                         </div>
 
                         {/* Price Display */}
@@ -518,9 +504,6 @@ export default function ProductShow({
                                     isCurrentVariantOutOfStock ? 'text-neutral-500' : 'text-brand-950'
                                 }`}>
                                     {formatRupiah(selectedVariant.price)}
-                                </span>
-                                <span className="text-sm sm:text-sm md:text-base text-brand-600 font-medium">
-                                    / {selectedVariant.label}
                                 </span>
                             </div>
                         </div>
@@ -676,92 +659,6 @@ export default function ProductShow({
                             >
                                 <span>{isCurrentVariantOutOfStock ? 'Tanyakan Restock via WhatsApp' : 'Pesan Langsung via WhatsApp'}</span>
                             </a>
-                        </div>
-
-                        {/* Marketplace Availability Box */}
-                        <div className="rounded-2xl border border-sand-200/90 bg-[#f8f9fa] p-3.5 sm:p-5">
-                            <div className="flex items-center justify-between mb-3 sm:mb-3.5">
-                                <div className="flex items-center gap-1.5 sm:gap-2">
-                                    <svg
-                                        className="w-4.5 h-4.5 sm:w-5 sm:h-5 text-brand-900 flex-shrink-0"
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <rect x="3" y="4" width="18" height="16" rx="3" />
-                                        <path d="M3 9h18" />
-                                        <path d="M9 13a3 3 0 0 0 6 0" />
-                                    </svg>
-                                    <h4 className="text-xs sm:text-sm md:text-base font-bold text-brand-950">
-                                        Produk Ini Tersedia di:
-                                    </h4>
-                                </div>
-                                <span className="text-[9.5px] sm:text-xs font-black text-indigo-600 bg-indigo-50 border border-indigo-100 px-2 sm:px-2.5 py-0.5 rounded-full tracking-wider uppercase flex-shrink-0">
-                                    TOKO RESMI
-                                </span>
-                            </div>
-
-                            <div className="grid grid-cols-2 gap-2.5">
-                                <a
-                                    href={tokopediaUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-start gap-2.5 px-3.5 py-2.5 rounded-2xl bg-white hover:bg-cream-50 border border-sand-200/90 hover:border-brand-400 shadow-2xs hover:shadow-sm text-xs sm:text-sm md:text-base font-bold text-brand-950 transition-all duration-150 min-w-0"
-                                >
-                                    <TokopediaIcon className="w-6 h-6 flex-shrink-0" />
-                                    <span className="truncate whitespace-nowrap">Tokopedia</span>
-                                </a>
-
-                                <a
-                                    href={shopeeUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="flex items-center justify-start gap-2.5 px-3.5 py-2.5 rounded-2xl bg-white hover:bg-cream-50 border border-sand-200/90 hover:border-brand-400 shadow-2xs hover:shadow-sm text-xs sm:text-sm md:text-base font-bold text-brand-950 transition-all duration-150 min-w-0"
-                                >
-                                    <ShopeeIcon className="w-6 h-6 flex-shrink-0" />
-                                    <span className="truncate whitespace-nowrap">Shopee</span>
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* Technical Spec Tiles */}
-                        <div className="pt-6 border-t border-sand-200 space-y-3.5">
-                            <h3 className="text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-accent-copper">
-                                Spesifikasi Produk & Brand
-                            </h3>
-                            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
-                                <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Brand</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.producer || product.series_label || product.series || 'Alat Kopi Malang'}</span>
-                                </div>
-                                <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Kategori</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">
-                                        {product.categories && product.categories.length > 0
-                                            ? product.categories.map((c: any) => typeof c.name === 'string' ? c.name : (c.name?.id || c.slug)).join(', ')
-                                            : 'Peralatan Kopi'}
-                                    </span>
-                                </div>
-                                <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Material / Tipe</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.process || product.varietal || 'Original Grade'}</span>
-                                </div>
-                                <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Asal Brand</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.origin || 'Official Partner'}</span>
-                                </div>
-                                <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Satuan / Varian</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{selectedVariant.label}</span>
-                                </div>
-                                <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Jaminan</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">100% Original Resmi</span>
-                                </div>
-                            </div>
                         </div>
 
                         {/* Description Text */}
