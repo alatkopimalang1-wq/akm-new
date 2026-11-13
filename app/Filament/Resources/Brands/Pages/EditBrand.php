@@ -20,3 +20,4 @@ class EditBrand extends EditRecord
         ];
     }
 }
+

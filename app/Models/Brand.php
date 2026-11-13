@@ -54,3 +54,4 @@ class Brand extends Model
         return Product::where('producer', $this->name)->count();
     }
 }
+

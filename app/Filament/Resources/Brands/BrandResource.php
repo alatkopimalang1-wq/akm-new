@@ -54,3 +54,4 @@ class BrandResource extends Resource
         ];
     }
 }
+

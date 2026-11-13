@@ -511,7 +511,7 @@ export default function ProductShow({
                         {/* Variant Selection */}
                         <div className="space-y-2">
                             <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                Pilih Varian / Satuan:
+                                Pilih Warna / Ukuran:
                             </label>
                             <div className="flex flex-wrap gap-2">
                                 {variants.map((v) => {

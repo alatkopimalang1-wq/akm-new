@@ -18,3 +18,4 @@ class ListBrands extends ListRecords
         ];
     }
 }
+
