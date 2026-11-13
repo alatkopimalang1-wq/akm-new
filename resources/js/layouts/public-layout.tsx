@@ -366,15 +366,15 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                         <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group">
                             <img
                                 src="/brand/logo-circle.png"
-                                alt="Sanubari Roastery Logo"
+                                alt="Alat Kopi Malang Logo"
                                 className="w-9 h-9 sm:w-10 sm:h-10 rounded-full group-hover:scale-105 transition-transform shadow-xs"
                             />
                             <div className="flex flex-col">
                                 <span className="font-extrabold text-sm sm:text-base tracking-tight text-white group-hover:text-accent-copper transition-colors whitespace-nowrap">
-                                    Sanubari
+                                    Alat Kopi
                                 </span>
                                 <span className="text-[9px] sm:text-[10px] text-brand-300 font-semibold tracking-normal -mt-0.5 whitespace-nowrap">
-                                    Roastery Malang
+                                    Malang • Est. 2017
                                 </span>
                             </div>
                         </Link>

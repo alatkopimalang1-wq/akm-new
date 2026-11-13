@@ -84,29 +84,29 @@
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-ring: var(--sidebar-ring);
 
-    --color-brand-950: #121e21;
-    --color-brand-900: #1b2b2f;
-    --color-brand-800: #24393f;
-    --color-brand-700: #2e474e;
-    --color-brand-600: #3b5a63;
-    --color-brand-500: #4f6e76;
-    --color-brand-400: #718d95;
-    --color-brand-300: #9db3b8;
-    --color-brand-200: #c2d2d5;
-    --color-brand-100: #e3ebec;
-    --color-brand-50: #f2f6f6;
+    --color-brand-950: #070d18;
+    --color-brand-900: #0b1528;
+    --color-brand-800: #102342;
+    --color-brand-700: #173461;
+    --color-brand-600: #1e4580;
+    --color-brand-500: #2563eb;
+    --color-brand-400: #3b82f6;
+    --color-brand-300: #93c5fd;
+    --color-brand-200: #bfdbfe;
+    --color-brand-100: #dbeafe;
+    --color-brand-50: #eff6ff;
 
     --color-cream-50: #ffffff;
-    --color-cream-100: #f8f9fa;
-    --color-sand-200: #eef0f2;
-    --color-sand-300: #e2e5e8;
+    --color-cream-100: #f8fafc;
+    --color-sand-200: #f1f5f9;
+    --color-sand-300: #e2e8f0;
 
-    --color-accent-copper: #a06f32;
-    --color-accent-copper-hover: #865a24;
-    --color-accent-copper-light: #e6a765;
+    --color-accent-copper: #1d4ed8;
+    --color-accent-copper-hover: #1e40af;
+    --color-accent-copper-light: #3b82f6;
 
-    --color-ink: #121e21;
-    --color-ink-muted: #3b5a63;
+    --color-ink: #0f172a;
+    --color-ink-muted: #475569;
 }
 
 body {

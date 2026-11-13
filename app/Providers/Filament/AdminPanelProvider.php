@@ -35,7 +35,7 @@ class AdminPanelProvider extends PanelProvider
             ->favicon(asset('favicon-32x32.png?v=20261105c'))
             ->maxContentWidth('full')
             ->colors([
-                'primary' => Color::Amber,
+                'primary' => Color::Blue,
             ])
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(\Crumbls\Layup\LayupPlugin::make())

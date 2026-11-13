@@ -46,8 +46,8 @@
 
         <meta name="apple-mobile-web-app-title" content="Alat Kopi Malang">
         <meta name="application-name" content="Alat Kopi Malang">
-        <meta name="theme-color" content="#1c1917">
-        <meta name="msapplication-TileColor" content="#1c1917">
+        <meta name="theme-color" content="#0b1528">
+        <meta name="msapplication-TileColor" content="#0b1528">
         <meta name="msapplication-TileImage" content="/favicon-192x192.png?v=20261105c">
         <meta property="og:image" content="/brand/logo-circle.png?v=20261105c">
         <meta property="og:image:width" content="512">
