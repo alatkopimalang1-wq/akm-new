@@ -11,7 +11,7 @@ import { CartProvider } from '@/context/cart-context';
 import { GlobalCoffeeBeanLoader } from '@/components/global-coffee-bean-loader';
 import { trackPageView } from '@/lib/meta-pixel';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Sanubari Roastery';
+const appName = import.meta.env.VITE_APP_NAME || 'Your Trusted Coffee Business Partner — Alat Kopi Malang';
 
 void createInertiaApp({
     title: (title) => (title ? `${title}` : appName),

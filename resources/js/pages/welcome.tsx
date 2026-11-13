@@ -568,7 +568,7 @@ export default function Welcome({
         : defaultFlavorProfiles;
 
     return (
-        <PublicLayout title="Speciality Coffee Roastery in Malang">
+        <PublicLayout title="Your Trusted Coffee Business Partner">
             <div className="space-y-10 sm:space-y-16 pb-4 sm:pb-16 w-full max-w-full overflow-x-hidden">
                 {/* ============================================================== */}
                 {/* 1. HERO SLIDER / CAROUSEL (Artatix 1:1 Pattern)                */}

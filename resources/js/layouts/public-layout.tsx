@@ -279,20 +279,19 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
 
     return (
         <div className="min-h-svh flex flex-col bg-cream-50 text-brand-950 font-sans antialiased selection:bg-brand-700 selection:text-white [overflow-x:clip] w-full max-w-full">
-            <Head title={title ? `${title} — Sanubari Roastery` : 'Sanubari Roastery — Close to Every Brew'}>
-                <link head-key="favicon-32" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261105c" />
-                <link head-key="favicon-16" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261105c" />
-                <link head-key="favicon-48" rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261105c" />
-                <link head-key="favicon-96" rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20261105c" />
-                <link head-key="favicon-192" rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png?v=20261105c" />
-                <link head-key="favicon-512" rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=20261105c" />
-                <link head-key="favicon-svg" rel="icon" type="image/svg+xml" href="/favicon.svg?v=20261105c" />
-                <link head-key="favicon-ico" rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico?v=20261105c" />
-                <link head-key="shortcut-icon" rel="shortcut icon" href="/favicon.ico?v=20261105c" type="image/x-icon" />
-                <link head-key="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261105c" />
-                <link head-key="apple-touch-icon-precomposed" rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261105c" />
-                <link head-key="manifest" rel="manifest" href="/site.webmanifest?v=20261105c" />
-                <meta head-key="og-image" property="og:image" content="/brand/logo-circle.png?v=20261105c" />
+            <Head title={title ? `${title} — Alat Kopi Malang` : 'Your Trusted Coffee Business Partner — Alat Kopi Malang'}>
+                <link head-key="favicon-32" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261113" />
+                <link head-key="favicon-16" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261113" />
+                <link head-key="favicon-48" rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261113" />
+                <link head-key="favicon-96" rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20261113" />
+                <link head-key="favicon-192" rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png?v=20261113" />
+                <link head-key="favicon-512" rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=20261113" />
+                <link head-key="favicon-ico" rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico?v=20261113" />
+                <link head-key="shortcut-icon" rel="shortcut icon" href="/favicon.ico?v=20261113" type="image/x-icon" />
+                <link head-key="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261113" />
+                <link head-key="apple-touch-icon-precomposed" rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261113" />
+                <link head-key="manifest" rel="manifest" href="/site.webmanifest?v=20261113" />
+                <meta head-key="og-image" property="og:image" content="/brand/logo-circle.png?v=20261113" />
             </Head>
 
             {/* Announcement Ticker Bar */}
