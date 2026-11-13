@@ -470,6 +470,15 @@ export default function ProductShow({
                     {/* Right Column: Product Info & Purchase Options (7 cols) */}
                     <div className="lg:col-span-6 space-y-6">
                         <div>
+                            {/* Brand Badge */}
+                            {(product.producer || product.series_label || product.series) && (
+                                <div className="mb-2">
+                                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-copper/10 border border-accent-copper/25 text-accent-copper text-xs font-extrabold uppercase tracking-wider">
+                                        {product.producer || product.series_label || product.series}
+                                    </span>
+                                </div>
+                            )}
+
                             {isProductOutOfStock && (
                                 <div className="mb-2.5">
                                     <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-black text-white rounded-md text-xs font-black uppercase tracking-widest border border-white/20 shadow-xs">
@@ -482,7 +491,7 @@ export default function ProductShow({
                                 {product.name}
                             </h1>
 
-                            {/* Tasting Notes */}
+                            {/* Feature Highlights */}
                             {product.tasting_notes && (
                                 <div className="mt-2 sm:mt-3 flex flex-wrap gap-1.5">
                                     {product.tasting_notes.split(',').map((note, i) => (
@@ -519,7 +528,7 @@ export default function ProductShow({
                         {/* Variant Selection */}
                         <div className="space-y-2">
                             <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                Pilih Ukuran Kemasan:
+                                Pilih Varian / Satuan:
                             </label>
                             <div className="flex flex-wrap gap-2">
                                 {variants.map((v) => {
@@ -559,33 +568,35 @@ export default function ProductShow({
                             </div>
                         </div>
 
-                        {/* Grind Size Selection */}
-                        <div className="space-y-2">
-                            <div className="flex items-center justify-between">
-                                <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                    Pilihan Gilingan:
-                                </label>
-                                <span className="text-xs sm:text-xs md:text-sm text-accent-copper font-medium">
-                                    Gratis giling sesuai metode seduh
-                                </span>
+                        {/* Grind Size Selection (Only if roast_level is specified) */}
+                        {product.roast_level && (
+                            <div className="space-y-2">
+                                <div className="flex items-center justify-between">
+                                    <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
+                                        Pilihan Gilingan:
+                                    </label>
+                                    <span className="text-xs sm:text-xs md:text-sm text-accent-copper font-medium">
+                                        Gratis giling sesuai metode seduh
+                                    </span>
+                                </div>
+                                <Select value={grindOption} onValueChange={setGrindOption}>
+                                    <SelectTrigger className="w-full py-2.5 px-3.5 h-auto rounded-xl bg-white border border-sand-200 text-sm sm:text-sm md:text-base font-semibold text-brand-950 focus:outline-hidden focus:border-brand-700 shadow-xs flex justify-between items-center cursor-pointer">
+                                        <SelectValue placeholder="Pilih tingkat gilingan" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-white border border-sand-200 rounded-xl shadow-xl z-50 p-1.5">
+                                        {grindOptions.map((opt) => (
+                                            <SelectItem
+                                                key={opt}
+                                                value={opt}
+                                                className="text-sm sm:text-sm md:text-base font-medium py-2.5 px-3 rounded-lg cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent data-[highlighted]:bg-transparent text-brand-900 hover:text-accent-copper focus:text-accent-copper data-[highlighted]:text-accent-copper data-[state=checked]:font-bold data-[state=checked]:text-brand-950 transition-colors"
+                                            >
+                                                {opt}
+                                            </SelectItem>
+                                        ))}
+                                    </SelectContent>
+                                </Select>
                             </div>
-                            <Select value={grindOption} onValueChange={setGrindOption}>
-                                <SelectTrigger className="w-full py-2.5 px-3.5 h-auto rounded-xl bg-white border border-sand-200 text-sm sm:text-sm md:text-base font-semibold text-brand-950 focus:outline-hidden focus:border-brand-700 shadow-xs flex justify-between items-center cursor-pointer">
-                                    <SelectValue placeholder="Pilih tingkat gilingan" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-white border border-sand-200 rounded-xl shadow-xl z-50 p-1.5">
-                                    {grindOptions.map((opt) => (
-                                        <SelectItem
-                                            key={opt}
-                                            value={opt}
-                                            className="text-sm sm:text-sm md:text-base font-medium py-2.5 px-3 rounded-lg cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent data-[highlighted]:bg-transparent text-brand-900 hover:text-accent-copper focus:text-accent-copper data-[highlighted]:text-accent-copper data-[state=checked]:font-bold data-[state=checked]:text-brand-950 transition-colors"
-                                        >
-                                            {opt}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
-                        </div>
+                        )}
 
                         {/* Quantity Stepper & Add to Cart */}
                         <div className="space-y-3 pt-2">
@@ -719,35 +730,39 @@ export default function ProductShow({
                             </div>
                         </div>
 
-                        {/* Technical Spec Tiles (NiR Style At-a-glance Specs) */}
+                        {/* Technical Spec Tiles */}
                         <div className="pt-6 border-t border-sand-200 space-y-3.5">
                             <h3 className="text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-accent-copper">
-                                Spesifikasi Kopi (Terroir & Profil)
+                                Spesifikasi Produk & Brand
                             </h3>
                             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
                                 <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Origin</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.origin || 'G. Kawi, Malang, Jawa Timur'}</span>
+                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Brand</span>
+                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.producer || product.series_label || product.series || 'Alat Kopi Malang'}</span>
                                 </div>
                                 <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Varietas</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.varietal || 'Mix Varietals'}</span>
+                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Kategori</span>
+                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">
+                                        {product.categories && product.categories.length > 0
+                                            ? product.categories.map((c: any) => typeof c.name === 'string' ? c.name : (c.name?.id || c.slug)).join(', ')
+                                            : 'Peralatan Kopi'}
+                                    </span>
                                 </div>
                                 <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Proses</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.process || 'Natural'}</span>
+                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Material / Tipe</span>
+                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.process || product.varietal || 'Original Grade'}</span>
                                 </div>
                                 <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Ketinggian</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.altitude || '1.400 MASL'}</span>
+                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Asal Brand</span>
+                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.origin || 'Official Partner'}</span>
                                 </div>
                                 <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Roast Level</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{product.roast_level || 'Light to Medium'}</span>
+                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Satuan / Varian</span>
+                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">{selectedVariant.label}</span>
                                 </div>
                                 <div className="p-3.5 sm:p-4 rounded-xl md:rounded-2xl bg-white border border-sand-200/90 shadow-2xs">
-                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Sertifikasi</span>
-                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">PIRT & Halal</span>
+                                    <span className="block text-xs sm:text-xs md:text-sm text-brand-400 uppercase tracking-wider font-semibold">Jaminan</span>
+                                    <span className="text-sm sm:text-base md:text-base font-bold text-brand-950 mt-1 block leading-snug">100% Original Resmi</span>
                                 </div>
                             </div>
                         </div>
@@ -756,7 +771,7 @@ export default function ProductShow({
                         {product.description && (
                             <div className="pt-5 border-t border-sand-200 space-y-2.5">
                                 <h3 className="text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-accent-copper">
-                                    Catatan Roaster & Deskripsi
+                                    Deskripsi & Spesifikasi Produk
                                 </h3>
                                 <p className="text-sm sm:text-base md:text-base text-brand-800 leading-relaxed sm:leading-7 md:leading-relaxed whitespace-pre-line font-normal">
                                     {typeof product.description === 'string'
@@ -774,10 +789,10 @@ export default function ProductShow({
                         <div className="flex items-center justify-between">
                             <div>
                                 <h2 className="text-xl font-extrabold text-brand-950">
-                                    Biji Kopi Terkait Lainnya
+                                    Produk Terkait Lainnya
                                 </h2>
                                 <p className="text-xs text-brand-500">
-                                    Eksplorasi rasa lain dari seri {product.series_label || product.series?.replace('-', ' ')}
+                                    Eksplorasi produk pilihan lainnya dari katalog Alat Kopi Malang
                                 </p>
                             </div>
                             <Link href="/shop" className="text-xs font-bold text-accent-copper hover:underline">

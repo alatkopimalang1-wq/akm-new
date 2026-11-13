@@ -30,6 +30,8 @@ class ShopController extends Controller
         if ($search = $request->input('q')) {
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('producer', 'like', "%{$search}%")
+                  ->orWhere('series', 'like', "%{$search}%")
                   ->orWhere('tasting_notes', 'like', "%{$search}%")
                   ->orWhere('origin', 'like', "%{$search}%");
             });
@@ -119,8 +121,15 @@ class ShopController extends Controller
 
         $relatedProducts = Product::active()
             ->where('id', '!=', $product->id)
-            ->where('series', $product->series)
-            ->with(['variants', 'images'])
+            ->where(function ($q) use ($product) {
+                $q->where('series', $product->series);
+                if ($product->categories->isNotEmpty()) {
+                    $q->orWhereHas('categories', function ($cq) use ($product) {
+                        $cq->whereIn('categories.id', $product->categories->pluck('id'));
+                    });
+                }
+            })
+            ->with(['variants', 'images', 'categories'])
             ->take(4)
             ->get();
 
@@ -156,6 +165,7 @@ class ShopController extends Controller
         $products = Product::active()
             ->where(function ($query) use ($q) {
                 $query->where('name', 'like', "%{$q}%")
+                      ->orWhere('producer', 'like', "%{$q}%")
                       ->orWhere('tasting_notes', 'like', "%{$q}%")
                       ->orWhere('origin', 'like', "%{$q}%")
                       ->orWhere('process', 'like', "%{$q}%")

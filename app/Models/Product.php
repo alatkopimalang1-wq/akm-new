@@ -84,6 +84,10 @@ class Product extends Model
 
     public function getSeriesLabelAttribute(): string
     {
+        if (! empty($this->producer)) {
+            return (string) $this->producer;
+        }
+
         return static::getSeriesLabel($this->series);
     }
 

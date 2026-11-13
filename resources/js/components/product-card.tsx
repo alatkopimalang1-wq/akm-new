@@ -104,11 +104,11 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {/* Content Body with Compact Padding */}
             <div className="p-2.5 sm:p-3 flex flex-col flex-1 justify-between">
                 <Link href={`/shop/${product.slug}`} className="block">
-                    {/* Series / Category */}
-                    <span className={`block text-[11px] font-semibold uppercase tracking-wider truncate mb-1 ${
+                    {/* Brand / Series */}
+                    <span className={`block text-[11px] font-bold uppercase tracking-wider truncate mb-1 ${
                         isOutOfStock ? 'text-neutral-500' : 'text-accent-copper'
                     }`}>
-                        {product.series_label || (product.series ? product.series.replace('-', ' ') : 'Specialty')}
+                        {product.producer || product.series_label || (product.series ? product.series.replace('-', ' ') : 'Alat Kopi Malang')}
                     </span>
 
                     {/* Product Name (2 Lines Max) */}
@@ -200,10 +200,10 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     ) : null}
                 </div>
 
-                <div className={`text-[12px] font-semibold uppercase tracking-wider mb-1.5 ${
+                <div className={`text-[12px] font-bold uppercase tracking-wider mb-1.5 ${
                     isOutOfStock ? 'text-neutral-500' : 'text-accent-copper'
                 }`}>
-                    <span className="capitalize">{product.series_label || product.series?.replace('-', ' ')}</span>
+                    <span>{product.producer || product.series_label || product.series?.replace('-', ' ') || 'Alat Kopi Malang'}</span>
                 </div>
 
                 <h3 className={`text-base font-bold line-clamp-2 leading-snug mb-2 transition-colors ${
