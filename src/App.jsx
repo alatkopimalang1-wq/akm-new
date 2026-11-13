@@ -24,7 +24,7 @@ import AdminDashboardPage from './pages/AdminDashboardPage';
 import MobileBottomNav from './components/MobileBottomNav';
 
 import { PRODUCTS, CATEGORIES, BRANDS, STORE_INFO } from './data/products';
-import { getStoredProducts } from './utils/contentStore';
+import { getStoredProducts, syncProductsFromAPI, syncHeroSlidesFromAPI } from './utils/contentStore';
 import { 
   Filter, 
   ArrowUpDown, 
@@ -207,8 +207,13 @@ export default function App() {
     }
   };
 
-  // Live Products synced with Admin Storage
+  // Live Products synced with Admin Storage & MySQL API
   const [liveProducts, setLiveProducts] = useState(() => getStoredProducts());
+
+  useEffect(() => {
+    syncProductsFromAPI();
+    syncHeroSlidesFromAPI();
+  }, []);
 
   useEffect(() => {
     const handleStorageUpdate = () => {

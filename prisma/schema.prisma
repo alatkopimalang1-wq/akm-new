@@ -1,0 +1,99 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model AdminUser {
+  id        String   @id @default(cuid())
+  username  String   @unique
+  password  String
+  name      String
+  email     String   @unique
+  role      String   @default("Super Admin")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id          String    @id
+  name        String
+  slug        String    @unique
+  icon        String?
+  count       Int       @default(0)
+  tagline     String?
+  description String?   @db.Text
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+model Product {
+  id             String    @id
+  name           String
+  slug           String    @unique
+  brand          String
+  category       String
+  categoryRel    Category? @relation(fields: [category], references: [id])
+  price          Int
+  originalPrice  Int?
+  badge          String?
+  rating         Float     @default(5.0)
+  reviewsCount   Int       @default(0)
+  stock          Int       @default(10)
+  images         Json      // Array of image URLs
+  tagline        String?
+  description    String?   @db.Text
+  specs          Json?     // Array of key/value specs
+  variants       Variant[]
+  isFeatured     Boolean   @default(false)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+model Variant {
+  id        String   @id @default(cuid())
+  productId String
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  label     String
+  price     Int?
+  inStock   Boolean  @default(true)
+}
+
+model HeroSlide {
+  id        String   @id @default(cuid())
+  order     Int      @default(0)
+  badge     String?
+  title     String
+  subtitle  String
+  desc      String?  @db.Text
+  image     String   @db.Text
+  link      String   @default("/kategori/all")
+  ctaText   String   @default("Mulai Belanja")
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id              String   @id
+  customerName    String
+  phone           String
+  email           String?
+  shippingAddress String?  @db.Text
+  date            String
+  status          String   @default("Diproses")
+  paymentMethod   String   @default("QRIS")
+  shippingCourier String   @default("GoSend Instant")
+  items           Json
+  subtotal        Int
+  shippingCost    Int      @default(0)
+  discount        Int      @default(0)
+  total           Int
+  notes           String?  @db.Text
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

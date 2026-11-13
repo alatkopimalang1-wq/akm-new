@@ -156,6 +156,42 @@ export const DEFAULT_COUPONS = [
   { id: 'cp-3', code: 'PROMOBARISTA', discountPercent: 15, maxDiscount: 200000, minSpend: 350000, isActive: true, usageCount: 15 }
 ];
 
+// Async helper to synchronize products with Express & MySQL Backend
+export async function syncProductsFromAPI() {
+  try {
+    const res = await fetch('/api/products');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        localStorage.setItem('akm_products', JSON.stringify(data));
+        notifyContentUpdate();
+        return data;
+      }
+    }
+  } catch (err) {
+    // Silently fall back to cached/default products
+  }
+  return getStoredProducts();
+}
+
+// Async helper to synchronize hero slides with Express & MySQL Backend
+export async function syncHeroSlidesFromAPI() {
+  try {
+    const res = await fetch('/api/hero-slides');
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data) && data.length > 0) {
+        localStorage.setItem('akm_hero_slides', JSON.stringify(data));
+        notifyContentUpdate();
+        return data;
+      }
+    }
+  } catch (err) {
+    // Silently fall back to cached/default slides
+  }
+  return getStoredHeroSlides();
+}
+
 // Helper to notify other components of content change
 export function notifyContentUpdate() {
   window.dispatchEvent(new Event('akm_content_updated'));
