@@ -46,8 +46,16 @@ class ProductsTable
                 TextColumn::make('stock_status')
                     ->label('Stok')
                     ->badge()
-                    ->formatStateUsing(fn (string $state): string => $state === 'out_of_stock' ? 'Habis' : 'Tersedia')
-                    ->color(fn (string $state): string => $state === 'out_of_stock' ? 'danger' : 'success'),
+                    ->formatStateUsing(fn (string $state, Product $record): string => match (true) {
+                        $state === 'out_of_stock' => 'Habis',
+                        $state === 'pre_order' || (bool) $record->is_preorder => 'Pre-Order',
+                        default => 'Tersedia',
+                    })
+                    ->color(fn (string $state, Product $record): string => match (true) {
+                        $state === 'out_of_stock' => 'danger',
+                        $state === 'pre_order' || (bool) $record->is_preorder => 'warning',
+                        default => 'success',
+                    }),
                 TextColumn::make('status')
                     ->label('Status')
                     ->badge()

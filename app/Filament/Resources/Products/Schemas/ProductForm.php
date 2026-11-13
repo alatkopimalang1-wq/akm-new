@@ -111,10 +111,17 @@ class ProductForm
                                 ->label('Status Stok')
                                 ->options([
                                     'in_stock' => 'Tersedia (In Stock)',
+                                    'pre_order' => 'Pre-Order',
                                     'out_of_stock' => 'Stok Habis (Sold Out)',
                                 ])
                                 ->required()
-                                ->default('in_stock'),
+                                ->default('in_stock')
+                                ->live()
+                                ->afterStateUpdated(function ($state, callable $set) {
+                                    if ($state === 'pre_order') {
+                                        $set('is_preorder', true);
+                                    }
+                                }),
                             DateTimePicker::make('released_at')
                                 ->label('Tanggal Rilis')
                                 ->default(now()),
@@ -170,6 +177,7 @@ class ProductForm
                                         ->label('Stok Varian')
                                         ->options([
                                             'in_stock' => 'Tersedia',
+                                            'pre_order' => 'Pre-Order',
                                             'out_of_stock' => 'Habis',
                                         ])
                                         ->default('in_stock')
