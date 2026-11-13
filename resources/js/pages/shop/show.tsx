@@ -556,10 +556,10 @@ export default function ProductShow({
                                                     scrollToMobileImage(targetIdx);
                                                 }
                                             }}
-                                            className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm sm:text-sm md:text-base font-bold transition-all cursor-pointer ${
+                                            className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm sm:text-sm md:text-base font-bold transition-all cursor-pointer border-2 ${
                                                 active
-                                                    ? 'bg-brand-700 text-white shadow-sm ring-2 ring-brand-700'
-                                                    : 'bg-white hover:bg-cream-100 text-brand-800 border border-sand-200'
+                                                    ? 'bg-accent-copper/10 border-accent-copper text-accent-copper shadow-2xs ring-2 ring-accent-copper/20'
+                                                    : 'bg-white hover:bg-sand-100/70 text-brand-800 border-sand-200 hover:border-brand-300'
                                             } ${vOutOfStock ? 'opacity-60 line-through decoration-neutral-500' : ''}`}
                                         >
                                             {vImage && (
