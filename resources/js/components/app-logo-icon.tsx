@@ -8,8 +8,8 @@ export default function AppLogoIcon({
     return (
         <img
             {...props}
-            src="/brand/logo-circle.png"
-            alt="Sanubari Roastery"
+            src="/brand/logo-akm.jpg?v=20261113"
+            alt="Alat Kopi Malang"
             className={cn('rounded-full object-contain', className)}
         />
     );

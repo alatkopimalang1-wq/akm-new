@@ -99,7 +99,7 @@ export const CartDrawer: React.FC = () => {
                                             ? (rawImg.startsWith('http://') || rawImg.startsWith('https://')
                                                 ? rawImg
                                                 : `/storage/${rawImg.replace(/^\/?(public\/|storage\/)?/, '')}`)
-                                            : '/brand/logo-circle.png';
+                                            : '/brand/logo-akm.jpg?v=20261113';
                                         return (
                                             <motion.div
                                                 key={`${item.variant.id}-${item.grindOption}-${idx}`}

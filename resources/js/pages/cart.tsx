@@ -122,10 +122,10 @@ export default function CartPage({
     paymentSettings,
     pickupSettings = {
         enabled: true,
-        store_name: 'Sanubari Roastery (Tlogomas, Malang)',
-        store_address: 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
-        store_hours: 'Buka setiap hari: 09.00 - 23.00 WIB',
-        notes: 'Pesanan dapat diambil langsung di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
+        store_name: 'Alat Kopi Malang',
+        store_address: 'Malang, Jawa Timur',
+        store_hours: 'Buka setiap hari: 09.00 - 21.00 WIB',
+        notes: 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
         maps_url: 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
     },
     deliverySettings = {

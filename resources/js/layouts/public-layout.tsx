@@ -365,9 +365,9 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                         {/* Brand Logo & Name */}
                         <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group">
                             <img
-                                src="/brand/logo-circle.png"
+                                src="/brand/logo-akm.jpg?v=20261113"
                                 alt="Alat Kopi Malang Logo"
-                                className="w-9 h-9 sm:w-10 sm:h-10 rounded-full group-hover:scale-105 transition-transform shadow-xs"
+                                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover group-hover:scale-105 transition-transform shadow-xs bg-white"
                             />
                             <div className="flex flex-col">
                                 <span className="font-extrabold text-sm sm:text-base tracking-tight text-white group-hover:text-accent-copper transition-colors whitespace-nowrap">
@@ -769,12 +769,12 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                     { label: 'Kebijakan Retur', url: '/legal/refund', is_active: true },
                 ];
 
-                const brandTitle = footerSettings.brand_title || 'Sanubari Roastery';
-                const brandTagline = footerSettings.brand_tagline || 'Close to Every Brew';
-                const brandDescription = footerSettings.brand_description || 'Roastery kopi artisan yang berfokus pada eksplorasi biji kopi Gunung Kawi, proses klasik, eksperimental, dan co-fermentasi presisi di Malang, Jawa Timur.';
-                const brandLogoSrc = footerSettings.brand_logo ? (resolveImageUrl(footerSettings.brand_logo) || '/brand/logo-circle.png') : '/brand/logo-circle.png';
-                const showroomLabel = footerSettings.showroom_label || 'Roastery & Showroom:';
-                const showroomName = footerSettings.showroom_name || 'Sanubari x Alat Kopi Malang';
+                const brandTitle = footerSettings.brand_title || settings?.brand_name || 'Alat Kopi Malang';
+                const brandTagline = footerSettings.brand_tagline || 'Curated Coffee Equipment & Barista Tools';
+                const brandDescription = footerSettings.brand_description || 'Pusat perlengkapan kopi, alat seduh manual, grinder, dan mesin espresso terlengkap di Malang sejak 2017.';
+                const brandLogoSrc = footerSettings.brand_logo ? (resolveImageUrl(footerSettings.brand_logo) || '/brand/logo-akm.jpg?v=20261113') : '/brand/logo-akm.jpg?v=20261113';
+                const showroomLabel = footerSettings.showroom_label || 'Showroom Alat Kopi:';
+                const showroomName = footerSettings.showroom_name || 'Alat Kopi Malang';
                 const showroomAddress = footerSettings.showroom_address || settings?.address || 'Jl. Terusan Kawi No. 12, Klojen, Malang';
 
                 const col2Title = footerSettings.column_2_title || 'Sanubari Roastery';

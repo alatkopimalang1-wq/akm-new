@@ -22,7 +22,7 @@ interface SearchModalProps {
 
 const resolveProductImageUrl = (p: Product) => {
     const raw = p.images?.[0]?.path || p.variants?.[0]?.image_url || p.variants?.[0]?.image;
-    if (!raw) return '/brand/logo-circle.png';
+    if (!raw) return '/brand/logo-akm.jpg?v=20261113';
     if (raw.startsWith('http://') || raw.startsWith('https://')) return raw;
     const clean = raw.replace(/^\/?(public\/|storage\/)?/, '');
     return `/storage/${clean}`;
