@@ -47,14 +47,10 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ isOpen, onClos
         <AnimatePresence>
             {isOpen && (
                 <>
-                    {/* Backdrop */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.15 }}
+                    {/* Backdrop (Transparent click-outside dismiss without dark/black overlay effect) */}
+                    <div
                         onClick={onClose}
-                        className="hidden md:block fixed inset-0 bg-black/50 backdrop-blur-xs z-30"
+                        className="hidden md:block fixed inset-0 z-30 pointer-events-auto"
                     />
 
                     {/* Mega Menu Container */}
@@ -63,7 +59,7 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ isOpen, onClos
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -6 }}
                         transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-                        className="hidden md:block absolute top-full inset-x-0 bg-white border-b border-sand-300 shadow-2xl z-40 text-brand-950 font-sans"
+                        className="hidden md:block absolute top-full inset-x-0 bg-white border-b border-slate-200 shadow-xl z-40 text-brand-950 font-sans"
                     >
                         <div className="max-w-7xl mx-auto flex items-stretch min-h-[440px]">
                             {/* Left Sidebar: Main Categories */}
