@@ -31,7 +31,7 @@ class CheckoutController extends Controller
             'items.*.quantity' => 'required|integer|min:1|max:100',
             'items.*.price' => 'nullable|numeric|min:0',
             'items.*.grind_option' => 'nullable|string|max:100',
-            'items.*.custom_notes' => 'nullable|string|max:500',
+            'items.*.custom_notes' => 'nullable|string|max:2000',
             'fulfillment_type' => 'nullable|string|in:delivery,pickup',
             'customer.name' => 'required|string|max:100',
             'customer.phone' => 'required|string|max:30',

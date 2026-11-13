@@ -114,8 +114,9 @@ class CartController extends Controller
             'items' => 'required|array|min:1',
             'items.*.variant_id' => 'required|integer|exists:product_variants,id',
             'items.*.quantity' => 'required|integer|min:1|max:50',
+            'items.*.price' => 'nullable|numeric|min:0',
             'items.*.grind_option' => 'nullable|string|max:100',
-            'items.*.custom_notes' => 'nullable|string|max:500',
+            'items.*.custom_notes' => 'nullable|string|max:2000',
             'customer.name' => 'required|string|max:100',
             'customer.phone' => 'required|string|max:30',
             'customer.address' => 'required|string|max:500',
@@ -128,10 +129,13 @@ class CartController extends Controller
         foreach ($validated['items'] as $item) {
             $variant = ProductVariant::with('product')->findOrFail($item['variant_id']);
             $qty = $item['quantity'];
-            $lineTotal = $variant->price * $qty;
+            $unitPrice = ($variant->product->slug === 'byob' && isset($item['price']) && is_numeric($item['price']))
+                ? (float) $item['price']
+                : (float) $variant->price;
+            $lineTotal = $unitPrice * $qty;
             $subtotal += $lineTotal;
 
-            $grind = $item['grind_option'] ?? 'Biji Utuh (Whole Bean)';
+            $grind = $item['grind_option'] ?? 'Standar';
             $customNotes = $item['custom_notes'] ?? null;
 
             $orderLines[] = [
@@ -140,7 +144,7 @@ class CartController extends Controller
                 'grind_option' => $grind,
                 'custom_notes' => $customNotes,
                 'quantity' => $qty,
-                'price' => $variant->price,
+                'price' => $unitPrice,
                 'total' => $lineTotal,
             ];
         }

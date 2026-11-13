@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Filament\Pages\ManageCustomBundleSettings;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductVariant;
 use App\Models\Setting;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -24,7 +26,7 @@ class ShopController extends Controller
 
     public function index(Request $request): Response
     {
-        $query = Product::active()->with(['variants', 'images', 'categories']);
+        $query = Product::active()->where('slug', '!=', 'byob')->with(['variants', 'images', 'categories']);
 
         // Search
         if ($search = $request->input('q')) {
@@ -112,6 +114,74 @@ class ShopController extends Controller
         ]);
     }
 
+    public function customBundle(): Response
+    {
+        $savedSettings = Setting::get('custom_bundle_settings', []);
+        $defaults = ManageCustomBundleSettings::defaultBundleSettings();
+        $bundleSettings = array_merge($defaults, is_array($savedSettings) ? $savedSettings : []);
+        if (empty($bundleSettings['discount_tiers']) || ! is_array($bundleSettings['discount_tiers'])) {
+            $bundleSettings['discount_tiers'] = $defaults['discount_tiers'];
+        }
+
+        // Ensure virtual BYOB bundle product & variant exist so customers can add custom bundles to cart
+        $byobProduct = Product::firstOrCreate(
+            ['slug' => 'byob'],
+            [
+                'name' => 'Paket Custom Alat Kopi Malang',
+                'producer' => 'ALAT KOPI MALANG',
+                'series' => 'Custom Bundle',
+                'stock_status' => 'in_stock',
+                'is_active' => true,
+                'is_featured' => false,
+                'min_price' => 0,
+            ]
+        );
+
+        $byobVariant = ProductVariant::firstOrCreate(
+            [
+                'product_id' => $byobProduct->id,
+                'label' => 'Paket Custom',
+            ],
+            [
+                'weight_grams' => 1000,
+                'price' => 0,
+                'stock_status' => 'in_stock',
+                'is_default' => true,
+            ]
+        );
+
+        $byobProduct->load(['variants', 'images', 'categories']);
+
+        $products = Product::active()
+            ->where('slug', '!=', 'byob')
+            ->with(['variants', 'images', 'categories'])
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        $categories = Category::whereNull('parent_id')
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get()
+            ->map(function ($cat) {
+                return [
+                    'id' => $cat->id,
+                    'name' => $cat->getTranslation('name') ?: (is_array($cat->name) ? ($cat->name['id'] ?? reset($cat->name)) : $cat->name),
+                    'slug' => $cat->slug,
+                    'icon' => $cat->icon,
+                ];
+            })
+            ->values();
+
+        return Inertia::render('shop/custom-bundle', [
+            'bundleSettings' => $bundleSettings,
+            'products' => $products,
+            'categories' => $categories,
+            'byobProduct' => $byobProduct,
+            'byobVariant' => $byobVariant,
+        ]);
+    }
+
     public function show(string $slug): Response
     {
         $product = Product::active()
@@ -120,6 +190,7 @@ class ShopController extends Controller
             ->firstOrFail();
 
         $relatedProducts = Product::active()
+            ->where('slug', '!=', 'byob')
             ->where('id', '!=', $product->id)
             ->where(function ($q) use ($product) {
                 $q->where('series', $product->series);
@@ -156,6 +227,7 @@ class ShopController extends Controller
 
         if (empty($q)) {
             $recommended = Product::active()
+                ->where('slug', '!=', 'byob')
                 ->where('is_featured', true)
                 ->with(['variants', 'images'])
                 ->take(4)
@@ -170,6 +242,7 @@ class ShopController extends Controller
         }
 
         $products = Product::active()
+            ->where('slug', '!=', 'byob')
             ->where(function ($query) use ($q) {
                 $query->where('name', 'like', "%{$q}%")
                       ->orWhere('producer', 'like', "%{$q}%")
