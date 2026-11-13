@@ -148,10 +148,11 @@
                 @foreach ($categories as $index => $cat)
                     <button
                         type="button"
+                        onmousedown="event.preventDefault()"
                         onmouseenter="activateMegaCategory('{{ $cat['id'] }}', this)"
-                        onclick="activateMegaCategory('{{ $cat['id'] }}', this)"
+                        onclick="activateMegaCategory('{{ $cat['id'] }}', this); this.blur();"
                         data-category-id="{{ $cat['id'] }}"
-                        class="mega-category-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer {{ $index === 0 ? 'bg-sand-200/90 text-accent-copper font-bold shadow-xs' : 'text-brand-800 hover:text-brand-950 hover:bg-cream-100/90' }}"
+                        class="mega-category-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer border-0 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 {{ $index === 0 ? 'bg-blue-50 text-blue-700 font-bold' : 'text-brand-800 hover:text-brand-950 hover:bg-cream-100/90' }}"
                     >
                         <span>{{ $cat['name'] }}</span>
                         <svg class="w-4 h-4 {{ $index === 0 ? 'text-accent-copper translate-x-0.5' : 'text-brand-300' }}" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -198,12 +199,12 @@
     function activateMegaCategory(categoryId, targetBtn) {
         // Toggle sidebar button styles
         document.querySelectorAll('.mega-category-btn').forEach(btn => {
-            btn.className = 'mega-category-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer text-brand-800 hover:text-brand-950 hover:bg-cream-100/90';
+            btn.className = 'mega-category-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer border-0 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 text-brand-800 hover:text-brand-950 hover:bg-cream-100/90';
             const icon = btn.querySelector('svg');
             if (icon) icon.className = 'w-4 h-4 text-brand-300';
         });
 
-        targetBtn.className = 'mega-category-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer bg-sand-200/90 text-accent-copper font-bold shadow-xs';
+        targetBtn.className = 'mega-category-btn w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer border-0 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 bg-blue-50 text-blue-700 font-bold';
         const targetIcon = targetBtn.querySelector('svg');
         if (targetIcon) targetIcon.className = 'w-4 h-4 text-accent-copper translate-x-0.5';
 

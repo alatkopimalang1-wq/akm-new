@@ -393,10 +393,11 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                         {/* Tombol Menu "Kategori Navigasi" (Desktop & Tablet) */}
                         <button
                             type="button"
+                            onMouseDown={(e) => e.preventDefault()}
                             onClick={() => setIsMegaMenuOpen((prev) => !prev)}
-                            className={`hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold border transition-all cursor-pointer select-none ${
+                            className={`hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold border transition-all cursor-pointer select-none outline-none focus:outline-none focus-visible:outline-none ${
                                 isMegaMenuOpen
-                                    ? 'bg-blue-600 text-white border-blue-500 shadow-sm ring-2 ring-blue-400/40'
+                                    ? 'bg-blue-600 text-white border-blue-500 shadow-sm'
                                     : 'bg-brand-800/90 hover:bg-brand-800 text-white border-brand-700/60 hover:border-blue-500/50'
                             }`}
                             aria-expanded={isMegaMenuOpen}

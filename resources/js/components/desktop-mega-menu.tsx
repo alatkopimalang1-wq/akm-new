@@ -71,11 +71,15 @@ export const DesktopMegaMenu: React.FC<DesktopMegaMenuProps> = ({ isOpen, onClos
                                             <button
                                                 key={cat.id}
                                                 type="button"
+                                                onMouseDown={(e) => e.preventDefault()}
                                                 onMouseEnter={() => setSelectedCategoryId(cat.id)}
-                                                onClick={() => setSelectedCategoryId(cat.id)}
-                                                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer ${
+                                                onClick={(e) => {
+                                                    setSelectedCategoryId(cat.id);
+                                                    e.currentTarget.blur();
+                                                }}
+                                                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-150 text-left cursor-pointer border-0 outline-none focus:outline-none focus-visible:outline-none ring-0 focus:ring-0 ${
                                                     isActive
-                                                        ? 'bg-blue-50 text-blue-700 font-bold shadow-xs border border-blue-200/80'
+                                                        ? 'bg-blue-50 text-blue-700 font-bold'
                                                         : 'text-brand-800 hover:text-brand-950 hover:bg-cream-100/90'
                                                 }`}
                                             >
