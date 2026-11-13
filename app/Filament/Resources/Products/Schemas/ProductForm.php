@@ -127,21 +127,9 @@ class ProductForm
                         ]),
                     ]),
 
-                Section::make('Spesifikasi & Deskripsi Produk')
+                Section::make('Deskripsi Produk')
                     ->columnSpanFull()
                     ->schema([
-                        TextInput::make('tasting_notes')
-                            ->label('Highlight Fitur Utama (Dipisahkan Koma)')
-                            ->placeholder('Contoh: Dual Boiler, PID Temperature Control, Stainless Steel 304')
-                            ->columnSpanFull(),
-                        Grid::make(2)->schema([
-                            TextInput::make('process')
-                                ->label('Material / Tipe Spesifikasi')
-                                ->placeholder('Contoh: Stainless Steel 304 • Rotary Pump'),
-                            TextInput::make('origin')
-                                ->label('Negara / Asal Brand')
-                                ->placeholder('Contoh: Florence, Italia'),
-                        ]),
                         Textarea::make('description.id')
                             ->label('Deskripsi Lengkap Produk')
                             ->rows(4)
@@ -210,21 +198,6 @@ class ProductForm
                                         ->default(true),
                                 ]),
                             ]),
-                    ]),
-
-                Section::make('Tautan Marketplace (Opsional)')
-                    ->collapsible()
-                    ->collapsed()
-                    ->columnSpanFull()
-                    ->schema([
-                        Grid::make(2)->schema([
-                            TextInput::make('tokopedia_url')
-                                ->label('Link Produk Tokopedia')
-                                ->url(),
-                            TextInput::make('shopee_url')
-                                ->label('Link Produk Shopee')
-                                ->url(),
-                        ]),
                     ]),
             ]);
     }
