@@ -22,6 +22,16 @@ class ContentController extends Controller
         ]);
     }
 
+    public function preorderTerms(): Response
+    {
+        $saved = Setting::get('page_preorder_terms', []);
+        $defaults = \App\Filament\Pages\ManagePreOrderTerms::defaultPreOrderTerms();
+
+        return Inertia::render('preorder-terms', [
+            'page' => array_merge($defaults, is_array($saved) ? $saved : []),
+        ]);
+    }
+
     public function customVisit(string $slug): Response
     {
         $customPages = Setting::get('custom_visit_pages', []);

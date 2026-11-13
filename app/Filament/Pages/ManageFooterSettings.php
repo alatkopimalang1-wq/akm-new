@@ -91,6 +91,7 @@ class ManageFooterSettings extends Page
             // Bottom Bar / Copyright & Legal
             'copyright_text' => '© {year} Alat Kopi Malang. Hak Cipta Dilindungi.',
             'legal_links' => [
+                ['label' => 'Syarat & Ketentuan Pre-Order', 'url' => '/syarat-ketentuan-pre-order', 'is_active' => true],
                 ['label' => 'Kebijakan Privasi', 'url' => '/legal/privacy', 'is_active' => true],
                 ['label' => 'Syarat & Ketentuan', 'url' => '/legal/terms', 'is_active' => true],
                 ['label' => 'Kebijakan Retur', 'url' => '/legal/refund', 'is_active' => true],

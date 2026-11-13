@@ -21,6 +21,8 @@ Route::get('/categories', [ShopController::class, 'categories'])->name('categori
 Route::get('/api/search', [ShopController::class, 'liveSearch'])->name('api.search');
 Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
 Route::get('/tentang', [ContentController::class, 'about'])->name('about');
+Route::get('/syarat-ketentuan-pre-order', [ContentController::class, 'preorderTerms'])->name('preorder.terms');
+Route::get('/pre-order', [ContentController::class, 'preorderTerms'])->name('preorder.alias');
 Route::get('/kunjungi', [ContentController::class, 'visit'])->name('visit');
 Route::get('/kunjungi/{slug}', [ContentController::class, 'customVisit'])->name('visit.custom');
 Route::get('/halaman/{slug}', [ContentController::class, 'customVisit'])->name('visit.halaman');
@@ -50,6 +52,8 @@ Route::prefix('en')->as('en.')->group(function () {
     Route::get('/api/search', [ShopController::class, 'liveSearch'])->name('api.search');
     Route::get('/shop/{slug}', [ShopController::class, 'show'])->name('shop.show');
     Route::get('/about', [ContentController::class, 'about'])->name('about');
+    Route::get('/syarat-ketentuan-pre-order', [ContentController::class, 'preorderTerms'])->name('preorder.terms');
+    Route::get('/pre-order-terms', [ContentController::class, 'preorderTerms'])->name('preorder.alias');
     Route::get('/visit', [ContentController::class, 'visit'])->name('visit');
     Route::get('/visit/{slug}', [ContentController::class, 'customVisit'])->name('visit.custom');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
@@ -60,7 +64,7 @@ Route::prefix('en')->as('en.')->group(function () {
 
 // Dynamic Custom Pages (Format /kunjungi) via Direct Slug
 Route::get('/{slug}', [ContentController::class, 'customVisit'])
-    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
+    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|syarat-ketentuan-pre-order|pre-order|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
     ->name('visit.direct');
 
 // XML Sitemap

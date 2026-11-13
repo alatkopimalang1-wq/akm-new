@@ -485,10 +485,14 @@ export default function ProductShow({
                                             <span>STOK HABIS (SOLD OUT)</span>
                                         </span>
                                     ) : (product.is_preorder || product.stock_status === 'pre_order') ? (
-                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-600 text-white rounded-full text-xs font-black uppercase tracking-widest shadow-xs">
+                                        <Link
+                                            href="/syarat-ketentuan-pre-order"
+                                            title="Lihat Syarat & Ketentuan Pre-Order"
+                                            className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded-full text-xs font-black uppercase tracking-widest shadow-xs transition-colors"
+                                        >
                                             <span className="w-2 h-2 rounded-full bg-amber-200 animate-pulse" />
                                             <span>PRE-ORDER</span>
-                                        </span>
+                                        </Link>
                                     ) : null}
                                 </div>
                             )}
