@@ -19,6 +19,7 @@ use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Str;
 
 class ManageCategoryMenu extends Page
 {
@@ -28,7 +29,7 @@ class ManageCategoryMenu extends Page
 
     protected static ?string $navigationLabel = 'Menu Kategori';
 
-    protected static ?string $title = 'Pengaturan 7 Menu Kategori & Pintasan Beranda';
+    protected static ?string $title = 'Pengaturan Menu Kategori & Pintasan Beranda';
 
     protected static ?int $navigationSort = 2;
 
@@ -155,25 +156,30 @@ class ManageCategoryMenu extends Page
     {
         return $schema
             ->components([
-                Section::make('Tombol Menu Kategori Beranda (7 Pilihan Utama)')
-                    ->description('Atur tepat 7 tombol lingkaran yang tampil di bawah banner hero beranda. Tentukan ikon atau upload gambar, nama label, tautan tujuan, dan teks badge aksen (kosongkan jika tanpa badge). Anda juga dapat mengubah urutan tombol dengan cara menggeser (drag & drop).')
+                Section::make('Menu Kategori Beranda (Tambah & Kelola Kategori)')
+                    ->description('Kelola daftar kategori yang tampil di halaman beranda. Klik "+ Tambah Kategori Baru" untuk menambahkan kategori baru, tentukan ikon atau upload gambar, nama kategori, URL tujuan, serta urutan tampil (drag & drop).')
                     ->schema([
                         Repeater::make('home_category_menu_items')
-                            ->label('Daftar Tombol Menu & Pintasan')
-                            ->itemLabel(fn (array $state): ?string => ($state['label'] ?? 'Tombol Menu') . (! empty($state['badge']) ? " [Badge: {$state['badge']}]" : ''))
+                            ->label('Daftar Menu Kategori')
+                            ->itemLabel(fn (array $state): ?string => ($state['label'] ?? 'Kategori Baru') . (! empty($state['badge']) ? " [Badge: {$state['badge']}]" : ''))
                             ->collapsible()
                             ->collapseAllAction(fn ($action) => $action->hidden())
                             ->expandAllAction(fn ($action) => $action->hidden())
                             ->reorderable()
                             ->cloneable()
-                            ->maxItems(8)
-                            ->addActionLabel('Tambah Tombol Menu')
+                            ->addActionLabel('+ Tambah Kategori Baru')
                             ->schema([
                                 Grid::make(2)->schema([
                                     TextInput::make('label')
-                                        ->label('Nama Label')
-                                        ->placeholder('Contoh: Filter Beans')
-                                        ->required(),
+                                        ->label('Nama Kategori / Label')
+                                        ->placeholder('Contoh: Mesin Espresso, Grinder Kopi...')
+                                        ->required()
+                                        ->live(onBlur: true)
+                                        ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                            if (! empty($state) && (empty($get('custom_url')) || $get('custom_url') === '/shop')) {
+                                                $set('custom_url', '/shop?category=' . Str::slug($state));
+                                            }
+                                        }),
 
                                     TextInput::make('badge')
                                         ->label('Teks Badge Aksen (Opsional)')

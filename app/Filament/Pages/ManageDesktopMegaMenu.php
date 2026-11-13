@@ -309,8 +309,14 @@ class ManageDesktopMegaMenu extends Page
                                         ->required()
                                         ->live(onBlur: true)
                                         ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                                            if (empty($get('slug')) && ! empty($state)) {
-                                                $set('slug', Str::slug($state));
+                                            if (! empty($state)) {
+                                                $slug = Str::slug($state);
+                                                if (empty($get('slug'))) {
+                                                    $set('slug', $slug);
+                                                }
+                                                if (empty($get('url')) || $get('url') === '/shop') {
+                                                    $set('url', '/shop?category=' . $slug);
+                                                }
                                             }
                                         }),
 
@@ -350,8 +356,14 @@ class ManageDesktopMegaMenu extends Page
                                                     ->required()
                                                     ->live(onBlur: true)
                                                     ->afterStateUpdated(function ($state, callable $set, callable $get) {
-                                                        if (empty($get('id')) && ! empty($state)) {
-                                                            $set('id', Str::slug($state));
+                                                        if (! empty($state)) {
+                                                            $slug = Str::slug($state);
+                                                            if (empty($get('id'))) {
+                                                                $set('id', $slug);
+                                                            }
+                                                            if (empty($get('custom_url')) || $get('custom_url') === '/shop') {
+                                                                $set('custom_url', '/shop?category=' . $slug);
+                                                            }
                                                         }
                                                     }),
 
