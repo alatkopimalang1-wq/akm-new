@@ -190,56 +190,8 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
             </div>
 
             <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8 py-4 sm:py-8 space-y-4 sm:space-y-6">
-                {/* Search & Filter Bar */}
-                <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-sand-200/80 shadow-xs space-y-3 sm:space-y-4">
-                    {/* Top Row: Search input & Sorting */}
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-                        <form onSubmit={handleSearch} className="relative flex-1">
-                            <Search className="w-4 h-4 text-brand-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-                            <input
-                                type="text"
-                                value={searchTerm}
-                                onChange={(e) => handleSearchChange(e.target.value)}
-                                placeholder="Cari nama produk, alat kopi, atau kategori..."
-                                className="w-full pl-10 pr-10 py-2.5 rounded-full bg-cream-50 border border-sand-200 text-[16px] sm:text-sm text-brand-950 placeholder-transparent sm:placeholder-brand-400 focus:outline-hidden focus:border-brand-700"
-                            />
-                            {searchTerm && (
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setSearchTerm('');
-                                        applyFilters({ q: '' });
-                                    }}
-                                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
-                                >
-                                    <X className="w-4 h-4" />
-                                </button>
-                            )}
-                        </form>
-
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                            <span className="text-xs text-brand-500 font-medium hidden sm:inline">Urutkan:</span>
-                            <Select
-                                value={selectedSort}
-                                onValueChange={(val: string) => {
-                                    setSelectedSort(val);
-                                    applyFilters({ sort: val });
-                                }}
-                            >
-                                <SelectTrigger className="py-2 px-3.5 h-auto rounded-full bg-cream-50 border border-sand-200 text-xs font-semibold text-brand-900 focus:outline-hidden focus:border-brand-700 cursor-pointer shadow-xs min-w-[140px]">
-                                    <SelectValue placeholder="Best Seller" />
-                                </SelectTrigger>
-                                <SelectContent className="bg-white border border-sand-200 rounded-xl shadow-lg z-50">
-                                    <SelectItem value="featured" className="text-xs font-medium py-1.5 cursor-pointer">Best Seller</SelectItem>
-                                    <SelectItem value="newest" className="text-xs font-medium py-1.5 cursor-pointer">Terbaru</SelectItem>
-                                    <SelectItem value="price_asc" className="text-xs font-medium py-1.5 cursor-pointer">Harga: Terendah</SelectItem>
-                                    <SelectItem value="price_desc" className="text-xs font-medium py-1.5 cursor-pointer">Harga: Tertinggi</SelectItem>
-                                    <SelectItem value="name" className="text-xs font-medium py-1.5 cursor-pointer">Nama (A - Z)</SelectItem>
-                                </SelectContent>
-                            </Select>
-                        </div>
-                    </div>
-
+                {/* Filter Bar */}
+                <div className="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 border border-sand-200/80 shadow-xs">
                     {/* Filter Pills from Admin Dashboard Categories with Navigation Arrows */}
                     <div className="relative">
                         {/* Left Scroll Arrow (Desktop only, hidden on mobile) */}
