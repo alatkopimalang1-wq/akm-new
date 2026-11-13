@@ -30,7 +30,7 @@ class AdminPanelProvider extends PanelProvider
             ->login()
             ->profile(isSimple: false)
             ->brandName('Alat Kopi Malang Admin')
-            ->brandLogo(fn () => asset('brand/logo-circle.png'))
+            ->brandLogo(fn () => asset('brand/logo-akm.jpg?v=20261113'))
             ->brandLogoHeight('2.5rem')
             ->favicon(asset('favicon-32x32.png?v=20261105c'))
             ->maxContentWidth('full')

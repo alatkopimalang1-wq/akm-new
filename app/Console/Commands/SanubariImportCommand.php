@@ -75,21 +75,21 @@ class SanubariImportCommand extends Command
         $this->line('Seeding settings...');
 
         $defaults = [
-            'brand_name' => $brand['name'] ?? 'Sanubari Roastery',
+            'brand_name' => 'Alat Kopi Malang',
             'tagline' => [
-                'id' => 'Close to Every Brew — Jejak Rasa di Gunung Kawi',
-                'en' => 'Close to Every Brew — Flavor Traces of Mount Kawi',
+                'id' => 'Pusat Alat Kopi & Peralatan Barista Malang',
+                'en' => 'Curated Coffee Equipment & Barista Tools Malang',
             ],
             'description' => [
-                'id' => 'Sanubari Roastery menyajikan kopi artisan pilihan dari perkebunan terbaik, dengan spesialisasi biji kopi Gunung Kawi dan inovasi proses fermentasi modern.',
-                'en' => 'Sanubari Roastery presents curated artisan coffees from the finest estates, specializing in Mount Kawi beans and modern fermentation innovations.',
+                'id' => 'Alat Kopi Malang menyediakan kurasi alat seduh manual, mesin espresso, grinder, dan perlengkapan barista terlengkap di Malang sejak 2017.',
+                'en' => 'Alat Kopi Malang curates manual brew equipment, espresso machines, grinders, and barista tools in Malang since 2017.',
             ],
-            'whatsapp' => $brand['whatsapp'] ?? '6285121930454',
-            'maps_url' => $brand['mapsUrl'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
-            'address' => 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang, Jawa Timur 65116',
-            'opening_hours' => '09.00 – 23.00 WIB (Setiap Hari)',
-            'instagram' => 'https://instagram.com/sanubariroastery',
-            'email' => 'halo@sanubariroastery.id',
+            'whatsapp' => '6285121930454',
+            'maps_url' => 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
+            'address' => 'Malang, Jawa Timur',
+            'opening_hours' => '09.00 – 21.00 WIB (Setiap Hari)',
+            'instagram' => 'https://instagram.com/alatkopimalang',
+            'email' => 'admin@alatkopimalang.co.id',
             'currency' => 'IDR',
             'free_shipping_min' => 250000,
             // Announcement Ticker
@@ -343,10 +343,10 @@ class SanubariImportCommand extends Command
 
         // Seed Admin User for Filament
         \App\Models\User::updateOrCreate(
-            ['email' => 'admin@app.com'],
+            ['email' => 'admin@alatkopimalang.co.id'],
             [
-                'name' => 'Admin Sanubari',
-                'password' => \Illuminate\Support\Facades\Hash::make('password'),
+                'name' => 'Admin Alat Kopi Malang',
+                'password' => \Illuminate\Support\Facades\Hash::make('admin123'),
                 'email_verified_at' => now(),
             ]
         );
