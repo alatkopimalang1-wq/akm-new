@@ -100,3 +100,4 @@ class PurgeWebsiteContentCommand extends Command
         return self::SUCCESS;
     }
 }
+

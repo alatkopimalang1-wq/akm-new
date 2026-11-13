@@ -41,8 +41,6 @@ Route::post('/api/shipping/calculate', [ShippingController::class, 'calculate'])
 Route::post('/api/shipping/track', [ShippingController::class, 'track'])->name('api.shipping.track');
 Route::post('/api/shipping/pickup', [ShippingController::class, 'requestPickup'])->name('api.shipping.pickup');
 
-Route::get('/legal/{type?}', [ContentController::class, 'legal'])->name('legal');
-
 // Public English Routes (Prefix: /en)
 Route::prefix('en')->as('en.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -58,12 +56,11 @@ Route::prefix('en')->as('en.')->group(function () {
     Route::get('/order/{orderNumber}', [CheckoutController::class, 'show'])->name('orders.show');
     Route::get('/order/{orderNumber}/invoice', [CheckoutController::class, 'invoice'])->name('orders.invoice.en');
     Route::get('/track-order', [CheckoutController::class, 'track'])->name('orders.track');
-    Route::get('/legal/{type?}', [ContentController::class, 'legal'])->name('legal');
 });
 
 // Dynamic Custom Pages (Format /kunjungi) via Direct Slug
 Route::get('/{slug}', [ContentController::class, 'customVisit'])
-    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|legal|sitemap\.xml)[a-zA-Z0-9\-_]+$')
+    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
     ->name('visit.direct');
 
 // XML Sitemap

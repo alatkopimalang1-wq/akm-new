@@ -299,29 +299,6 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 <meta head-key="og-image" property="og:image" content="/brand/logo-akm.png?v=20261113b" />
             </Head>
 
-            {/* Announcement Ticker Bar */}
-            {announcementVisible && settings?.announcement_enabled && (settings?.announcement_text_id || settings?.announcement_text_en) && (
-                <div className="bg-accent-copper text-white px-4 py-2 text-xs font-semibold flex items-center justify-between text-center relative z-50 shadow-xs">
-                    <div className="flex-1 text-center">
-                        {settings?.announcement_link ? (
-                            <Link href={settings.announcement_link} className="hover:underline inline-flex items-center gap-1.5 justify-center">
-                                <span>{isEn ? (settings.announcement_text_en || settings.announcement_text_id) : settings.announcement_text_id}</span>
-                            </Link>
-                        ) : (
-                            <span>{isEn ? (settings.announcement_text_en || settings.announcement_text_id) : settings.announcement_text_id}</span>
-                        )}
-                    </div>
-                    <button
-                        type="button"
-                        onClick={() => setAnnouncementVisible(false)}
-                        aria-label="Tutup Pengumuman"
-                        className="text-white/80 hover:text-white p-1 rounded-full transition-colors cursor-pointer"
-                    >
-                        <X className="w-3.5 h-3.5" />
-                    </button>
-                </div>
-            )}
-
             {/* Navigation Header - Otten Coffee Style Desktop Mega Menu Navbar (Alat Kopi Malang Theme Green) */}
             <header className="sticky top-0 z-50 bg-brand-900 text-white border-b border-brand-800/80 shadow-md transition-shadow [view-transition-name:app-header] font-sans">
                 <div className="relative z-50 max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-3 sm:gap-4">
@@ -572,20 +549,6 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 announcementText={settings?.announcement_text_id}
                 announcementLink={settings?.announcement_link}
             />
-
-            {/* Floating WhatsApp Action Button (Desktop & Tablet only, Mobile uses Bottom Nav) */}
-            <a
-                href={waUrl}
-                target="_blank"
-                rel="noreferrer"
-                className="hidden md:flex fixed bottom-8 right-8 z-30 items-center gap-2 px-5 py-3 rounded-full bg-[#0f766e] text-white hover:bg-[#115e59] active:scale-95 transition-colors group shadow-lg"
-                aria-label="Chat WhatsApp Alat Kopi Malang"
-            >
-                <MessageCircle className="w-5 h-5 fill-white" />
-                <span className="hidden md:inline font-semibold text-sm">
-                    Tanya Roaster
-                </span>
-            </a>
 
             {/* Fixed Mobile Bottom Navigation Bar (Screens < 768px) */}
             {!isCartOpen && (
@@ -959,32 +922,9 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                 </div>
                             </div>
 
-                            {/* Bottom Copyright & Legal */}
+                            {/* Bottom Copyright */}
                             <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-brand-300">
                                 <p>{copyrightText}</p>
-                                <div className="flex items-center gap-6 text-sm">
-                                    {legalLinks.map((link: any, idx: number) => {
-                                        const isExternal = Boolean(link.is_external || link.url?.startsWith('http://') || link.url?.startsWith('https://'));
-                                        if (isExternal) {
-                                            return (
-                                                <a
-                                                    key={idx}
-                                                    href={link.url}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                    className="hover:text-white transition-colors"
-                                                >
-                                                    {link.label}
-                                                </a>
-                                            );
-                                        }
-                                        return (
-                                            <Link key={idx} href={link.url} className="hover:text-white transition-colors">
-                                                {link.label}
-                                            </Link>
-                                        );
-                                    })}
-                                </div>
                             </div>
                         </div>
                     </footer>

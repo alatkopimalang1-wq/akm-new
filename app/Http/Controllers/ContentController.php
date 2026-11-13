@@ -40,18 +40,4 @@ class ContentController extends Controller
             'page' => $page,
         ]);
     }
-
-    public function legal(string $type = 'privacy'): Response
-    {
-        $titles = [
-            'privacy' => 'Kebijakan Privasi / Privacy Policy',
-            'terms' => 'Syarat & Ketentuan / Terms & Conditions',
-            'refund' => 'Kebijakan Pengembalian & Garansi Kesegaran',
-        ];
-
-        return Inertia::render('legal', [
-            'type' => $type,
-            'title' => $titles[$type] ?? 'Informasi Legal',
-        ]);
-    }
 }
