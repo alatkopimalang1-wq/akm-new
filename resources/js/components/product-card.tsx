@@ -219,14 +219,6 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                 }`}>
                     {product.name}
                 </h3>
-
-                {product.tasting_notes && (
-                    <p className={`text-[13px] line-clamp-1 mb-4 leading-relaxed ${
-                        isOutOfStock ? 'text-neutral-400' : 'text-brand-700'
-                    }`}>
-                        {product.tasting_notes}
-                    </p>
-                )}
             </Link>
 
             <div className="pt-3 flex items-center justify-between mt-auto">
