@@ -61,7 +61,7 @@ export default function LegalPage({ type = 'privacy', title }: LegalPageProps) {
                         <>
                             <h2 className="text-base font-bold text-brand-950">1. Pengumpulan Informasi Pribadi</h2>
                             <p>
-                                Sanubari Roastery hanya mengumpulkan data yang diberikan secara sukarela saat Anda melakukan konfirmasi pemesanan produk melalui website, seperti Nama Lengkap, Nomor WhatsApp, dan Alamat Pengiriman untuk keperluan pemenuhan kurir dan komunikasi transaksi.
+                                Alat Kopi Malang hanya mengumpulkan data yang diberikan secara sukarela saat Anda melakukan konfirmasi pemesanan produk melalui website, seperti Nama Lengkap, Nomor WhatsApp, dan Alamat Pengiriman untuk keperluan pemenuhan kurir dan komunikasi transaksi.
                             </p>
 
                             <h2 className="text-base font-bold text-brand-950">2. Keamanan & Kerahasiaan Data</h2>
@@ -71,7 +71,7 @@ export default function LegalPage({ type = 'privacy', title }: LegalPageProps) {
 
                             <h2 className="text-base font-bold text-brand-950">3. Komunikasi Transaksi</h2>
                             <p>
-                                Komunikasi resmi transaksi dilakukan hanya melalui nomor WhatsApp resmi Sanubari Roastery di <strong>+62 851-2193-0454</strong>. Pastikan tidak melakukan transfer ke rekening selain rekening resmi yang diinstruksikan oleh admin kami.
+                                Komunikasi resmi transaksi dilakukan hanya melalui nomor WhatsApp resmi Alat Kopi Malang di <strong>+62 851-2193-0454</strong>. Pastikan tidak melakukan transfer ke rekening selain rekening resmi yang diinstruksikan oleh admin kami.
                             </p>
                         </>
                     )}
@@ -80,7 +80,7 @@ export default function LegalPage({ type = 'privacy', title }: LegalPageProps) {
                         <>
                             <h2 className="text-base font-bold text-brand-950">1. Pemesanan & Pembayaran</h2>
                             <p>
-                                Seluruh pemesanan produk di website sanubari.test diarahkan untuk diverifikasi melalui WhatsApp resmi. Harga yang tertera adalah harga retail dan grosir resmi belum termasuk ongkos kirim.
+                                Seluruh pemesanan produk di website Alat Kopi Malang.test diarahkan untuk diverifikasi melalui WhatsApp resmi. Harga yang tertera adalah harga retail dan grosir resmi belum termasuk ongkos kirim.
                             </p>
 
                             <h2 className="text-base font-bold text-brand-950">2. Permintaan Gilingan (Grind Request)</h2>

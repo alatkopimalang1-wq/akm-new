@@ -161,9 +161,9 @@ class ContentController extends Controller
     public function booking(): Response
     {
         $defaultPage = [
-            'hero_badge' => 'Reservasi & Sewa Tempat di Sanubari Roastery',
-            'hero_title' => 'Booking Tempat Nyaman untuk Acara & Komunitas di Sanubari',
-            'hero_description' => 'Ruang estetik, nyaman, dan ber-AC untuk workshop, meeting kerja, gathering komunitas, maupun private event Anda di Malang. Tanpa biaya sewa ruangan terpisah — cukup dengan minimum spent ngopi & jajan di Sanubari Roastery.',
+            'hero_badge' => 'Reservasi & Sewa Tempat di Alat Kopi Malang',
+            'hero_title' => 'Booking Tempat Nyaman untuk Acara & Komunitas di Alat Kopi Malang',
+            'hero_description' => 'Ruang estetik, nyaman, dan ber-AC untuk workshop, meeting kerja, gathering komunitas, maupun private event Anda di Malang. Tanpa biaya sewa ruangan terpisah — cukup dengan minimum spent ngopi & jajan di Alat Kopi Malang.',
             'hero_image' => 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1200&q=80',
             'benefits' => [
                 [
@@ -185,9 +185,9 @@ class ContentController extends Controller
                     'icon' => 'volume-2',
                 ],
                 [
-                    'title' => 'Cukup dengan Minimum Spent Ngopi di Sanubari',
+                    'title' => 'Cukup dengan Minimum Spent Ngopi di Alat Kopi Malang',
                     'badge' => 'Tanpa Biaya Sewa Ruang',
-                    'description' => 'Bebas biaya sewa gedung atau room charge terpisah! Cukup penuhi minimum spent pesanan kopi artisan, minuman segar, dan aneka menu makanan lezat Sanubari.',
+                    'description' => 'Bebas biaya sewa gedung atau room charge terpisah! Cukup penuhi minimum spent pesanan kopi artisan, minuman segar, dan aneka menu makanan lezat Alat Kopi Malang.',
                     'icon' => 'coffee',
                 ],
             ],
@@ -206,7 +206,7 @@ class ContentController extends Controller
                 'Nonton Bareng & Diskusi Kreatif',
             ],
             'gallery_title' => 'Dokumentasi Suasana Ruangan & Acara',
-            'gallery_subtitle' => 'Momen kehangatan workshop, meeting, dan gathering komunitas di Sanubari Roastery Malang.',
+            'gallery_subtitle' => 'Momen kehangatan workshop, meeting, dan gathering komunitas di Alat Kopi Malang.',
             'grid_desktop' => '3',
             'grid_tablet' => '2',
             'grid_mobile' => '1',
@@ -242,7 +242,7 @@ class ContentController extends Controller
             'hours' => 'Setiap Hari: 09.00 – 23.00 WIB',
             'maps_url' => 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
             'form_title' => 'Formulir Reservasi Tempat',
-            'form_subtitle' => 'Isi detail rencana acara Anda di bawah ini untuk langsung terhubung ke WhatsApp reservasi Sanubari Roastery.',
+            'form_subtitle' => 'Isi detail rencana acara Anda di bawah ini untuk langsung terhubung ke WhatsApp reservasi Alat Kopi Malang.',
         ];
 
         $saved = Setting::get('page_booking_tempat', []);
@@ -257,8 +257,8 @@ class ContentController extends Controller
     {
         $defaultPage = [
             'hero_badge' => 'Live Espresso Bar & Coffee Catering',
-            'hero_title' => 'Sanubari Coffee Catering untuk Segala Momen Spesial Anda',
-            'hero_description' => 'Hadirkan pengalaman specialty coffee bar autentik langsung di lokasi acara Anda di Malang & sekitarnya. Cocok untuk Wedding, Acara Kantor, Acara Seminar, maupun Acara Keluarga dengan minimum order 200 cup dan racikan barista profesional Sanubari.',
+            'hero_title' => 'Alat Kopi Malang Coffee Catering untuk Segala Momen Spesial Anda',
+            'hero_description' => 'Hadirkan pengalaman specialty coffee bar autentik langsung di lokasi acara Anda di Malang & sekitarnya. Cocok untuk Wedding, Acara Kantor, Acara Seminar, maupun Acara Keluarga dengan minimum order 200 cup dan racikan barista profesional Alat Kopi Malang.',
             'hero_image' => 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80',
             'minimum_order_cups' => '200',
             'benefits' => [
@@ -271,7 +271,7 @@ class ContentController extends Controller
                 [
                     'title' => 'Pelayanan Langsung di Tempat Acara',
                     'badge' => 'Live Espresso Bar',
-                    'description' => 'Tim barista profesional Sanubari hadir langsung di lokasi acara dengan setup mobile coffee bar lengkap, menyajikan kopi segar di hadapan tamu.',
+                    'description' => 'Tim barista profesional Alat Kopi Malang hadir langsung di lokasi acara dengan setup mobile coffee bar lengkap, menyajikan kopi segar di hadapan tamu.',
                     'is_highlight' => false,
                 ],
                 [
@@ -281,9 +281,9 @@ class ContentController extends Controller
                     'is_highlight' => false,
                 ],
                 [
-                    'title' => 'Biji Kopi Fresh Roast Khas Sanubari',
+                    'title' => 'Biji Kopi Fresh Roast Khas Alat Kopi Malang',
                     'badge' => 'Specialty Grade 1',
-                    'description' => 'Pilihan espresso blend dan single origin artisan khas Sanubari Roastery. Cita rasa kaya, manis seimbang, dan ramah di lambung para tamu undangan.',
+                    'description' => 'Pilihan espresso blend dan single origin artisan khas Alat Kopi Malang. Cita rasa kaya, manis seimbang, dan ramah di lambung para tamu undangan.',
                     'is_highlight' => true,
                 ],
             ],
@@ -302,7 +302,7 @@ class ContentController extends Controller
                 ],
             ],
             'gallery_title' => 'Dokumentasi Live Coffee Bar & Catering Acara',
-            'gallery_subtitle' => 'Momen kebahagiaan para tamu menikmati racikan segar Sanubari di berbagai pesta pernikahan, kantor, dan seminar.',
+            'gallery_subtitle' => 'Momen kebahagiaan para tamu menikmati racikan segar Alat Kopi Malang di berbagai pesta pernikahan, kantor, dan seminar.',
             'grid_desktop' => '3',
             'grid_tablet' => '2',
             'grid_mobile' => '1',
@@ -335,7 +335,7 @@ class ContentController extends Controller
             ],
             'whatsapp_number' => '6285121930454',
             'form_title' => 'Konsultasi Jadwal & Pemesanan Coffee Catering',
-            'form_subtitle' => 'Isi formulir singkat di bawah ini untuk mendapatkan penawaran harga & paket coffee catering Sanubari via WhatsApp.',
+            'form_subtitle' => 'Isi formulir singkat di bawah ini untuk mendapatkan penawaran harga & paket coffee catering Alat Kopi Malang via WhatsApp.',
             'terms_note' => '*Minimum pemesanan 200 cup. Pemesanan disarankan minimal H-7 acara untuk persiapan jadwal tim barista dan ketersediaan mesin.',
             'address' => 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
             'hours' => 'Setiap Hari: 09.00 – 23.00 WIB',

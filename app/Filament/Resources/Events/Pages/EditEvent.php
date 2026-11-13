@@ -35,7 +35,7 @@ class EditEvent extends EditRecord
         }
 
         if (empty($data['meta']['entry_type'])) {
-            $data['meta']['entry_type'] = in_array($data['category'] ?? '', ['Live Music', 'Live DJ', 'Stand Sanubari']) ? 'walk_in' : 'rsvp';
+            $data['meta']['entry_type'] = in_array($data['category'] ?? '', ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang']) ? 'walk_in' : 'rsvp';
         }
 
         return $data;

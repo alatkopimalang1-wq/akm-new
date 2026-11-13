@@ -116,7 +116,7 @@ export default function AllCategoriesPage({ navCategories }: AllCategoriesPagePr
 
     return (
         <div className="min-h-screen bg-sand-200/50 flex justify-center text-brand-950 font-sans antialiased selection:bg-brand-900 selection:text-white">
-            <Head title="Semua Kategori - Sanubari Roastery" />
+            <Head title="Semua Kategori - Alat Kopi Malang" />
 
             {/* Global Search Modal */}
             <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />

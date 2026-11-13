@@ -18,11 +18,11 @@ use Illuminate\Support\Str;
 class SanubariImportCommand extends Command
 {
     protected $signature = 'sanubari:import-seed {--download-images : Download product images to local storage}';
-    protected $description = 'Import Sanubari Roastery seed data and demo content';
+    protected $description = 'Import Alat Kopi Malang seed data and demo content';
 
     public function handle(): int
     {
-        $this->info('Starting Sanubari seed data import...');
+        $this->info('Starting Alat Kopi Malang seed data import...');
 
         // 0. Synchronize starter media assets to storage
         $this->copySeedAssets();
@@ -51,7 +51,7 @@ class SanubariImportCommand extends Command
         // 4. Seed Content (Posts, Brew Guides, Events)
         $this->seedContent();
 
-        $this->info('Sanubari seed data import completed successfully!');
+        $this->info('Alat Kopi Malang seed data import completed successfully!');
         return Command::SUCCESS;
     }
 
@@ -203,7 +203,7 @@ class SanubariImportCommand extends Command
             ],
             'home_rec_title' => 'Rekomendasi Biji Kopi',
             'home_rec_subtitle' => 'Kurasi sangrai segar lereng Gunung Kawi dan Nusantara pekan ini',
-            'home_video_tag' => 'Sanubari Roasting Studio',
+            'home_video_tag' => 'Alat Kopi Malang Roasting Studio',
             'home_video_title' => 'Dedikasi & Presisi Sangrai di Malang',
             'home_video_subtitle' => '',
             'home_video_url' => 'https://www.smokingbarrels.coffee/media/home-hero-video.mp4',
@@ -223,7 +223,7 @@ class SanubariImportCommand extends Command
             'home_stat_4_unit' => 'Jam',
             'home_stat_4_label' => 'Jaminan Fresh Roast',
             'home_stat_4_desc' => 'Maksimal jeda sangrai ke pengiriman',
-            'home_place_title' => 'Roastery & Showroom Sanubari',
+            'home_place_title' => 'Roastery & Showroom Alat Kopi Malang',
             'home_place_subtitle' => 'Kunjungi slow bar, uji coba mesin espresso, dan rasakan atmosfer sangrai lereng Kawi di Kota Malang',
             'home_place_items' => [
                 [
@@ -268,11 +268,11 @@ class SanubariImportCommand extends Command
                 ],
             ],
             'home_laris_title' => 'Laris Manis',
-            'home_laris_subtitle' => 'Koleksi biji kopi paling laris dan sering diseduh di Sanubari yang mungkin kamu sukai',
+            'home_laris_subtitle' => 'Koleksi biji kopi paling laris dan sering diseduh di Alat Kopi Malang yang mungkin kamu sukai',
             'home_laris_1_title' => 'Gunung Kawi Honey Anaerobic',
             'home_laris_1_href' => '/shop?series=kawi',
             'home_laris_1_image' => 'featured-menu/laris-1.jpg',
-            'home_laris_2_title' => 'Sanubari Signature Houseblend Espresso',
+            'home_laris_2_title' => 'Alat Kopi Malang Signature Houseblend Espresso',
             'home_laris_2_subtitle' => 'Diformulasikan untuk Crema Tebal & Manis Karamel',
             'home_laris_2_href' => '/shop?category=espresso-beans',
             'home_laris_2_image' => 'featured-menu/laris-2.jpg',
@@ -420,7 +420,7 @@ class SanubariImportCommand extends Command
                 'slug' => 'houseblend',
                 'type' => 'espresso',
                 'parent' => 'espresso-beans',
-                'description' => ['id' => 'Racikan signature Sanubari untuk coffee shop dan daily brew.', 'en' => 'Sanubari signature blends designed for cafes and daily brewing.'],
+                'description' => ['id' => 'Racikan signature Alat Kopi Malang untuk coffee shop dan daily brew.', 'en' => 'Alat Kopi Malang signature blends designed for cafes and daily brewing.'],
                 'sort_order' => 22,
             ],
             'robusta' => [
@@ -815,12 +815,12 @@ class SanubariImportCommand extends Command
                 'slug' => 'jejak-kopi-lereng-gunung-kawi',
                 'category' => 'Origin Story',
                 'excerpt' => [
-                    'id' => 'Mengapa Gunung Kawi memiliki tanah vulkanis dan iklim mikro sempurna yang menghasilkan profil rasa manis madu alami pada biji kopi Sanubari.',
-                    'en' => 'Why Mount Kawi possesses the ideal volcanic terroir and microclimate yielding natural honey sweetness in Sanubari beans.',
+                    'id' => 'Mengapa Gunung Kawi memiliki tanah vulkanis dan iklim mikro sempurna yang menghasilkan profil rasa manis madu alami pada biji kopi Alat Kopi Malang.',
+                    'en' => 'Why Mount Kawi possesses the ideal volcanic terroir and microclimate yielding natural honey sweetness in Alat Kopi Malang beans.',
                 ],
                 'body' => [
-                    'id' => "Terletak di barat daya Kota Malang, Gunung Kawi tidak hanya dikenal dengan keindahan alamnya, namun juga sebagai surga tersembunyi bagi perkebunan kopi specialty di ketinggian 1.200 hingga 1.600 meter di atas permukaan laut.\n\nSanubari Roastery bermitra langsung dengan kelompok tani lokal di Kawi untuk menerapkan praktik petik merah selektif dan pengolahan pasca panen presisi. Hasilnya adalah cangkir kopi yang kaya akan aroma bunga kopi, buah plum manis, dan keasaman seimbang yang lembut di lambung.",
-                    'en' => "Located southwest of Malang, Mount Kawi is not only celebrated for its serene landscapes, but also as a hidden gem for specialty coffee farming between 1,200 and 1,600 MASL.\n\nSanubari Roastery partners directly with local smallholders on Kawi, establishing selective red-cherry harvesting and precise post-harvest fermentation. The outcome is a distinctive cup bursting with floral aromatics, sweet plum notes, and smooth, balanced acidity.",
+                    'id' => "Terletak di barat daya Kota Malang, Gunung Kawi tidak hanya dikenal dengan keindahan alamnya, namun juga sebagai surga tersembunyi bagi perkebunan kopi specialty di ketinggian 1.200 hingga 1.600 meter di atas permukaan laut.\n\nAlat Kopi Malang bermitra langsung dengan kelompok tani lokal di Kawi untuk menerapkan praktik petik merah selektif dan pengolahan pasca panen presisi. Hasilnya adalah cangkir kopi yang kaya akan aroma bunga kopi, buah plum manis, dan keasaman seimbang yang lembut di lambung.",
+                    'en' => "Located southwest of Malang, Mount Kawi is not only celebrated for its serene landscapes, but also as a hidden gem for specialty coffee farming between 1,200 and 1,600 MASL.\n\nAlat Kopi Malang partners directly with local smallholders on Kawi, establishing selective red-cherry harvesting and precise post-harvest fermentation. The outcome is a distinctive cup bursting with floral aromatics, sweet plum notes, and smooth, balanced acidity.",
                 ],
                 'cover_image' => 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=1200&q=80',
                 'author_name' => 'Didik Kurniawan',
@@ -839,11 +839,11 @@ class SanubariImportCommand extends Command
                     'en' => 'How co-fermentation with fresh fruit extracts produces extraordinary sensory profiles while preserving core terroir characteristics.',
                 ],
                 'body' => [
-                    'id' => "CO-Fermentasi (Co-Fermentation) adalah salah satu inovasi pascapanen paling dinamis di industri kopi modern. Dengan menambahkan ragi alami dan ekstrak buah murni selama fase fermentasi anaerobik tertutup, bakteri pengurai bekerja mengubah gula alami biji kopi sambil mengikat molekul aromatik buah.\n\nDi Sanubari, kami memastikan kadar fermentasi terkontrol ketat demi menghasilkan rasa yang harmonis: buah berry segar yang meledak di lidah, diakhiri dengan aftertaste cokelat susu yang manis dan bersih.",
-                    'en' => "Co-fermentation represents one of the most vibrant innovations in specialty processing. By introducing natural yeasts and pure fruit juices into controlled anaerobic tanks, fermentation breaks down sugars while weaving aromatic fruity compounds into the beans.\n\nAt Sanubari, tight monitoring ensures harmonious cup clarity: vibrant berry bursts finishing with long, sweet milk chocolate notes.",
+                    'id' => "CO-Fermentasi (Co-Fermentation) adalah salah satu inovasi pascapanen paling dinamis di industri kopi modern. Dengan menambahkan ragi alami dan ekstrak buah murni selama fase fermentasi anaerobik tertutup, bakteri pengurai bekerja mengubah gula alami biji kopi sambil mengikat molekul aromatik buah.\n\nDi Alat Kopi Malang, kami memastikan kadar fermentasi terkontrol ketat demi menghasilkan rasa yang harmonis: buah berry segar yang meledak di lidah, diakhiri dengan aftertaste cokelat susu yang manis dan bersih.",
+                    'en' => "Co-fermentation represents one of the most vibrant innovations in specialty processing. By introducing natural yeasts and pure fruit juices into controlled anaerobic tanks, fermentation breaks down sugars while weaving aromatic fruity compounds into the beans.\n\nAt Alat Kopi Malang, tight monitoring ensures harmonious cup clarity: vibrant berry bursts finishing with long, sweet milk chocolate notes.",
                 ],
                 'cover_image' => 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1200&q=80',
-                'author_name' => 'Sanubari Roaster',
+                'author_name' => 'Alat Kopi Malang Roaster',
                 'read_time_minutes' => 5,
                 'published_at' => now()->subDays(12),
             ],
@@ -863,7 +863,7 @@ class SanubariImportCommand extends Command
                     'en' => "Roast levels define how sugars and organic acids inside the bean caramelize under drum heat.\n\nLight roast preserves terroir acidity, perfect for manual pour-over. Medium roast balances caramel sweetness with rounded body. Dark roast emphasizes dark cocoa notes and crema density without bitterness.",
                 ],
                 'cover_image' => 'https://images.unsplash.com/photo-1518832553480-cd0e625ed3e6?auto=format&fit=crop&w=1200&q=80',
-                'author_name' => 'Sanubari Roaster',
+                'author_name' => 'Alat Kopi Malang Roaster',
                 'read_time_minutes' => 4,
                 'published_at' => now()->subDays(18),
             ],
@@ -875,12 +875,12 @@ class SanubariImportCommand extends Command
                 'slug' => 'direct-trade-petani-kawi',
                 'category' => 'Terroir & Community',
                 'excerpt' => [
-                    'id' => 'Transparansi rantai pasok dan komitmen harga adil Sanubari dalam menjaga kelestarian kebun kopi rakyat di lereng Gunung Kawi.',
-                    'en' => 'Supply chain transparency and fair price commitments by Sanubari supporting local smallholder farmers on Mount Kawi.',
+                    'id' => 'Transparansi rantai pasok dan komitmen harga adil Alat Kopi Malang dalam menjaga kelestarian kebun kopi rakyat di lereng Gunung Kawi.',
+                    'en' => 'Supply chain transparency and fair price commitments by Alat Kopi Malang supporting local smallholder farmers on Mount Kawi.',
                 ],
                 'body' => [
-                    'id' => "Bagi Sanubari, kualitas secangkir kopi berawal dari kesejahteraan petani yang merawat pohonnya di lereng Gunung Kawi.\n\nMelalui skema Direct Trade, kami membeli ceri merah dengan harga premium di atas pasar komoditas, mendampingi proses pascapanen, dan menjamin serapan panen secara konsisten setiap musim. Hubungan saling percaya ini melahirkan biji kopi spesialti dengan standar mutu tertinggi.",
-                    'en' => "At Sanubari, cup quality begins with the well-being of the farming families tending Mount Kawi slopes.\n\nThrough direct trade relationships, we purchase ripe red cherries at significant premiums above commodity prices, assist with controlled fermentation, and guarantee seasonal harvest uptake.",
+                    'id' => "Bagi Alat Kopi Malang, kualitas secangkir kopi berawal dari kesejahteraan petani yang merawat pohonnya di lereng Gunung Kawi.\n\nMelalui skema Direct Trade, kami membeli ceri merah dengan harga premium di atas pasar komoditas, mendampingi proses pascapanen, dan menjamin serapan panen secara konsisten setiap musim. Hubungan saling percaya ini melahirkan biji kopi spesialti dengan standar mutu tertinggi.",
+                    'en' => "At Alat Kopi Malang, cup quality begins with the well-being of the farming families tending Mount Kawi slopes.\n\nThrough direct trade relationships, we purchase ripe red cherries at significant premiums above commodity prices, assist with controlled fermentation, and guarantee seasonal harvest uptake.",
                 ],
                 'cover_image' => 'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=1200&q=80',
                 'author_name' => 'Didik Kurniawan',
@@ -909,8 +909,8 @@ class SanubariImportCommand extends Command
                 'grind_size' => 'Medium-Fine',
                 'water_temp' => '92°C',
                 'description' => [
-                    'id' => 'Resep andalan tim Sanubari untuk mengeluarkan karakter floral dan fruity pada lini Filter Beans kami.',
-                    'en' => 'Sanubari signature recipe to extract vibrant floral and fruity notes from our Filter Beans.',
+                    'id' => 'Resep andalan tim Alat Kopi Malang untuk mengeluarkan karakter floral dan fruity pada lini Filter Beans kami.',
+                    'en' => 'Alat Kopi Malang signature recipe to extract vibrant floral and fruity notes from our Filter Beans.',
                 ],
                 'steps' => [
                     ['step' => 1, 'time' => '0:00 - 0:45', 'text' => 'Blooming 45g air, biarkan mekar merata dan keluarkan gas CO2.'],
@@ -987,17 +987,17 @@ class SanubariImportCommand extends Command
                     'en' => 'Public Cupping: Exploring Mount Kawi Micro-lots',
                 ],
                 'description' => [
-                    'id' => 'Sesi cupping terbuka untuk umum mencicipi 8 varietas dan proses terbaru dari perkebunan mitra kami di Kawi, didampingi head roaster Sanubari.',
+                    'id' => 'Sesi cupping terbuka untuk umum mencicipi 8 varietas dan proses terbaru dari perkebunan mitra kami di Kawi, didampingi head roaster Alat Kopi Malang.',
                     'en' => 'Open cupping session tasting 8 fresh varietals and experimental lots from our partner Kawi farms, hosted by our head roaster.',
                 ],
-                'location' => 'Sanubari Roastery x Alat Kopi Malang',
+                'location' => 'Alat Kopi Malang',
                 'address' => 'Jl. Terusan Kawi No. 12, Klojen, Malang',
                 'fee' => 50000,
                 'capacity' => 16,
                 'starts_at' => now()->addDays(7)->setTime(15, 0),
                 'ends_at' => now()->addDays(7)->setTime(17, 30),
                 'status' => 'open',
-                'whatsapp_register_text' => 'Halo Sanubari, saya ingin mendaftar Public Cupping Gunung Kawi',
+                'whatsapp_register_text' => 'Halo Alat Kopi Malang, saya ingin mendaftar Public Cupping Gunung Kawi',
                 'cover_image' => 'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1200&q=80',
             ],
         ];

@@ -55,7 +55,7 @@ class VideoReelForm
                     ->schema([
                         TextInput::make('video_url')
                             ->label('URL Tautan Instagram Reels')
-                            ->placeholder('Contoh: https://www.instagram.com/reel/C-XYZ123/ atau https://www.instagram.com/sanubari.roastery.mlg/')
+                            ->placeholder('Contoh: https://www.instagram.com/reel/C-XYZ123/ atau https://www.instagram.com/alatkopimalang/')
                             ->helperText('Tautan video Instagram Reels. Pengunjung yang mengklik video akan langsung dibuka ke aplikasi Instagram.')
                             ->required()
                             ->url()

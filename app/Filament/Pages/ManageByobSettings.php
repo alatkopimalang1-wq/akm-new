@@ -100,7 +100,7 @@ class ManageByobSettings extends Page
 
         $this->form->fill([
             'hero_title' => $byobSettings['hero_title'] ?? 'C.Y.B.R: Custom Your Blend Ratio',
-            'hero_description' => $byobSettings['hero_description'] ?? 'Layanan C.Y.B.R (Custom Your Blend Ratio) Kopi Sanubari Roastery Malang. Padukan single origin lereng Gunung Kawi dan Nusantara dengan satu slider rasio persentase presisi.',
+            'hero_description' => $byobSettings['hero_description'] ?? 'Layanan C.Y.B.R (Custom Your Blend Ratio) Kopi Alat Kopi Malang. Padukan single origin lereng Gunung Kawi dan Nusantara dengan satu slider rasio persentase presisi.',
             'hero_image' => ! empty($byobSettings['hero_image']) ? ltrim(preg_replace('#^/?(?:(?:storage|public)/)+#', '', trim($byobSettings['hero_image'])), '/') : null,
             'packshot_image' => ! empty($byobSettings['packshot_image']) ? ltrim(preg_replace('#^/?(?:(?:storage|public)/)+#', '', trim($byobSettings['packshot_image'])), '/') : null,
 
@@ -209,7 +209,7 @@ class ManageByobSettings extends Page
                                 ->image()
                                 ->imageEditor()
                                 ->live()
-                                ->helperText('Upload foto pouch/standing bag C.Y.B.R Sanubari.'),
+                                ->helperText('Upload foto pouch/standing bag C.Y.B.R Alat Kopi Malang.'),
                         ]),
                         Grid::make(2)->schema([
                             TextInput::make('default_ratio')
@@ -403,7 +403,7 @@ class ManageByobSettings extends Page
                 'name' => $data['hero_title'] ?? 'C.Y.B.R - Custom Your Blend Ratio',
                 'series' => 'custom-blend',
                 'tagline' => 'Racik profil sangrai dan paduan biji kopi favorit Anda sendiri',
-                'description' => $data['hero_description'] ?? 'Layanan racik blend kustom Sanubari Roastery...',
+                'description' => $data['hero_description'] ?? 'Layanan racik blend kustom Alat Kopi Malang...',
                 'min_price' => 65000,
                 'max_price' => 275000,
                 'is_featured' => true,

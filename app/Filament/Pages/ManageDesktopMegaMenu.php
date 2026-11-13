@@ -262,7 +262,7 @@ class ManageDesktopMegaMenu extends Page
             '/wholesale' => 'Wholesale & B2B Kemitraan (/wholesale)',
             '/jasa-roasting' => 'Layanan Jasa Roasting (/jasa-roasting)',
             '/kunjungi' => 'Showroom & Slow Bar Malang (/kunjungi)',
-            '/tentang' => 'Tentang Sanubari Roastery (/tentang)',
+            '/tentang' => 'Tentang Alat Kopi Malang (/tentang)',
             '/panduan-seduh' => 'Panduan Seduh Resep Kopi (/panduan-seduh)',
             '/blog' => 'Jurnal & Artikel Kopi (/blog)',
         ];
@@ -414,7 +414,7 @@ class ManageDesktopMegaMenu extends Page
                                                         ->label('Tujuan Tautan URL')
                                                         ->options([
                                                             'custom' => 'Tautan Kustom Sendiri (URL Custom)',
-                                                            'preset' => 'Pilih Halaman Sanubari (Preset)',
+                                                            'preset' => 'Pilih Halaman Alat Kopi Malang (Preset)',
                                                         ])
                                                         ->default('custom')
                                                         ->live(),
@@ -575,7 +575,7 @@ class ManageDesktopMegaMenu extends Page
                 ->color('gray')
                 ->requiresConfirmation()
                 ->modalHeading('Muat Ulang Kategori Default?')
-                ->modalDescription('Tindakan ini akan mengembalikan semua kategori dan subkategori ke data bawaan Sanubari (Otten Style). Data yang belum disimpan akan digantikan.')
+                ->modalDescription('Tindakan ini akan mengembalikan semua kategori dan subkategori ke data bawaan Alat Kopi Malang (Otten Style). Data yang belum disimpan akan digantikan.')
                 ->action('resetToDefault'),
         ];
     }

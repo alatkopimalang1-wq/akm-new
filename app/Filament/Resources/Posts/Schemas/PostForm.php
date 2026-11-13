@@ -61,14 +61,14 @@ class PostForm
                                     'Edukasi' => 'Edukasi Seduh',
                                     'Terroir' => 'Terroir & Petani',
                                     'Roasting' => 'Catatan Roastery',
-                                    'Kabar' => 'Kabar Sanubari',
+                                    'Kabar' => 'Kabar Alat Kopi Malang',
                                 ])
                                 ->default('Journal')
                                 ->searchable()
                                 ->required(),
                             TextInput::make('author_name')
                                 ->label('Nama Penulis')
-                                ->default('Sanubari Roastery')
+                                ->default('Alat Kopi Malang')
                                 ->required(),
                             TextInput::make('read_time_minutes')
                                 ->label('Estimasi Waktu Baca')
@@ -85,7 +85,7 @@ class PostForm
 
                 // SECTION 2: PUBLIKASI KE WEBSITE
                 Section::make('Publikasi ke Website')
-                    ->description('Atur apakah artikel ini langsung ditayangkan di halaman https://sanubari.co.id/blog atau disimpan sebagai draf.')
+                    ->description('Atur apakah artikel ini langsung ditayangkan di halaman https://Alat Kopi Malang.co.id/blog atau disimpan sebagai draf.')
                     ->schema([
                         Grid::make(2)->schema([
                             Toggle::make('is_published')
@@ -240,7 +240,7 @@ class PostForm
                             Select::make('meta.badge_color')
                                 ->label('Warna Badge')
                                 ->options([
-                                    'copper' => 'Copper Gold (Sanubari Theme)',
+                                    'copper' => 'Copper Gold (Alat Kopi Malang Theme)',
                                     'amber' => 'Amber Hangat',
                                     'emerald' => 'Emerald Green (Segar)',
                                     'blue' => 'Blue Sky (Info)',
@@ -468,7 +468,7 @@ class PostForm
                                                     Select::make('color')
                                                         ->label('Warna Tema Aksen')
                                                         ->options([
-                                                            'copper' => 'Copper Gold (Sanubari Theme)',
+                                                            'copper' => 'Copper Gold (Alat Kopi Malang Theme)',
                                                             'amber' => 'Amber Hangat',
                                                             'emerald' => 'Emerald Green (Terroir)',
                                                             'blue' => 'Blue Sky (Info)',
@@ -754,7 +754,7 @@ class PostForm
                         Grid::make(2)->schema([
                             TextInput::make('location')
                                 ->label('Nama Tempat / Lokasi')
-                                ->placeholder('e.g. Sanubari Roastery x Alat Kopi Malang'),
+                                ->placeholder('e.g. Alat Kopi Malang'),
                             TextInput::make('address')
                                 ->label('Alamat Lengkap')
                                 ->placeholder('Jl. Terusan Kawi No. 12, Klojen, Malang'),
@@ -786,7 +786,7 @@ class PostForm
                         ]),
                         TextInput::make('whatsapp_register_text')
                             ->label('Template Pesan WhatsApp Pendaftaran')
-                            ->placeholder('Halo Sanubari, saya ingin mendaftar Public Cupping...')
+                            ->placeholder('Halo Alat Kopi Malang, saya ingin mendaftar Public Cupping...')
                             ->columnSpanFull(),
                     ]),
             ]);

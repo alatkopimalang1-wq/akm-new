@@ -20,12 +20,12 @@ interface NewReleaseIndexProps {
 export default function NewReleaseIndex({
     products = [],
     title = 'New Release',
-    subtitle = 'Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery',
+    subtitle = 'Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang',
     badge = 'NEW RELEASE',
 }: NewReleaseIndexProps) {
     const { settings } = usePage<SanubariSharedProps>().props;
     const effectiveTitle = title || settings?.home_new_release_title || 'New Release';
-    const effectiveSubtitle = subtitle || settings?.home_new_release_subtitle || 'Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery';
+    const effectiveSubtitle = subtitle || settings?.home_new_release_subtitle || 'Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang';
     const effectiveBadge = badge || settings?.home_new_release_badge || 'NEW RELEASE';
 
     const [wishlist, setWishlist] = useState<Record<string | number, boolean>>({});
@@ -45,11 +45,11 @@ export default function NewReleaseIndex({
     };
 
     return (
-        <PublicLayout title={`${effectiveTitle} — Koleksi Terbaru Sanubari Roastery`}>
+        <PublicLayout title={`${effectiveTitle} — Koleksi Terbaru Alat Kopi Malang`}>
             <Head>
                 <meta
                     name="description"
-                    content={`${effectiveTitle}: ${effectiveSubtitle}. Pilihan biji kopi single origin, house blend, dan racikan kopi terbaru langsung dari sangrai Sanubari Roastery.`}
+                    content={`${effectiveTitle}: ${effectiveSubtitle}. Pilihan biji kopi single origin, house blend, dan racikan kopi terbaru langsung dari sangrai Alat Kopi Malang.`}
                 />
             </Head>
 

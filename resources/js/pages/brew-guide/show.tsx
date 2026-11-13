@@ -144,7 +144,7 @@ export default function BrewGuideShow({ guide, otherGuides = [] }: BrewGuideShow
                 <div className="p-6 rounded-2xl bg-sand-200/60 border border-sand-200 space-y-2">
                     <div className="flex items-center gap-2 font-bold text-xs uppercase tracking-wider text-accent-copper">
                         <Lightbulb className="w-4 h-4" />
-                        <span>Tips Roaster Sanubari</span>
+                        <span>Tips Roaster Alat Kopi Malang</span>
                     </div>
                     <p className="text-xs text-brand-700 leading-relaxed">
                         Gunakan air mineral dengan total dissolved solids (TDS) antara 80 - 150 ppm untuk ekstraksi rasa manis maksimal. Jangan lupa bilas kertas filter dengan air panas sebelum memasukkan bubuk kopi.

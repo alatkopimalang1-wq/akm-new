@@ -126,10 +126,10 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
     const [notes, setNotes] = useState('');
 
     const heroBadge = page?.hero_badge || (isEn ? 'On-Site Specialty Coffee Catering' : 'Layanan Coffee Catering On-Site');
-    const heroTitle = page?.hero_title || (isEn ? 'Sanubari Coffee Catering for Your Special Moments' : 'Sanubari Coffee Catering untuk Segala Momen Spesial Anda');
+    const heroTitle = page?.hero_title || (isEn ? 'Alat Kopi Malang Coffee Catering for Your Special Moments' : 'Alat Kopi Malang Coffee Catering untuk Segala Momen Spesial Anda');
     const heroDesc = page?.hero_description || (isEn
         ? 'Bring an authentic specialty coffee bar experience directly to your venue in Malang & East Java. Tailored for Weddings, Corporate Gatherings, Seminars, and Family Celebrations with minimum order of 200 cups and professional on-site barista service.'
-        : 'Hadirkan pengalaman live specialty coffee bar autentik langsung di lokasi acara Anda di Malang & sekitarnya. Cocok untuk Wedding, Acara Kantor, Acara Seminar, maupun Acara Keluarga dengan minimum order 200 cup dan racikan barista profesional Sanubari.');
+        : 'Hadirkan pengalaman live specialty coffee bar autentik langsung di lokasi acara Anda di Malang & sekitarnya. Cocok untuk Wedding, Acara Kantor, Acara Seminar, maupun Acara Keluarga dengan minimum order 200 cup dan racikan barista profesional Alat Kopi Malang.');
 
     const heroImage = page?.hero_image
         ? resolveImageUrl(page.hero_image)
@@ -143,7 +143,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
     const mapsUrl = page?.maps_url || 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7';
 
     const formTitle = page?.form_title || 'Konsultasi Jadwal & Pemesanan Coffee Catering';
-    const formSubtitle = page?.form_subtitle || 'Isi formulir singkat di bawah ini untuk mendapatkan penawaran harga & paket coffee catering Sanubari via WhatsApp.';
+    const formSubtitle = page?.form_subtitle || 'Isi formulir singkat di bawah ini untuk mendapatkan penawaran harga & paket coffee catering Alat Kopi Malang via WhatsApp.';
     const termsNote = page?.terms_note || '*Minimum pemesanan 200 cup. Pemesanan disarankan minimal H-7 acara untuk persiapan jadwal tim barista dan ketersediaan mesin.';
 
     // 4 Core Highlights
@@ -161,7 +161,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
             badge: isEn ? 'Live Brewing' : 'Live Espresso Bar',
             description: isEn
                 ? 'Our professional baristas arrive at your venue with complete commercial equipment, brewing drinks live in front of your guests.'
-                : 'Tim barista profesional Sanubari hadir langsung di lokasi acara dengan setup mobile coffee bar lengkap, menyajikan kopi segar di hadapan tamu.',
+                : 'Tim barista profesional Alat Kopi Malang hadir langsung di lokasi acara dengan setup mobile coffee bar lengkap, menyajikan kopi segar di hadapan tamu.',
             is_highlight: false,
         },
         {
@@ -173,11 +173,11 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
             is_highlight: false,
         },
         {
-            title: isEn ? 'Specialty Fresh Roasted Beans' : 'Biji Kopi Fresh Roast Khas Sanubari',
+            title: isEn ? 'Specialty Fresh Roasted Beans' : 'Biji Kopi Fresh Roast Khas Alat Kopi Malang',
             badge: isEn ? 'Specialty Grade 1' : 'Racikan Khas Roastery',
             description: isEn
                 ? 'Exclusive houseblends and single origins roasted in Malang. Rich, sweet, balanced, and gentle on the stomach for all your guests.'
-                : 'Pilihan espresso blend dan single origin artisan khas Sanubari Roastery. Cita rasa kaya, manis seimbang, dan ramah di lambung para tamu undangan.',
+                : 'Pilihan espresso blend dan single origin artisan khas Alat Kopi Malang. Cita rasa kaya, manis seimbang, dan ramah di lambung para tamu undangan.',
             is_highlight: true,
         },
     ];
@@ -204,7 +204,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
 
     // Gallery configuration
     const galleryTitle = page?.gallery_title || (isEn ? 'On-Site Live Coffee Bar Documentation' : 'Dokumentasi Live Coffee Bar & Catering Acara');
-    const gallerySubtitle = page?.gallery_subtitle || (isEn ? 'Joyful moments of guests enjoying Sanubari craft coffee across weddings, offices, and seminars.' : 'Momen kebahagiaan para tamu menikmati racikan segar Sanubari di berbagai pesta pernikahan, kantor, dan seminar.');
+    const gallerySubtitle = page?.gallery_subtitle || (isEn ? 'Joyful moments of guests enjoying Alat Kopi Malang craft coffee across weddings, offices, and seminars.' : 'Momen kebahagiaan para tamu menikmati racikan segar Alat Kopi Malang di berbagai pesta pernikahan, kantor, dan seminar.');
     const gridDesktop = page?.grid_desktop ?? '3';
     const gridTablet = page?.grid_tablet ?? '2';
     const gridMobile = page?.grid_mobile ?? '1';
@@ -240,7 +240,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
         e.preventDefault();
 
         const message = [
-            'Halo Sanubari Roastery! 👋',
+            'Halo Alat Kopi Malang! 👋',
             'Saya ingin konsultasi & reservasi layanan *Coffee Catering On-Site*:',
             '',
             `👤 *Nama PIC / Penyelenggara*: ${picName || '-'}`,
@@ -263,13 +263,13 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
     return (
         <PublicLayout>
             <Head>
-                <title>{isEn ? 'Coffee Catering for Weddings, Corporate & Seminars — Sanubari Roastery' : 'Coffee Catering On-Site Wedding, Kantor & Seminar — Sanubari Roastery'}</title>
+                <title>{isEn ? 'Coffee Catering for Weddings, Corporate & Seminars — Alat Kopi Malang' : 'Coffee Catering On-Site Wedding, Kantor & Seminar — Alat Kopi Malang'}</title>
                 <meta
                     name="description"
                     content={
                         isEn
-                            ? 'Book live coffee catering by Sanubari Roastery Malang. Minimum order 200 cups with on-site professional barista service for weddings, corporate events, seminars, and family parties.'
-                            : 'Layanan live espresso bar & coffee catering on-site oleh Sanubari Roastery Malang. Minimum order 200 cup dengan pelayanan langsung di tempat acara untuk wedding, acara kantor, seminar, dan acara keluarga.'
+                            ? 'Book live coffee catering by Alat Kopi Malang. Minimum order 200 cups with on-site professional barista service for weddings, corporate events, seminars, and family parties.'
+                            : 'Layanan live espresso bar & coffee catering on-site oleh Alat Kopi Malang. Minimum order 200 cup dengan pelayanan langsung di tempat acara untuk wedding, acara kantor, seminar, dan acara keluarga.'
                     }
                 />
             </Head>
@@ -306,7 +306,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
                             Solusi Kopi Spesialis untuk Acara Spesial Anda
                         </h2>
                         <p className="text-xs sm:text-sm text-brand-600 leading-relaxed">
-                            Kami hadirkan standar slow bar Sanubari langsung ke venue Anda lengkap dengan mesin komersial, bahan baku segar, dan tim barista terampil.
+                            Kami hadirkan standar slow bar Alat Kopi Malang langsung ke venue Anda lengkap dengan mesin komersial, bahan baku segar, dan tim barista terampil.
                         </p>
                     </div>
 
@@ -406,7 +406,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
                                     <div className={`${getAspectClass(imageAspect)} w-full overflow-hidden`}>
                                         <img
                                             src={resolveImageUrl(item.image)}
-                                            alt={item.caption || `Galeri Sanubari Coffee Catering ${idx + 1}`}
+                                            alt={item.caption || `Galeri Alat Kopi Malang Coffee Catering ${idx + 1}`}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                                             loading="lazy"
                                         />
@@ -586,7 +586,7 @@ export default function CoffeeCateringPage({ page }: CoffeeCateringPageProps) {
                         <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
                             <div className="flex items-center gap-2 text-xs text-brand-600">
                                 <Clock className="w-4 h-4 text-accent-copper" />
-                                <span>Konfirmasi Cepat & Konsultasi Langsung dengan Tim Sanubari</span>
+                                <span>Konfirmasi Cepat & Konsultasi Langsung dengan Tim Alat Kopi Malang</span>
                             </div>
                             <button
                                 type="submit"

@@ -131,7 +131,7 @@ export default function ProductModal({
 
                             {/* Description */}
                             <div className="text-sm text-stone-300 leading-relaxed mb-6 space-y-2">
-                                <p>{product.short_description || product.description || 'Peralatan kopi kurasi resmi Sanubari Roastery Malang.'}</p>
+                                <p>{product.short_description || product.description || 'Peralatan kopi kurasi resmi Alat Kopi Malang.'}</p>
                             </div>
 
                             {/* Specifications */}

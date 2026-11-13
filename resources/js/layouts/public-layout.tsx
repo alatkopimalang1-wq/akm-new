@@ -224,12 +224,12 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
     }, [url]);
 
     const waNumber = settings?.whatsapp || '6285121930454';
-    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Sanubari Roastery! Saya ingin bertanya tentang produk kopi.')}`;
+    const waUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Alat Kopi Malang! Saya ingin bertanya tentang produk kopi.')}`;
 
-    const instagramUrl = settings?.instagram || 'https://instagram.com/sanubari.roastery.mlg';
-    const facebookUrl = settings?.facebook || 'https://facebook.com/sanubariroastery';
-    const xUrl = settings?.x_url || settings?.twitter || 'https://x.com/sanubariroastery';
-    const tiktokUrl = settings?.tiktok || 'https://tiktok.com/@sanubariroastery';
+    const instagramUrl = settings?.instagram || 'https://instagram.com/alatkopimalang';
+    const facebookUrl = settings?.facebook || 'https://facebook.com/alatkopimalang';
+    const xUrl = settings?.x_url || settings?.twitter || 'https://x.com/alatkopimalang';
+    const tiktokUrl = settings?.tiktok || 'https://tiktok.com/@alatkopimalang';
 
     // Global keyboard shortcut (Cmd+K for search, ESC for search / mega menu dismiss)
     useEffect(() => {
@@ -317,7 +317,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 </div>
             )}
 
-            {/* Navigation Header - Otten Coffee Style Desktop Mega Menu Navbar (Sanubari Theme Green) */}
+            {/* Navigation Header - Otten Coffee Style Desktop Mega Menu Navbar (Alat Kopi Malang Theme Green) */}
             <header className="sticky top-0 z-50 bg-brand-900 text-white border-b border-brand-800/80 shadow-md transition-shadow [view-transition-name:app-header] font-sans">
                 <div className="relative z-50 max-w-7xl mx-auto px-3.5 sm:px-6 lg:px-8 h-[72px] flex items-center justify-between gap-3 sm:gap-4">
                     {/* Sisi Kiri: Brand Logo & Tombol Menu Kategori */}
@@ -454,7 +454,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                         <div className="space-y-6 pb-20">
                             <div className="flex items-center justify-between pb-3 border-b border-sand-200">
                                 <span className="text-sm font-bold text-accent-copper">
-                                    Menu Navigasi Sanubari
+                                    Menu Navigasi Alat Kopi Malang
                                 </span>
                             </div>
 
@@ -565,7 +565,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                         onClick={() => setMobileMenuOpen(false)}
                                         className="block py-1 text-sm font-medium text-brand-800"
                                     >
-                                        Tentang Sanubari Roastery
+                                        Tentang Alat Kopi Malang
                                     </Link>
                                     <Link
                                         href="/blog"
@@ -651,7 +651,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 target="_blank"
                 rel="noreferrer"
                 className="hidden md:flex fixed bottom-8 right-8 z-30 items-center gap-2 px-5 py-3 rounded-full bg-[#0f766e] text-white hover:bg-[#115e59] active:scale-95 transition-colors group shadow-lg"
-                aria-label="Chat WhatsApp Sanubari"
+                aria-label="Chat WhatsApp Alat Kopi Malang"
             >
                 <MessageCircle className="w-5 h-5 fill-white" />
                 <span className="hidden md:inline font-semibold text-sm">
@@ -743,7 +743,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 const defaultCol2Links = [
                     { label: isEn ? 'About Us' : 'Tentang Kami', url: isEn ? '/en/about' : '/tentang', is_external: false, is_active: true },
                     { label: isEn ? 'Wholesale Partnership' : 'Kemitraan Kedai', url: isEn ? '/en/wholesale' : '/wholesale', is_external: false, is_active: true },
-                    { label: isEn ? 'Sanubari Articles' : 'Artikel Sanubari', url: isEn ? '/en/blog' : '/blog', is_external: false, is_active: true },
+                    { label: isEn ? 'Alat Kopi Malang Articles' : 'Artikel Alat Kopi Malang', url: isEn ? '/en/blog' : '/blog', is_external: false, is_active: true },
                     { label: isEn ? 'Track Order & Payment' : 'Lacak Pesanan & Pembayaran', url: isEn ? '/en/track-order' : '/lacak-pesanan', is_external: false, is_active: true },
                 ];
 
@@ -771,7 +771,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 const showroomName = footerSettings.showroom_name || 'Alat Kopi Malang';
                 const showroomAddress = footerSettings.showroom_address || settings?.address || 'Jl. Terusan Kawi No. 12, Klojen, Malang';
 
-                const col2Title = footerSettings.column_2_title || 'Sanubari Roastery';
+                const col2Title = footerSettings.column_2_title || 'Alat Kopi Malang';
                 const col2Links = (Array.isArray(footerSettings.column_2_links) && footerSettings.column_2_links.length > 0)
                     ? footerSettings.column_2_links.filter((l: any) => l.is_active !== false)
                     : defaultCol2Links;
@@ -787,17 +787,17 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 const col4Wa = footerSettings.whatsapp || settings?.whatsapp || '6285121930454';
                 const col4City = footerSettings.city || 'Kota Malang, Jawa Timur';
                 const col4WaCta = footerSettings.whatsapp_cta_text || 'Pesan via WhatsApp';
-                const col4WaMessage = footerSettings.whatsapp_message || 'Halo Sanubari Roastery! Saya ingin bertanya tentang produk kopi.';
+                const col4WaMessage = footerSettings.whatsapp_message || 'Halo Alat Kopi Malang! Saya ingin bertanya tentang produk kopi.';
                 const col4WaUrl = `https://wa.me/${col4Wa}?text=${encodeURIComponent(col4WaMessage)}`;
 
                 const socialTitle = footerSettings.social_title || 'Dapatkan Update Seputar Kopi';
-                const footerInstagram = footerSettings.instagram || settings?.instagram || 'https://instagram.com/sanubari.roastery.mlg';
-                const footerFacebook = footerSettings.facebook || settings?.facebook || 'https://facebook.com/sanubariroastery';
-                const footerX = footerSettings.x_url || settings?.x_url || settings?.twitter || 'https://x.com/sanubariroastery';
-                const footerTiktok = footerSettings.tiktok || settings?.tiktok || 'https://tiktok.com/@sanubariroastery';
+                const footerInstagram = footerSettings.instagram || settings?.instagram || 'https://instagram.com/alatkopimalang';
+                const footerFacebook = footerSettings.facebook || settings?.facebook || 'https://facebook.com/alatkopimalang';
+                const footerX = footerSettings.x_url || settings?.x_url || settings?.twitter || 'https://x.com/alatkopimalang';
+                const footerTiktok = footerSettings.tiktok || settings?.tiktok || 'https://tiktok.com/@alatkopimalang';
                 const footerYoutube = footerSettings.youtube || '';
 
-                const rawCopyright = footerSettings.copyright_text || '© {year} Sanubari Roastery. Hak Cipta Dilindungi.';
+                const rawCopyright = footerSettings.copyright_text || '© {year} Alat Kopi Malang. Hak Cipta Dilindungi.';
                 const copyrightText = rawCopyright.replace('{year}', String(new Date().getFullYear()));
                 const legalLinks = (Array.isArray(footerSettings.legal_links) && footerSettings.legal_links.length > 0)
                     ? footerSettings.legal_links.filter((l: any) => l.is_active !== false)
@@ -869,7 +869,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                     )}
                                 </div>
 
-                                {/* Col 2: Sanubari Roastery Links */}
+                                {/* Col 2: Alat Kopi Malang Links */}
                                 <div className="space-y-3">
                                     <h4 className="text-sm font-bold text-white">
                                         {col2Title}
@@ -946,8 +946,8 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                             href={footerInstagram}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label="Instagram Sanubari Roastery"
-                                            title="Instagram Sanubari Roastery"
+                                            aria-label="Instagram Alat Kopi Malang"
+                                            title="Instagram Alat Kopi Malang"
                                             className="w-10 h-10 rounded-full bg-brand-900/90 hover:bg-gradient-to-tr hover:from-[#f09433] hover:via-[#dc2743] hover:to-[#bc1888] text-sand-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 border border-brand-800 hover:border-transparent shadow-xs"
                                         >
                                             <InstagramIcon className="w-5 h-5" />
@@ -960,8 +960,8 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                             href={footerFacebook}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label="Facebook Sanubari Roastery"
-                                            title="Facebook Sanubari Roastery"
+                                            aria-label="Facebook Alat Kopi Malang"
+                                            title="Facebook Alat Kopi Malang"
                                             className="w-10 h-10 rounded-full bg-brand-900/90 hover:bg-[#1877F2] text-sand-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 border border-brand-800 hover:border-transparent shadow-xs"
                                         >
                                             <FacebookIcon className="w-5 h-5" />
@@ -974,8 +974,8 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                             href={footerX}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label="X Sanubari Roastery"
-                                            title="X (Twitter) Sanubari Roastery"
+                                            aria-label="X Alat Kopi Malang"
+                                            title="X (Twitter) Alat Kopi Malang"
                                             className="w-10 h-10 rounded-full bg-brand-900/90 hover:bg-black text-sand-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 border border-brand-800 hover:border-white/30 shadow-xs"
                                         >
                                             <XSocialIcon className="w-4 h-4" />
@@ -988,8 +988,8 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                             href={footerTiktok}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label="TikTok Sanubari Roastery"
-                                            title="TikTok Sanubari Roastery"
+                                            aria-label="TikTok Alat Kopi Malang"
+                                            title="TikTok Alat Kopi Malang"
                                             className="w-10 h-10 rounded-full bg-brand-900/90 hover:bg-black text-sand-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 border border-brand-800 hover:border-white/30 shadow-xs"
                                         >
                                             <TikTokIcon className="w-4.5 h-4.5" />
@@ -1002,8 +1002,8 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                             href={footerYoutube}
                                             target="_blank"
                                             rel="noopener noreferrer"
-                                            aria-label="YouTube Sanubari Roastery"
-                                            title="YouTube Sanubari Roastery"
+                                            aria-label="YouTube Alat Kopi Malang"
+                                            title="YouTube Alat Kopi Malang"
                                             className="w-10 h-10 rounded-full bg-brand-900/90 hover:bg-[#FF0000] text-sand-200 hover:text-white flex items-center justify-center transition-all duration-300 hover:scale-110 border border-brand-800 hover:border-transparent shadow-xs"
                                         >
                                             <YouTubeIcon className="w-5 h-5" />

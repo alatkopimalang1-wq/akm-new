@@ -161,12 +161,12 @@ class ProductForm
                         Grid::make(2)->schema([
                             TextInput::make('tokopedia_url')
                                 ->label('Link Tokopedia')
-                                ->placeholder('https://www.tokopedia.com/sanubari/...')
+                                ->placeholder('https://www.tokopedia.com/Alat Kopi Malang/...')
                                 ->url()
                                 ->helperText('Kosongkan untuk memakai link toko resmi Tokopedia default.'),
                             TextInput::make('shopee_url')
                                 ->label('Link Shopee')
-                                ->placeholder('https://shopee.co.id/sanubari/...')
+                                ->placeholder('https://shopee.co.id/Alat Kopi Malang/...')
                                 ->url()
                                 ->helperText('Kosongkan untuk memakai link toko resmi Shopee default.'),
                         ]),
@@ -299,12 +299,12 @@ class ProductForm
                         Grid::make(2)->schema([
                             Textarea::make('description.id')
                                 ->label('Deskripsi Lengkap (Indonesia)')
-                                ->default('Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.')
-                                ->helperText('Deskripsi standar Sanubari: "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL."')
+                                ->default('Alat Kopi Malang Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.')
+                                ->helperText('Deskripsi standar Alat Kopi Malang: "Alat Kopi Malang Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL."')
                                 ->rows(5),
                             Textarea::make('description.en')
                                 ->label('Deskripsi Lengkap (English)')
-                                ->default('Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.')
+                                ->default('Alat Kopi Malang Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.')
                                 ->rows(5),
                         ]),
                     ]),

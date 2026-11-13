@@ -79,7 +79,7 @@ class GoogleAuthController extends Controller
 
         // 3. Create user if still not found
         if (! $user) {
-            $name = $googleUser->getName() ?: ($googleUser->getNickname() ?: 'Pelanggan Sanubari');
+            $name = $googleUser->getName() ?: ($googleUser->getNickname() ?: 'Pelanggan Alat Kopi Malang');
 
             $user = User::create([
                 'name' => $name,

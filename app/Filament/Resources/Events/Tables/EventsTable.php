@@ -35,7 +35,7 @@ class EventsTable
                     })
                     ->sortable(query: fn (Builder $query, string $direction) => $query->orderBy('id', $direction))
                     ->weight('bold')
-                    ->description(fn (Event $record) => $record->category ?? 'Acara Sanubari'),
+                    ->description(fn (Event $record) => $record->category ?? 'Acara Alat Kopi Malang'),
 
                 TextColumn::make('timing')
                     ->label('Jadwal Acara')
@@ -64,7 +64,7 @@ class EventsTable
                     ->badge()
                     ->state(function (Event $record): string {
                         $type = $record->meta['entry_type'] ?? null;
-                        if ($type === 'walk_in' || in_array($record->category, ['Live Music', 'Live DJ', 'Stand Sanubari'])) {
+                        if ($type === 'walk_in' || in_array($record->category, ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang'])) {
                             return 'Tanpa Daftar';
                         }
                         return 'Perlu RSVP';
@@ -128,12 +128,12 @@ class EventsTable
                         if (($data['value'] ?? null) === 'walk_in') {
                             $query->where(function ($q) {
                                 $q->where('meta->entry_type', 'walk_in')
-                                    ->orWhereIn('category', ['Live Music', 'Live DJ', 'Stand Sanubari']);
+                                    ->orWhereIn('category', ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang']);
                             });
                         } elseif (($data['value'] ?? null) === 'rsvp') {
                             $query->where(function ($q) {
                                 $q->where(fn ($sub) => $sub->whereNull('meta->entry_type')->orWhere('meta->entry_type', '!=', 'walk_in'))
-                                    ->whereNotIn('category', ['Live Music', 'Live DJ', 'Stand Sanubari']);
+                                    ->whereNotIn('category', ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang']);
                             });
                         }
                     }),
@@ -151,7 +151,7 @@ class EventsTable
                     ->options([
                         'Live Music' => 'Live Music & Akustik',
                         'Live DJ' => 'Live DJ Session',
-                        'Stand Sanubari' => 'Stand / Pop-up Booth',
+                        'Stand Alat Kopi Malang' => 'Stand / Pop-up Booth',
                         'Cupping Session' => 'Cupping Session',
                         'Workshop Seduh' => 'Workshop Seduh',
                         'Roasting Masterclass' => 'Roasting Masterclass',

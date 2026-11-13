@@ -186,7 +186,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                     <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
                         Katalog Biji Kopi{' '}
                         <span className="font-serif-italic italic font-normal text-accent-copper">
-                            sanubari
+                            Alat Kopi Malang
                         </span>
                     </h1>
                     <p className="text-xs sm:text-sm text-brand-300 max-w-2xl">
@@ -366,7 +366,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                             Tidak ada produk yang cocok dengan pencarian Anda
                         </p>
                         <p className="text-xs text-brand-500 max-w-sm mx-auto">
-                            Coba ubah kata kunci pencarian atau reset filter untuk melihat seluruh koleksi biji kopi Sanubari.
+                            Coba ubah kata kunci pencarian atau reset filter untuk melihat seluruh koleksi biji kopi Alat Kopi Malang.
                         </p>
                         <button
                             type="button"

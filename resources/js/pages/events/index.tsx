@@ -107,18 +107,18 @@ interface EventsIndexProps {
 export default function EventsIndex({ upcoming = [], past = [], page }: EventsIndexProps) {
     const heroBadge = page?.hero_badge || 'Komunitas & Edukasi';
     const heroTitle = page?.hero_title || 'Workshop & Sesi Cupping Terbuka';
-    const heroDesc = page?.hero_description || 'Bergabung bersama komunitas pecinta kopi di Malang dalam sesi cupping kalibrasi rasa, kelas manual brew, dan bincang santai bersama roaster Sanubari.';
+    const heroDesc = page?.hero_description || 'Bergabung bersama komunitas pecinta kopi di Malang dalam sesi cupping kalibrasi rasa, kelas manual brew, dan bincang santai bersama roaster Alat Kopi Malang.';
     const heroImage = page?.hero_image ? resolveImageUrl(page.hero_image) : null;
 
     const upcomingTitle = page?.upcoming_title || 'Acara Mendatang';
-    const emptyMessage = page?.empty_message || 'Belum ada jadwal acara baru saat ini. Ikuti Instagram kami di @sanubari.roastery.mlg untuk kabar workshop terdekat!';
+    const emptyMessage = page?.empty_message || 'Belum ada jadwal acara baru saat ini. Ikuti Instagram kami di @alatkopimalang untuk kabar workshop terdekat!';
     const showPast = page?.show_past ?? true;
     const pastTitle = page?.past_title || 'Arsip & Riwayat Acara Sebelumnya';
     const waNumber = page?.whatsapp_number || '6285121930454';
     const ctaButtonText = page?.cta_button_text || 'Daftar via WhatsApp';
     const ctaNote = page?.cta_note || 'Slot terbatas • Konfirmasi instan';
 
-    const galleryTitle = page?.gallery_title || 'Dokumentasi Acara & Workshop Sanubari';
+    const galleryTitle = page?.gallery_title || 'Dokumentasi Acara & Workshop Alat Kopi Malang';
     const gallerySubtitle = page?.gallery_subtitle || 'Momen kebersamaan komunitas, sesi sensory cupping, dan workshop seduh di Malang.';
     const gridDesktop = page?.grid_desktop ?? '3';
     const gridTablet = page?.grid_tablet ?? '2';
@@ -127,7 +127,7 @@ export default function EventsIndex({ upcoming = [], past = [], page }: EventsIn
     const galleryImages = page?.gallery_images && page.gallery_images.length > 0 ? page.gallery_images : [];
 
     return (
-        <PublicLayout title="Acara & Workshop Cupping Kopi | Sanubari Roastery">
+        <PublicLayout title="Acara & Workshop Cupping Kopi | Alat Kopi Malang">
             {/* Header Hero Section */}
             <div className="relative bg-brand-950 text-white py-14 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-brand-900 text-center space-y-3 overflow-hidden">
                 {heroImage && (
@@ -166,16 +166,16 @@ export default function EventsIndex({ upcoming = [], past = [], page }: EventsIn
                                 const title = typeof ev.title === 'string' ? ev.title : (ev.title as any)?.id || '';
                                 const desc = typeof ev.description === 'string' ? ev.description : (ev.description as any)?.id || '';
                                 const coverImg = ev.cover_image ? resolveImageUrl(ev.cover_image) : null;
-                                const isWalkIn = ev.meta?.entry_type === 'walk_in' || ['Live Music', 'Live DJ', 'Stand Sanubari'].includes(ev.category || '');
+                                const isWalkIn = ev.meta?.entry_type === 'walk_in' || ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang'].includes(ev.category || '');
                                 const isFull = !isWalkIn && ev.status === 'full';
                                 const walkInBadge = ev.meta?.walk_in_badge || 'Bebas Masuk • Langsung Datang';
                                 const actionButtonText = ev.meta?.action_button_text || (isWalkIn ? 'Buka Petunjuk Arah' : ctaButtonText);
-                                const mapsUrl = ev.meta?.maps_url || (ev.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${ev.location || 'Sanubari Roastery'} ${ev.address}`)}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.location || 'Sanubari Roastery Malang')}`);
+                                const mapsUrl = ev.meta?.maps_url || (ev.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${ev.location || 'Alat Kopi Malang'} ${ev.address}`)}` : `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(ev.location || 'Alat Kopi Malang')}`);
 
                                 const dateFormatted = formatEventSchedule(ev);
                                 const defaultMsg = isWalkIn
-                                    ? `Halo Sanubari Roastery! Saya ingin bertanya info mengenai acara: *${title}* (${dateFormatted}). Terima kasih!`
-                                    : `Halo Sanubari Roastery! Saya ingin mendaftar untuk acara: *${title}* (${dateFormatted}). Mohon info ketersediaan slot. Terima kasih!`;
+                                    ? `Halo Alat Kopi Malang! Saya ingin bertanya info mengenai acara: *${title}* (${dateFormatted}). Terima kasih!`
+                                    : `Halo Alat Kopi Malang! Saya ingin mendaftar untuk acara: *${title}* (${dateFormatted}). Mohon info ketersediaan slot. Terima kasih!`;
                                 const waMsg = ev.whatsapp_register_text && ev.whatsapp_register_text.trim().length > 0
                                     ? ev.whatsapp_register_text
                                     : defaultMsg;

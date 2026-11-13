@@ -214,7 +214,7 @@ class ManageCategoryMenu extends Page
                                     Select::make('link_type')
                                         ->label('Tujuan Tautan')
                                         ->options([
-                                            'preset' => 'Pilih Halaman Sanubari',
+                                            'preset' => 'Pilih Halaman Alat Kopi Malang',
                                             'custom' => 'Tautan Kustom Sendiri',
                                         ])
                                         ->default('preset')
@@ -238,8 +238,8 @@ class ManageCategoryMenu extends Page
                                             '/training-barista' => 'Training Barista: Kursus & Sertifikasi (/training-barista)',
                                             '/kunjungi' => 'Showroom: Kunjungan & Slow Bar Malang',
                                             '/shop' => 'Semua Katalog Kopi',
-                                            '/tentang' => 'Tentang Sanubari Roastery (/tentang)',
-                                            '/tentang-kami' => 'Tentang Sanubari Roastery (Legacy)',
+                                            '/tentang' => 'Tentang Alat Kopi Malang (/tentang)',
+                                            '/tentang-kami' => 'Tentang Alat Kopi Malang (Legacy)',
                                         ])
                                         ->default('/shop'),
 

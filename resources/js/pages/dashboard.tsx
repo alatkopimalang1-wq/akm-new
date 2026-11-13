@@ -6,7 +6,7 @@ import { dashboard } from '@/routes';
 export default function Dashboard() {
     return (
         <>
-            <Head title="Dashboard - Sanubari Admin" />
+            <Head title="Dashboard - Alat Kopi Malang Admin" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <div className="grid auto-rows-min gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {/* Video Reels Card */}
@@ -61,7 +61,7 @@ export default function Dashboard() {
                                 Website Publik
                             </h3>
                             <p className="text-xs text-neutral-500 dark:text-neutral-400">
-                                Kunjungi tampilan website publik Sanubari Roastery Malang secara langsung.
+                                Kunjungi tampilan website publik Alat Kopi Malang secara langsung.
                             </p>
                         </div>
                         <div className="pt-4 mt-2 border-t border-neutral-100 dark:border-neutral-800">
@@ -117,7 +117,7 @@ export default function Dashboard() {
                 <div className="relative min-h-[50vh] flex-1 overflow-hidden rounded-2xl border border-sidebar-border/70 p-6 bg-white dark:bg-neutral-900 flex flex-col justify-between">
                     <div className="space-y-2">
                         <h2 className="text-lg font-bold text-neutral-900 dark:text-neutral-100">
-                            Selamat Datang di Panel Admin Sanubari
+                            Selamat Datang di Panel Admin Alat Kopi Malang
                         </h2>
                         <p className="text-xs sm:text-sm text-neutral-500 max-w-xl leading-relaxed">
                             Gunakan menu di sidebar kiri atau kartu pintasan di atas untuk mengelola konten website seperti Video Reels (menambah, mengubah judul & deskripsi, serta menghapus video).

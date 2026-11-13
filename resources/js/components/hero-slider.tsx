@@ -128,7 +128,7 @@ export const HeroSlider: React.FC<HeroSliderProps> = ({
     const resolveImage = (slide: HeroSlide) => {
         let src = slide.bgImage || slide.image || '';
         if (!src) return '';
-        if (src.startsWith('http://') && (src.includes('sanubari.test') || src.includes('localhost'))) {
+        if (src.startsWith('http://') && (src.includes('Alat Kopi Malang.test') || src.includes('localhost'))) {
             src = src.replace(/^http:\/\/[^/]+/, '');
         } else if (src.startsWith('http://')) {
             src = src.replace(/^http:\/\//, 'https://');

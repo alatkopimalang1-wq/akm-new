@@ -138,7 +138,7 @@ export default function RoastingPage({ page }: RoastingPageProps) {
     ];
 
     const galleryTitle = page?.gallery_title || 'Galeri Fasilitas & Proses Sangrai';
-    const gallerySubtitle = page?.gallery_subtitle || 'Dokumentasi studio sangrai, mesin roasting, dan quality control cupping di Sanubari Roastery Malang.';
+    const gallerySubtitle = page?.gallery_subtitle || 'Dokumentasi studio sangrai, mesin roasting, dan quality control cupping di Alat Kopi Malang.';
     const gridDesktop = page?.grid_desktop ?? '3';
     const gridTablet = page?.grid_tablet ?? '2';
     const gridMobile = page?.grid_mobile ?? '1';
@@ -185,7 +185,7 @@ export default function RoastingPage({ page }: RoastingPageProps) {
 
     const handleWhatsAppSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const msg = `Halo Tim Roaster Sanubari!\nSaya tertarik dengan Layanan Jasa Roasting Kopi:\n\n` +
+        const msg = `Halo Tim Roaster Alat Kopi Malang!\nSaya tertarik dengan Layanan Jasa Roasting Kopi:\n\n` +
             `• Nama PIC: ${clientName}\n` +
             `• Nama Brand/Kedai: ${brandName || '-'}\n` +
             `• No. WhatsApp: ${contactPhone}\n` +
@@ -198,7 +198,7 @@ export default function RoastingPage({ page }: RoastingPageProps) {
     };
 
     return (
-        <PublicLayout title="Jasa Roasting Kopi Presisi & Maklon | Sanubari Roastery">
+        <PublicLayout title="Jasa Roasting Kopi Presisi & Maklon | Alat Kopi Malang">
             {/* Header Hero Section */}
             <div className="bg-brand-950 text-white py-12 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-brand-900/60">
                 <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4 text-center">
@@ -431,7 +431,7 @@ export default function RoastingPage({ page }: RoastingPageProps) {
                                 type="text"
                                 value={coffeeOrigin}
                                 onChange={(e) => setCoffeeOrigin(e.target.value)}
-                                placeholder="Contoh: Biji Sendiri / Pasokan Sanubari"
+                                placeholder="Contoh: Biji Sendiri / Pasokan Alat Kopi Malang"
                                 className="w-full h-8.5 sm:h-10 px-2.5 sm:px-3 rounded-lg sm:rounded-xl border border-brand-200 bg-white text-xs sm:text-sm text-brand-950 focus:border-brand-800 outline-none"
                             />
                         </div>

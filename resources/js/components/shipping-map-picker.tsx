@@ -31,7 +31,7 @@ function calcDistanceKm(lat1: number, lon1: number, lat2: number, lon2: number):
 export function ShippingMapPicker({
     originLat = -7.9327,
     originLng = 112.6037,
-    originName = 'Sanubari Roastery, Tlogomas',
+    originName = 'Alat Kopi Malang, Tlogomas',
     latitude,
     longitude,
     onChange,

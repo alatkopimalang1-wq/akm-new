@@ -437,7 +437,7 @@ export default function Welcome({
         return defaultCategoryMenuItems;
     }, [settings?.home_category_menu_items, defaultCategoryMenuItems]);
 
-    // Sanubari Place / Space Experiences (Showroom, Slow Bar, Roastery, Cupping)
+    // Alat Kopi Malang Place / Space Experiences (Showroom, Slow Bar, Roastery, Cupping)
     const defaultPlaceItems = [
         {
             id: 'place-slowbar',
@@ -453,7 +453,7 @@ export default function Welcome({
         {
             id: 'place-showroom',
             badge: 'Alat Kopi Malang',
-            subBadge: 'Gedung Sanubari Lt. 1',
+            subBadge: 'Gedung Alat Kopi Malang Lt. 1',
             title: 'Equipment & Commercial Espresso Showroom',
             desc: 'Kolaborasi dengan Alat Kopi Malang: coba langsung mesin espresso komersial, grinder Mahlkönig/Eureka, dripper, dan timbangan digital.',
             href: '/kunjungi',
@@ -775,7 +775,7 @@ export default function Welcome({
                 </section>
 
                 {/* ============================================================== */}
-                {/* 2.5 RUANG & PENGALAMAN SANUBARI (Place Slider above Laris Manis)*/}
+                {/* 2.5 RUANG & PENGALAMAN ALAT KOPI MALANG (Place Slider above Laris Manis)*/}
                 {/* Editorial cards showcasing Roastery, Showroom, Slow Bar, etc.  */}
                 {/* ============================================================== */}
                 <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden">
@@ -787,7 +787,7 @@ export default function Welcome({
                                 </span>
                             </div>
                             <h2 className="text-xl sm:text-2xl font-bold text-brand-950">
-                                {settings?.home_place_title || 'Roastery & Showroom Sanubari'}
+                                {settings?.home_place_title || 'Roastery & Showroom Alat Kopi Malang'}
                             </h2>
                             <p className="text-xs sm:text-sm text-brand-700 mt-0.5">
                                 {settings?.home_place_subtitle || 'Kunjungi slow bar, uji coba mesin espresso, dan rasakan atmosfer sangrai lereng Kawi di Kota Malang'}
@@ -903,7 +903,7 @@ export default function Welcome({
                 />
 
                 {/* ============================================================== */}
-                {/* 2.8 PROMO BANNER ANIMASI: SANUBARI COFFEE CATERING (DI ATAS LARIS MANIS) */}
+                {/* 2.8 PROMO BANNER ANIMASI: ALAT KOPI MALANG COFFEE CATERING (DI ATAS LARIS MANIS) */}
                 {/* Gambar animasi dengan judul & deskripsi floating mengarah ke   */}
                 {/* halaman coffee catering (/coffee-catering)                     */}
                 {/* ============================================================== */}
@@ -921,7 +921,7 @@ export default function Welcome({
                                         settings?.home_catering_banner_image ||
                                         'https://images.unsplash.com/photo-1511920170033-f8396924c348?auto=format&fit=crop&w=1600&q=80'
                                     }
-                                    alt={settings?.home_catering_banner_title || 'Sanubari Coffee Catering'}
+                                    alt={settings?.home_catering_banner_title || 'Alat Kopi Malang Coffee Catering'}
                                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                                     loading="lazy"
                                     onError={(e) => {
@@ -947,7 +947,7 @@ export default function Welcome({
                             {settings?.home_laris_title || 'Laris Manis'}
                         </h2>
                         <p className="text-sm text-brand-700">
-                            {settings?.home_laris_subtitle || 'Koleksi biji kopi paling laris dan sering diseduh di Sanubari yang mungkin kamu sukai'}
+                            {settings?.home_laris_subtitle || 'Koleksi biji kopi paling laris dan sering diseduh di Alat Kopi Malang yang mungkin kamu sukai'}
                         </p>
                     </div>
 
@@ -986,13 +986,13 @@ export default function Welcome({
                         >
                             <img
                                 src={resolveCategoryImageUrl(settings?.home_laris_2_image) || 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=1200&q=80'}
-                                alt={settings?.home_laris_2_title || 'Sanubari Signature Houseblend'}
+                                alt={settings?.home_laris_2_title || 'Alat Kopi Malang Signature Houseblend'}
                                 className="w-full h-full object-cover opacity-85 group-hover:scale-105 transition-transform duration-500"
                                 loading="lazy"
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-brand-950/85 via-brand-950/30 to-transparent flex flex-col justify-end items-center p-4 sm:p-6 text-center">
                                 <span className="px-4 py-2.5 rounded-xl bg-white text-brand-950 text-xs sm:text-sm font-extrabold shadow-md group-hover:bg-accent-copper group-hover:text-white transition-colors">
-                                    {settings?.home_laris_2_title || 'Sanubari Signature Houseblend Espresso'}
+                                    {settings?.home_laris_2_title || 'Alat Kopi Malang Signature Houseblend Espresso'}
                                 </span>
                                 {settings?.home_laris_2_subtitle && (
                                     <span className="text-sand-200 text-xs mt-1.5 font-medium line-clamp-1">
@@ -1174,7 +1174,7 @@ export default function Welcome({
                                         settings?.home_booking_banner_image ||
                                         'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=1600&q=80'
                                     }
-                                    alt={settings?.home_booking_banner_title || 'Booking Tempat di Sanubari Roastery'}
+                                    alt={settings?.home_booking_banner_title || 'Booking Tempat di Alat Kopi Malang'}
                                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                                     loading="lazy"
                                     onError={(e) => {
@@ -1222,7 +1222,7 @@ export default function Welcome({
                                         settings?.home_brew_banner_image ||
                                         'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1600&q=80'
                                     }
-                                    alt={settings?.home_brew_banner_title || 'Resep Seduh Kopi Sanubari'}
+                                    alt={settings?.home_brew_banner_title || 'Resep Seduh Kopi Alat Kopi Malang'}
                                     className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                                     loading="lazy"
                                     onError={(e) => {
@@ -1244,16 +1244,16 @@ export default function Welcome({
                 {/* ============================================================== */}
                 <LazyCoverflowSlider
                     title={settings?.home_partners_title || 'Disajikan di Kedai Pilihan'}
-                    subtitle={settings?.home_partners_subtitle || 'Temukan seduhan biji kopi sangrai Sanubari di berbagai kedai kopi dan coffee space terkurasi di Malang'}
+                    subtitle={settings?.home_partners_subtitle || 'Temukan seduhan biji kopi sangrai Alat Kopi Malang di berbagai kedai kopi dan coffee space terkurasi di Malang'}
                     slides={Array.isArray(settings?.home_partners_slides) && settings.home_partners_slides.length > 0 ? settings.home_partners_slides : undefined}
                 />
 
                 {/* ============================================================== */}
-                {/* 5.2 VIDEO REELS: SANUBARI REELS VIDEOS                         */}
+                {/* 5.2 VIDEO REELS: ALAT KOPI MALANG REELS VIDEOS                         */}
                 {/* Vertical video reels card slider with tagged products & modal   */}
                 {/* ============================================================== */}
                 <LazyVideoReelsSlider
-                    title={settings?.home_reels_title || 'Sanubari Reels Videos'}
+                    title={settings?.home_reels_title || 'Alat Kopi Malang Reels Videos'}
                     subtitle={settings?.home_reels_subtitle || 'Tonton tutorial seduh, bedah mesin & tips kopi langsung di Instagram Reels'}
                     viewAllText={settings?.home_reels_view_all_text || 'Lihat Semua'}
                     viewAllHref={settings?.home_reels_view_all_url || '/video'}

@@ -42,22 +42,22 @@ class ManageFooterSettings extends Page
     {
         return [
             // Kolom 1: Brand Info & Showroom
-            'brand_title' => 'Sanubari Roastery',
+            'brand_title' => 'Alat Kopi Malang',
             'brand_tagline' => 'Close to Every Brew',
             'brand_description' => 'Roastery kopi artisan yang berfokus pada eksplorasi biji kopi Gunung Kawi, proses klasik, eksperimental, dan co-fermentasi presisi di Malang, Jawa Timur.',
             'brand_logo' => null,
             'showroom_label' => 'Roastery & Showroom:',
-            'showroom_name' => 'Sanubari x Alat Kopi Malang',
+            'showroom_name' => 'Alat Kopi Malang',
             'showroom_address' => 'Jl. Terusan Kawi No. 12, Klojen, Malang',
 
             // Kolom 2: Menu Tautan 1
-            'column_2_title' => 'Sanubari Roastery',
+            'column_2_title' => 'Alat Kopi Malang',
             'column_2_links' => [
                 ['label' => 'Tentang Kami', 'url' => '/tentang', 'is_external' => false, 'is_active' => true],
                 ['label' => 'Kemitraan Kedai', 'url' => '/wholesale', 'is_external' => false, 'is_active' => true],
                 ['label' => 'Jasa Roasting Kopi', 'url' => '/jasa-roasting', 'is_external' => false, 'is_active' => true],
                 ['label' => 'Training Barista', 'url' => '/training-barista', 'is_external' => false, 'is_active' => true],
-                ['label' => 'Artikel Sanubari', 'url' => '/blog', 'is_external' => false, 'is_active' => true],
+                ['label' => 'Artikel Alat Kopi Malang', 'url' => '/blog', 'is_external' => false, 'is_active' => true],
                 ['label' => 'Lacak Pesanan & Pembayaran', 'url' => '/lacak-pesanan', 'is_external' => false, 'is_active' => true],
             ],
 
@@ -78,18 +78,18 @@ class ManageFooterSettings extends Page
             'whatsapp' => '6285121930454',
             'city' => 'Kota Malang, Jawa Timur',
             'whatsapp_cta_text' => 'Pesan via WhatsApp',
-            'whatsapp_message' => 'Halo Sanubari Roastery! Saya ingin bertanya tentang produk kopi.',
+            'whatsapp_message' => 'Halo Alat Kopi Malang! Saya ingin bertanya tentang produk kopi.',
 
             // Sosial Media
             'social_title' => 'Dapatkan Update Seputar Kopi',
-            'instagram' => 'https://instagram.com/sanubari.roastery.mlg',
-            'facebook' => 'https://facebook.com/sanubariroastery',
-            'x_url' => 'https://x.com/sanubariroastery',
-            'tiktok' => 'https://tiktok.com/@sanubariroastery',
+            'instagram' => 'https://instagram.com/alatkopimalang',
+            'facebook' => 'https://facebook.com/alatkopimalang',
+            'x_url' => 'https://x.com/alatkopimalang',
+            'tiktok' => 'https://tiktok.com/@alatkopimalang',
             'youtube' => '',
 
             // Bottom Bar / Copyright & Legal
-            'copyright_text' => '© {year} Sanubari Roastery. Hak Cipta Dilindungi.',
+            'copyright_text' => '© {year} Alat Kopi Malang. Hak Cipta Dilindungi.',
             'legal_links' => [
                 ['label' => 'Kebijakan Privasi', 'url' => '/legal/privacy', 'is_active' => true],
                 ['label' => 'Syarat & Ketentuan', 'url' => '/legal/terms', 'is_active' => true],
@@ -172,7 +172,7 @@ class ManageFooterSettings extends Page
                             TextInput::make('brand_title')
                                 ->label('Nama Brand Roastery')
                                 ->required()
-                                ->placeholder('Sanubari Roastery'),
+                                ->placeholder('Alat Kopi Malang'),
                             TextInput::make('brand_tagline')
                                 ->label('Slogan / Tagline')
                                 ->placeholder('Close to Every Brew'),
@@ -182,7 +182,7 @@ class ManageFooterSettings extends Page
                                 ->directory('footer')
                                 ->image()
                                 ->imagePreviewHeight('50')
-                                ->helperText('Jika dikosongkan, menggunakan logo standar bulat Sanubari.'),
+                                ->helperText('Jika dikosongkan, menggunakan logo standar bulat Alat Kopi Malang.'),
                         ]),
                         Textarea::make('brand_description')
                             ->label('Deskripsi Singkat Roastery')
@@ -195,7 +195,7 @@ class ManageFooterSettings extends Page
                                 ->default('Roastery & Showroom:'),
                             TextInput::make('showroom_name')
                                 ->label('Nama Tempat / Kolaborasi')
-                                ->placeholder('Sanubari x Alat Kopi Malang'),
+                                ->placeholder('Alat Kopi Malang'),
                             TextInput::make('showroom_address')
                                 ->label('Alamat Roastery & Showroom')
                                 ->placeholder('Jl. Terusan Kawi No. 12, Klojen, Malang')
@@ -212,7 +212,7 @@ class ManageFooterSettings extends Page
                         TextInput::make('column_2_title')
                             ->label('Judul Kolom 2')
                             ->required()
-                            ->default('Sanubari Roastery'),
+                            ->default('Alat Kopi Malang'),
                         Repeater::make('column_2_links')
                             ->label('Daftar Tautan Kolom 2')
                             ->schema([
@@ -320,13 +320,13 @@ class ManageFooterSettings extends Page
                                 ->placeholder('Pesan via WhatsApp'),
                             TextInput::make('whatsapp_message')
                                 ->label('Pesan Awal Saat Chat WA Diklik')
-                                ->placeholder('Halo Sanubari Roastery! Saya ingin bertanya tentang produk kopi.'),
+                                ->placeholder('Halo Alat Kopi Malang! Saya ingin bertanya tentang produk kopi.'),
                         ]),
                     ]),
 
                 // SECTION 5: SOSIAL MEDIA & UPDATE
                 Section::make('Bagian Media Sosial & Komunitas')
-                    ->description('Tautkan akun Instagram, Facebook, X (Twitter), TikTok, dan YouTube Sanubari Roastery.')
+                    ->description('Tautkan akun Instagram, Facebook, X (Twitter), TikTok, dan YouTube Alat Kopi Malang.')
                     ->icon(Heroicon::Share)
                     ->collapsible()
                     ->schema([
@@ -337,21 +337,21 @@ class ManageFooterSettings extends Page
                         Grid::make(3)->schema([
                             TextInput::make('instagram')
                                 ->label('Instagram URL')
-                                ->placeholder('https://instagram.com/sanubari.roastery.mlg'),
+                                ->placeholder('https://instagram.com/alatkopimalang'),
                             TextInput::make('facebook')
                                 ->label('Facebook URL')
-                                ->placeholder('https://facebook.com/sanubariroastery'),
+                                ->placeholder('https://facebook.com/alatkopimalang'),
                             TextInput::make('x_url')
                                 ->label('X (Twitter) URL')
-                                ->placeholder('https://x.com/sanubariroastery'),
+                                ->placeholder('https://x.com/alatkopimalang'),
                         ]),
                         Grid::make(2)->schema([
                             TextInput::make('tiktok')
                                 ->label('TikTok URL')
-                                ->placeholder('https://tiktok.com/@sanubariroastery'),
+                                ->placeholder('https://tiktok.com/@alatkopimalang'),
                             TextInput::make('youtube')
                                 ->label('YouTube URL (Opsional)')
-                                ->placeholder('https://youtube.com/@sanubariroastery'),
+                                ->placeholder('https://youtube.com/@alatkopimalang'),
                         ]),
                     ]),
 
@@ -364,7 +364,7 @@ class ManageFooterSettings extends Page
                         TextInput::make('copyright_text')
                             ->label('Teks Hak Cipta (Gunakan {year} untuk tahun otomatis)')
                             ->required()
-                            ->default('© {year} Sanubari Roastery. Hak Cipta Dilindungi.'),
+                            ->default('© {year} Alat Kopi Malang. Hak Cipta Dilindungi.'),
                         Repeater::make('legal_links')
                             ->label('Daftar Tautan Hukum / Legal')
                             ->schema([

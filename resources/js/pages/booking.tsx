@@ -125,11 +125,11 @@ export default function BookingPage({ page }: BookingPageProps) {
     const [needSoundSystem, setNeedSoundSystem] = useState(true);
     const [notes, setNotes] = useState('');
 
-    const heroBadge = page?.hero_badge || (isEn ? 'Venue & Space Booking' : 'Reservasi & Sewa Tempat di Sanubari');
-    const heroTitle = page?.hero_title || (isEn ? 'Space Booking for Events & Communities at Sanubari Roastery' : 'Booking Tempat Nyaman untuk Acara & Komunitas di Sanubari Roastery');
+    const heroBadge = page?.hero_badge || (isEn ? 'Venue & Space Booking' : 'Reservasi & Sewa Tempat di Alat Kopi Malang');
+    const heroTitle = page?.hero_title || (isEn ? 'Space Booking for Events & Communities at Alat Kopi Malang' : 'Booking Tempat Nyaman untuk Acara & Komunitas di Alat Kopi Malang');
     const heroDesc = page?.hero_description || (isEn
         ? 'A cozy, aesthetic, and welcoming space in Malang for workshops, meetings, gatherings, or private events. No venue rental fee — simply enjoy our coffee and menu with a friendly minimum spend.'
-        : 'Ruang berkumpul yang hangat, estetis, dan santai untuk workshop, meeting, gathering komunitas, atau acara spesial Anda di Malang. Tanpa biaya sewa ruangan terpisah — cukup dengan minimum spent ngopi & menu lezat di Sanubari Roastery.');
+        : 'Ruang berkumpul yang hangat, estetis, dan santai untuk workshop, meeting, gathering komunitas, atau acara spesial Anda di Malang. Tanpa biaya sewa ruangan terpisah — cukup dengan minimum spent ngopi & menu lezat di Alat Kopi Malang.');
 
     const heroImage = page?.hero_image
         ? resolveImageUrl(page.hero_image)
@@ -143,7 +143,7 @@ export default function BookingPage({ page }: BookingPageProps) {
     const mapsUrl = page?.maps_url || 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7';
 
     const formTitle = page?.form_title || 'Konsultasi Jadwal & Reservasi Tempat';
-    const formSubtitle = page?.form_subtitle || 'Isi detail rencana acara Anda di bawah ini untuk langsung terhubung ke WhatsApp reservasi Sanubari Roastery.';
+    const formSubtitle = page?.form_subtitle || 'Isi detail rencana acara Anda di bawah ini untuk langsung terhubung ke WhatsApp reservasi Alat Kopi Malang.';
 
     // The 4 Core Benefits Requested by the User
     const defaultBenefits: BookingBenefit[] = [
@@ -175,11 +175,11 @@ export default function BookingPage({ page }: BookingPageProps) {
             is_highlight: false,
         },
         {
-            title: isEn ? 'Simple Minimum Spend Only' : 'Cukup dengan Minimum Spent Ngopi di Sanubari',
+            title: isEn ? 'Simple Minimum Spend Only' : 'Cukup dengan Minimum Spent Ngopi di Alat Kopi Malang',
             badge: isEn ? 'Zero Venue Fee' : 'Bebas Sewa Ruang',
             description: isEn
                 ? 'Zero room rental charge. Your entire event budget goes directly toward handcrafted specialty coffees, fresh beverages, and delicious foods.'
-                : 'Tanpa biaya sewa tempat terpisah (Rp 0 room fee)! Seluruh anggaran acara Anda dialokasikan langsung untuk menikmati pesanan kopi artisan, minuman segar, dan makanan di Sanubari.',
+                : 'Tanpa biaya sewa tempat terpisah (Rp 0 room fee)! Seluruh anggaran acara Anda dialokasikan langsung untuk menikmati pesanan kopi artisan, minuman segar, dan makanan di Alat Kopi Malang.',
             icon: 'coffee',
             is_highlight: true,
         },
@@ -213,7 +213,7 @@ export default function BookingPage({ page }: BookingPageProps) {
     const facilities = (page?.facilities && page.facilities.length > 0) ? page.facilities : defaultFacilities;
 
     const galleryTitle = page?.gallery_title || (isEn ? 'Space & Event Documentation' : 'Dokumentasi Suasana Ruangan & Acara');
-    const gallerySubtitle = page?.gallery_subtitle || (isEn ? 'Cozy moments of workshops, meetings, and community gatherings at Sanubari Roastery Malang.' : 'Momen kehangatan workshop, meeting, dan gathering komunitas di Sanubari Roastery Malang.');
+    const gallerySubtitle = page?.gallery_subtitle || (isEn ? 'Cozy moments of workshops, meetings, and community gatherings at Alat Kopi Malang.' : 'Momen kehangatan workshop, meeting, dan gathering komunitas di Alat Kopi Malang.');
     const gridDesktop = page?.grid_desktop ?? '3';
     const gridTablet = page?.grid_tablet ?? '2';
     const gridMobile = page?.grid_mobile ?? '1';
@@ -259,7 +259,7 @@ export default function BookingPage({ page }: BookingPageProps) {
         e.preventDefault();
 
         const msg =
-            `Halo Tim Sanubari Roastery!\n` +
+            `Halo Tim Alat Kopi Malang!\n` +
             `Saya tertarik untuk booking tempat acara:\n\n` +
             `• Nama PIC: ${picName || '-'}\n` +
             (organizationName ? `• Komunitas / Brand: ${organizationName}\n` : '') +
@@ -271,21 +271,21 @@ export default function BookingPage({ page }: BookingPageProps) {
             `• Kebutuhan Proyektor: ${needProjector ? 'Ya (Free)' : 'Tidak'}\n` +
             `• Kebutuhan Sound System: ${needSoundSystem ? 'Ya (Free)' : 'Tidak'}\n` +
             (notes ? `• Catatan / Permintaan: ${notes}\n\n` : `\n`) +
-            `Mohon info ketersediaan tanggal dan rekomendasi menu minimum spent di Sanubari. Terima kasih!`;
+            `Mohon info ketersediaan tanggal dan rekomendasi menu minimum spent di Alat Kopi Malang. Terima kasih!`;
 
         window.open(`https://wa.me/${cleanWhatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
     return (
-        <PublicLayout title={isEn ? 'Venue & Space Booking — Sanubari Roastery' : 'Booking Tempat Acara & Komunitas | Sanubari Roastery'}>
+        <PublicLayout title={isEn ? 'Venue & Space Booking — Alat Kopi Malang' : 'Booking Tempat Acara & Komunitas | Alat Kopi Malang'}>
             <Head>
-                <title>{isEn ? 'Venue & Space Booking — Sanubari Roastery' : 'Booking Tempat Acara & Komunitas — Sanubari Roastery'}</title>
+                <title>{isEn ? 'Venue & Space Booking — Alat Kopi Malang' : 'Booking Tempat Acara & Komunitas — Alat Kopi Malang'}</title>
                 <meta
                     name="description"
                     content={
                         isEn
-                            ? 'Book event space at Sanubari Roastery Malang. Capacity 50+ people, free projector, free sound system, with minimum spend only.'
-                            : 'Booking tempat acara di Sanubari Roastery Malang. Muat hingga lebih dari 50 orang, Free Proyektor, Free Sound System, cukup dengan minimum spent ngopi di Sanubari.'
+                            ? 'Book event space at Alat Kopi Malang. Capacity 50+ people, free projector, free sound system, with minimum spend only.'
+                            : 'Booking tempat acara di Alat Kopi Malang. Muat hingga lebih dari 50 orang, Free Proyektor, Free Sound System, cukup dengan minimum spent ngopi di Alat Kopi Malang.'
                     }
                 />
             </Head>
@@ -428,7 +428,7 @@ export default function BookingPage({ page }: BookingPageProps) {
                                     <div className={`${getAspectClass(imageAspect)} w-full overflow-hidden`}>
                                         <img
                                             src={resolveImageUrl(item.image)}
-                                            alt={item.caption || `Galeri Sanubari Roastery ${idx + 1}`}
+                                            alt={item.caption || `Galeri Alat Kopi Malang ${idx + 1}`}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
                                             loading="lazy"
                                         />
@@ -610,12 +610,12 @@ export default function BookingPage({ page }: BookingPageProps) {
                             className="w-full py-2.5 sm:py-3 px-4 rounded-xl bg-[#128C7E] hover:bg-[#075E54] text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-xs transition-colors cursor-pointer"
                         >
                             <MessageCircle className="w-4 h-4" />
-                            <span>Kirim Reservasi ke WhatsApp Sanubari</span>
+                            <span>Kirim Reservasi ke WhatsApp Alat Kopi Malang</span>
                             <ArrowRight className="w-4 h-4" />
                         </button>
 
                         <p className="text-[10px] sm:text-[11px] text-center text-brand-500">
-                            Pesan WhatsApp terformat otomatis akan langsung terhubung ke admin Sanubari Roastery.
+                            Pesan WhatsApp terformat otomatis akan langsung terhubung ke admin Alat Kopi Malang.
                         </p>
                     </form>
                 </div>
@@ -629,7 +629,7 @@ export default function BookingPage({ page }: BookingPageProps) {
                                 <span>Lokasi Kami di Malang</span>
                             </div>
                             <h3 className="text-xl sm:text-2xl font-black text-white">
-                                Sanubari Roastery Malang
+                                Alat Kopi Malang
                             </h3>
                             <p className="text-xs sm:text-sm text-brand-300 max-w-lg leading-relaxed">
                                 {address}

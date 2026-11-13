@@ -59,7 +59,7 @@ class ManageEditorialSection extends Page
                 'badge' => 'PANDUAN SEDUH',
                 'subBadge' => '2:45 menit',
                 'title' => 'V60 Pour Over — Bersih, Terang & Manis',
-                'excerpt' => 'Resep andalan tim Sanubari untuk mengeluarkan karakter floral dan fruity pada lini Filter Beans.',
+                'excerpt' => 'Resep andalan tim Alat Kopi Malang untuk mengeluarkan karakter floral dan fruity pada lini Filter Beans.',
                 'cover_url' => 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
                 'coverImage' => null,
                 'href' => '/panduan-seduh',

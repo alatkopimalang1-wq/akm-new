@@ -20,7 +20,7 @@ type Props = {
 export default function Login({ status, canResetPassword }: Props) {
     return (
         <>
-            <Head title="Masuk Akun — Sanubari Roastery" />
+            <Head title="Masuk Akun — Alat Kopi Malang" />
 
             <PasskeyVerify />
 

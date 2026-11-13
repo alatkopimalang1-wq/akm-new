@@ -7,7 +7,7 @@ interface CoffeeBeanIconProps {
 
 export const CoffeeBeanIcon: React.FC<CoffeeBeanIconProps> = ({
     className = 'w-12 h-12',
-    alt = 'Biji Kopi Sanubari',
+    alt = 'Biji Kopi Alat Kopi Malang',
 }) => {
     return (
         <img

@@ -54,8 +54,8 @@ class ManagePartnerCafes extends Page
                 'open_in_new_tab' => true,
             ],
             [
-                'id' => 'sanubari-roastery',
-                'title' => 'Sanubari Roasting Studio',
+                'id' => 'Alat Kopi Malang-roastery',
+                'title' => 'Alat Kopi Malang Roasting Studio',
                 'city' => 'MALANG',
                 'image' => 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80',
                 'href' => '/kunjungi',
@@ -134,7 +134,7 @@ class ManagePartnerCafes extends Page
 
         $this->form->fill([
             'home_partners_title' => $settings['home_partners_title'] ?? 'Disajikan di Kedai Pilihan',
-            'home_partners_subtitle' => $settings['home_partners_subtitle'] ?? 'Temukan seduhan biji kopi sangrai Sanubari di berbagai kedai kopi dan coffee space terkurasi di Malang',
+            'home_partners_subtitle' => $settings['home_partners_subtitle'] ?? 'Temukan seduhan biji kopi sangrai Alat Kopi Malang di berbagai kedai kopi dan coffee space terkurasi di Malang',
             'home_partners_slides' => $sanitizedSlides,
         ]);
     }
@@ -172,7 +172,7 @@ class ManagePartnerCafes extends Page
                                 ->required(),
                             Textarea::make('home_partners_subtitle')
                                 ->label('Subjudul / Deskripsi')
-                                ->default('Temukan seduhan biji kopi sangrai Sanubari di berbagai kedai kopi dan coffee space terkurasi di Malang')
+                                ->default('Temukan seduhan biji kopi sangrai Alat Kopi Malang di berbagai kedai kopi dan coffee space terkurasi di Malang')
                                 ->rows(2)
                                 ->required(),
                         ]),

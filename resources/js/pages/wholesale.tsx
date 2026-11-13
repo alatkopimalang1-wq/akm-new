@@ -125,12 +125,12 @@ export default function WholesalePage({ page }: WholesalePageProps) {
 
     const handleWhatsAppSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const msg = `Halo Tim Sanubari Roastery!\nSaya tertarik bermitra wholesale/B2B:\n\nNama Kedai/Usaha: ${cafeName}\nKota: ${city}\nNama PIC: ${contactName}\nWhatsApp: ${phone}\nEstimasi Kebutuhan: ${volume}\n\nMohon informasi pricelist grosir dan katalog varietas kopi. Terima kasih!`;
+        const msg = `Halo Tim Alat Kopi Malang!\nSaya tertarik bermitra wholesale/B2B:\n\nNama Kedai/Usaha: ${cafeName}\nKota: ${city}\nNama PIC: ${contactName}\nWhatsApp: ${phone}\nEstimasi Kebutuhan: ${volume}\n\nMohon informasi pricelist grosir dan katalog varietas kopi. Terima kasih!`;
         window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(msg)}`, '_blank');
     };
 
     return (
-        <PublicLayout title="Wholesale & Kemitraan Kedai Kopi (B2B) | Sanubari Roastery">
+        <PublicLayout title="Wholesale & Kemitraan Kedai Kopi (B2B) | Alat Kopi Malang">
             {/* Header Hero Banner */}
             <div className="relative bg-brand-950 text-white py-14 sm:py-24 px-4 sm:px-6 lg:px-8 overflow-hidden text-center">
                 {heroImage && (
@@ -156,7 +156,7 @@ export default function WholesalePage({ page }: WholesalePageProps) {
                 <div className="space-y-6">
                     <div className="text-center max-w-2xl mx-auto space-y-2">
                         <h2 className="text-xl sm:text-3xl font-extrabold text-brand-950">
-                            Keuntungan Bermitra dengan Sanubari
+                            Keuntungan Bermitra dengan Alat Kopi Malang
                         </h2>
                         <p className="text-xs sm:text-sm text-brand-600">
                             Dukungan menyeluruh dari biji kopi berkualitas prima hingga setup operasional bar mesin.
@@ -223,7 +223,7 @@ export default function WholesalePage({ page }: WholesalePageProps) {
                                 </div>
                                 <div className="space-y-3">
                                     <h4 className="text-lg font-extrabold text-brand-950">
-                                        Kenapa Memilih Pasokan Sanubari?
+                                        Kenapa Memilih Pasokan Alat Kopi Malang?
                                     </h4>
                                     <ul className="space-y-2 text-xs sm:text-sm text-brand-700">
                                         <li className="flex items-center gap-2">

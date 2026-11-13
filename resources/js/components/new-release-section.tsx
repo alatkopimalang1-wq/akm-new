@@ -16,7 +16,7 @@ interface NewReleaseSectionProps {
 export function NewReleaseSection({
     products = [],
     title = 'New Release',
-    subtitle = 'Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery',
+    subtitle = 'Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang',
     badge = 'NEW RELEASE',
     buttonText = 'Lihat Semua',
     buttonUrl = '/new-release',

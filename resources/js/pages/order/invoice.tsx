@@ -93,8 +93,8 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
         order.customer_address.toLowerCase().includes('ambil di toko');
 
     const pageTitle = isPaid
-        ? `Invoice-LUNAS-${order.order_number}-Sanubari-Roastery`
-        : `Invoice-${order.order_number}-Sanubari-Roastery`;
+        ? `Invoice-LUNAS-${order.order_number}-Alat Kopi Malang-Roastery`
+        : `Invoice-${order.order_number}-Alat Kopi Malang-Roastery`;
 
     return (
         <div className="min-h-screen bg-sand-100/60 py-6 sm:py-10 px-4 sm:px-6 print:bg-white print:p-0 print:m-0 font-sans text-brand-950 selection:bg-brand-700 selection:text-white">
@@ -152,12 +152,12 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                     <div className="flex items-start gap-3.5">
                         <img
                             src="/brand/logo-circle.png"
-                            alt="Sanubari Roastery Logo"
+                            alt="Alat Kopi Malang Logo"
                             className="w-12 h-12 rounded-full object-cover shrink-0 mt-0.5 border border-sand-200"
                         />
                         <div className="space-y-0.5">
                             <h1 className="text-xl font-extrabold tracking-tight text-brand-950">
-                                {settings.site_name || 'Sanubari Roastery Malang'}
+                                {settings.site_name || 'Alat Kopi Malang'}
                             </h1>
                             <p className="text-xs text-brand-600 font-medium">
                                 Specialty Coffee Roaster Malang · Close to Every Brew
@@ -217,7 +217,7 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
 
                         {/* Stempel Fisik LUNAS Model Roastery */}
                         <div className="border-2 sm:border-3 border-emerald-700 bg-white/70 text-emerald-700 px-4 py-1.5 rounded-xl font-black text-xs sm:text-sm tracking-widest uppercase rotate-[-3deg] shadow-xs select-none shrink-0 text-center self-start sm:self-auto">
-                            <div className="text-[9px] tracking-normal font-bold">SANUBARI ROASTERY</div>
+                            <div className="text-[9px] tracking-normal font-bold">ALAT KOPI MALANG</div>
                             <div className="text-base font-black text-emerald-700 leading-none my-0.5">★ LUNAS ★</div>
                             <div className="text-[8px] font-mono tracking-tighter">PAID · {order.paid_at || order.created_at}</div>
                         </div>
@@ -257,7 +257,7 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                     <span>Ambil di Toko (Self Pick Up)</span>
                                 </div>
                                 <p className="text-brand-700 leading-snug">
-                                    {settings.pickup_store_name || 'Sanubari Roastery (Tlogomas, Malang)'}
+                                    {settings.pickup_store_name || 'Alat Kopi Malang (Tlogomas, Malang)'}
                                     <br />
                                     {settings.pickup_store_address || order.customer_address}
                                 </p>
@@ -388,19 +388,19 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                 {/* Invoice Footer Notes */}
                 <div className="mt-10 pt-6 border-t border-sand-200/80 text-[11px] text-brand-500 space-y-1">
                     <p className="font-semibold text-brand-800">
-                        Catatan Resmi Sanubari Roastery:
+                        Catatan Resmi Alat Kopi Malang:
                     </p>
                     <p>
                         • Biji kopi diroasting secara berkala untuk menjaga kesegaran rasa (*peak flavor* 7–21 hari setelah roasting).
                     </p>
                     <p>
-                        • Dokumen ini merupakan bukti transaksi sah yang diterbitkan oleh sistem resmi Sanubari Roastery Malang.
+                        • Dokumen ini merupakan bukti transaksi sah yang diterbitkan oleh sistem resmi Alat Kopi Malang.
                     </p>
                     <p>
                         • Jika ada pertanyaan seputar pesanan atau membutuhkan bantuan panduan seduh, hubungi kami via WhatsApp: {settings.phone}.
                     </p>
                     <p className="pt-2 text-center text-brand-400 font-medium">
-                        Terima kasih telah memilih seduhan Sanubari Roastery Malang — Close to Every Brew.
+                        Terima kasih telah memilih seduhan Alat Kopi Malang — Close to Every Brew.
                     </p>
                 </div>
             </div>

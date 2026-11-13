@@ -68,7 +68,7 @@ export default function OrderTrackPage({ error }: TrackPageProps) {
     };
 
     return (
-        <PublicLayout title="Lacak Pesanan & Cek Resi Ekspedisi — Sanubari Roastery">
+        <PublicLayout title="Lacak Pesanan & Cek Resi Ekspedisi — Alat Kopi Malang">
             <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 pb-32 md:pb-20 space-y-8">
                 {/* Header */}
                 <div className="text-center space-y-2">

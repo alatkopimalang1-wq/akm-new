@@ -268,20 +268,20 @@ export default function ProductShow({
 
     const waDirectUrl = isCurrentVariantOutOfStock
         ? `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Sanubari Roastery! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*\nUkuran: ${selectedVariant.label}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*\nUkuran: ${selectedVariant.label}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
         )}`
         : `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Sanubari Roastery! Saya ingin memesan langsung:\n*${product.name}*\nUkuran: ${selectedVariant.label}\nGilingan: ${grindOption}\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*\nUkuran: ${selectedVariant.label}\nGilingan: ${grindOption}\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
         )}`;
 
     const tokopediaUrl =
         product.tokopedia_url ||
         marketplaceDefaults?.tokopedia ||
-        'https://www.tokopedia.com/sanubariroastery';
+        'https://www.tokopedia.com/alatkopimalang';
     const shopeeUrl =
         product.shopee_url ||
         marketplaceDefaults?.shopee ||
-        'https://shopee.co.id/sanubariroastery';
+        'https://shopee.co.id/alatkopimalang';
 
     return (
         <PublicLayout title={product.name}>

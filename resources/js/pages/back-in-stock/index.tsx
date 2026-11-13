@@ -45,11 +45,11 @@ export default function BackInStockIndex({
     };
 
     return (
-        <PublicLayout title={`${effectiveTitle} — Koleksi Favorit Sanubari Roastery`}>
+        <PublicLayout title={`${effectiveTitle} — Koleksi Favorit Alat Kopi Malang`}>
             <Head>
                 <meta
                     name="description"
-                    content={`${effectiveTitle}: ${effectiveSubtitle}. Pilihan biji kopi dan produk favorit yang kembali restock dan siap dipesan langsung dari sangrai Sanubari Roastery.`}
+                    content={`${effectiveTitle}: ${effectiveSubtitle}. Pilihan biji kopi dan produk favorit yang kembali restock dan siap dipesan langsung dari sangrai Alat Kopi Malang.`}
                 />
             </Head>
 

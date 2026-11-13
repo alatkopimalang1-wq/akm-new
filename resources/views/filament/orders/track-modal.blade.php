@@ -26,7 +26,7 @@
             <div class="mt-3 grid grid-cols-2 gap-3 border-t border-gray-200 pt-3 text-xs dark:border-gray-800">
                 <div>
                     <span class="text-gray-500">Pengirim:</span>
-                    <p class="font-semibold text-gray-900 dark:text-white">{{ $tracking['shipper'] ?? 'Sanubari Roastery Malang' }}</p>
+                    <p class="font-semibold text-gray-900 dark:text-white">{{ $tracking['shipper'] ?? 'Alat Kopi Malang' }}</p>
                 </div>
                 <div>
                     <span class="text-gray-500">Penerima:</span>

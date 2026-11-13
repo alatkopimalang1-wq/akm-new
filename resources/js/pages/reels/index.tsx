@@ -5,7 +5,7 @@ import { PublicLayout } from '@/layouts/public-layout';
 import { DEFAULT_REELS, InstagramIcon, resolveReelThumbnail, type VideoReel } from '@/components/video-reels-slider';
 import type { SanubariSharedProps } from '@/types/sanubari';
 
-// Extended collection of high quality reels for Sanubari & Alat Kopi Malang
+// Extended collection of high quality reels for Alat Kopi Malang & Alat Kopi Malang
 const ALL_REELS: VideoReel[] = [
     ...DEFAULT_REELS,
     {
@@ -15,7 +15,7 @@ const ALL_REELS: VideoReel[] = [
         caption: 'Uji komparasi seduhan pour-over: flow rate konikal vs flow flat bed untuk ekstraksi rasa manis maksimal buah kopi...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 12,
@@ -40,7 +40,7 @@ const ALL_REELS: VideoReel[] = [
         caption: 'Biar hasil seduhan espresso di rumah nggak asem encer atau pahit gosong, ikuti 3 kunci kalibrasi burr grinder ini...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 14,
@@ -68,12 +68,12 @@ export default function ReelsIndex({ reels = [] }: ReelsIndexProps) {
     const { settings } = usePage<SanubariSharedProps>().props;
     const activeReels = reels.length > 0 ? reels : ALL_REELS;
 
-    const pageTitle = settings?.reels_page_title || settings?.home_reels_title || 'Sanubari Reels Videos';
+    const pageTitle = settings?.reels_page_title || settings?.home_reels_title || 'Alat Kopi Malang Reels Videos';
     const pageDescription =
         settings?.reels_page_description ||
         settings?.home_reels_subtitle ||
         'Klik salah satu video untuk langsung menonton tayangan resmi di aplikasi Instagram. Temukan tips barista, review mesin espresso, hingga tutorial seduh kopi manual.';
-    const igUrl = settings?.home_reels_instagram_url || settings?.instagram || 'https://www.instagram.com/sanubari.roastery.mlg/';
+    const igUrl = settings?.home_reels_instagram_url || settings?.instagram || 'https://www.instagram.com/alatkopimalang/';
 
     const igHandle = (() => {
         try {
@@ -84,11 +84,11 @@ export default function ReelsIndex({ reels = [] }: ReelsIndexProps) {
         } catch {
             // fallback
         }
-        return '@sanubari.roastery.mlg';
+        return '@alatkopimalang';
     })();
 
     return (
-        <PublicLayout title={`${pageTitle} — Sanubari Roastery`}>
+        <PublicLayout title={`${pageTitle} — Alat Kopi Malang`}>
             <Head>
                 <meta name="description" content={pageDescription} />
             </Head>
@@ -130,7 +130,7 @@ export default function ReelsIndex({ reels = [] }: ReelsIndexProps) {
                 <section aria-label="Daftar Video Reels">
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 lg:gap-6">
                         {activeReels.map((reel) => {
-                            const targetUrl = reel.videoUrl || reel.video_url || 'https://www.instagram.com/sanubari.roastery.mlg/';
+                            const targetUrl = reel.videoUrl || reel.video_url || 'https://www.instagram.com/alatkopimalang/';
 
                             return (
                                 <a

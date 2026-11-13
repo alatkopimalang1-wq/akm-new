@@ -44,7 +44,7 @@ class ManageGeneralSettings extends Page
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
         $this->form->fill([
-            'site_name' => $settings['site_name'] ?? 'Sanubari Roastery Malang',
+            'site_name' => $settings['site_name'] ?? 'Alat Kopi Malang',
             'tagline' => $settings['tagline'] ?? 'Specialty Coffee Roaster Malang',
             'currency' => $settings['currency'] ?? 'IDR',
             'site_logo' => $settings['site_logo'] ?? null,
@@ -54,26 +54,26 @@ class ManageGeneralSettings extends Page
             'whatsapp_gateway_provider' => $settings['whatsapp_gateway_provider'] ?? 'auto',
             'whatsapp_gateway_token' => $settings['whatsapp_gateway_token'] ?? null,
             'phone' => $settings['phone'] ?? '+6285121930454',
-            'email' => $settings['email'] ?? 'halo@sanubariroastery.id',
+            'email' => $settings['email'] ?? 'info@alatkopimalang.co.id',
 
             'address' => $settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
             'hours' => $settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB',
             'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
 
-            'instagram' => $settings['instagram'] ?? 'https://instagram.com/sanubari.roastery.mlg',
-            'facebook' => $settings['facebook'] ?? 'https://facebook.com/sanubariroastery',
-            'x_url' => $settings['x_url'] ?? $settings['twitter'] ?? 'https://x.com/sanubariroastery',
-            'tiktok' => $settings['tiktok'] ?? 'https://tiktok.com/@sanubariroastery',
-            'tokopedia' => $settings['tokopedia'] ?? 'https://www.tokopedia.com/sanubariroastery',
-            'shopee' => $settings['shopee'] ?? 'https://shopee.co.id/sanubariroastery',
+            'instagram' => $settings['instagram'] ?? 'https://instagram.com/alatkopimalang',
+            'facebook' => $settings['facebook'] ?? 'https://facebook.com/alatkopimalang',
+            'x_url' => $settings['x_url'] ?? $settings['twitter'] ?? 'https://x.com/alatkopimalang',
+            'tiktok' => $settings['tiktok'] ?? 'https://tiktok.com/@alatkopimalang',
+            'tokopedia' => $settings['tokopedia'] ?? 'https://www.tokopedia.com/alatkopimalang',
+            'shopee' => $settings['shopee'] ?? 'https://shopee.co.id/alatkopimalang',
             'free_shipping_min' => $settings['free_shipping_min'] ?? 250000,
 
             // --- Opsi Ambil di Toko (Self Pick Up) ---
             'pickup_in_store_enabled' => (bool) ($settings['pickup_in_store_enabled'] ?? true),
-            'pickup_store_name' => $settings['pickup_store_name'] ?? 'Sanubari Roastery (Tlogomas, Malang)',
+            'pickup_store_name' => $settings['pickup_store_name'] ?? 'Alat Kopi Malang (Tlogomas, Malang)',
             'pickup_store_hours' => $settings['pickup_store_hours'] ?? ($settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB'),
             'pickup_store_address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
-            'pickup_notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil langsung di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
+            'pickup_notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
 
             'announcement_enabled' => (bool) ($settings['announcement_enabled'] ?? true),
             'announcement_text_id' => $settings['announcement_text_id'] ?? 'Gratis ongkir ke seluruh Jawa untuk pesanan biji kopi di atas Rp 250.000!',
@@ -82,7 +82,7 @@ class ManageGeneralSettings extends Page
 
             // --- Metode Pembayaran (Payment Gateway) ---
             'payment_qris_enabled' => (bool) ($settings['payment_qris_enabled'] ?? true),
-            'payment_qris_merchant_name' => $settings['payment_qris_merchant_name'] ?? 'SANUBARI ROASTERY MALANG',
+            'payment_qris_merchant_name' => $settings['payment_qris_merchant_name'] ?? 'ALAT KOPI MALANG',
             'payment_qris_nmid' => $settings['payment_qris_nmid'] ?? 'ID1020038829102',
             'payment_qris_image' => $settings['payment_qris_image'] ?? null,
 
@@ -92,7 +92,7 @@ class ManageGeneralSettings extends Page
                     'bank_code' => 'bca',
                     'bank_name' => 'Bank BCA',
                     'account_number' => '011-829-9102',
-                    'account_holder' => 'SANUBARI ROASTERY MALANG',
+                    'account_holder' => 'ALAT KOPI MALANG',
                     'branch_info' => 'KCU Malang Kawi',
                     'is_active' => true,
                 ],
@@ -100,7 +100,7 @@ class ManageGeneralSettings extends Page
                     'bank_code' => 'mandiri',
                     'bank_name' => 'Bank Mandiri',
                     'account_number' => '144-00-98213-901',
-                    'account_holder' => 'SANUBARI ROASTERY MALANG',
+                    'account_holder' => 'ALAT KOPI MALANG',
                     'branch_info' => 'KCP Malang Sutoyo',
                     'is_active' => true,
                 ],
@@ -108,7 +108,7 @@ class ManageGeneralSettings extends Page
                     'bank_code' => 'bri',
                     'bank_name' => 'Bank BRI',
                     'account_number' => '0051-01-00291-532',
-                    'account_holder' => 'SANUBARI ROASTERY MALANG',
+                    'account_holder' => 'ALAT KOPI MALANG',
                     'branch_info' => 'KC Malang Martadinata',
                     'is_active' => true,
                 ],
@@ -168,7 +168,7 @@ class ManageGeneralSettings extends Page
                                 ->image()
                                 ->imageEditor()
                                 ->maxSize(2048)
-                                ->helperText('Upload logo Sanubari (PNG transparan, WEBP, atau SVG maks 2MB).'),
+                                ->helperText('Upload logo Alat Kopi Malang (PNG transparan, WEBP, atau SVG maks 2MB).'),
                             FileUpload::make('site_favicon')
                                 ->label('Favicon Tab Browser')
                                 ->disk('public')
@@ -244,16 +244,16 @@ class ManageGeneralSettings extends Page
                         Grid::make(4)->schema([
                             TextInput::make('instagram')
                                 ->label('URL Instagram')
-                                ->placeholder('https://instagram.com/sanubari.roastery.mlg'),
+                                ->placeholder('https://instagram.com/alatkopimalang'),
                             TextInput::make('facebook')
                                 ->label('URL Facebook')
-                                ->placeholder('https://facebook.com/sanubariroastery'),
+                                ->placeholder('https://facebook.com/alatkopimalang'),
                             TextInput::make('x_url')
                                 ->label('URL X (Twitter)')
-                                ->placeholder('https://x.com/sanubariroastery'),
+                                ->placeholder('https://x.com/alatkopimalang'),
                             TextInput::make('tiktok')
                                 ->label('URL TikTok')
-                                ->placeholder('https://tiktok.com/@sanubariroastery'),
+                                ->placeholder('https://tiktok.com/@alatkopimalang'),
                         ]),
                         Grid::make(1)->schema([
                             TextInput::make('free_shipping_min')
@@ -266,11 +266,11 @@ class ManageGeneralSettings extends Page
                         Grid::make(2)->schema([
                             TextInput::make('tokopedia')
                                 ->label('Toko Resmi Tokopedia (Default)')
-                                ->placeholder('https://www.tokopedia.com/sanubariroastery')
+                                ->placeholder('https://www.tokopedia.com/alatkopimalang')
                                 ->url(),
                             TextInput::make('shopee')
                                 ->label('Toko Resmi Shopee (Default)')
-                                ->placeholder('https://shopee.co.id/sanubariroastery')
+                                ->placeholder('https://shopee.co.id/alatkopimalang')
                                 ->url(),
                         ]),
                     ]),
@@ -288,7 +288,7 @@ class ManageGeneralSettings extends Page
                                 Grid::make(2)->schema([
                                     TextInput::make('payment_qris_merchant_name')
                                         ->label('Nama Merchant QRIS')
-                                        ->placeholder('SANUBARI ROASTERY MALANG')
+                                        ->placeholder('ALAT KOPI MALANG')
                                         ->required(),
                                     TextInput::make('payment_qris_nmid')
                                         ->label('NMID QRIS Toko')
@@ -296,7 +296,7 @@ class ManageGeneralSettings extends Page
                                 ]),
                                 FileUpload::make('payment_qris_image')
                                     ->label('Gambar Barcode QRIS Kustom Toko (Opsional)')
-                                    ->helperText('Jika dikosongkan, sistem akan otomatis menggunakan barcode QRIS default Sanubari Roastery.')
+                                    ->helperText('Jika dikosongkan, sistem akan otomatis menggunakan barcode QRIS default Alat Kopi Malang.')
                                     ->image()
                                     ->directory('payment/qris')
                                     ->disk('public'),
@@ -335,7 +335,7 @@ class ManageGeneralSettings extends Page
                                                 ->required(),
                                             TextInput::make('account_holder')
                                                 ->label('Atas Nama Pemilik Rekening')
-                                                ->placeholder('Contoh: SANUBARI ROASTERY MALANG')
+                                                ->placeholder('Contoh: ALAT KOPI MALANG')
                                                 ->required(),
                                         ]),
                                         Grid::make(2)->schema([
@@ -385,7 +385,7 @@ class ManageGeneralSettings extends Page
                         Grid::make(2)->schema([
                             TextInput::make('pickup_store_name')
                                 ->label('Nama Gerai / Toko Pengambilan')
-                                ->placeholder('Sanubari Roastery (Tlogomas, Malang)')
+                                ->placeholder('Alat Kopi Malang (Tlogomas, Malang)')
                                 ->required(),
                             TextInput::make('pickup_store_hours')
                                 ->label('Jam Layanan Pengambilan')
@@ -399,7 +399,7 @@ class ManageGeneralSettings extends Page
                             ->required(),
                         Textarea::make('pickup_notes')
                             ->label('Petunjuk Pengambilan untuk Pelanggan')
-                            ->placeholder('Pesanan dapat diambil di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.')
+                            ->placeholder('Pesanan dapat diambil di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.')
                             ->rows(2),
                     ]),
 

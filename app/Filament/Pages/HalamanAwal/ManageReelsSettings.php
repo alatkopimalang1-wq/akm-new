@@ -41,12 +41,12 @@ class ManageReelsSettings extends Page
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
         $this->form->fill([
-            'home_reels_title' => $settings['home_reels_title'] ?? 'Sanubari Reels Videos',
+            'home_reels_title' => $settings['home_reels_title'] ?? 'Alat Kopi Malang Reels Videos',
             'home_reels_subtitle' => $settings['home_reels_subtitle'] ?? 'Tonton tutorial seduh, bedah mesin & tips kopi langsung di Instagram Reels',
             'home_reels_view_all_text' => $settings['home_reels_view_all_text'] ?? 'Lihat Semua',
             'home_reels_view_all_url' => $settings['home_reels_view_all_url'] ?? '/video',
-            'home_reels_instagram_url' => $settings['home_reels_instagram_url'] ?? ($settings['instagram'] ?? 'https://www.instagram.com/sanubari.roastery.mlg/'),
-            'reels_page_title' => $settings['reels_page_title'] ?? 'Sanubari Reels Videos',
+            'home_reels_instagram_url' => $settings['home_reels_instagram_url'] ?? ($settings['instagram'] ?? 'https://www.instagram.com/alatkopimalang/'),
+            'reels_page_title' => $settings['reels_page_title'] ?? 'Alat Kopi Malang Reels Videos',
             'reels_page_description' => $settings['reels_page_description'] ?? 'Klik salah satu video untuk langsung menonton tayangan resmi di aplikasi Instagram. Temukan tips barista, review mesin espresso, hingga tutorial seduh kopi manual.',
         ]);
     }
@@ -82,7 +82,7 @@ class ManageReelsSettings extends Page
                             TextInput::make('home_reels_title')
                                 ->label('Judul Bagian Reels (Section Title)')
                                 ->required()
-                                ->placeholder('Sanubari Reels Videos')
+                                ->placeholder('Alat Kopi Malang Reels Videos')
                                 ->helperText('Judul di sebelah ikon Instagram pada halaman beranda.'),
                             TextInput::make('home_reels_view_all_text')
                                 ->label('Teks Tautan Lihat Semua')
@@ -104,7 +104,7 @@ class ManageReelsSettings extends Page
                             TextInput::make('home_reels_instagram_url')
                                 ->label('Tautan Akun Instagram Reels Resmi')
                                 ->url()
-                                ->placeholder('https://www.instagram.com/sanubari.roastery.mlg/'),
+                                ->placeholder('https://www.instagram.com/alatkopimalang/'),
                         ]),
                     ]),
 
@@ -116,7 +116,7 @@ class ManageReelsSettings extends Page
                         TextInput::make('reels_page_title')
                             ->label('Judul Banner Halaman')
                             ->required()
-                            ->placeholder('Sanubari Reels Videos'),
+                            ->placeholder('Alat Kopi Malang Reels Videos'),
                         Textarea::make('reels_page_description')
                             ->label('Deskripsi / Paragraf Pengantar Halaman')
                             ->rows(3)

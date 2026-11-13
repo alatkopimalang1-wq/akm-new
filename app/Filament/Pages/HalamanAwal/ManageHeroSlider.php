@@ -276,7 +276,7 @@ class ManageHeroSlider extends Page
                                             '/panduan-seduh' => 'Panduan Seduh (/panduan-seduh)',
                                             '/blog' => 'Artikel Blog & Catatan Roaster (/blog)',
                                             '/acara' => 'Jadwal Acara & Cupping (/acara)',
-                                            '/tentang' => 'Tentang Sanubari Roastery (/tentang)',
+                                            '/tentang' => 'Tentang Alat Kopi Malang (/tentang)',
                                         ])
                                         ->default('/shop')
                                         ->visible(fn ($get) => $get('link_type') === 'page')
@@ -297,7 +297,7 @@ class ManageHeroSlider extends Page
                                         ->required(fn ($get) => $get('link_type') === 'product'),
                                     TextInput::make('link_custom_url')
                                         ->label('Ketik URL Kustom')
-                                        ->placeholder('e.g. /shop?series=kawi atau https://instagram.com/sanubari.roastery')
+                                        ->placeholder('e.g. /shop?series=kawi atau https://instagram.com/Alat Kopi Malang.roastery')
                                         ->visible(fn ($get) => $get('link_type') === 'custom')
                                         ->required(fn ($get) => $get('link_type') === 'custom'),
                                 ]),

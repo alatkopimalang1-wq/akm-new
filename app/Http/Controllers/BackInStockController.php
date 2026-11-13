@@ -71,7 +71,7 @@ class BackInStockController extends Controller
                     'image' => $image ?: '/brand/logo-circle.png',
                     'badge' => $item['badge'] ?? 'BACK IN STOCK',
                     'stock_status' => $item['stock_status'] ?? 'Tersedia',
-                    'description' => $product?->short_description ?? ($product?->tasting_notes ? 'Notes: ' . $product->tasting_notes : 'Koleksi produk favorit kembali tersedia di Sanubari Roastery.'),
+                    'description' => $product?->short_description ?? ($product?->tasting_notes ? 'Notes: ' . $product->tasting_notes : 'Koleksi produk favorit kembali tersedia di Alat Kopi Malang.'),
                 ];
             }, $configuredItems);
         }

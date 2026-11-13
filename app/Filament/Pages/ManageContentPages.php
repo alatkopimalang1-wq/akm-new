@@ -244,7 +244,7 @@ class ManageContentPages extends Page
             ],
             [
                 'image' => 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80',
-                'caption' => 'Suasana Belajar Nyaman di Sanubari Roastery Showroom Malang',
+                'caption' => 'Suasana Belajar Nyaman di Alat Kopi Malang Showroom Malang',
             ],
         ];
 
@@ -267,10 +267,10 @@ class ManageContentPages extends Page
             // --- 1. Tentang Kami ---
             'about_hero_badge' => $pageAbout['hero_badge'] ?? 'Didirikan di Malang sejak 2017',
             'about_hero_title' => $pageAbout['hero_title'] ?? 'Dedikasi pada Setiap Cangkir Kopi',
-            'about_hero_description' => $pageAbout['hero_description'] ?? 'Sanubari Roastery berfokus mengangkat karakter biji kopi lereng Gunung Kawi ke cangkir Anda, melalui pemetikan selektif, kurva sangrai digital, dan pengujian rasa yang jujur.',
+            'about_hero_description' => $pageAbout['hero_description'] ?? 'Alat Kopi Malang berfokus mengangkat karakter biji kopi lereng Gunung Kawi ke cangkir Anda, melalui pemetikan selektif, kurva sangrai digital, dan pengujian rasa yang jujur.',
             'about_hero_image' => $pageAbout['hero_image'] ?? null,
 
-            'about_story_title' => $pageAbout['story_title'] ?? 'Mengapa Nama Kami Sanubari',
+            'about_story_title' => $pageAbout['story_title'] ?? 'Mengapa Nama Kami Alat Kopi Malang',
             'about_story_subtitle' => $pageAbout['story_subtitle'] ?? 'Menghubungkan jerih payah petani lereng Gunung Kawi langsung dengan cangkir kopi Anda.',
             'about_story_p1' => $pageAbout['story_p1'] ?? 'Bagi kami, setiap biji kopi membawa cerita perjalanan panjang: dari tanah vulkanis lereng Gunung Kawi pada ketinggian 1.200–1.600 meter, kabut sore yang memperlambat pematangan buah, ketelitian tangan petani saat memetik buah merah, hingga kalibrasi kurva sangrai di roastery kami di Kota Malang.',
             'about_story_p2' => $pageAbout['story_p2'] ?? 'Kami menjaga kemitraan langsung dengan petani lokal tanpa perantara spekulan, sehingga petani mendapatkan harga yang adil dan Anda mendapatkan biji kopi segar dengan jejak asal-usul yang jelas.',
@@ -283,7 +283,7 @@ class ManageContentPages extends Page
             'about_video_poster' => $pageAbout['video_poster'] ?? null,
             'about_video_position' => $pageAbout['video_position'] ?? 'section',
 
-            'about_values_title' => $pageAbout['values_title'] ?? 'Tiga Pilar Utama Sanubari',
+            'about_values_title' => $pageAbout['values_title'] ?? 'Tiga Pilar Utama Alat Kopi Malang',
             'about_values_subtitle' => $pageAbout['values_subtitle'] ?? 'Prinsip nyata yang kami jalankan di setiap batch kopi yang kami sangrai.',
             'about_pillars' => ! empty($pageAbout['pillars']) ? $pageAbout['pillars'] : $defaultAboutPillars,
 
@@ -346,11 +346,11 @@ class ManageContentPages extends Page
 
             // --- 3. Kunjungi Roastery (Visit) ---
             'visit_hero_badge' => $pageVisit['hero_badge'] ?? 'Roastery & Showroom Malang',
-            'visit_hero_title' => $pageVisit['hero_title'] ?? 'Sanubari Roastery x Alat Kopi Malang',
+            'visit_hero_title' => $pageVisit['hero_title'] ?? 'Alat Kopi Malang',
             'visit_hero_description' => $pageVisit['hero_description'] ?? 'Cicipi beans fresh roast langsung di slow bar kami, coba mesin espresso komersial, dan konsultasikan kebutuhan seduh Anda bersama roaster dan barista kami.',
 
             'visit_welcome_title' => $pageVisit['welcome_title'] ?? 'Selamat Datang di Malang',
-            'visit_address' => $pageVisit['address'] ?? ($settings['address'] ?? 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang, Jawa Timur 65116 (Gedung Sanubari x Alat Kopi Malang)'),
+            'visit_address' => $pageVisit['address'] ?? ($settings['address'] ?? 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang, Jawa Timur 65116 (Gedung Alat Kopi Malang)'),
             'visit_hours' => $pageVisit['hours'] ?? ($settings['hours'] ?? 'Buka Setiap Hari: 09.00–23.00 WIB (Layanan Seduh di Tempat & Pembelian Beans)'),
             'visit_phone' => $pageVisit['phone'] ?? ($settings['phone'] ?? '+62 851-2193-0454'),
             'visit_maps_url' => $pageVisit['maps_url'] ?? ($settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7'),
@@ -406,7 +406,7 @@ class ManageContentPages extends Page
                 }, $pageRoasting['packages'])
                 : $defaultRoastingPackages,
             'roasting_gallery_title' => $pageRoasting['gallery_title'] ?? 'Galeri Fasilitas & Proses Sangrai',
-            'roasting_gallery_subtitle' => $pageRoasting['gallery_subtitle'] ?? 'Dokumentasi studio sangrai, mesin roasting, dan quality control cupping di Sanubari Roastery Malang.',
+            'roasting_gallery_subtitle' => $pageRoasting['gallery_subtitle'] ?? 'Dokumentasi studio sangrai, mesin roasting, dan quality control cupping di Alat Kopi Malang.',
             'roasting_grid_desktop' => (string) ($pageRoasting['grid_desktop'] ?? '3'),
             'roasting_grid_tablet' => (string) ($pageRoasting['grid_tablet'] ?? '2'),
             'roasting_grid_mobile' => (string) ($pageRoasting['grid_mobile'] ?? '1'),
@@ -436,7 +436,7 @@ class ManageContentPages extends Page
             // --- 5. Training Barista ---
             'barista_hero_badge' => $pageBarista['hero_badge'] ?? 'Kelas Barista Profesional & Sertifikasi',
             'barista_hero_title' => $pageBarista['hero_title'] ?? 'Training Barista Bersertifikat & Edukasi Seduh Spesialis',
-            'barista_hero_description' => $pageBarista['hero_description'] ?? 'Tingkatkan keahlian seduh kopi Anda dari dasar hingga siap kerja atau buka kedai. Dibimbing langsung oleh trainer dan roaster berpengalaman dengan mesin komersial standar industri di Sanubari Malang.',
+            'barista_hero_description' => $pageBarista['hero_description'] ?? 'Tingkatkan keahlian seduh kopi Anda dari dasar hingga siap kerja atau buka kedai. Dibimbing langsung oleh trainer dan roaster berpengalaman dengan mesin komersial standar industri di Alat Kopi Malang.',
             'barista_hero_image' => (! empty($pageBarista['hero_image']) && ! str_starts_with($pageBarista['hero_image'], 'http')) ? str_replace('/storage/', '', $pageBarista['hero_image']) : null,
             'barista_hero_image_url' => (! empty($pageBarista['hero_image']) && str_starts_with($pageBarista['hero_image'], 'http')) ? $pageBarista['hero_image'] : null,
             'barista_packages' => ! empty($pageBarista['packages'])
@@ -457,7 +457,7 @@ class ManageContentPages extends Page
                 }, $pageBarista['packages'])
                 : $defaultBaristaPackages,
             'barista_gallery_title' => $pageBarista['gallery_title'] ?? 'Dokumentasi & Suasana Kelas Barista',
-            'barista_gallery_subtitle' => $pageBarista['gallery_subtitle'] ?? 'Momen praktik peserta mengasah teknik espresso, latte art, dan manual brew di Sanubari Roastery Malang.',
+            'barista_gallery_subtitle' => $pageBarista['gallery_subtitle'] ?? 'Momen praktik peserta mengasah teknik espresso, latte art, dan manual brew di Alat Kopi Malang.',
             'barista_grid_desktop' => (string) ($pageBarista['grid_desktop'] ?? '3'),
             'barista_grid_tablet' => (string) ($pageBarista['grid_tablet'] ?? '2'),
             'barista_grid_mobile' => (string) ($pageBarista['grid_mobile'] ?? '1'),
@@ -487,17 +487,17 @@ class ManageContentPages extends Page
             // --- 6. Acara & Workshop (/acara) ---
             'events_hero_badge' => $pageEvents['hero_badge'] ?? 'Komunitas & Edukasi',
             'events_hero_title' => $pageEvents['hero_title'] ?? 'Workshop & Sesi Cupping Terbuka',
-            'events_hero_description' => $pageEvents['hero_description'] ?? 'Bergabung bersama komunitas pecinta kopi di Malang dalam sesi cupping kalibrasi rasa, kelas manual brew, dan bincang santai bersama roaster Sanubari.',
+            'events_hero_description' => $pageEvents['hero_description'] ?? 'Bergabung bersama komunitas pecinta kopi di Malang dalam sesi cupping kalibrasi rasa, kelas manual brew, dan bincang santai bersama roaster Alat Kopi Malang.',
             'events_hero_image' => (! empty($pageEvents['hero_image']) && ! str_starts_with($pageEvents['hero_image'], 'http')) ? str_replace('/storage/', '', $pageEvents['hero_image']) : null,
             'events_hero_image_url' => (! empty($pageEvents['hero_image']) && str_starts_with($pageEvents['hero_image'], 'http')) ? $pageEvents['hero_image'] : null,
             'events_upcoming_title' => $pageEvents['upcoming_title'] ?? 'Acara Mendatang',
-            'events_empty_message' => $pageEvents['empty_message'] ?? 'Belum ada jadwal acara baru saat ini. Ikuti Instagram kami di @sanubari.roastery.mlg untuk kabar workshop terdekat!',
+            'events_empty_message' => $pageEvents['empty_message'] ?? 'Belum ada jadwal acara baru saat ini. Ikuti Instagram kami di @alatkopimalang untuk kabar workshop terdekat!',
             'events_show_past' => (bool) ($pageEvents['show_past'] ?? true),
             'events_past_title' => $pageEvents['past_title'] ?? 'Arsip & Riwayat Acara Sebelumnya',
             'events_whatsapp_number' => $pageEvents['whatsapp_number'] ?? ($settings['whatsapp'] ?? '6285121930454'),
             'events_cta_button_text' => $pageEvents['cta_button_text'] ?? 'Daftar via WhatsApp',
             'events_cta_note' => $pageEvents['cta_note'] ?? 'Slot terbatas • Konfirmasi instan',
-            'events_gallery_title' => $pageEvents['gallery_title'] ?? 'Dokumentasi Acara & Workshop Sanubari',
+            'events_gallery_title' => $pageEvents['gallery_title'] ?? 'Dokumentasi Acara & Workshop Alat Kopi Malang',
             'events_gallery_subtitle' => $pageEvents['gallery_subtitle'] ?? 'Momen kebersamaan komunitas, sesi sensory cupping, dan workshop seduh di Malang.',
             'events_grid_desktop' => (string) ($pageEvents['grid_desktop'] ?? '3'),
             'events_grid_tablet' => (string) ($pageEvents['grid_tablet'] ?? '2'),
@@ -575,9 +575,9 @@ class ManageContentPages extends Page
                 ],
 
             // --- 8. Booking Tempat (/booking-tempat) ---
-            'booking_hero_badge' => $pageBooking['hero_badge'] ?? 'Reservasi & Sewa Tempat di Sanubari Roastery',
-            'booking_hero_title' => $pageBooking['hero_title'] ?? 'Booking Tempat Nyaman untuk Acara & Komunitas di Sanubari',
-            'booking_hero_description' => $pageBooking['hero_description'] ?? 'Ruang berkumpul yang hangat, estetis, dan santai untuk workshop, meeting kerja, gathering komunitas, maupun acara spesial Anda di Malang. Cukup dengan minimum spent ngopi & menu lezat di Sanubari Roastery.',
+            'booking_hero_badge' => $pageBooking['hero_badge'] ?? 'Reservasi & Sewa Tempat di Alat Kopi Malang',
+            'booking_hero_title' => $pageBooking['hero_title'] ?? 'Booking Tempat Nyaman untuk Acara & Komunitas di Alat Kopi Malang',
+            'booking_hero_description' => $pageBooking['hero_description'] ?? 'Ruang berkumpul yang hangat, estetis, dan santai untuk workshop, meeting kerja, gathering komunitas, maupun acara spesial Anda di Malang. Cukup dengan minimum spent ngopi & menu lezat di Alat Kopi Malang.',
             'booking_hero_image' => (! empty($pageBooking['hero_image']) && ! str_starts_with($pageBooking['hero_image'], 'http')) ? str_replace('/storage/', '', $pageBooking['hero_image']) : null,
             'booking_hero_image_url' => (! empty($pageBooking['hero_image']) && str_starts_with($pageBooking['hero_image'], 'http')) ? $pageBooking['hero_image'] : ($pageBooking['hero_image_url'] ?? ''),
             'booking_benefits' => ! empty($pageBooking['benefits'])
@@ -609,9 +609,9 @@ class ManageContentPages extends Page
                         'is_highlight' => false,
                     ],
                     [
-                        'title' => 'Cukup dengan Minimum Spent Ngopi di Sanubari',
+                        'title' => 'Cukup dengan Minimum Spent Ngopi di Alat Kopi Malang',
                         'badge' => 'Tanpa Biaya Sewa Ruang',
-                        'description' => 'Bebas biaya sewa gedung atau room charge terpisah! Cukup penuhi minimum spent pesanan kopi artisan, minuman segar, dan aneka menu makanan lezat Sanubari.',
+                        'description' => 'Bebas biaya sewa gedung atau room charge terpisah! Cukup penuhi minimum spent pesanan kopi artisan, minuman segar, dan aneka menu makanan lezat Alat Kopi Malang.',
                         'is_highlight' => true,
                     ],
                 ],
@@ -632,7 +632,7 @@ class ManageContentPages extends Page
                     ['icon' => 'building-2', 'title' => 'Parkir Luas & Aman', 'description' => 'Akses mudah di Ruko Tlogomas Square dengan fasilitas parkir mobil dan motor yang aman.'],
                 ],
             'booking_gallery_title' => $pageBooking['gallery_title'] ?? 'Dokumentasi Suasana Ruangan & Acara',
-            'booking_gallery_subtitle' => $pageBooking['gallery_subtitle'] ?? 'Momen kehangatan workshop, meeting, dan gathering komunitas di Sanubari Roastery Malang.',
+            'booking_gallery_subtitle' => $pageBooking['gallery_subtitle'] ?? 'Momen kehangatan workshop, meeting, dan gathering komunitas di Alat Kopi Malang.',
             'booking_grid_desktop' => (string) ($pageBooking['grid_desktop'] ?? '3'),
             'booking_grid_tablet' => (string) ($pageBooking['grid_tablet'] ?? '2'),
             'booking_grid_mobile' => (string) ($pageBooking['grid_mobile'] ?? '1'),
@@ -682,8 +682,8 @@ class ManageContentPages extends Page
                 ],
             'booking_whatsapp_number' => $pageBooking['whatsapp_number'] ?? ($settings['whatsapp'] ?? '6285121930454'),
             'booking_form_title' => $pageBooking['form_title'] ?? 'Konsultasi Jadwal & Reservasi Tempat',
-            'booking_form_subtitle' => $pageBooking['form_subtitle'] ?? 'Isi detail rencana acara Anda di bawah ini untuk langsung terhubung ke WhatsApp reservasi Sanubari Roastery.',
-            'booking_minimum_spent_info' => $pageBooking['minimum_spent_info'] ?? 'Cukup dengan minimum order menu Sanubari Roastery (makanan & minuman). Bebas biaya sewa ruang (Rp 0 venue fee).',
+            'booking_form_subtitle' => $pageBooking['form_subtitle'] ?? 'Isi detail rencana acara Anda di bawah ini untuk langsung terhubung ke WhatsApp reservasi Alat Kopi Malang.',
+            'booking_minimum_spent_info' => $pageBooking['minimum_spent_info'] ?? 'Cukup dengan minimum order menu Alat Kopi Malang (makanan & minuman). Bebas biaya sewa ruang (Rp 0 venue fee).',
             'booking_event_types' => ! empty($pageBooking['event_types'])
                 ? array_map(function ($item) {
                     return [
@@ -705,8 +705,8 @@ class ManageContentPages extends Page
 
             // --- 9. Coffee Catering (/coffee-catering) ---
             'catering_hero_badge' => $pageCatering['hero_badge'] ?? 'Live Espresso Bar & Coffee Catering',
-            'catering_hero_title' => $pageCatering['hero_title'] ?? 'Sanubari Coffee Catering untuk Segala Momen Spesial Anda',
-            'catering_hero_description' => $pageCatering['hero_description'] ?? 'Hadirkan pengalaman specialty coffee bar autentik langsung di lokasi acara Anda di Malang & sekitarnya. Cocok untuk Wedding, Acara Kantor, Acara Seminar, maupun Acara Keluarga dengan minimum order 200 cup dan racikan barista profesional Sanubari.',
+            'catering_hero_title' => $pageCatering['hero_title'] ?? 'Alat Kopi Malang Coffee Catering untuk Segala Momen Spesial Anda',
+            'catering_hero_description' => $pageCatering['hero_description'] ?? 'Hadirkan pengalaman specialty coffee bar autentik langsung di lokasi acara Anda di Malang & sekitarnya. Cocok untuk Wedding, Acara Kantor, Acara Seminar, maupun Acara Keluarga dengan minimum order 200 cup dan racikan barista profesional Alat Kopi Malang.',
             'catering_hero_image' => (! empty($pageCatering['hero_image']) && ! str_starts_with($pageCatering['hero_image'], 'http')) ? str_replace('/storage/', '', $pageCatering['hero_image']) : null,
             'catering_hero_image_url' => (! empty($pageCatering['hero_image']) && str_starts_with($pageCatering['hero_image'], 'http')) ? $pageCatering['hero_image'] : ($pageCatering['hero_image_url'] ?? ''),
             'catering_minimum_order_cups' => $pageCatering['minimum_order_cups'] ?? '200',
@@ -729,7 +729,7 @@ class ManageContentPages extends Page
                     [
                         'title' => 'Pelayanan Langsung di Tempat Acara',
                         'badge' => 'Live Espresso Bar',
-                        'description' => 'Tim barista profesional Sanubari hadir langsung di lokasi acara dengan setup mobile coffee bar lengkap, menyajikan kopi segar di hadapan tamu.',
+                        'description' => 'Tim barista profesional Alat Kopi Malang hadir langsung di lokasi acara dengan setup mobile coffee bar lengkap, menyajikan kopi segar di hadapan tamu.',
                         'is_highlight' => false,
                     ],
                     [
@@ -739,9 +739,9 @@ class ManageContentPages extends Page
                         'is_highlight' => false,
                     ],
                     [
-                        'title' => 'Biji Kopi Fresh Roast Khas Sanubari',
+                        'title' => 'Biji Kopi Fresh Roast Khas Alat Kopi Malang',
                         'badge' => 'Specialty Grade 1',
-                        'description' => 'Pilihan espresso blend dan single origin artisan khas Sanubari Roastery. Cita rasa kaya, manis seimbang, dan ramah di lambung para tamu undangan.',
+                        'description' => 'Pilihan espresso blend dan single origin artisan khas Alat Kopi Malang. Cita rasa kaya, manis seimbang, dan ramah di lambung para tamu undangan.',
                         'is_highlight' => true,
                     ],
                 ],
@@ -766,7 +766,7 @@ class ManageContentPages extends Page
                     ],
                 ],
             'catering_gallery_title' => $pageCatering['gallery_title'] ?? 'Dokumentasi Live Coffee Bar & Catering Acara',
-            'catering_gallery_subtitle' => $pageCatering['gallery_subtitle'] ?? 'Momen kebahagiaan para tamu menikmati racikan segar Sanubari di berbagai pesta pernikahan, kantor, dan seminar.',
+            'catering_gallery_subtitle' => $pageCatering['gallery_subtitle'] ?? 'Momen kebahagiaan para tamu menikmati racikan segar Alat Kopi Malang di berbagai pesta pernikahan, kantor, dan seminar.',
             'catering_grid_desktop' => (string) ($pageCatering['grid_desktop'] ?? '3'),
             'catering_grid_tablet' => (string) ($pageCatering['grid_tablet'] ?? '2'),
             'catering_grid_mobile' => (string) ($pageCatering['grid_mobile'] ?? '1'),
@@ -816,7 +816,7 @@ class ManageContentPages extends Page
                 ],
             'catering_whatsapp_number' => $pageCatering['whatsapp_number'] ?? ($settings['whatsapp'] ?? '6285121930454'),
             'catering_form_title' => $pageCatering['form_title'] ?? 'Konsultasi Jadwal & Pemesanan Coffee Catering',
-            'catering_form_subtitle' => $pageCatering['form_subtitle'] ?? 'Isi formulir singkat di bawah ini untuk mendapatkan penawaran harga & paket coffee catering Sanubari via WhatsApp.',
+            'catering_form_subtitle' => $pageCatering['form_subtitle'] ?? 'Isi formulir singkat di bawah ini untuk mendapatkan penawaran harga & paket coffee catering Alat Kopi Malang via WhatsApp.',
             'catering_terms_note' => $pageCatering['terms_note'] ?? '*Minimum pemesanan 200 cup. Pemesanan disarankan minimal H-7 acara untuk persiapan jadwal tim barista dan ketersediaan mesin.',
         ]);
     }
@@ -851,7 +851,7 @@ class ManageContentPages extends Page
                             ->icon(Heroicon::InformationCircle)
                             ->schema([
                                 Section::make('Banner Atas (Hero Section)')
-                                    ->description('Judul, slogan pembuka, dan deskripsi singkat pada halaman Tentang Sanubari.')
+                                    ->description('Judul, slogan pembuka, dan deskripsi singkat pada halaman Tentang Alat Kopi Malang.')
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('about_hero_badge')
@@ -871,12 +871,12 @@ class ManageContentPages extends Page
                                     ]),
 
                                 Section::make('Cerita Filosofi & Foto Roastery')
-                                    ->description('Bagian narasi mengapa nama Sanubari dipilih dan hubungan dengan petani lokal.')
+                                    ->description('Bagian narasi mengapa nama Alat Kopi Malang dipilih dan hubungan dengan petani lokal.')
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('about_story_title')
                                                 ->label('Judul Bagian')
-                                                ->placeholder('Contoh: Mengapa Nama Kami Sanubari')
+                                                ->placeholder('Contoh: Mengapa Nama Kami Alat Kopi Malang')
                                                 ->required(),
                                             TextInput::make('about_story_subtitle')
                                                 ->label('Subjudul / Kalimat Pendukung')
@@ -944,12 +944,12 @@ class ManageContentPages extends Page
                                     ]),
 
                                 Section::make('Tiga Pilar Utama (Nilai Roastery)')
-                                    ->description('Tiga kartu prinsip utama yang menjadi pondasi Sanubari Roastery.')
+                                    ->description('Tiga kartu prinsip utama yang menjadi pondasi Alat Kopi Malang.')
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('about_values_title')
                                                 ->label('Judul Bagian Nilai')
-                                                ->default('Tiga Pilar Utama Sanubari')
+                                                ->default('Tiga Pilar Utama Alat Kopi Malang')
                                                 ->required(),
                                             TextInput::make('about_values_subtitle')
                                                 ->label('Subjudul Bagian')
@@ -1011,7 +1011,7 @@ class ManageContentPages extends Page
                                     ]),
 
                                 Section::make('Keuntungan Kemitraan B2B')
-                                    ->description('Daftar benefit atau keunggulan bermitra pasokan kopi dengan Sanubari beserta foto/ikon.')
+                                    ->description('Daftar benefit atau keunggulan bermitra pasokan kopi dengan Alat Kopi Malang beserta foto/ikon.')
                                     ->schema([
                                         Repeater::make('wholesale_benefits')
                                             ->label('Kartu Keuntungan Kemitraan')
@@ -1167,7 +1167,7 @@ class ManageContentPages extends Page
                                                 ->required(),
                                             TextInput::make('visit_hero_title')
                                                 ->label('Judul Utama Hero')
-                                                ->placeholder('Contoh: Sanubari Roastery x Alat Kopi Malang')
+                                                ->placeholder('Contoh: Alat Kopi Malang')
                                                 ->required(),
                                         ]),
                                         Textarea::make('visit_hero_description')
@@ -1413,7 +1413,7 @@ class ManageContentPages extends Page
                                                 ->required(),
                                             TextInput::make('roasting_gallery_subtitle')
                                                 ->label('Subjudul Galeri')
-                                                ->default('Dokumentasi studio sangrai, mesin roasting, dan quality control cupping di Sanubari Roastery Malang.'),
+                                                ->default('Dokumentasi studio sangrai, mesin roasting, dan quality control cupping di Alat Kopi Malang.'),
                                         ]),
                                         Grid::make(4)->schema([
                                             Select::make('roasting_grid_desktop')
@@ -1590,7 +1590,7 @@ class ManageContentPages extends Page
                                                 ->required(),
                                             TextInput::make('barista_gallery_subtitle')
                                                 ->label('Subjudul Galeri')
-                                                ->default('Momen praktik peserta mengasah teknik espresso, latte art, dan manual brew di Sanubari Roastery Malang.'),
+                                                ->default('Momen praktik peserta mengasah teknik espresso, latte art, dan manual brew di Alat Kopi Malang.'),
                                         ]),
                                         Grid::make(4)->schema([
                                             Select::make('barista_grid_desktop')
@@ -1725,7 +1725,7 @@ class ManageContentPages extends Page
                                             ->required(),
                                         Textarea::make('events_empty_message')
                                             ->label('Pesan Jika Tidak Ada Acara Aktif')
-                                            ->default('Belum ada jadwal acara baru saat ini. Ikuti Instagram kami di @sanubari.roastery.mlg untuk kabar workshop terdekat!')
+                                            ->default('Belum ada jadwal acara baru saat ini. Ikuti Instagram kami di @alatkopimalang untuk kabar workshop terdekat!')
                                             ->rows(2)
                                             ->required(),
                                         Grid::make(2)->schema([
@@ -1763,7 +1763,7 @@ class ManageContentPages extends Page
                                         Grid::make(2)->schema([
                                             TextInput::make('events_gallery_title')
                                                 ->label('Judul Bagian Galeri')
-                                                ->default('Dokumentasi Acara & Workshop Sanubari')
+                                                ->default('Dokumentasi Acara & Workshop Alat Kopi Malang')
                                                 ->required(),
                                             TextInput::make('events_gallery_subtitle')
                                                 ->label('Subjudul Galeri')
@@ -2006,7 +2006,7 @@ class ManageContentPages extends Page
                                     ]),
 
                                 Section::make('4 Manfaat Utama (Kapasitas, Free Proyektor, Free Sound, Minimum Spent)')
-                                    ->description('Atur kartu manfaat utama booking tempat di Sanubari (Kapasitas 50+ orang, Proyektor Gratis, Sound System Gratis, Cukup Minimum Spent).')
+                                    ->description('Atur kartu manfaat utama booking tempat di Alat Kopi Malang (Kapasitas 50+ orang, Proyektor Gratis, Sound System Gratis, Cukup Minimum Spent).')
                                     ->schema([
                                         Repeater::make('booking_benefits')
                                             ->label('Daftar Manfaat Utama')
@@ -2063,7 +2063,7 @@ class ManageContentPages extends Page
                                     ]),
 
                                 Section::make('Galeri Dokumentasi Foto Ruangan & Suasana Acara')
-                                    ->description('Unggah dokumentasi foto suasana ruangan, penataan meja workshop/meeting, dan acara komunitas di Sanubari.')
+                                    ->description('Unggah dokumentasi foto suasana ruangan, penataan meja workshop/meeting, dan acara komunitas di Alat Kopi Malang.')
                                     ->schema([
                                         Grid::make(2)->schema([
                                             TextInput::make('booking_gallery_title')
@@ -2224,7 +2224,7 @@ class ManageContentPages extends Page
                                     ]),
 
                                 Section::make('4 Keunggulan Utama (Min. Order 200 Cup, On-site, Mesin Lengkap, Biji Kopi)')
-                                    ->description('Atur 4 kartu keunggulan utama layanan coffee catering Sanubari.')
+                                    ->description('Atur 4 kartu keunggulan utama layanan coffee catering Alat Kopi Malang.')
                                     ->schema([
                                         Repeater::make('catering_benefits')
                                             ->label('Daftar Keunggulan Utama')
@@ -2766,7 +2766,7 @@ class ManageContentPages extends Page
             'whatsapp_number' => $data['events_whatsapp_number'] ?? '',
             'cta_button_text' => $data['events_cta_button_text'] ?? 'Daftar via WhatsApp',
             'cta_note' => $data['events_cta_note'] ?? '',
-            'gallery_title' => $data['events_gallery_title'] ?? 'Dokumentasi Acara & Workshop Sanubari',
+            'gallery_title' => $data['events_gallery_title'] ?? 'Dokumentasi Acara & Workshop Alat Kopi Malang',
             'gallery_subtitle' => $data['events_gallery_subtitle'] ?? '',
             'grid_desktop' => (int) ($data['events_grid_desktop'] ?? 3),
             'grid_tablet' => (int) ($data['events_grid_tablet'] ?? 2),
@@ -2902,8 +2902,8 @@ class ManageContentPages extends Page
         }
 
         $pageBooking = [
-            'hero_badge' => $data['booking_hero_badge'] ?? 'Reservasi & Sewa Tempat di Sanubari Roastery',
-            'hero_title' => $data['booking_hero_title'] ?? 'Booking Tempat Nyaman untuk Acara & Komunitas di Sanubari',
+            'hero_badge' => $data['booking_hero_badge'] ?? 'Reservasi & Sewa Tempat di Alat Kopi Malang',
+            'hero_title' => $data['booking_hero_title'] ?? 'Booking Tempat Nyaman untuk Acara & Komunitas di Alat Kopi Malang',
             'hero_description' => $data['booking_hero_description'] ?? '',
             'hero_image' => $finalBookingHero,
             'hero_image_url' => $data['booking_hero_image_url'] ?? null,
@@ -2995,7 +2995,7 @@ class ManageContentPages extends Page
 
         $pageCatering = [
             'hero_badge' => $data['catering_hero_badge'] ?? 'Live Espresso Bar & Coffee Catering',
-            'hero_title' => $data['catering_hero_title'] ?? 'Sanubari Coffee Catering untuk Segala Momen Spesial Anda',
+            'hero_title' => $data['catering_hero_title'] ?? 'Alat Kopi Malang Coffee Catering untuk Segala Momen Spesial Anda',
             'hero_description' => $data['catering_hero_description'] ?? '',
             'hero_image' => $finalCateringHero,
             'hero_image_url' => $data['catering_hero_image_url'] ?? null,

@@ -424,13 +424,13 @@ export default function ByobPage({ beans = [], byobProduct, byobSettings }: Byob
     );
 
     return (
-        <PublicLayout title={`${byobSettings?.hero_title || 'C.Y.B.R: Custom Your Blend Ratio'} | Sanubari Roastery`}>
+        <PublicLayout title={`${byobSettings?.hero_title || 'C.Y.B.R: Custom Your Blend Ratio'} | Alat Kopi Malang`}>
             <Head>
                 <meta
                     name="description"
                     content={
                         byobSettings?.hero_description ||
-                        'Layanan C.Y.B.R (Custom Your Blend Ratio) Kopi Sanubari Roastery Malang. Padukan single origin lereng Gunung Kawi dan Nusantara dengan satu slider rasio persentase presisi.'
+                        'Layanan C.Y.B.R (Custom Your Blend Ratio) Kopi Alat Kopi Malang. Padukan single origin lereng Gunung Kawi dan Nusantara dengan satu slider rasio persentase presisi.'
                     }
                 />
             </Head>
@@ -770,7 +770,7 @@ export default function ByobPage({ beans = [], byobProduct, byobSettings }: Byob
                                         resolveImageUrl(byobSettings?.packshot_image) ||
                                         'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?auto=format&fit=crop&w=600&q=80'
                                     }
-                                    alt="Sanubari Coffee Packaging"
+                                    alt="Alat Kopi Malang Coffee Packaging"
                                     className="w-full h-full object-cover"
                                 />
                             </div>

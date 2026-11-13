@@ -365,7 +365,7 @@ class Product extends Model
             [
                 'name' => 'Houseblend Collection',
                 'slug' => 'houseblend',
-                'description' => 'Racikan khas Sanubari untuk kafe dan kebutuhan komersial.',
+                'description' => 'Racikan khas Alat Kopi Malang untuk kafe dan kebutuhan komersial.',
                 'badge_color' => 'sky',
                 'is_active' => true,
             ],

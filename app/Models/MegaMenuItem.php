@@ -31,11 +31,11 @@ class MegaMenuItem extends Model
     protected static function booted(): void
     {
         static::saved(function () {
-            Cache::forget('sanubari_mega_menus');
+            Cache::forget('Alat Kopi Malang_mega_menus');
         });
 
         static::deleted(function () {
-            Cache::forget('sanubari_mega_menus');
+            Cache::forget('Alat Kopi Malang_mega_menus');
         });
     }
 

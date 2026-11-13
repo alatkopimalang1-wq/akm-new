@@ -13,7 +13,7 @@ class ShippingService
 {
     /**
      * Default Origin for RajaOngkir Enterprise Pro (Komerce V2):
-     * Provinsi Jawa Timur (18), Kota/Kab Malang (391), Kecamatan Lowokwaru (3896) - Sanubari Tlogomas.
+     * Provinsi Jawa Timur (18), Kota/Kab Malang (391), Kecamatan Lowokwaru (3896) - Alat Kopi Malang Tlogomas.
      */
     public const DEFAULT_ORIGIN_PROVINCE_ID = 18;
     public const DEFAULT_ORIGIN_CITY_ID = 391;
@@ -423,7 +423,7 @@ class ShippingService
     public static function getBuiltInSubdistricts(int $cityId): array
     {
         $subdistricts = [
-            // Malang (391) - Lowokwaru (Sanubari Tlogomas) first
+            // Malang (391) - Lowokwaru (Alat Kopi Malang Tlogomas) first
             391 => [
                 ['id' => 3896, 'city_id' => 391, 'name' => 'Lowokwaru'],
                 ['id' => 3895, 'city_id' => 391, 'name' => 'Klojen'],
@@ -745,7 +745,7 @@ class ShippingService
             return [];
         }
 
-        // Determine distance zone based on RajaOngkir District (Kecamatan) ID from Sanubari Roastery (Ruko Tlogomas Square, Lowokwaru 3896)
+        // Determine distance zone based on RajaOngkir District (Kecamatan) ID from Alat Kopi Malang (Ruko Tlogomas Square, Lowokwaru 3896)
         $subId = (int) ($destSubdistrictId ?: 3896);
 
         // Zone 1 (0–4 km): Lowokwaru (Tlogomas) & Dau (Kab. Malang perbatasan langsung)
@@ -1554,7 +1554,7 @@ class ShippingService
             'courier' => $order->shipping_courier,
             'service' => $order->shipping_service,
             'created_at' => now()->toDateTimeString(),
-            'origin' => 'Sanubari Roastery (Tlogomas, Malang)',
+            'origin' => 'Alat Kopi Malang (Tlogomas, Malang)',
             'destination' => $order->shipping_city ?? 'Kota Malang',
             'weight_grams' => (int) ($order->total_weight_grams ?: 200),
             'status' => 'booked',
@@ -1589,7 +1589,7 @@ class ShippingService
         $pickupDate = $pickupDetails['pickup_date'] ?? now()->format('Y-m-d');
         $pickupTime = $pickupDetails['pickup_time'] ?? '13:00 - 16:00';
         $vehicle = $pickupDetails['vehicle'] ?? 'Motor';
-        $driverNotes = $pickupDetails['notes'] ?? 'Paket biji kopi Sanubari Roastery (Jangan dibanting). Lokasi pickup di kasir bar.';
+        $driverNotes = $pickupDetails['notes'] ?? 'Paket biji kopi Alat Kopi Malang (Jangan dibanting). Lokasi pickup di kasir bar.';
 
         $pickupRef = 'PU-' . strtoupper(Str::random(6)) . '-' . now()->format('ymd');
 
@@ -1732,8 +1732,8 @@ class ShippingService
                 'waybill' => $waybill,
                 'status' => 'ON PROCESS',
                 'status_label' => 'Driver Sedang Mengantar Paket ke Alamat Tujuan',
-                'shipper' => 'Sanubari Roastery (Tlogomas, Malang)',
-                'receiver' => 'Pelanggan Sanubari',
+                'shipper' => 'Alat Kopi Malang (Tlogomas, Malang)',
+                'receiver' => 'Pelanggan Alat Kopi Malang',
                 'origin' => 'Tlogomas, Lowokwaru, Kota Malang',
                 'destination' => 'Area Malang Raya',
                 'delivered' => false,
@@ -1746,12 +1746,12 @@ class ShippingService
                     [
                         'date' => now()->subMinutes(15)->format('d M Y, H:i'),
                         'desc' => 'Paket kopi spesialti selesai dipacking dan diserahkan ke driver GoSend.',
-                        'location' => 'Sanubari Roastery (Ruko Tlogomas Square Kav. 34)',
+                        'location' => 'Alat Kopi Malang (Ruko Tlogomas Square Kav. 34)',
                     ],
                     [
                         'date' => now()->subMinutes(30)->format('d M Y, H:i'),
                         'desc' => 'Pesanan GoSend Instant terkonfirmasi & driver ditugaskan.',
-                        'location' => 'Sistem Dispatch Sanubari',
+                        'location' => 'Sistem Dispatch Alat Kopi Malang',
                     ],
                 ],
             ];
@@ -1800,7 +1800,7 @@ class ShippingService
                         'waybill' => $waybill,
                         'status' => $statusCode,
                         'status_label' => $isDelivered ? 'Paket Telah Diterima (Delivered)' : 'Dalam Proses Pengiriman (' . $statusCode . ')',
-                        'shipper' => $summary['shipper_name'] ?? 'Sanubari Roastery Malang',
+                        'shipper' => $summary['shipper_name'] ?? 'Alat Kopi Malang',
                         'receiver' => $summary['receiver_name'] ?? '-',
                         'origin' => $summary['origin'] ?? 'Malang',
                         'destination' => $summary['destination'] ?? '-',
@@ -1821,8 +1821,8 @@ class ShippingService
             'waybill' => $waybill,
             'status' => 'REGISTERED / ON PROCESS',
             'status_label' => 'Nomor Resi Telah Diterbitkan & Menunggu Pickup Kurir',
-            'shipper' => 'Sanubari Roastery (Tlogomas, Malang)',
-            'receiver' => 'Pelanggan Sanubari',
+            'shipper' => 'Alat Kopi Malang (Tlogomas, Malang)',
+            'receiver' => 'Pelanggan Alat Kopi Malang',
             'origin' => 'Kota Malang',
             'destination' => 'Tujuan Pengiriman',
             'delivered' => false,
@@ -1830,7 +1830,7 @@ class ShippingService
                 [
                     'date' => now()->format('d M Y, H:i'),
                     'desc' => 'Air Waybill (AWB) telah diterbitkan dan data paket terdaftar di sistem ekspedisi ' . strtoupper($cleanCourier) . '.',
-                    'location' => 'Sanubari Roastery (Tlogomas, Malang)',
+                    'location' => 'Alat Kopi Malang (Tlogomas, Malang)',
                 ],
                 [
                     'date' => now()->subMinutes(20)->format('d M Y, H:i'),
@@ -1849,7 +1849,7 @@ class ShippingService
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
         $sender = [
-            'name' => $settings['shipping_sender_name'] ?? 'SANUBARI ROASTERY TLOGOMAS',
+            'name' => $settings['shipping_sender_name'] ?? 'ALAT KOPI MALANG TLOGOMAS',
             'phone' => $settings['whatsapp'] ?? '0851-2193-0454',
             'address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang 65144'),
             'city' => 'Kota Malang',

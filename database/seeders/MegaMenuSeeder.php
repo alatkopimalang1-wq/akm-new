@@ -14,7 +14,7 @@ class MegaMenuSeeder extends Seeder
      */
     public function run(): void
     {
-        Cache::forget('sanubari_mega_menus');
+        Cache::forget('Alat Kopi Malang_mega_menus');
 
         // 1. Katalog Kopi (shop)
         $shop = MegaMenu::updateOrCreate(
@@ -116,7 +116,7 @@ class MegaMenuSeeder extends Seeder
                 'featured_title' => 'Showroom & Lab Roastery',
                 'featured_subtitle' => 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang. Buka Setiap Hari: 09.00 - 23.00 WIB',
                 'featured_image' => 'mega-menu/showroom.jpg',
-                'featured_url' => 'https://wa.me/6285121930454?text=Halo%20Sanubari%20Roastery!%20Saya%20ingin%20konsultasi%20pasokan%20kopi%20grosir%20dan%20sample%20kedai.',
+                'featured_url' => 'https://wa.me/6285121930454?text=Halo%20Alat Kopi Malang%20Roastery!%20Saya%20ingin%20konsultasi%20pasokan%20kopi%20grosir%20dan%20sample%20kedai.',
                 'featured_button_text' => 'Hubungi Tim Wholesale (WhatsApp)',
             ]
         );
@@ -231,10 +231,10 @@ class MegaMenuSeeder extends Seeder
                 'badge' => null,
                 'sort_order' => 3,
             ],
-            // Section 2: Cerita & Ruang Sanubari
+            // Section 2: Cerita & Ruang Alat Kopi Malang
             [
-                'section_title' => 'Cerita & Ruang Sanubari',
-                'title' => 'Tentang Sanubari',
+                'section_title' => 'Cerita & Ruang Alat Kopi Malang',
+                'title' => 'Tentang Alat Kopi Malang',
                 'description' => 'Didirikan di Malang sejak 2017 dengan dedikasi mengangkat kopi lokal lereng Kawi.',
                 'url' => '/tentang',
                 'icon' => 'arrow-right',
@@ -242,7 +242,7 @@ class MegaMenuSeeder extends Seeder
                 'sort_order' => 4,
             ],
             [
-                'section_title' => 'Cerita & Ruang Sanubari',
+                'section_title' => 'Cerita & Ruang Alat Kopi Malang',
                 'title' => 'Kunjungi Showroom Malang',
                 'description' => 'Cicipi seduhan kopi, uji alat seduh manual, dan konsultasi blend langsung.',
                 'url' => '/kunjungi',
@@ -251,7 +251,7 @@ class MegaMenuSeeder extends Seeder
                 'sort_order' => 5,
             ],
             [
-                'section_title' => 'Cerita & Ruang Sanubari',
+                'section_title' => 'Cerita & Ruang Alat Kopi Malang',
                 'title' => 'Jurnal & Wawasan Kopi',
                 'description' => 'Catatan sangrai, varietas kopi Nusantara, dan panduan merawat grinder.',
                 'url' => '/blog',

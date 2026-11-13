@@ -71,9 +71,9 @@ export default function AboutPage({ page }: AboutPageProps) {
 
     const heroBadge = page?.hero_badge || 'Didirikan di Malang sejak 2017';
     const heroTitle = page?.hero_title || 'Dedikasi pada Setiap Cangkir Kopi';
-    const heroDesc = page?.hero_description || 'Sanubari Roastery berfokus mengangkat karakter biji kopi lereng Gunung Kawi ke cangkir Anda, melalui pemetikan selektif, kurva sangrai digital, dan pengujian rasa yang jujur.';
+    const heroDesc = page?.hero_description || 'Alat Kopi Malang berfokus mengangkat karakter biji kopi lereng Gunung Kawi ke cangkir Anda, melalui pemetikan selektif, kurva sangrai digital, dan pengujian rasa yang jujur.';
 
-    const storyTitle = page?.story_title || 'Mengapa Nama Kami Sanubari';
+    const storyTitle = page?.story_title || 'Mengapa Nama Kami Alat Kopi Malang';
     const storySubtitle = page?.story_subtitle || 'Menghubungkan jerih payah petani lereng Gunung Kawi langsung dengan cangkir kopi Anda.';
     const storyP1 = page?.story_p1 || 'Bagi kami, setiap biji kopi membawa cerita perjalanan panjang: dari tanah vulkanis lereng Gunung Kawi pada ketinggian 1.200–1.600 meter, kabut sore yang memperlambat pematangan buah, ketelitian tangan petani saat memetik buah merah, hingga kalibrasi kurva sangrai di roastery kami di Kota Malang.';
     const storyP2 = page?.story_p2 || 'Kami menjaga kemitraan langsung dengan petani lokal tanpa perantara spekulan, sehingga petani mendapatkan harga yang adil dan Anda mendapatkan biji kopi segar dengan jejak asal-usul yang jelas.';
@@ -87,7 +87,7 @@ export default function AboutPage({ page }: AboutPageProps) {
     const videoPosition = page?.video_position || 'section';
     const embedUrl = getEmbedUrl(videoSource);
 
-    const valuesTitle = page?.values_title || 'Tiga Pilar Utama Sanubari';
+    const valuesTitle = page?.values_title || 'Tiga Pilar Utama Alat Kopi Malang';
     const valuesSubtitle = page?.values_subtitle || 'Prinsip nyata yang kami jalankan di setiap batch kopi yang kami sangrai.';
     const pillars = (page?.pillars && page.pillars.length > 0) ? page.pillars : [
         {
@@ -105,7 +105,7 @@ export default function AboutPage({ page }: AboutPageProps) {
     ];
 
     return (
-        <PublicLayout title="Tentang Sanubari Roastery">
+        <PublicLayout title="Tentang Alat Kopi Malang">
             {/* Hero Header */}
             <div className="bg-brand-950 text-white py-12 sm:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
                 <div className="max-w-4xl mx-auto space-y-3 sm:space-y-4 text-center relative z-10">
@@ -161,7 +161,7 @@ export default function AboutPage({ page }: AboutPageProps) {
                         ) : (
                             <img
                                 src={storyImage}
-                                alt="Proses Sangrai Biji Kopi di Sanubari Roastery Malang"
+                                alt="Proses Sangrai Biji Kopi di Alat Kopi Malang"
                                 className="w-full h-full object-cover"
                             />
                         )}

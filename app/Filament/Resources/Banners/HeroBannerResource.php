@@ -43,7 +43,7 @@ class HeroBannerResource extends Resource
                         TextInput::make('title')
                             ->label('Judul Utama Banner')
                             ->required()
-                            ->placeholder('e.g. Official Sanubari Roastery Gear Partner'),
+                            ->placeholder('e.g. Official Alat Kopi Malang Gear Partner'),
                         TextInput::make('badge')
                             ->label('Lencana Badge')
                             ->placeholder('e.g. NEW ARRIVAL / PROMO SPESIAL'),

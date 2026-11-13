@@ -28,7 +28,7 @@ class ListVideoReels extends ListRecords
                 ->modalDescription('Atur judul dan deskripsi yang tampil pada header bagian Video Reels di halaman awal serta halaman /video.')
                 ->modalSubmitActionLabel('Simpan Perubahan')
                 ->fillForm(fn (): array => [
-                    'home_reels_title' => Setting::get('home_reels_title', 'Sanubari Reels Videos'),
+                    'home_reels_title' => Setting::get('home_reels_title', 'Alat Kopi Malang Reels Videos'),
                     'home_reels_subtitle' => Setting::get('home_reels_subtitle', 'Tonton tutorial seduh, bedah mesin & tips kopi langsung di Instagram Reels'),
                     'home_reels_view_all_text' => Setting::get('home_reels_view_all_text', 'Lihat Semua'),
                     'home_reels_view_all_url' => Setting::get('home_reels_view_all_url', '/video'),
@@ -37,7 +37,7 @@ class ListVideoReels extends ListRecords
                     TextInput::make('home_reels_title')
                         ->label('Judul Bagian Video Reels')
                         ->required()
-                        ->placeholder('Sanubari Reels Videos')
+                        ->placeholder('Alat Kopi Malang Reels Videos')
                         ->helperText('Judul tebal di samping ikon Instagram pada halaman awal.'),
                     Textarea::make('home_reels_subtitle')
                         ->label('Deskripsi / Subtitle Bagian')

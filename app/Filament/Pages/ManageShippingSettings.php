@@ -46,10 +46,10 @@ class ManageShippingSettings extends Page
         $this->form->fill([
             'shipping_delivery_enabled' => Setting::get('shipping_delivery_enabled', true),
             'pickup_in_store_enabled' => Setting::get('pickup_in_store_enabled', true),
-            'pickup_store_name' => Setting::get('pickup_store_name', 'Sanubari Roastery (Tlogomas, Malang)'),
+            'pickup_store_name' => Setting::get('pickup_store_name', 'Alat Kopi Malang (Tlogomas, Malang)'),
             'pickup_store_address' => Setting::get('pickup_store_address', 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
             'pickup_store_hours' => Setting::get('pickup_store_hours', 'Buka setiap hari: 09.00 - 23.00 WIB'),
-            'pickup_notes' => Setting::get('pickup_notes', 'Pesanan dapat diambil langsung di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.'),
+            'pickup_notes' => Setting::get('pickup_notes', 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.'),
             'maps_url' => Setting::get('maps_url', 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7'),
 
             'rajaongkir_enabled' => $config['enabled'],
@@ -80,12 +80,12 @@ class ManageShippingSettings extends Page
 
             'rajaongkir_auto_booking' => Setting::get('rajaongkir_auto_booking', true),
             'rajaongkir_auto_pickup' => Setting::get('rajaongkir_auto_pickup', false),
-            'shipping_sender_name' => Setting::get('shipping_sender_name', 'SANUBARI ROASTERY TLOGOMAS'),
+            'shipping_sender_name' => Setting::get('shipping_sender_name', 'ALAT KOPI MALANG TLOGOMAS'),
             'shipping_sender_phone' => Setting::get('shipping_sender_phone', '0851-2193-0454'),
             'shipping_sender_address' => Setting::get('shipping_sender_address', 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang 65144'),
             'shipping_default_pickup_vehicle' => Setting::get('shipping_default_pickup_vehicle', 'Motor'),
             'shipping_default_pickup_time' => Setting::get('shipping_default_pickup_time', '13:00 - 16:00'),
-            'shipping_pickup_notes' => Setting::get('shipping_pickup_notes', 'Paket biji kopi spesialti (Fragile). Ambil di bar kasir Sanubari.'),
+            'shipping_pickup_notes' => Setting::get('shipping_pickup_notes', 'Paket biji kopi spesialti (Fragile). Ambil di bar kasir Alat Kopi Malang.'),
 
             'komerce_shipping_delivery_key' => Setting::get('komerce_shipping_delivery_key', ''),
             'komerce_shipping_delivery_env' => Setting::get('komerce_shipping_delivery_env', 'production'),
@@ -214,13 +214,13 @@ class ManageShippingSettings extends Page
                                 ->default(true),
                             Toggle::make('pickup_in_store_enabled')
                                 ->label('Aktifkan Ambil di Toko (Self Pick Up)')
-                                ->helperText('Izinkan pelanggan mengambil pesanan sendiri di gerai Sanubari Roastery tanpa ongkos kirim.')
+                                ->helperText('Izinkan pelanggan mengambil pesanan sendiri di gerai Alat Kopi Malang tanpa ongkos kirim.')
                                 ->default(true),
                         ]),
                         Grid::make(2)->schema([
                             TextInput::make('pickup_store_name')
                                 ->label('Nama Gerai / Toko Pick Up')
-                                ->default('Sanubari Roastery (Tlogomas, Malang)')
+                                ->default('Alat Kopi Malang (Tlogomas, Malang)')
                                 ->required(),
                             TextInput::make('maps_url')
                                 ->label('Tautan Google Maps Toko')
@@ -237,7 +237,7 @@ class ManageShippingSettings extends Page
                                 ->required(),
                             TextInput::make('pickup_notes')
                                 ->label('Petunjuk Pengambilan Pelanggan')
-                                ->default('Pesanan dapat diambil langsung di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.'),
+                                ->default('Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.'),
                         ]),
                     ]),
 
@@ -293,7 +293,7 @@ class ManageShippingSettings extends Page
                     ]),
 
                 Section::make('Lokasi Pengiriman Asal (Origin Roastery)')
-                    ->description('Tentukan kota dan kecamatan asal pengiriman paket biji kopi Sanubari Roastery.')
+                    ->description('Tentukan kota dan kecamatan asal pengiriman paket biji kopi Alat Kopi Malang.')
                     ->icon(Heroicon::MapPin)
                     ->schema([
                         Grid::make(3)->schema([
@@ -439,7 +439,7 @@ class ManageShippingSettings extends Page
                         Grid::make(3)->schema([
                             TextInput::make('shipping_sender_name')
                                 ->label('Nama Toko Pengirim (Di Label Resi)')
-                                ->default('SANUBARI ROASTERY MALANG')
+                                ->default('ALAT KOPI MALANG')
                                 ->required(),
                             TextInput::make('shipping_sender_phone')
                                 ->label('No. WhatsApp / HP Pengirim')
@@ -472,7 +472,7 @@ class ManageShippingSettings extends Page
                         ]),
                         TextInput::make('shipping_pickup_notes')
                             ->label('Catatan Instruksi untuk Driver Penjemput')
-                            ->default('Paket biji kopi spesialti (Fragile). Ambil di bar kasir Sanubari.')
+                            ->default('Paket biji kopi spesialti (Fragile). Ambil di bar kasir Alat Kopi Malang.')
                             ->helperText('Catatan ini dicantumkan saat request pickup dikirim ke kurir ekspedisi.'),
                     ]),
             ]);

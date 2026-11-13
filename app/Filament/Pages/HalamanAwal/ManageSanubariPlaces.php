@@ -55,7 +55,7 @@ class ManageSanubariPlaces extends Page
             ],
             [
                 'badge' => 'Alat Kopi Malang',
-                'subBadge' => 'Gedung Sanubari Lt. 1',
+                'subBadge' => 'Gedung Alat Kopi Malang Lt. 1',
                 'title' => 'Equipment & Commercial Espresso Showroom',
                 'desc' => 'Kolaborasi dengan Alat Kopi Malang: coba langsung mesin espresso komersial, grinder Mahlkönig/Eureka, dripper, dan timbangan digital.',
                 'href' => '/kunjungi',
@@ -131,7 +131,7 @@ class ManageSanubariPlaces extends Page
         }
 
         $this->form->fill([
-            'home_place_title' => $settings['home_place_title'] ?? 'Roastery & Showroom Sanubari',
+            'home_place_title' => $settings['home_place_title'] ?? 'Roastery & Showroom Alat Kopi Malang',
             'home_place_subtitle' => $settings['home_place_subtitle'] ?? 'Kunjungi slow bar, uji coba mesin espresso, dan rasakan atmosfer sangrai lereng Kawi di Kota Malang',
             'home_place_items' => $sanitizedItems,
         ]);
@@ -160,7 +160,7 @@ class ManageSanubariPlaces extends Page
     {
         return $schema
             ->components([
-                Section::make('Ruang & Suasana Sanubari di Malang')
+                Section::make('Ruang & Suasana Alat Kopi Malang di Malang')
                     ->description('Kartu pengalaman fisik tempat: Slow Bar, Showroom Alat Kopi, Laboratorium Roasting, Cupping Sensory, dll.')
                     ->schema([
                         Grid::make(2)->schema([

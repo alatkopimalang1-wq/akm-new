@@ -21,8 +21,8 @@ export const DEFAULT_PARTNER_SLIDES: PartnerSlide[] = [
         open_in_new_tab: true,
     },
     {
-        id: 'sanubari-roastery',
-        title: 'Sanubari Roasting Studio',
+        id: 'Alat Kopi Malang-roastery',
+        title: 'Alat Kopi Malang Roasting Studio',
         city: 'MALANG',
         image: 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80',
         href: '/kunjungi',
@@ -80,7 +80,7 @@ interface CoverflowSliderProps {
 export const CoverflowSlider: React.FC<CoverflowSliderProps> = ({
     slides = DEFAULT_PARTNER_SLIDES,
     title = 'Disajikan di Kedai Pilihan',
-    subtitle = 'Temukan seduhan biji kopi sangrai Sanubari di berbagai kedai kopi dan coffee space terkurasi di Malang',
+    subtitle = 'Temukan seduhan biji kopi sangrai Alat Kopi Malang di berbagai kedai kopi dan coffee space terkurasi di Malang',
     className = '',
 }) => {
     // Start centered on Lafayette (index 3 of 7)

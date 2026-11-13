@@ -57,12 +57,12 @@ class ManageFeaturedMenu extends Page
 
         $this->form->fill([
             'home_laris_title' => $settings['home_laris_title'] ?? 'Laris Manis',
-            'home_laris_subtitle' => $settings['home_laris_subtitle'] ?? 'Koleksi biji kopi paling laris dan sering diseduh di Sanubari yang mungkin kamu sukai',
+            'home_laris_subtitle' => $settings['home_laris_subtitle'] ?? 'Koleksi biji kopi paling laris dan sering diseduh di Alat Kopi Malang yang mungkin kamu sukai',
             'home_laris_1_title' => $settings['home_laris_1_title'] ?? 'Gunung Kawi Honey Anaerobic',
             'home_laris_1_subtitle' => $settings['home_laris_1_subtitle'] ?? 'Karakter Manis Madu & Floral Lereng Kawi',
             'home_laris_1_href' => $settings['home_laris_1_href'] ?? '/shop?series=kawi',
             'home_laris_1_image' => $img1,
-            'home_laris_2_title' => $settings['home_laris_2_title'] ?? 'Sanubari Signature Houseblend Espresso',
+            'home_laris_2_title' => $settings['home_laris_2_title'] ?? 'Alat Kopi Malang Signature Houseblend Espresso',
             'home_laris_2_subtitle' => $settings['home_laris_2_subtitle'] ?? 'Diformulasikan untuk Crema Tebal & Manis Karamel',
             'home_laris_2_href' => $settings['home_laris_2_href'] ?? '/shop?category=espresso-beans',
             'home_laris_2_image' => $img2,

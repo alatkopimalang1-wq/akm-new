@@ -52,7 +52,7 @@ class EventForm
                                 ->options([
                                     'Live Music' => '🎵 Live Music & Akustik (Tanpa Daftar)',
                                     'Live DJ' => '🎧 Live DJ Session (Tanpa Daftar)',
-                                    'Stand Sanubari' => '☕ Stand / Pop-up Booth Sanubari (Tanpa Daftar)',
+                                    'Stand Alat Kopi Malang' => '☕ Stand / Pop-up Booth Alat Kopi Malang (Tanpa Daftar)',
                                     'Cupping Session' => '☕ Cupping Session (Uji Cita Rasa)',
                                     'Workshop Seduh' => '🧪 Workshop Seduh (Manual Brew)',
                                     'Roasting Masterclass' => '🔥 Roasting Masterclass',
@@ -65,10 +65,10 @@ class EventForm
                                 ->searchable()
                                 ->live()
                                 ->afterStateUpdated(function ($state, callable $set) {
-                                    if (in_array($state, ['Live Music', 'Live DJ', 'Stand Sanubari'])) {
+                                    if (in_array($state, ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang'])) {
                                         $set('meta.entry_type', 'walk_in');
                                         $set('fee', 0);
-                                        if ($state === 'Stand Sanubari') {
+                                        if ($state === 'Stand Alat Kopi Malang') {
                                             $set('meta.walk_in_badge', 'Kunjungi Stand Kami');
                                         } else {
                                             $set('meta.walk_in_badge', 'Bebas Masuk • Langsung Datang');
@@ -99,7 +99,7 @@ class EventForm
                         ]),
 
                         Grid::make(3)
-                            ->visible(fn ($get) => $get('meta.entry_type') === 'walk_in' || in_array($get('category'), ['Live Music', 'Live DJ', 'Stand Sanubari']))
+                            ->visible(fn ($get) => $get('meta.entry_type') === 'walk_in' || in_array($get('category'), ['Live Music', 'Live DJ', 'Stand Alat Kopi Malang']))
                             ->schema([
                                 TextInput::make('meta.walk_in_badge')
                                     ->label('Label Badge Tanpa Daftar')
@@ -163,8 +163,8 @@ class EventForm
                         Grid::make(2)->schema([
                             TextInput::make('location')
                                 ->label('Nama Tempat / Venue')
-                                ->placeholder('Sanubari Roastery Lab x Alat Kopi Malang')
-                                ->default('Sanubari Roastery Lab x Alat Kopi Malang')
+                                ->placeholder('Alat Kopi Malang Lab x Alat Kopi Malang')
+                                ->default('Alat Kopi Malang Lab x Alat Kopi Malang')
                                 ->required(),
                             TextInput::make('address')
                                 ->label('Alamat Lengkap Venue')
@@ -221,7 +221,7 @@ class EventForm
                     ->schema([
                         TextInput::make('whatsapp_register_text')
                             ->label('Template Pesan WhatsApp')
-                            ->placeholder('Halo Sanubari Roastery! Saya ingin info seputar acara ini...')
+                            ->placeholder('Halo Alat Kopi Malang! Saya ingin info seputar acara ini...')
                             ->helperText('Pesan ini otomatis muncul di kolom chat WhatsApp calon pengunjung saat mengklik tombol.')
                             ->columnSpanFull(),
                     ]),

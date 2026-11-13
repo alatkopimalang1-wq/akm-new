@@ -444,7 +444,7 @@ export default function CartPage({
 
                 // Save recent order to localStorage for live notification center tracking
                 try {
-                    const existing = JSON.parse(localStorage.getItem('sanubari_recent_orders') || '[]');
+                    const existing = JSON.parse(localStorage.getItem('Alat Kopi Malang_recent_orders') || '[]');
                     const newOrder = {
                         order_number: data.order_number,
                         status: 'pending',
@@ -455,7 +455,7 @@ export default function CartPage({
                         shipping_courier: isPickup ? 'Ambil di Toko' : (activeCourier?.courier || 'J&T Express'),
                     };
                     const updated = [newOrder, ...existing.filter((o: any) => o.order_number !== data.order_number)].slice(0, 5);
-                    localStorage.setItem('sanubari_recent_orders', JSON.stringify(updated));
+                    localStorage.setItem('Alat Kopi Malang_recent_orders', JSON.stringify(updated));
                 } catch (e) {
                     console.error(e);
                 }
@@ -678,7 +678,7 @@ export default function CartPage({
                                                     {fulfillmentType === 'pickup' && <Check className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-brand-700 stroke-[3]" />}
                                                 </div>
                                                 <p className="text-xs sm:text-[11px] text-brand-600 mt-1 leading-snug">
-                                                    Ambil sendiri di bar Roastery Sanubari tanpa ongkir.
+                                                    Ambil sendiri di bar Alat Kopi Malang tanpa ongkir.
                                                 </p>
                                             </div>
                                         </button>
@@ -699,7 +699,7 @@ export default function CartPage({
                                             <div className="flex items-start justify-between gap-3">
                                                 <div>
                                                     <span className="text-[10px] font-bold uppercase tracking-wider text-accent-copper block">
-                                                        Gerai Sanubari Roastery
+                                                        Gerai Alat Kopi Malang
                                                     </span>
                                                     <h3 className="font-extrabold text-brand-950 text-sm mt-0.5">
                                                         {pickupSettings.store_name}
@@ -929,7 +929,7 @@ export default function CartPage({
                                         <ShippingMapPicker
                                             originLat={origin?.latitude ?? -7.9327}
                                             originLng={origin?.longitude ?? 112.6037}
-                                            originName="Sanubari Roastery, Tlogomas"
+                                            originName="Alat Kopi Malang, Tlogomas"
                                             latitude={destLat}
                                             longitude={destLng}
                                             cityName={currentCity?.name || 'Kota Malang'}

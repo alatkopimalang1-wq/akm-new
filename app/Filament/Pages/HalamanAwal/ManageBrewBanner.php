@@ -44,7 +44,7 @@ class ManageBrewBanner extends Page
         $this->form->fill([
             'home_brew_banner_enable' => (bool) ($settings['home_brew_banner_enable'] ?? true),
             'home_brew_banner_badge' => $settings['home_brew_banner_badge'] ?? 'Panduan & Resep Seduh',
-            'home_brew_banner_title' => $settings['home_brew_banner_title'] ?? 'Resep & Panduan Seduh Kopi Presisi dari Barista Sanubari',
+            'home_brew_banner_title' => $settings['home_brew_banner_title'] ?? 'Resep & Panduan Seduh Kopi Presisi dari Barista Alat Kopi Malang',
             'home_brew_banner_desc' => $settings['home_brew_banner_desc'] ?? 'Pelajari rasio seduh, ukuran gilingan, suhu air, dan teknik penuangan optimal mulai dari V60, Japanese Ice, hingga Espresso untuk mengeluarkan cita rasa terbaik.',
             'home_brew_banner_button' => $settings['home_brew_banner_button'] ?? 'Eksplorasi Resep Seduh Sekarang',
             'home_brew_banner_image' => (! empty($bannerImg) && ! $isHttp) ? str_replace('/storage/', '', $bannerImg) : null,
@@ -100,7 +100,7 @@ class ManageBrewBanner extends Page
                     ->schema([
                         TextInput::make('home_brew_banner_title')
                             ->label('Judul Banner (Alt Text)')
-                            ->default('Resep Seduh Kopi Sanubari')
+                            ->default('Resep Seduh Kopi Alat Kopi Malang')
                             ->nullable(),
                         Textarea::make('home_brew_banner_desc')
                             ->label('Deskripsi / Penjelasan Singkat')
@@ -112,7 +112,7 @@ class ManageBrewBanner extends Page
                     ]),
 
                 Section::make('Gambar Latar Animasi (Background Image)')
-                    ->description('Pilih foto suasana seduh kopi atau barista Sanubari dengan efek animasi zoom ambient.')
+                    ->description('Pilih foto suasana seduh kopi atau barista Alat Kopi Malang dengan efek animasi zoom ambient.')
                     ->schema([
                         Grid::make(2)->schema([
                             FileUpload::make('home_brew_banner_image')

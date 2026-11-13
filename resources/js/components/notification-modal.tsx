@@ -48,7 +48,7 @@ interface NotificationModalProps {
 }
 
 const STORAGE_READ_KEY = 'sanubari_read_notifications_v1';
-const STORAGE_ORDERS_KEY = 'sanubari_recent_orders';
+const STORAGE_ORDERS_KEY = 'Alat Kopi Malang_recent_orders';
 
 export const NotificationModal: React.FC<NotificationModalProps> = ({
     isOpen,
@@ -156,7 +156,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
                   {
                       id: 'admin-broadcast-banner',
                       type: 'broadcast' as const,
-                      title: '📢 Pengumuman Resmi Sanubari Roastery',
+                      title: '📢 Pengumuman Resmi Alat Kopi Malang',
                       message: announcementText,
                       timestamp: 'Informasi Terkini',
                       isRead: readIds.includes('admin-broadcast-banner'),
@@ -204,7 +204,7 @@ export const NotificationModal: React.FC<NotificationModalProps> = ({
             id: 'event-cupping-session',
             type: 'event',
             title: '☕ Public Cupping Session di Roastery Malang',
-            message: 'Eksplorasi sensorik profil rasa panen lereng Gunung Kawi bersama head roaster Sanubari. Terbuka untuk umum & home brewer.',
+            message: 'Eksplorasi sensorik profil rasa panen lereng Gunung Kawi bersama head roaster Alat Kopi Malang. Terbuka untuk umum & home brewer.',
             timestamp: 'Sabtu Ini',
             isRead: readIds.includes('event-cupping-session'),
             href: '/acara',

@@ -57,7 +57,7 @@ class CheckoutController extends Controller
         $settings = Setting::all()->pluck('value', 'key')->toArray();
         $freeShippingMin = (int) ($settings['free_shipping_min'] ?? 250000);
         $waNumber = $settings['whatsapp'] ?? '6285121930454';
-        $storeName = $settings['pickup_store_name'] ?? 'Sanubari Roastery (Tlogomas, Malang)';
+        $storeName = $settings['pickup_store_name'] ?? 'Alat Kopi Malang (Tlogomas, Malang)';
         $storeAddress = $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144');
 
         $subtotal = 0;
@@ -148,21 +148,21 @@ class CheckoutController extends Controller
                 'bank_code' => 'bca',
                 'bank_name' => 'Bank BCA',
                 'account_number' => $settings['payment_bank_bca_number'] ?? '011-829-9102',
-                'account_holder' => $settings['payment_bank_bca_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_bca_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KCU Malang Kawi',
             ],
             [
                 'bank_code' => 'mandiri',
                 'bank_name' => 'Bank Mandiri',
                 'account_number' => $settings['payment_bank_mandiri_number'] ?? '144-00-98213-901',
-                'account_holder' => $settings['payment_bank_mandiri_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_mandiri_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KCP Malang Sutoyo',
             ],
             [
                 'bank_code' => 'bri',
                 'bank_name' => 'Bank BRI',
                 'account_number' => $settings['payment_bank_bri_number'] ?? '0051-01-00291-532',
-                'account_holder' => $settings['payment_bank_bri_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_bri_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KC Malang Martadinata',
             ],
         ];
@@ -186,7 +186,7 @@ class CheckoutController extends Controller
                 $matchedBankInfo = [
                     'bank' => $first['bank_name'] ?? 'Bank BCA',
                     'number' => $first['account_number'] ?? '011-829-9102',
-                    'holder' => $first['account_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                    'holder' => $first['account_holder'] ?? 'ALAT KOPI MALANG',
                     'branch' => $first['branch_info'] ?? null,
                 ];
             }
@@ -195,7 +195,7 @@ class CheckoutController extends Controller
         $paymentDetails = [
             'method' => $validated['payment_method'],
             'channel' => $channel,
-            'qris_merchant' => $settings['payment_qris_merchant_name'] ?? 'SANUBARI ROASTERY MALANG',
+            'qris_merchant' => $settings['payment_qris_merchant_name'] ?? 'ALAT KOPI MALANG',
             'qris_nmid' => $settings['payment_qris_nmid'] ?? 'ID1020038829102',
             'bank_info' => $matchedBankInfo,
         ];
@@ -254,8 +254,8 @@ class CheckoutController extends Controller
         });
 
         // WhatsApp redirect fallback or message link
-        $waMessage = "Halo Sanubari Roastery! ☕\n";
-        $waMessage .= "Saya telah membuat pesanan di website sanubari.co.id:\n\n";
+        $waMessage = "Halo Alat Kopi Malang! ☕\n";
+        $waMessage .= "Saya telah membuat pesanan di website Alat Kopi Malang.co.id:\n\n";
         $waMessage .= "🔖 *No. Pesanan:* #{$order->order_number}\n";
         $waMessage .= "👤 *Pemesan:* {$order->customer_name} ({$order->customer_phone})\n";
         if ($isPickup) {
@@ -308,10 +308,10 @@ class CheckoutController extends Controller
 
         $qrisImageUrl = !empty($settings['payment_qris_image'])
             ? (str_starts_with($settings['payment_qris_image'], 'http') ? $settings['payment_qris_image'] : '/storage/' . ltrim($settings['payment_qris_image'], '/'))
-            : '/brand/qris-sanubari.svg';
+            : '/brand/qris-Alat Kopi Malang.svg';
 
         $waNumber = $settings['whatsapp'] ?? '6285121930454';
-        $waConfirmText = "Halo Sanubari Roastery! Saya sudah melakukan pembayaran untuk Pesanan #{$order->order_number} sebesar Rp " . number_format($order->total_amount, 0, ',', '.') . ". Mohon dicek dan diproses ya. Terima kasih!";
+        $waConfirmText = "Halo Alat Kopi Malang! Saya sudah melakukan pembayaran untuk Pesanan #{$order->order_number} sebesar Rp " . number_format($order->total_amount, 0, ',', '.') . ". Mohon dicek dan diproses ya. Terima kasih!";
         $waConfirmUrl = "https://wa.me/{$waNumber}?text=" . rawurlencode($waConfirmText);
 
         $configuredBanks = $settings['payment_banks'] ?? [
@@ -319,21 +319,21 @@ class CheckoutController extends Controller
                 'bank_code' => 'bca',
                 'bank_name' => 'Bank BCA',
                 'account_number' => $settings['payment_bank_bca_number'] ?? '011-829-9102',
-                'account_holder' => $settings['payment_bank_bca_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_bca_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KCU Malang Kawi',
             ],
             [
                 'bank_code' => 'mandiri',
                 'bank_name' => 'Bank Mandiri',
                 'account_number' => $settings['payment_bank_mandiri_number'] ?? '144-00-98213-901',
-                'account_holder' => $settings['payment_bank_mandiri_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_mandiri_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KCP Malang Sutoyo',
             ],
             [
                 'bank_code' => 'bri',
                 'bank_name' => 'Bank BRI',
                 'account_number' => $settings['payment_bank_bri_number'] ?? '0051-01-00291-532',
-                'account_holder' => $settings['payment_bank_bri_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_bri_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KC Malang Martadinata',
             ],
         ];
@@ -387,16 +387,16 @@ class CheckoutController extends Controller
             ],
             'paymentConfig' => [
                 'qris_image_url' => $qrisImageUrl,
-                'qris_merchant' => $settings['payment_qris_merchant_name'] ?? 'SANUBARI ROASTERY MALANG',
+                'qris_merchant' => $settings['payment_qris_merchant_name'] ?? 'ALAT KOPI MALANG',
                 'qris_nmid' => $settings['payment_qris_nmid'] ?? 'ID1020038829102',
                 'whatsapp_url' => $waConfirmUrl,
                 'banks' => $configuredBanks,
             ],
             'pickupConfig' => [
-                'store_name' => $settings['pickup_store_name'] ?? 'Sanubari Roastery (Tlogomas, Malang)',
+                'store_name' => $settings['pickup_store_name'] ?? 'Alat Kopi Malang (Tlogomas, Malang)',
                 'store_address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
                 'store_hours' => $settings['pickup_store_hours'] ?? ($settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB'),
-                'notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan.',
+                'notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan.',
                 'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
             ],
         ]);
@@ -469,11 +469,11 @@ class CheckoutController extends Controller
                 ]),
             ],
             'settings' => [
-                'site_name' => $settings['site_name'] ?? 'Sanubari Roastery Malang',
+                'site_name' => $settings['site_name'] ?? 'Alat Kopi Malang',
                 'address' => $settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
                 'phone' => $settings['phone'] ?? $settings['whatsapp'] ?? '+6285121930454',
-                'email' => $settings['email'] ?? 'halo@sanubariroastery.id',
-                'pickup_store_name' => $settings['pickup_store_name'] ?? 'Sanubari Roastery (Tlogomas, Malang)',
+                'email' => $settings['email'] ?? 'info@alatkopimalang.co.id',
+                'pickup_store_name' => $settings['pickup_store_name'] ?? 'Alat Kopi Malang (Tlogomas, Malang)',
                 'pickup_store_address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
                 'pickup_store_hours' => $settings['pickup_store_hours'] ?? ($settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB'),
             ],

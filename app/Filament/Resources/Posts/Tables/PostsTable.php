@@ -141,7 +141,7 @@ class PostsTable
                         'Edukasi' => 'Edukasi Seduh',
                         'Terroir' => 'Terroir & Petani',
                         'Roasting' => 'Catatan Roastery',
-                        'Kabar' => 'Kabar Sanubari',
+                        'Kabar' => 'Kabar Alat Kopi Malang',
                     ]),
 
                 TernaryFilter::make('is_featured')

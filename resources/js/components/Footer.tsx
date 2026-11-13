@@ -31,7 +31,7 @@ export default function Footer({
                         </div>
                         <div>
                             <h4 className="text-xs font-bold text-white">Kurasi Barista Malang</h4>
-                            <p className="text-[11px] text-stone-500">Telah lolos uji seduh Sanubari</p>
+                            <p className="text-[11px] text-stone-500">Telah lolos uji seduh Alat Kopi Malang</p>
                         </div>
                     </div>
 
@@ -67,7 +67,7 @@ export default function Footer({
                         <span className="font-extrabold text-base text-white tracking-tight">ALAT KOPI MALANG</span>
                     </div>
                     <p className="text-xs text-stone-500 leading-relaxed">
-                        Spesialis peralatan manual brew, grinder elektrik & manual, mesin espresso, serta aksesoris barista profesional di Kota Malang. Partner kurasi peralatan Sanubari Roastery.
+                        Spesialis peralatan manual brew, grinder elektrik & manual, mesin espresso, serta aksesoris barista profesional di Kota Malang. Partner kurasi peralatan Alat Kopi Malang.
                     </p>
                 </div>
 

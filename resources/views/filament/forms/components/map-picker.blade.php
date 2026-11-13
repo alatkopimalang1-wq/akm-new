@@ -71,7 +71,7 @@
                 icon: icon
             }).addTo(this.map);
 
-            this.marker.bindPopup('<b>Sanubari Roastery (Origin)</b><br>Tlogomas, Lowokwaru, Kota Malang').openPopup();
+            this.marker.bindPopup('<b>Alat Kopi Malang (Origin)</b><br>Tlogomas, Lowokwaru, Kota Malang').openPopup();
 
             // When marker is dragged
             this.marker.on('dragend', (e) => {
@@ -202,9 +202,9 @@
                 type="button"
                 @click="setRoasteryDefault()"
                 class="flex-1 px-3 py-2 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-lg text-xs font-medium border border-gray-300 dark:border-gray-700 truncate cursor-pointer"
-                title="Pusat Sanubari Roastery Tlogomas"
+                title="Pusat Alat Kopi Malang Tlogomas"
             >
-                📍 Sanubari Tlogomas
+                📍 Alat Kopi Malang Tlogomas
             </button>
             <button
                 type="button"
@@ -238,7 +238,7 @@
             <strong class="text-gray-900 dark:text-gray-100" x-text="lng || '112.6037'"></strong>
         </div>
         <div>
-            <span>Sanubari Roastery · Malang</span>
+            <span>Alat Kopi Malang · Malang</span>
         </div>
     </div>
 </div>

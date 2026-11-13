@@ -144,7 +144,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 <motion.div
                     role="dialog"
                     aria-modal="true"
-                    aria-label="Pencarian Kopi Sanubari"
+                    aria-label="Pencarian Kopi Alat Kopi Malang"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -443,7 +443,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                                             Reset Pencarian
                                         </button>
                                         <a
-                                            href="https://wa.me/6285121930454?text=Halo%20Sanubari%20Roastery%2C%20saya%20mencari%20kopi%20spesifik"
+                                            href="https://wa.me/6285121930454?text=Halo%20Alat Kopi Malang%20Roastery%2C%20saya%20mencari%20kopi%20spesifik"
                                             target="_blank"
                                             rel="noreferrer"
                                             className="px-4 py-2 rounded-full bg-brand-900 hover:bg-brand-800 text-white text-xs font-bold transition-transform duration-100 active:scale-95"

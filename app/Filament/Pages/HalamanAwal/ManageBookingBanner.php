@@ -44,7 +44,7 @@ class ManageBookingBanner extends Page
         $this->form->fill([
             'home_booking_banner_enable' => (bool) ($settings['home_booking_banner_enable'] ?? true),
             'home_booking_banner_badge' => $settings['home_booking_banner_badge'] ?? 'Space & Venue Booking',
-            'home_booking_banner_title' => $settings['home_booking_banner_title'] ?? 'Booking Tempat Nyaman untuk Acara, Workshop & Komunitas di Sanubari',
+            'home_booking_banner_title' => $settings['home_booking_banner_title'] ?? 'Booking Tempat Nyaman untuk Acara, Workshop & Komunitas di Alat Kopi Malang',
             'home_booking_banner_desc' => $settings['home_booking_banner_desc'] ?? 'Ruang leluasa muat 50+ orang dengan free proyektor & sound system audio jernih. Cukup dengan minimum spent pesan kopi & menu lezat!',
             'home_booking_banner_button' => $settings['home_booking_banner_button'] ?? 'Booking Tempat Sekarang',
             'home_booking_banner_image' => (! empty($bannerImg) && ! $isHttp) ? str_replace('/storage/', '', $bannerImg) : null,
@@ -99,7 +99,7 @@ class ManageBookingBanner extends Page
                     ->schema([
                         TextInput::make('home_booking_banner_title')
                             ->label('Judul Banner (Alt Text)')
-                            ->default('Booking Tempat di Sanubari Roastery')
+                            ->default('Booking Tempat di Alat Kopi Malang')
                             ->nullable(),
                         Textarea::make('home_booking_banner_desc')
                             ->label('Deskripsi / Penjelasan Fasilitas')
@@ -111,7 +111,7 @@ class ManageBookingBanner extends Page
                     ]),
 
                 Section::make('Gambar Latar Animasi (Background Image)')
-                    ->description('Pilih foto ruang atau venue Sanubari Roastery yang tampil dengan efek animasi zoom ambient.')
+                    ->description('Pilih foto ruang atau venue Alat Kopi Malang yang tampil dengan efek animasi zoom ambient.')
                     ->schema([
                         Grid::make(2)->schema([
                             FileUpload::make('home_booking_banner_image')

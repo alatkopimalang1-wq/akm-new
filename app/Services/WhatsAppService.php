@@ -13,7 +13,7 @@ class WhatsAppService
      */
     public static function sendOtp(string $phone, string $otp): bool
     {
-        $message = "☕ *Sanubari Roastery*\n\nKode OTP Verifikasi Masuk Anda:\n*{$otp}*\n\nGunakan kode ini untuk masuk ke akun Anda. Kode berlaku selama 10 menit.\n\n_Demi keamanan akun Anda, jangan bagikan kode ini kepada siapa pun._";
+        $message = "☕ *Alat Kopi Malang*\n\nKode OTP Verifikasi Masuk Anda:\n*{$otp}*\n\nGunakan kode ini untuk masuk ke akun Anda. Kode berlaku selama 10 menit.\n\n_Demi keamanan akun Anda, jangan bagikan kode ini kepada siapa pun._";
 
         return self::sendMessage($phone, $message);
     }

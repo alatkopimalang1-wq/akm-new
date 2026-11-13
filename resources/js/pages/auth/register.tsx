@@ -16,7 +16,7 @@ type Props = {
 export default function Register({ passwordRules }: Props) {
     return (
         <>
-            <Head title="Daftar Akun — Sanubari Roastery" />
+            <Head title="Daftar Akun — Alat Kopi Malang" />
 
             {/* Quick Google Login/Registration Option */}
             <div className="mb-6 space-y-4">

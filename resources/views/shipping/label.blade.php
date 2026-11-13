@@ -293,7 +293,7 @@
             <table class="header-table">
                 <tr>
                     <td style="vertical-align: top;">
-                        <div class="brand-title">SANUBARI ROASTERY</div>
+                        <div class="brand-title">ALAT KOPI MALANG</div>
                         <div class="brand-sub">Specialty Coffee Roastery in Malang</div>
                         <div style="font-size: 9px; font-weight: 600; margin-top: 2px;">Tgl: {{ $created_at }}</div>
                     </td>

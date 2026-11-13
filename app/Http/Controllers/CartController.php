@@ -18,14 +18,14 @@ class CartController extends Controller
 
         $qrisImageUrl = !empty($settings['payment_qris_image'])
             ? (str_starts_with($settings['payment_qris_image'], 'http') ? $settings['payment_qris_image'] : '/storage/' . ltrim($settings['payment_qris_image'], '/'))
-            : '/brand/qris-sanubari.svg';
+            : '/brand/qris-Alat Kopi Malang.svg';
 
         $defaultBanks = [
             [
                 'bank_code' => 'bca',
                 'bank_name' => 'Bank BCA',
                 'account_number' => $settings['payment_bank_bca_number'] ?? '011-829-9102',
-                'account_holder' => $settings['payment_bank_bca_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_bca_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KCU Malang Kawi',
                 'is_active' => true,
             ],
@@ -33,7 +33,7 @@ class CartController extends Controller
                 'bank_code' => 'mandiri',
                 'bank_name' => 'Bank Mandiri',
                 'account_number' => $settings['payment_bank_mandiri_number'] ?? '144-00-98213-901',
-                'account_holder' => $settings['payment_bank_mandiri_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_mandiri_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KCP Malang Sutoyo',
                 'is_active' => true,
             ],
@@ -41,7 +41,7 @@ class CartController extends Controller
                 'bank_code' => 'bri',
                 'bank_name' => 'Bank BRI',
                 'account_number' => $settings['payment_bank_bri_number'] ?? '0051-01-00291-532',
-                'account_holder' => $settings['payment_bank_bri_holder'] ?? 'SANUBARI ROASTERY MALANG',
+                'account_holder' => $settings['payment_bank_bri_holder'] ?? 'ALAT KOPI MALANG',
                 'branch_info' => 'KC Malang Martadinata',
                 'is_active' => true,
             ],
@@ -59,7 +59,7 @@ class CartController extends Controller
         $paymentSettings = [
             'qris' => [
                 'enabled' => (bool) ($settings['payment_qris_enabled'] ?? true),
-                'merchant_name' => $settings['payment_qris_merchant_name'] ?? 'SANUBARI ROASTERY MALANG',
+                'merchant_name' => $settings['payment_qris_merchant_name'] ?? 'ALAT KOPI MALANG',
                 'nmid' => $settings['payment_qris_nmid'] ?? 'ID1020038829102',
                 'image_url' => $qrisImageUrl,
             ],
@@ -73,10 +73,10 @@ class CartController extends Controller
 
         $pickupSettings = [
             'enabled' => (bool) ($settings['pickup_in_store_enabled'] ?? true),
-            'store_name' => $settings['pickup_store_name'] ?? 'Sanubari Roastery (Tlogomas, Malang)',
+            'store_name' => $settings['pickup_store_name'] ?? 'Alat Kopi Malang (Tlogomas, Malang)',
             'store_address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
             'store_hours' => $settings['pickup_store_hours'] ?? ($settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB'),
-            'notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil langsung di kasir Sanubari Roastery dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
+            'notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
             'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
         ];
 
@@ -164,8 +164,8 @@ class CartController extends Controller
 
         $formattedSubtotal = "Rp " . number_format($subtotal, 0, ',', '.');
 
-        $message = "Halo Sanubari Roastery! ☕\n";
-        $message .= "Saya ingin melakukan pemesanan melalui website sanubari.test:\n\n";
+        $message = "Halo Alat Kopi Malang! ☕\n";
+        $message .= "Saya ingin melakukan pemesanan melalui website Alat Kopi Malang.test:\n\n";
         $message .= "📋 *DETAIL PESANAN:*\n";
         $message .= $linesText;
         $message .= "💰 *SUBTOTAL:* {$formattedSubtotal}\n\n";

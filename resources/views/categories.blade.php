@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Semua Kategori - Sanubari Roastery</title>
+    <title>Semua Kategori - Alat Kopi Malang</title>
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261105c">
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261105c">
     <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261105c">
@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261105">
     <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261105">
     <link rel="manifest" href="/site.webmanifest?v=20261105">
-    <!-- Fonts: Raleway (Sanubari Signature Font) -->
+    <!-- Fonts: Raleway (Alat Kopi Malang Signature Font) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800&display=swap" rel="stylesheet">

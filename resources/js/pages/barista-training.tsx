@@ -92,7 +92,7 @@ interface BaristaTrainingPageProps {
 export default function BaristaTrainingPage({ page }: BaristaTrainingPageProps) {
     const heroBadge = page?.hero_badge || 'Kelas Barista Profesional & Sertifikasi';
     const heroTitle = page?.hero_title || 'Training Barista Bersertifikat & Edukasi Seduh Spesialis';
-    const heroDesc = page?.hero_description || 'Tingkatkan keahlian seduh kopi Anda dari dasar hingga siap kerja atau buka kedai. Dibimbing langsung oleh trainer dan roaster berpengalaman dengan mesin komersial standar industri di Sanubari Malang.';
+    const heroDesc = page?.hero_description || 'Tingkatkan keahlian seduh kopi Anda dari dasar hingga siap kerja atau buka kedai. Dibimbing langsung oleh trainer dan roaster berpengalaman dengan mesin komersial standar industri di Alat Kopi Malang.';
     const heroImage = page?.hero_image
         ? resolveImageUrl(page.hero_image)
         : 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=1200&q=80';
@@ -138,7 +138,7 @@ export default function BaristaTrainingPage({ page }: BaristaTrainingPageProps) 
     ];
 
     const galleryTitle = page?.gallery_title || 'Dokumentasi & Suasana Kelas Barista';
-    const gallerySubtitle = page?.gallery_subtitle || 'Momen praktik peserta mengasah teknik espresso, latte art, dan manual brew di Sanubari Roastery Malang.';
+    const gallerySubtitle = page?.gallery_subtitle || 'Momen praktik peserta mengasah teknik espresso, latte art, dan manual brew di Alat Kopi Malang.';
     const gridDesktop = page?.grid_desktop ?? '3';
     const gridTablet = page?.grid_tablet ?? '2';
     const gridMobile = page?.grid_mobile ?? '1';
@@ -166,7 +166,7 @@ export default function BaristaTrainingPage({ page }: BaristaTrainingPageProps) 
         },
         {
             image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80',
-            caption: 'Suasana Belajar Nyaman di Sanubari Roastery Showroom Malang',
+            caption: 'Suasana Belajar Nyaman di Alat Kopi Malang Showroom Malang',
         },
     ];
 
@@ -185,7 +185,7 @@ export default function BaristaTrainingPage({ page }: BaristaTrainingPageProps) 
 
     const handleWhatsAppSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        const msg = `Halo Tim Barista Academy Sanubari!\nSaya ingin mendaftar / konsultasi Kelas Barista:\n\n` +
+        const msg = `Halo Tim Barista Academy Alat Kopi Malang!\nSaya ingin mendaftar / konsultasi Kelas Barista:\n\n` +
             `• Nama Peserta / PIC: ${fullName}\n` +
             `• No. WhatsApp: ${contactPhone}\n` +
             `• Pilihan Program: ${selectedPackage}\n` +
@@ -198,7 +198,7 @@ export default function BaristaTrainingPage({ page }: BaristaTrainingPageProps) 
     };
 
     return (
-        <PublicLayout title="Training Barista Profesional & Sertifikasi | Sanubari Roastery">
+        <PublicLayout title="Training Barista Profesional & Sertifikasi | Alat Kopi Malang">
             {/* Header Hero Section */}
             <div className="relative bg-brand-950 text-white py-12 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-brand-900/60 overflow-hidden">
                 {heroImage && (

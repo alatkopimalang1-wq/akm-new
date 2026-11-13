@@ -78,11 +78,11 @@ export default function FlashSaleIndex({
     };
 
     return (
-        <PublicLayout title="Flash Sale Kopi Hari Ini — Sanubari Roastery">
+        <PublicLayout title="Flash Sale Kopi Hari Ini — Alat Kopi Malang">
             <Head>
                 <meta
                     name="description"
-                    content="Flash Sale Kopi Hari Ini pilihan Sanubari Roastery. Diskon spesial terbatas untuk biji kopi pilihan dan peralatan seduh manual."
+                    content="Flash Sale Kopi Hari Ini pilihan Alat Kopi Malang. Diskon spesial terbatas untuk biji kopi pilihan dan peralatan seduh manual."
                 />
             </Head>
 

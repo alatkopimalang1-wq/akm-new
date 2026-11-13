@@ -80,8 +80,8 @@ class ManageNewRelease extends Page
             ],
             [
                 'id' => 'nr-4',
-                'name' => 'Sanubari House Blend Arabica Signature',
-                'slug' => 'sanubari-house-blend-signature',
+                'name' => 'Alat Kopi Malang House Blend Arabica Signature',
+                'slug' => 'Alat Kopi Malang-house-blend-signature',
                 'category_id' => null,
                 'price' => 95000,
                 'original_price' => 110000,
@@ -95,7 +95,7 @@ class ManageNewRelease extends Page
             'home_new_release_is_active' => (bool) ($settings['home_new_release_is_active'] ?? true),
             'home_new_release_badge' => $settings['home_new_release_badge'] ?? 'NEW RELEASE',
             'home_new_release_title' => $settings['home_new_release_title'] ?? 'New Release',
-            'home_new_release_subtitle' => $settings['home_new_release_subtitle'] ?? 'Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery',
+            'home_new_release_subtitle' => $settings['home_new_release_subtitle'] ?? 'Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang',
             'home_new_release_button_text' => $settings['home_new_release_button_text'] ?? 'Lihat Semua',
             'home_new_release_button_url' => $settings['home_new_release_button_url'] ?? '/new-release',
             'home_new_release_items' => $settings['home_new_release_items'] ?? $defaultNewReleaseItems,
@@ -154,8 +154,8 @@ class ManageNewRelease extends Page
                         Grid::make(3)->schema([
                             TextInput::make('home_new_release_subtitle')
                                 ->label('Subjudul / Keterangan')
-                                ->placeholder('Contoh: Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery')
-                                ->default('Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery')
+                                ->placeholder('Contoh: Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang')
+                                ->default('Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang')
                                 ->required()
                                 ->columnSpan(2),
 

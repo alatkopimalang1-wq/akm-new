@@ -76,11 +76,11 @@ interface VisitPageProps {
 
 export default function VisitPage({ page }: VisitPageProps) {
     const heroBadge = page?.hero_badge || 'Roastery & Showroom Malang';
-    const heroTitle = page?.hero_title || 'Sanubari Roastery x Alat Kopi Malang';
+    const heroTitle = page?.hero_title || 'Alat Kopi Malang';
     const heroDesc = page?.hero_description || 'Cicipi beans fresh roast langsung di slow bar kami, coba mesin espresso komersial, dan konsultasikan kebutuhan seduh Anda bersama roaster dan barista kami.';
 
     const welcomeTitle = page?.welcome_title || 'Selamat Datang di Malang';
-    const address = page?.address || 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang, Jawa Timur 65116 (Gedung Sanubari x Alat Kopi Malang)';
+    const address = page?.address || 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang, Jawa Timur 65116 (Gedung Alat Kopi Malang)';
     const hours = page?.hours || 'Buka Setiap Hari: 09.00–23.00 WIB (Layanan Seduh di Tempat & Pembelian Beans)';
     const phone = page?.phone || '+62 851-2193-0454';
     const mapsUrl = page?.maps_url || 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7';
@@ -190,7 +190,7 @@ export default function VisitPage({ page }: VisitPageProps) {
                         <div className="rounded-2xl sm:rounded-3xl overflow-hidden aspect-16/9 bg-brand-900 shadow-md">
                             <img
                                 src={mainImage}
-                                alt="Suasana Slow Bar Sanubari Roastery Malang"
+                                alt="Suasana Slow Bar Alat Kopi Malang"
                                 className="w-full h-full object-cover"
                             />
                         </div>
@@ -238,7 +238,7 @@ export default function VisitPage({ page }: VisitPageProps) {
                                     <div className={`w-full overflow-hidden bg-brand-900 ${getAspectClass(imageAspect)}`}>
                                         <img
                                             src={resolveImageUrl(item.image)}
-                                            alt={item.caption || `Foto Suasana Roastery Sanubari ${idx + 1}`}
+                                            alt={item.caption || `Foto Suasana Alat Kopi Malang ${idx + 1}`}
                                             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                                             loading="lazy"
                                         />

@@ -392,10 +392,10 @@ export default function BrewGuideIndex({ guides = [], recommendedBeans = [], bre
         }
     }, [currentPhase.phaseIndex, isTimerRunning, currentPhase.isComplete]);
 
-    const pageTitle = brewSettings?.meta_title || 'Resep Seduh V60 Pour Over & Japanese Ice Coffee — Sanubari Roastery';
+    const pageTitle = brewSettings?.meta_title || 'Resep Seduh V60 Pour Over & Japanese Ice Coffee — Alat Kopi Malang';
     const pageDesc =
         brewSettings?.meta_description ||
-        'Panduan lengkap dan resep presisi seduh V60 Pour Over hangat dan Japanese Ice Coffee dingin segar dari Sanubari Roastery Malang. Takaran gramatur, rasio air, suhu, dan timer seduh interaktif.';
+        'Panduan lengkap dan resep presisi seduh V60 Pour Over hangat dan Japanese Ice Coffee dingin segar dari Alat Kopi Malang. Takaran gramatur, rasio air, suhu, dan timer seduh interaktif.';
 
     return (
         <PublicLayout title={pageTitle}>
@@ -413,7 +413,7 @@ export default function BrewGuideIndex({ guides = [], recommendedBeans = [], bre
                     <div className="flex justify-center">
                         <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] sm:text-xs font-bold bg-white/10 text-sand-200 border border-white/15 backdrop-blur-xs tracking-wider uppercase">
                             <Sparkles className="w-3.5 h-3.5 text-accent-copper" />
-                            {brewSettings?.hero_badge || 'SANUBARI BREW STUDIO • PANDUAN & TIMER PRESISI'}
+                            {brewSettings?.hero_badge || 'ALAT KOPI MALANG BREW STUDIO • PANDUAN & TIMER PRESISI'}
                         </span>
                     </div>
 

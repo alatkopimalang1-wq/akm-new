@@ -56,7 +56,7 @@ export const DEFAULT_REELS: VideoReel[] = [
         caption: 'Kalau mesin espresso bisa diperkecil, maka akan jadi portabel dan praktis dibawa seduh di mana saja...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1541167760496-1628856ab772?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 1,
@@ -67,7 +67,7 @@ export const DEFAULT_REELS: VideoReel[] = [
             },
             {
                 id: 2,
-                name: 'Sanubari Signature Houseblend Espresso 200gr',
+                name: 'Alat Kopi Malang Signature Houseblend Espresso 200gr',
                 price: 'Rp 85.000',
                 image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=400&q=80',
                 url: '/shop?category=espresso-beans',
@@ -80,7 +80,7 @@ export const DEFAULT_REELS: VideoReel[] = [
         caption: 'Sekarang mulai paham alasan kenapa yang kesurupan selalu minta kopi hitam pekat dengan aroma tajam...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 3,
@@ -104,7 +104,7 @@ export const DEFAULT_REELS: VideoReel[] = [
         caption: 'Review tombol-tombol yg ada di mesinnya orang have. Kees Van Der Weston Spirit & Mirage commercial grade...',
         productCount: 1,
         thumbnail: 'https://images.unsplash.com/photo-1577968897966-3d4325b36b61?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 5,
@@ -118,10 +118,10 @@ export const DEFAULT_REELS: VideoReel[] = [
     {
         id: 'reel-4',
         headline: 'Campur 2 Single Origin Sendiri Buat Espresso, Rasanya Aneh Nggak?',
-        caption: 'Campur 2 Single Origin Buat Espresso, Rasanya Enak dan unik banget pakai fitur C.Y.B.R Sanubari...',
+        caption: 'Campur 2 Single Origin Buat Espresso, Rasanya Enak dan unik banget pakai fitur C.Y.B.R Alat Kopi Malang...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1589396575653-c09c794ff6a6?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 6,
@@ -146,7 +146,7 @@ export const DEFAULT_REELS: VideoReel[] = [
         caption: 'Home espresso naik level pakai ini. Grinder presisi + kalibrasi extraction konsisten setiap pagi...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 8,
@@ -157,7 +157,7 @@ export const DEFAULT_REELS: VideoReel[] = [
             },
             {
                 id: 9,
-                name: 'Sanubari Espresso Roast Master Batch 500gr',
+                name: 'Alat Kopi Malang Espresso Roast Master Batch 500gr',
                 price: 'Rp 145.000',
                 image: 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=400&q=80',
                 url: '/shop?category=espresso-beans',
@@ -170,7 +170,7 @@ export const DEFAULT_REELS: VideoReel[] = [
         caption: 'Kalau lo suka espresso bold & crema tebal, wajib banget cobain Robusta Fine Dampit Malang ini...',
         productCount: 2,
         thumbnail: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
-        videoUrl: 'https://www.instagram.com/sanubari.roastery.mlg/',
+        videoUrl: 'https://www.instagram.com/alatkopimalang/',
         products: [
             {
                 id: 10,
@@ -200,7 +200,7 @@ interface VideoReelsSliderProps {
 }
 
 export const VideoReelsSlider: React.FC<VideoReelsSliderProps> = ({
-    title = 'Sanubari Reels Videos',
+    title = 'Alat Kopi Malang Reels Videos',
     subtitle = 'Tonton tutorial seduh, bedah mesin & tips kopi langsung di Instagram Reels',
     viewAllHref = '/video',
     viewAllText = 'Lihat Semua',
@@ -288,7 +288,7 @@ export const VideoReelsSlider: React.FC<VideoReelsSliderProps> = ({
                     className="flex gap-3.5 sm:gap-4 overflow-x-auto pb-4 pt-1 scroll-smooth snap-x snap-mandatory no-scrollbar"
                 >
                     {reels.map((reel) => {
-                        const targetUrl = reel.videoUrl || reel.video_url || 'https://www.instagram.com/sanubari.roastery.mlg/';
+                        const targetUrl = reel.videoUrl || reel.video_url || 'https://www.instagram.com/alatkopimalang/';
 
                         return (
                             <a

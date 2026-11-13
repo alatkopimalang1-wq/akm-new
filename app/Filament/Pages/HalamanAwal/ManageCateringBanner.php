@@ -44,7 +44,7 @@ class ManageCateringBanner extends Page
         $this->form->fill([
             'home_catering_banner_enable' => (bool) ($settings['home_catering_banner_enable'] ?? true),
             'home_catering_banner_badge' => $settings['home_catering_banner_badge'] ?? 'Live Coffee Catering',
-            'home_catering_banner_title' => $settings['home_catering_banner_title'] ?? 'Sanubari Coffee Catering untuk Wedding, Event & Acara Spesial',
+            'home_catering_banner_title' => $settings['home_catering_banner_title'] ?? 'Alat Kopi Malang Coffee Catering untuk Wedding, Event & Acara Spesial',
             'home_catering_banner_desc' => $settings['home_catering_banner_desc'] ?? 'Hadirkan live espresso bar & slow bar specialty langsung di venue Anda. Pelayanan ramah oleh barista profesional untuk resepsi pernikahan, seminar kantor, corporate gathering & perayaan keluarga mulai 200 cup.',
             'home_catering_banner_button' => $settings['home_catering_banner_button'] ?? 'Konsultasi & Reservasi Catering Sekarang',
             'home_catering_banner_image' => (! empty($bannerImg) && ! $isHttp) ? str_replace('/storage/', '', $bannerImg) : null,
@@ -99,7 +99,7 @@ class ManageCateringBanner extends Page
                     ->schema([
                         TextInput::make('home_catering_banner_title')
                             ->label('Judul Banner (Alt Text)')
-                            ->default('Sanubari Coffee Catering')
+                            ->default('Alat Kopi Malang Coffee Catering')
                             ->nullable(),
                         Textarea::make('home_catering_banner_desc')
                             ->label('Deskripsi / Penjelasan Layanan')

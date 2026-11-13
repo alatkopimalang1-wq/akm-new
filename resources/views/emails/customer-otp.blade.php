@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kode Verifikasi Masuk — Sanubari Roastery</title>
+    <title>Kode Verifikasi Masuk — Alat Kopi Malang</title>
     <style>
         body {
             margin: 0;
@@ -102,7 +102,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>Sanubari Roastery</h1>
+            <h1>Alat Kopi Malang</h1>
             <p>Jejak Rasa Lereng Gunung Kawi Malang</p>
         </div>
         <div class="content">
@@ -122,7 +122,7 @@
             </div>
 
             <div class="note">
-                <strong>Penting:</strong> Jangan bagikan kode ini kepada siapa pun demi keamanan akun Anda. Tim Sanubari Roastery tidak pernah meminta kode OTP Anda.
+                <strong>Penting:</strong> Jangan bagikan kode ini kepada siapa pun demi keamanan akun Anda. Tim Alat Kopi Malang tidak pernah meminta kode OTP Anda.
             </div>
 
             <p style="font-size: 12px; color: #8c7e6f; margin-top: 24px;">
@@ -130,7 +130,7 @@
             </p>
         </div>
         <div class="footer">
-            &copy; {{ date('Y') }} Sanubari Roastery · Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Kota Malang<br>
+            &copy; {{ date('Y') }} Alat Kopi Malang · Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Kota Malang<br>
             Kopi Spesialti Nusantara Berkualitas
         </div>
     </div>

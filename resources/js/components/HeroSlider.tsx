@@ -12,7 +12,7 @@ export default function HeroSlider({ banners = [] }: HeroSliderProps) {
     const slides = banners.length > 0 ? banners : [
         {
             id: 1,
-            title: 'Sanubari Roastery Official Gear Partner',
+            title: 'Alat Kopi Malang Official Gear Partner',
             subtitle: 'Pusat Kurasi Peralatan Seduh, Grinder Presisi & Mesin Espresso Terbaik di Malang.',
             badge: 'OFFICIAL PARTNER',
             image: '/slides/dirty-latte-banner.jpg',

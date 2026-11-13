@@ -17,7 +17,7 @@ class NewReleaseController extends Controller
 
         $isActive = (bool) ($settings['home_new_release_is_active'] ?? true);
         $title = $settings['home_new_release_title'] ?? 'New Release';
-        $subtitle = $settings['home_new_release_subtitle'] ?? 'Koleksi biji kopi dan racikan terbaru dari Sanubari Roastery';
+        $subtitle = $settings['home_new_release_subtitle'] ?? 'Koleksi biji kopi dan racikan terbaru dari Alat Kopi Malang';
         $badge = $settings['home_new_release_badge'] ?? 'NEW RELEASE';
 
         $configuredItems = $settings['home_new_release_items'] ?? [];
@@ -89,7 +89,7 @@ class NewReleaseController extends Controller
                     'stock_status' => $item['stock_status'] ?? 'Tersedia',
                     'is_coffee' => $isCoffee,
                     'variants' => $variants,
-                    'description' => $product?->short_description ?? ($product?->tasting_notes ? 'Notes: ' . $product->tasting_notes : 'Koleksi rilisan terbaru Sanubari Roastery.'),
+                    'description' => $product?->short_description ?? ($product?->tasting_notes ? 'Notes: ' . $product->tasting_notes : 'Koleksi rilisan terbaru Alat Kopi Malang.'),
                 ];
             }, $configuredItems);
         }

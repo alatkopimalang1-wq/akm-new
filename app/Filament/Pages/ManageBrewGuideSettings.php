@@ -114,7 +114,7 @@ class ManageBrewGuideSettings extends Page
 
         $this->form->fill([
             // Tab 1: Hero & Kalkulator
-            'hero_badge' => $brew['hero_badge'] ?? 'SANUBARI BREW STUDIO • PANDUAN & TIMER PRESISI',
+            'hero_badge' => $brew['hero_badge'] ?? 'ALAT KOPI MALANG BREW STUDIO • PANDUAN & TIMER PRESISI',
             'hero_title' => $brew['hero_title'] ?? 'Resep Seduh V60 Pour Over & Japanese Ice Coffee',
             'hero_subtitle' => $brew['hero_subtitle'] ?? 'Keluarkan potensi terbaik dari biji kopi specialty lereng Gunung Kawi. Sesuaikan takaran dosis kopi, atur sendiri rasio perbandingan air, dan jalankan timer interaktif langkah demi langkah secara langsung.',
             'mode_v60_label' => $brew['mode_v60_label'] ?? 'V60 Pour Over (Hangat)',
@@ -157,8 +157,8 @@ class ManageBrewGuideSettings extends Page
             'ice_phases' => $brew['ice_phases'] ?? $defaultIcePhases,
 
             // Tab 4: SEO & Metadata
-            'meta_title' => $brew['meta_title'] ?? 'Resep Seduh V60 Pour Over & Japanese Ice Coffee — Sanubari Roastery',
-            'meta_description' => $brew['meta_description'] ?? 'Panduan lengkap dan resep presisi seduh V60 Pour Over hangat dan Japanese Ice Coffee dingin segar dari Sanubari Roastery Malang. Takaran gramatur, rasio air, suhu, dan timer seduh interaktif.',
+            'meta_title' => $brew['meta_title'] ?? 'Resep Seduh V60 Pour Over & Japanese Ice Coffee — Alat Kopi Malang',
+            'meta_description' => $brew['meta_description'] ?? 'Panduan lengkap dan resep presisi seduh V60 Pour Over hangat dan Japanese Ice Coffee dingin segar dari Alat Kopi Malang. Takaran gramatur, rasio air, suhu, dan timer seduh interaktif.',
         ]);
     }
 
@@ -196,7 +196,7 @@ class ManageBrewGuideSettings extends Page
                                     ->schema([
                                         TextInput::make('hero_badge')
                                             ->label('Badge Atas Hero')
-                                            ->placeholder('SANUBARI BREW STUDIO • PANDUAN & TIMER PRESISI')
+                                            ->placeholder('ALAT KOPI MALANG BREW STUDIO • PANDUAN & TIMER PRESISI')
                                             ->required(),
                                         TextInput::make('hero_title')
                                             ->label('Judul Besar Halaman')
@@ -491,7 +491,7 @@ class ManageBrewGuideSettings extends Page
                                     ->schema([
                                         TextInput::make('meta_title')
                                             ->label('Meta Title (Judul Tab Browser)')
-                                            ->placeholder('Resep Seduh V60 Pour Over & Japanese Ice Coffee — Sanubari Roastery')
+                                            ->placeholder('Resep Seduh V60 Pour Over & Japanese Ice Coffee — Alat Kopi Malang')
                                             ->required(),
                                         Textarea::make('meta_description')
                                             ->label('Meta Description')

@@ -122,7 +122,7 @@ class ShopController extends Controller
                 'name' => $byobSettings['hero_title'] ?? 'C.Y.B.R - Custom Your Blend Ratio',
                 'series' => 'custom-blend',
                 'tagline' => 'Racik profil sangrai dan paduan biji kopi favorit Anda sendiri',
-                'description' => $byobSettings['hero_description'] ?? 'Layanan racik blend kustom Sanubari Roastery. Pilih 2 hingga 3 komponen biji kopi pilihan dengan rasio presisi sesuai selera seduh Anda.',
+                'description' => $byobSettings['hero_description'] ?? 'Layanan racik blend kustom Alat Kopi Malang. Pilih 2 hingga 3 komponen biji kopi pilihan dengan rasio presisi sesuai selera seduh Anda.',
                 'tasting_notes' => 'Custom Tasting Profile',
                 'origin' => 'Malang & Nusantara',
                 'process' => 'Custom Blend Process',
@@ -243,8 +243,8 @@ class ShopController extends Controller
             'product' => $product,
             'relatedProducts' => $relatedProducts,
             'marketplaceDefaults' => [
-                'tokopedia' => Setting::get('tokopedia', 'https://www.tokopedia.com/sanubariroastery'),
-                'shopee' => Setting::get('shopee', 'https://shopee.co.id/sanubariroastery'),
+                'tokopedia' => Setting::get('tokopedia', 'https://www.tokopedia.com/alatkopimalang'),
+                'shopee' => Setting::get('shopee', 'https://shopee.co.id/alatkopimalang'),
             ],
         ]);
     }

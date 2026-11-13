@@ -195,7 +195,7 @@ class OrdersTable
                             ->required(),
                         TextInput::make('notes')
                             ->label('Catatan untuk Driver')
-                            ->default('Paket biji kopi Sanubari Roastery (Fragile). Ambil di bar kasir.')
+                            ->default('Paket biji kopi Alat Kopi Malang (Fragile). Ambil di bar kasir.')
                             ->required(),
                     ])
                     ->action(function (Order $record, array $data) {

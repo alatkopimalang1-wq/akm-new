@@ -174,7 +174,7 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
 
     return (
         <PublicLayout title="Akun Saya">
-            <Head title="Akun Saya — Sanubari Roastery" />
+            <Head title="Akun Saya — Alat Kopi Malang" />
 
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
                 {/* Header Sambutan Pelanggan */}
@@ -189,7 +189,7 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                             <div>
                                 <div className="flex items-center gap-2.5 flex-wrap">
                                     <h1 className="text-xl sm:text-2xl font-bold font-serif tracking-tight text-white">
-                                        Halo, {user.name || 'Pelanggan Sanubari'}!
+                                        Halo, {user.name || 'Pelanggan Alat Kopi Malang'}!
                                     </h1>
                                     <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-accent-copper/20 border border-accent-copper/40 text-accent-copper-light">
                                         Pelanggan Setia
@@ -324,7 +324,7 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                     Belum Ada Riwayat Pesanan
                                 </h3>
                                 <p className="text-sm text-brand-600/80 mb-6 max-w-sm mx-auto leading-relaxed">
-                                    Anda belum memiliki transaksi pesanan di Sanubari Roastery. Temukan kopi segar sangrai pilihan kami sekarang.
+                                    Anda belum memiliki transaksi pesanan di Alat Kopi Malang. Temukan kopi segar sangrai pilihan kami sekarang.
                                 </p>
                                 <Link
                                     href="/shop"
@@ -690,7 +690,7 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                             <div>
                                 <h3 className="text-base font-bold text-brand-950">Ubah Kata Sandi Akun</h3>
                                 <p className="text-xs text-brand-600">
-                                    Pastikan kata sandi Anda kuat dan tidak mudah ditebak untuk menjaga keamanan akun Sanubari Roastery Anda.
+                                    Pastikan kata sandi Anda kuat dan tidak mudah ditebak untuk menjaga keamanan akun Alat Kopi Malang Anda.
                                 </p>
                             </div>
                         </div>
@@ -814,7 +814,7 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                             Konfirmasi Keluar Akun
                         </h4>
                         <p className="text-xs text-brand-600 text-center mb-6 leading-relaxed">
-                            Apakah Anda yakin ingin keluar dari akun Sanubari Roastery Anda?
+                            Apakah Anda yakin ingin keluar dari akun Alat Kopi Malang Anda?
                         </p>
                         <div className="grid grid-cols-2 gap-3">
                             <Button

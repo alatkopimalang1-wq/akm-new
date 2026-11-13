@@ -131,7 +131,7 @@ export default function ProductDetail({
 
                             {/* Description */}
                             <div className="text-sm text-stone-300 leading-relaxed mb-8 space-y-3">
-                                <p>{product.description || product.short_description || 'Peralatan seduh kurasi resmi Sanubari Roastery Malang.'}</p>
+                                <p>{product.description || product.short_description || 'Peralatan seduh kurasi resmi Alat Kopi Malang.'}</p>
                             </div>
 
                             {/* Specifications */}
