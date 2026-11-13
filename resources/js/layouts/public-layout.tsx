@@ -280,18 +280,18 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
     return (
         <div className="min-h-svh flex flex-col bg-cream-50 text-brand-950 font-sans antialiased selection:bg-brand-700 selection:text-white [overflow-x:clip] w-full max-w-full">
             <Head title={title ? `${title} — Alat Kopi Malang` : 'Your Trusted Coffee Business Partner — Alat Kopi Malang'}>
-                <link head-key="favicon-32" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261113" />
-                <link head-key="favicon-16" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261113" />
-                <link head-key="favicon-48" rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261113" />
-                <link head-key="favicon-96" rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20261113" />
-                <link head-key="favicon-192" rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png?v=20261113" />
-                <link head-key="favicon-512" rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=20261113" />
-                <link head-key="favicon-ico" rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico?v=20261113" />
-                <link head-key="shortcut-icon" rel="shortcut icon" href="/favicon.ico?v=20261113" type="image/x-icon" />
-                <link head-key="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261113" />
-                <link head-key="apple-touch-icon-precomposed" rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261113" />
-                <link head-key="manifest" rel="manifest" href="/site.webmanifest?v=20261113" />
-                <meta head-key="og-image" property="og:image" content="/brand/logo-circle.png?v=20261113" />
+                <link head-key="favicon-32" rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261113b" />
+                <link head-key="favicon-16" rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261113b" />
+                <link head-key="favicon-48" rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261113b" />
+                <link head-key="favicon-96" rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20261113b" />
+                <link head-key="favicon-192" rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png?v=20261113b" />
+                <link head-key="favicon-512" rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=20261113b" />
+                <link head-key="favicon-ico" rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico?v=20261113b" />
+                <link head-key="shortcut-icon" rel="shortcut icon" href="/favicon.ico?v=20261113b" type="image/x-icon" />
+                <link head-key="apple-touch-icon" rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261113b" />
+                <link head-key="apple-touch-icon-precomposed" rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261113b" />
+                <link head-key="manifest" rel="manifest" href="/site.webmanifest?v=20261113b" />
+                <meta head-key="og-image" property="og:image" content="/brand/logo-akm.png?v=20261113b" />
             </Head>
 
             {/* Announcement Ticker Bar */}
@@ -325,9 +325,9 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                         {/* Brand Logo & Name */}
                         <Link href="/" className="flex items-center gap-2 sm:gap-2.5 group">
                             <img
-                                src="/brand/logo-akm.jpg?v=20261113"
+                                src="/brand/logo-akm.png?v=20261113b"
                                 alt="Alat Kopi Malang Logo"
-                                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-cover group-hover:scale-105 transition-transform shadow-xs bg-white"
+                                className="w-10 h-10 sm:w-11 sm:h-11 rounded-full object-contain group-hover:scale-105 transition-transform"
                             />
                             <div className="flex flex-col">
                                 <span className="font-extrabold text-sm sm:text-base tracking-tight text-white group-hover:text-accent-copper transition-colors whitespace-nowrap">
@@ -766,7 +766,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 const brandTitle = footerSettings.brand_title || settings?.brand_name || 'Alat Kopi Malang';
                 const brandTagline = footerSettings.brand_tagline || 'Curated Coffee Equipment & Barista Tools';
                 const brandDescription = footerSettings.brand_description || 'Pusat perlengkapan kopi, alat seduh manual, grinder, dan mesin espresso terlengkap di Malang sejak 2017.';
-                const brandLogoSrc = footerSettings.brand_logo ? (resolveImageUrl(footerSettings.brand_logo) || '/brand/logo-akm.jpg?v=20261113') : '/brand/logo-akm.jpg?v=20261113';
+                const brandLogoSrc = '/brand/logo-akm.png?v=20261113b';
                 const showroomLabel = footerSettings.showroom_label || 'Showroom Alat Kopi:';
                 const showroomName = footerSettings.showroom_name || 'Alat Kopi Malang';
                 const showroomAddress = footerSettings.showroom_address || settings?.address || 'Jl. Terusan Kawi No. 12, Klojen, Malang';
@@ -838,7 +838,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                         <img
                                             src={brandLogoSrc}
                                             alt={brandTitle}
-                                            className="w-12 h-12 rounded-full object-cover"
+                                            className="w-12 h-12 rounded-full object-contain"
                                         />
                                         <div>
                                             <h3 className="font-extrabold text-base tracking-wide uppercase text-white">

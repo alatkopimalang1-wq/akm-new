@@ -31,27 +31,27 @@
             }
         </style>
 
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261113">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261113">
-        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261113">
-        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20261113">
-        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png?v=20261113">
-        <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=20261113">
-        <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico?v=20261113">
-        <link rel="shortcut icon" href="/favicon.ico?v=20261113" type="image/x-icon">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261113">
-        <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261113">
-        <link rel="manifest" href="/site.webmanifest?v=20261113">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png?v=20261113b">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png?v=20261113b">
+        <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png?v=20261113b">
+        <link rel="icon" type="image/png" sizes="96x96" href="/favicon-96x96.png?v=20261113b">
+        <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192x192.png?v=20261113b">
+        <link rel="icon" type="image/png" sizes="512x512" href="/favicon-512x512.png?v=20261113b">
+        <link rel="icon" type="image/x-icon" sizes="any" href="/favicon.ico?v=20261113b">
+        <link rel="shortcut icon" href="/favicon.ico?v=20261113b" type="image/x-icon">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png?v=20261113b">
+        <link rel="apple-touch-icon-precomposed" sizes="180x180" href="/apple-touch-icon-precomposed.png?v=20261113b">
+        <link rel="manifest" href="/site.webmanifest?v=20261113b">
 
         <meta name="apple-mobile-web-app-title" content="Alat Kopi Malang">
         <meta name="application-name" content="Alat Kopi Malang">
         <meta name="theme-color" content="#0b1528">
         <meta name="msapplication-TileColor" content="#0b1528">
-        <meta name="msapplication-TileImage" content="/favicon-192x192.png?v=20261113">
-        <meta property="og:image" content="/brand/logo-circle.png?v=20261113">
+        <meta name="msapplication-TileImage" content="/favicon-192x192.png?v=20261113b">
+        <meta property="og:image" content="/brand/logo-akm.png?v=20261113b">
         <meta property="og:image:width" content="512">
         <meta property="og:image:height" content="512">
-        <meta name="twitter:image" content="/brand/logo-circle.png?v=20261113">
+        <meta name="twitter:image" content="/brand/logo-akm.png?v=20261113b">
 
         {{-- Preload self-hosted primary font --}}
         <link rel="preload" href="/fonts/raleway/raleway-latin-variable.woff2" as="font" type="font/woff2" crossorigin>

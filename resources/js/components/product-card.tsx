@@ -30,7 +30,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         ? (rawImg.startsWith('http://') || rawImg.startsWith('https://')
             ? rawImg
             : `/storage/${rawImg.replace(/^\/?(public\/|storage\/)?/, '')}`)
-        : '/brand/logo-akm.jpg?v=20261113';
+        : '/brand/logo-akm.png?v=20261113b';
     const isDiscounted = !!primaryVariant.original_price && primaryVariant.original_price > primaryVariant.price;
     const discountPercent = isDiscounted
         ? Math.round(((primaryVariant.original_price! - primaryVariant.price) / primaryVariant.original_price!) * 100)

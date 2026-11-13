@@ -8,7 +8,7 @@ export default function AppLogoIcon({
     return (
         <img
             {...props}
-            src="/brand/logo-akm.jpg?v=20261113"
+            src="/brand/logo-akm.png?v=20261113b"
             alt="Alat Kopi Malang"
             className={cn('rounded-full object-contain', className)}
         />
