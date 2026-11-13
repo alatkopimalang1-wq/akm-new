@@ -231,8 +231,10 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                                 Semua Produk
                             </button>
 
-                            {/* Dynamic Categories from Admin Dashboard */}
-                            {categories.map((cat) => {
+                            {/* Dynamic Parent Categories from Admin Dashboard */}
+                            {categories
+                                .filter((cat) => !cat.parent_id)
+                                .map((cat) => {
                                 const catName = typeof cat.name === 'string'
                                     ? cat.name
                                     : (cat.name?.id || cat.name?.en || Object.values(cat.name || {})[0] || cat.slug);

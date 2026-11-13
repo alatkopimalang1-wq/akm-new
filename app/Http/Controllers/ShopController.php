@@ -80,7 +80,8 @@ class ShopController extends Controller
 
         $products = $query->paginate(24)->withQueryString();
 
-        $categories = Category::withCount('products')
+        $categories = Category::whereNull('parent_id')
+            ->withCount('products')
             ->orderBy('sort_order')
             ->orderBy('id')
             ->get()
