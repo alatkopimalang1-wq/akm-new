@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasTranslations;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,21 +11,22 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, HasTranslations;
 
     protected $fillable = [
         'name',
         'slug',
         'parent_id',
-        'icon',
+        'type',
         'description',
+        'icon',
         'sort_order',
-        'is_active',
     ];
 
     protected $casts = [
+        'name' => 'array',
+        'description' => 'array',
         'sort_order' => 'integer',
-        'is_active' => 'boolean',
     ];
 
     public function parent(): BelongsTo
@@ -42,4 +44,3 @@ class Category extends Model
         return $this->belongsToMany(Product::class);
     }
 }
-

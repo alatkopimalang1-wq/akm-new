@@ -1,0 +1,45 @@
+{
+  "success": true,
+  "data": [
+    {
+      "code": "200G",
+      "name": "200g",
+      "weightGrams": "200.00",
+      "wholesaleOnly": false,
+      "byobOnly": false,
+      "byobEligible": true,
+      "allowsBoxToggle": true,
+      "sortOrder": 3
+    },
+    {
+      "code": "500G",
+      "name": "500g",
+      "weightGrams": "500.00",
+      "wholesaleOnly": false,
+      "byobOnly": false,
+      "byobEligible": true,
+      "allowsBoxToggle": true,
+      "sortOrder": 4
+    },
+    {
+      "code": "1000G",
+      "name": "1kg",
+      "weightGrams": "1000.00",
+      "wholesaleOnly": false,
+      "byobOnly": false,
+      "byobEligible": true,
+      "allowsBoxToggle": false,
+      "sortOrder": 5
+    },
+    {
+      "code": "5000G",
+      "name": "5kg",
+      "weightGrams": "5000.00",
+      "wholesaleOnly": true,
+      "byobOnly": false,
+      "byobEligible": true,
+      "allowsBoxToggle": false,
+      "sortOrder": 6
+    }
+  ]
+}

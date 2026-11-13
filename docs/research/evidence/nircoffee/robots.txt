@@ -1,0 +1,36 @@
+# status 200
+User-agent: *
+Allow: /
+Disallow: /account
+Disallow: /account/privacy
+Disallow: /order/
+Disallow: /v1/
+Disallow: /signin
+Disallow: /signup
+Disallow: /forgot
+Disallow: /change-password
+Disallow: /onboarding
+Disallow: /checkout
+Disallow: /tracking/
+Disallow: /coffee
+Disallow: /coffee-card
+Disallow: /collection
+
+Disallow: /*/account
+Disallow: /*/order/
+Disallow: /*/orders
+Disallow: /*/v1/
+Disallow: /*/signin
+Disallow: /*/signup
+Disallow: /*/forgot
+Disallow: /*/change-password
+Disallow: /*/auth/
+Disallow: /*/onboarding
+Disallow: /*/checkout
+Disallow: /*/tracking/
+Disallow: /*/coffee
+Disallow: /*/coffee-card
+Disallow: /*/collection
+Disallow: /*/verify/invoice/
+
+Sitemap: https://nircoffee.id/sitemap.xml

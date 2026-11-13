@@ -1,0 +1,60 @@
+{
+  "success": true,
+  "data": {
+    "labor_electricity_per_kg": 10000,
+    "default_weight_loss_pct": 15,
+    "min_weight_loss_pct": 14,
+    "box_removal_discount": 10000,
+    "box_replacement_charge": 5000,
+    "no_box_min_total_grams": 500,
+    "price_rounding_precision": 1000,
+    "price_tolerance": 2000,
+    "packaging_costs": {
+      "100": 20000,
+      "200": 20000,
+      "500": 20000,
+      "1000": 10000,
+      "5000": 15000
+    },
+    "margin_rules": {
+      "espresso_daily": {
+        "retail": {
+          "200": 32,
+          "500": 27,
+          "1000": 17,
+          "9000": 12
+        },
+        "wholesale": {}
+      },
+      "espresso_limited": {
+        "retail": {
+          "200": 32,
+          "500": 27
+        },
+        "wholesale": {}
+      },
+      "filter_daily": {
+        "retail": {
+          "100": 42,
+          "200": 32,
+          "500": 27
+        },
+        "wholesale": {}
+      },
+      "filter_limited": {
+        "retail": {
+          "100": 32,
+          "200": 27
+        },
+        "wholesale": {}
+      }
+    },
+    "box_toggle_sizes": [
+      100,
+      125,
+      200,
+      500
+    ],
+    "updated_at": "2026-07-02T12:30:13.190Z"
+  }
+}

@@ -1,0 +1,101 @@
+[
+  {
+    "id": 28,
+    "slug": "adoraid-homepage-demo",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/",
+    "title": {
+      "rendered": "AdoraID Homepage Demo"
+    },
+    "parent": 0,
+    "template": "template-builder-full.php"
+  },
+  {
+    "id": 27,
+    "slug": "konfirmasi-pembayaran",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/konfirmasi-pembayaran/",
+    "title": {
+      "rendered": "Konfirmasi Pembayaran"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 26,
+    "slug": "wishlist",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/wishlist/",
+    "title": {
+      "rendered": "Wishlist"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 15,
+    "slug": "blog",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/blog/",
+    "title": {
+      "rendered": "Blog"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 10,
+    "slug": "my-account",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/my-account/",
+    "title": {
+      "rendered": "My account"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 9,
+    "slug": "checkout",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/checkout/",
+    "title": {
+      "rendered": "Checkout"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 8,
+    "slug": "cart",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/cart/",
+    "title": {
+      "rendered": "Cart"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 7,
+    "slug": "shop",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/shop/",
+    "title": {
+      "rendered": "Shop"
+    },
+    "parent": 0,
+    "template": ""
+  },
+  {
+    "id": 2,
+    "slug": "sample-page",
+    "status": "publish",
+    "link": "https://sanubariroastery.id/sample-page/",
+    "title": {
+      "rendered": "Sample Page"
+    },
+    "parent": 0,
+    "template": ""
+  }
+]

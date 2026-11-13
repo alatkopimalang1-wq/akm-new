@@ -1,0 +1,208 @@
+{
+  "site": "https://sanubariroastery.id",
+  "architecture": {
+    "type": "WordPress + WooCommerce (server-rendered theme)",
+    "namespaces": [
+      "oembed/1.0",
+      "wc/v3",
+      "wc/v1",
+      "wc/pos/v1/catalog",
+      "elementor-mcp-composer/v1.0.19",
+      "elementor-one/v1",
+      "jetpack/v4",
+      "wc-admin",
+      "wc-analytics",
+      "wc/store",
+      "wc/store/v1",
+      "wc/private",
+      "wc/v2",
+      "elementor/v1/documents",
+      "elementor/v1",
+      "elementor-ai/v1",
+      "elementor/v1/feedback",
+      "wc-admin-email",
+      "wc-push-notifications",
+      "wc-telemetry",
+      "wccom-site/v3",
+      "wp-abilities/v1",
+      "mcp",
+      "wp/v2",
+      "wp-site-health/v1",
+      "wp-block-editor/v1"
+    ]
+  },
+  "sitemap": {
+    "robotsSitemaps": [
+      "https://sanubariroastery.id/wp-sitemap.xml"
+    ],
+    "sitemapsTried": [
+      {
+        "url": "https://sanubariroastery.id/sitemap.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/sitemap_index.xml",
+        "status": 404,
+        "isXml": false
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-posts-post-1.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-posts-page-1.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-posts-product-1.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-taxonomies-category-1.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-taxonomies-product_brand-1.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-taxonomies-product_cat-1.xml",
+        "status": 200,
+        "isXml": true
+      },
+      {
+        "url": "https://sanubariroastery.id/wp-sitemap-users-1.xml",
+        "status": 200,
+        "isXml": true
+      }
+    ],
+    "indexableUrlCount": 78,
+    "groups": {
+      "/product/*": [
+        "/product/arabika-kawi-yellow-catura-natural/",
+        "/product/arabika-kawi-natural/",
+        "/product/arabika-kawi-natural-anaerob/",
+        "/product/arabika-kawi-honey/",
+        "/product/micro-lot-arabika-bukit-lembang-abisynnia-thermal-shocked-natural/",
+        "/product/arabika-cikole-earl-grey-bergamot-co-ferment-wash/",
+        "/product/arabika-whizky-bali-berry-co-ferment-natural/",
+        "/product/arabika-manglayang-natural-hsn-72h/",
+        "/product/arabika-cikole-natural-hibicus/",
+        "/product/arabika-cikole-mosto-anaerob-natural/",
+        "/product/micro-lot-arabika-abyssinia-earl-grey-co-ferment-wash/",
+        "/product/arabika-sungokong-persimon-natural-ss-tank/",
+        "/product/arabika-karaha-rose-bud-tea-co-ferment/",
+        "/product/arabika-tropical-malabar-honey-fermetation/",
+        "/product/arabika-java-ijen-raung-natural-anaerob/",
+        "/product/arabika-cikole-estate-natural-cm-144h/",
+        "/product/arabika-taneuh-sunda-gulali-honey/",
+        "/product/arabika-gayo-justjuice-water-melon-co-ferment/",
+        "/product/arabika-kerinci-caramela-honey-anaerob/",
+        "/product/arabika-kerinci-caramela-natural-anaerob/",
+        "/product/arabika-kerinci-caramela-wine/",
+        "/product/arabika-karo-melon-wethulled-infused/",
+        "/product/arabika-karo-cinnamon-roll-wethulled-infused/",
+        "/product/arabika-toraja-rantekarua-natural/",
+        "/product/arabika-fungky-berry-natural-anaerob/",
+        "/product/arabika-karo-vanilla-cookie-wethulled-infused/",
+        "/product/arabika-karo-strawberry-wethulled-infused/",
+        "/product/arabika-ijen-strawberry-smoothies-natural-co-ferment/",
+        "/product/arabika-litci-blossom-wethulled-infused/",
+        "/product/arabika-black-kerinci-natural-anaero-co-ferment/",
+        "/product/arabika-island-peach-natural-co-ferment/",
+        "/product/arabika-halu-sweet-punch-mix-process-filter-blend/",
+        "/product/arabika-halu-sweet-marry-mix-process-filter-blend/",
+        "/product/arabika-tropica-bliss-wethulled-infused/",
+        "/product/arabika-summer-bloom-wethulled-insfused/",
+        "/product/arabika-raspberry-rapshody-wethulled-infused/",
+        "/product/arabika-java-jasmine-wash-co-ferment/",
+        "/product/arabika-parahyangan-extendeed-natural/",
+        "/product/arabika-kamojang-golden-honey-anaerob/",
+        "/product/arabika-wanoja-crimson-wine/",
+        "/product/fine-robusta-temanggung/",
+        "/product/fine-robusta-dampit/",
+        "/product/special-houseblend-full-arabica-espresso-roast-bright-side/",
+        "/product/special-houseblend-full-arabica-espresso-roast-the-og/",
+        "/product/house-blend-espresso-70-robusta-30-arabica/",
+        "/product/house-blend-espresso-50-robusta-50-arabica/",
+        "/product/house-blend-espresso-30-robusta-70-arabica/",
+        "/product/house-blend-espresso-100-full-arabika/",
+        "/product/espresso-roast-arabika-kawi-natural/",
+        "/product/espresso-roast-arabika-kawi-fullwash/",
+        "/product/espresso-roast-arabika-kawi-honey/",
+        "/product/arabika-nanas-madu-wethulled-co-ferment/",
+        "/product/arabika-gayo-classic-orange-natural-anaerob/",
+        "/product/arabika-ethiopia-yirgachefe-fullwash/",
+        "/product/arabika-sindoro-sweet-plum-honey-brew-yeast/",
+        "/product/arabika-karo-blueberry-wethulled-infused/"
+      ],
+      "/product-category/*": [
+        "/product-category/espresso-beans/",
+        "/product-category/espresso-beans/robusta/",
+        "/product-category/espresso-beans/arabica/",
+        "/product-category/espresso-beans/houseblend/",
+        "/product-category/filter-bens/",
+        "/product-category/filter-bens/classic-process-filter-bens/",
+        "/product-category/kawi/",
+        "/product-category/filter-bens/experimental-process/",
+        "/product-category/filter-bens/co-ferment-proses/"
+      ],
+      "/hello-world": [
+        "/hello-world/"
+      ],
+      "/sample-page": [
+        "/sample-page/"
+      ],
+      "/shop": [
+        "/shop/"
+      ],
+      "/cart": [
+        "/cart/"
+      ],
+      "/checkout": [
+        "/checkout/"
+      ],
+      "/my-account": [
+        "/my-account/"
+      ],
+      "/blog": [
+        "/blog/"
+      ],
+      "/wishlist": [
+        "/wishlist/"
+      ],
+      "/konfirmasi-pembayaran": [
+        "/konfirmasi-pembayaran/"
+      ],
+      "/": [
+        "/"
+      ],
+      "/category/*": [
+        "/category/uncategorized/"
+      ],
+      "/brand/*": [
+        "/brand/kawi/"
+      ],
+      "/author/*": [
+        "/author/sanubariroasterymlg/"
+      ]
+    }
+  },
+  "counts": {
+    "pages": 9,
+    "posts": 1,
+    "products": 56,
+    "categories": 9
+  }
+}

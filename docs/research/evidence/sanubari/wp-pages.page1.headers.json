@@ -1,0 +1,19 @@
+{
+  "status": 200,
+  "headers": {
+    "access-control-allow-headers": "Authorization, X-WP-Nonce, Content-Disposition, Content-MD5, Content-Type",
+    "access-control-expose-headers": "X-WP-Total, X-WP-TotalPages, Link",
+    "allow": "GET",
+    "content-encoding": "br",
+    "content-length": "345",
+    "content-type": "application/json; charset=UTF-8",
+    "date": "Wed, 21 Oct 2026 22:48:04 GMT",
+    "link": "<https://sanubariroastery.id/wp-json/>; rel=\"https://api.w.org/\"",
+    "server": "LiteSpeed",
+    "vary": "Origin,Accept-Encoding",
+    "x-content-type-options": "nosniff",
+    "x-robots-tag": "noindex",
+    "x-wp-total": "9",
+    "x-wp-totalpages": "1"
+  }
+}

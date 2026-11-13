@@ -1,0 +1,1 @@
+function e(e,t=`id`,n=``){return e?typeof e==`string`?e:e[t]||e.id||e.en||Object.values(e)[0]||n:n}function t(e){return new Intl.NumberFormat(`id-ID`,{style:`currency`,currency:`IDR`,minimumFractionDigits:0,maximumFractionDigits:0}).format(e).replace(`IDR`,`Rp`)}export{e as n,t};

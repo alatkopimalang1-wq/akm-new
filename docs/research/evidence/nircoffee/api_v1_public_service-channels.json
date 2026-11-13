@@ -1,0 +1,5 @@
+{
+  "error": "RequestValidationError",
+  "message": "category must be one of: PAYMENT, INTEGRATION",
+  "code": 400
+}

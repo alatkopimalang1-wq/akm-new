@@ -1,0 +1,253 @@
+[
+  {
+    "id": "coffee",
+    "chip": "Coffee",
+    "name": "Coffee",
+    "slug": "coffee",
+    "viewAllUrl": "/shop?category=coffee",
+    "subcategories": [
+      {
+        "id": "coffee-beans",
+        "name": "Coffee Beans (Single Origin & Blend)",
+        "slug": "coffee-beans",
+        "url": "/shop?category=filter-beans",
+        "icon": "coffee-beans"
+      },
+      {
+        "id": "coffee-capsule",
+        "name": "Coffee Capsule",
+        "slug": "coffee-capsule",
+        "url": "/shop?category=capsule",
+        "icon": "coffee-capsule"
+      },
+      {
+        "id": "drip-bag",
+        "name": "Drip Bag Coffee",
+        "slug": "drip-bag",
+        "url": "/shop?category=drip-bag",
+        "icon": "drip-bag"
+      },
+      {
+        "id": "cold-brew",
+        "name": "Cold Brew & RTD",
+        "slug": "cold-brew",
+        "url": "/shop?category=cold-brew",
+        "icon": "cold-brew"
+      },
+      {
+        "id": "green-bean",
+        "name": "Green Bean",
+        "slug": "green-bean",
+        "url": "/shop?category=green-bean",
+        "icon": "green-bean"
+      },
+      {
+        "id": "specialty-ferment",
+        "name": "Kopi Luwak / Specialty Fermentation",
+        "slug": "specialty-ferment",
+        "url": "/shop?category=co-ferment",
+        "icon": "specialty-ferment"
+      }
+    ]
+  },
+  {
+    "id": "brewing-gear",
+    "chip": "Brewing Gear",
+    "name": "Manual Brew & Gear",
+    "slug": "manual-brew-gear",
+    "viewAllUrl": "/shop?category=manual-brew",
+    "subcategories": [
+      {
+        "id": "dripper-pourover",
+        "name": "Dripper & Pour Over",
+        "slug": "dripper-pourover",
+        "url": "/shop?category=dripper",
+        "icon": "dripper"
+      },
+      {
+        "id": "paper-filter",
+        "name": "Paper Filter",
+        "slug": "paper-filter",
+        "url": "/shop?category=paper-filter",
+        "icon": "paper-filter"
+      },
+      {
+        "id": "gooseneck-kettle",
+        "name": "Gooseneck Kettle",
+        "slug": "gooseneck-kettle",
+        "url": "/shop?category=kettle",
+        "icon": "kettle"
+      },
+      {
+        "id": "manual-grinder",
+        "name": "Manual Coffee Grinder",
+        "slug": "manual-grinder",
+        "url": "/shop?category=manual-grinder",
+        "icon": "manual-grinder"
+      },
+      {
+        "id": "scale-timer",
+        "name": "Scale & Timer",
+        "slug": "scale-timer",
+        "url": "/shop?category=scale",
+        "icon": "scale"
+      },
+      {
+        "id": "immersion-server",
+        "name": "Immersion & Server",
+        "slug": "immersion-server",
+        "url": "/shop?category=server",
+        "icon": "server"
+      }
+    ]
+  },
+  {
+    "id": "grinders",
+    "chip": "Grinders",
+    "name": "Coffee Grinders",
+    "slug": "grinders",
+    "viewAllUrl": "/shop?category=grinders",
+    "subcategories": [
+      {
+        "id": "hand-grinder",
+        "name": "Manual Hand Grinder",
+        "slug": "hand-grinder",
+        "url": "/shop?category=hand-grinder",
+        "icon": "manual-grinder"
+      },
+      {
+        "id": "flat-burr-grinder",
+        "name": "Electric Flat Burr Grinder",
+        "slug": "flat-burr-grinder",
+        "url": "/shop?category=electric-grinder",
+        "icon": "electric-grinder"
+      },
+      {
+        "id": "conical-burr-grinder",
+        "name": "Conical Burr Grinder",
+        "slug": "conical-burr-grinder",
+        "url": "/shop?category=conical-grinder",
+        "icon": "electric-grinder"
+      },
+      {
+        "id": "grinder-accessories",
+        "name": "Burr & Cleaning Tools",
+        "slug": "grinder-accessories",
+        "url": "/shop?category=grinder-tools",
+        "icon": "barista-tools"
+      }
+    ]
+  },
+  {
+    "id": "espresso-machines",
+    "chip": "Espresso & Machines",
+    "name": "Espresso & Machines",
+    "slug": "espresso-machines",
+    "viewAllUrl": "/shop?category=espresso-machines",
+    "subcategories": [
+      {
+        "id": "home-espresso",
+        "name": "Home Espresso Machine",
+        "slug": "home-espresso",
+        "url": "/shop?category=home-espresso",
+        "icon": "espresso-home"
+      },
+      {
+        "id": "commercial-espresso",
+        "name": "Commercial Espresso Machine",
+        "slug": "commercial-espresso",
+        "url": "/shop?category=commercial-espresso",
+        "icon": "espresso-commercial"
+      },
+      {
+        "id": "electric-grinder-espresso",
+        "name": "Electric Espresso Grinder",
+        "slug": "electric-grinder",
+        "url": "/shop?category=espresso-grinder",
+        "icon": "electric-grinder"
+      },
+      {
+        "id": "barista-tools",
+        "name": "Barista Tools & Accessories",
+        "slug": "barista-tools",
+        "url": "/shop?category=barista-tools",
+        "icon": "barista-tools"
+      }
+    ]
+  },
+  {
+    "id": "ingredients",
+    "chip": "Ingredients",
+    "name": "Ingredients & Mixology",
+    "slug": "ingredients",
+    "viewAllUrl": "/shop?category=ingredients",
+    "subcategories": [
+      {
+        "id": "artisan-syrups",
+        "name": "Artisan Syrups",
+        "slug": "artisan-syrups",
+        "url": "/shop?category=syrups",
+        "icon": "syrups"
+      },
+      {
+        "id": "powder-base",
+        "name": "Powder Base (Matcha, Chocolate, dll)",
+        "slug": "powder-base",
+        "url": "/shop?category=powder",
+        "icon": "powder"
+      },
+      {
+        "id": "specialty-tea",
+        "name": "Specialty Tea",
+        "slug": "specialty-tea",
+        "url": "/shop?category=tea",
+        "icon": "tea"
+      },
+      {
+        "id": "plant-based-dairy",
+        "name": "Milk & Plant-Based Dairy",
+        "slug": "plant-based-dairy",
+        "url": "/shop?category=dairy",
+        "icon": "milk"
+      }
+    ]
+  },
+  {
+    "id": "merchandise",
+    "chip": "Merchandise",
+    "name": "Merchandise & Lifestyle",
+    "slug": "merchandise",
+    "viewAllUrl": "/shop?category=merchandise",
+    "subcategories": [
+      {
+        "id": "apparel",
+        "name": "Sanubari Coffee Apparel / T-Shirt",
+        "slug": "apparel",
+        "url": "/shop?category=apparel",
+        "icon": "apparel"
+      },
+      {
+        "id": "tote-apron",
+        "name": "Tote Bag & Barista Apron",
+        "slug": "tote-apron",
+        "url": "/shop?category=apron",
+        "icon": "apron"
+      },
+      {
+        "id": "tumbler-mug",
+        "name": "Tumbler & Ceramic Mug",
+        "slug": "tumbler-mug",
+        "url": "/shop?category=tumbler",
+        "icon": "tumbler"
+      },
+      {
+        "id": "gift-set",
+        "name": "Coffee Gift Set & Hampers",
+        "slug": "gift-set",
+        "url": "/shop?category=hampers",
+        "icon": "gift"
+      }
+    ]
+  }
+]
+

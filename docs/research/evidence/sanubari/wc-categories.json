@@ -1,0 +1,101 @@
+[
+  {
+    "id": 26,
+    "name": "Arabica",
+    "slug": "arabica",
+    "description": "",
+    "parent": 24,
+    "count": 5,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/espresso-beans/arabica/"
+  },
+  {
+    "id": 29,
+    "name": "Classic Process",
+    "slug": "classic-process-filter-bens",
+    "description": "",
+    "parent": 28,
+    "count": 6,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/filter-bens/classic-process-filter-bens/"
+  },
+  {
+    "id": 33,
+    "name": "CO &#8211; Ferment Proses",
+    "slug": "co-ferment-proses",
+    "description": "",
+    "parent": 28,
+    "count": 19,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/filter-bens/co-ferment-proses/"
+  },
+  {
+    "id": 24,
+    "name": "Espresso Beans",
+    "slug": "espresso-beans",
+    "description": "",
+    "parent": 0,
+    "count": 11,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/espresso-beans/"
+  },
+  {
+    "id": 32,
+    "name": "Experimental Process",
+    "slug": "experimental-process",
+    "description": "",
+    "parent": 28,
+    "count": 20,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/filter-bens/experimental-process/"
+  },
+  {
+    "id": 28,
+    "name": "Filter Bens",
+    "slug": "filter-bens",
+    "description": "",
+    "parent": 0,
+    "count": 45,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/filter-bens/"
+  },
+  {
+    "id": 27,
+    "name": "Houseblend",
+    "slug": "houseblend",
+    "description": "",
+    "parent": 24,
+    "count": 4,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/espresso-beans/houseblend/"
+  },
+  {
+    "id": 30,
+    "name": "Kawi",
+    "slug": "kawi",
+    "description": "",
+    "parent": 0,
+    "count": 7,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/kawi/"
+  },
+  {
+    "id": 25,
+    "name": "Robusta",
+    "slug": "robusta",
+    "description": "",
+    "parent": 24,
+    "count": 2,
+    "image": null,
+    "review_count": 0,
+    "permalink": "https://sanubariroastery.id/product-category/espresso-beans/robusta/"
+  }
+]

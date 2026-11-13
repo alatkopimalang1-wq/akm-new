@@ -1,7 +1,18 @@
+<IfModule mod_headers.c>
+    <FilesMatch "(favicon|apple-touch-icon|site\.webmanifest)">
+        Header set Cache-Control "no-cache, no-store, must-revalidate"
+        Header set Pragma "no-cache"
+        Header set Expires "0"
+    </FilesMatch>
+</IfModule>
+
 <IfModule mod_rewrite.c>
     RewriteEngine On
-    RewriteRule ^$ public/ [L]
+
+    # Block access to hidden files and directories (like .env, .git)
+    RewriteRule ^\.(.*) - [F,L]
+
+    # Only rewrite requests that do NOT already start with /public/
     RewriteCond %{REQUEST_URI} !^/public/
     RewriteRule ^(.*)$ public/$1 [L]
 </IfModule>
-

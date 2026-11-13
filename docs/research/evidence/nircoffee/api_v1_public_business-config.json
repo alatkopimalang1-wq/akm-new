@@ -1,0 +1,129 @@
+{
+  "success": true,
+  "data": {
+    "WHOLESALE_ESPRESSO_MIN_KG": {
+      "value": "10",
+      "valueType": "NUMBER"
+    },
+    "WHOLESALE_FILTER_MIN_KG": {
+      "value": "1",
+      "valueType": "NUMBER"
+    },
+    "LABOR_ELECTRICITY_PER_KG": {
+      "value": "10000",
+      "valueType": "NUMBER"
+    },
+    "DEFAULT_WEIGHT_LOSS_PCT": {
+      "value": "15",
+      "valueType": "NUMBER"
+    },
+    "MIN_WEIGHT_LOSS_PCT": {
+      "value": "14",
+      "valueType": "NUMBER"
+    },
+    "WEIGHT_LOSS_DAILY_ESPRESSO": {
+      "value": "20",
+      "valueType": "NUMBER"
+    },
+    "WEIGHT_LOSS_LIMITED_ESPRESSO": {
+      "value": "20",
+      "valueType": "NUMBER"
+    },
+    "WEIGHT_LOSS_DAILY_FILTER": {
+      "value": "15",
+      "valueType": "NUMBER"
+    },
+    "WEIGHT_LOSS_LIMITED_FILTER": {
+      "value": "15",
+      "valueType": "NUMBER"
+    },
+    "BOX_REMOVAL_DISCOUNT": {
+      "value": "10000",
+      "valueType": "NUMBER"
+    },
+    "PRICE_ROUNDING_PRECISION": {
+      "value": "1000",
+      "valueType": "NUMBER"
+    },
+    "PRICE_TOLERANCE": {
+      "value": "2000",
+      "valueType": "NUMBER"
+    },
+    "PACKAGING_COST_100G": {
+      "value": "20000",
+      "valueType": "NUMBER"
+    },
+    "PACKAGING_COST_200G": {
+      "value": "20000",
+      "valueType": "NUMBER"
+    },
+    "PACKAGING_COST_500G": {
+      "value": "20000",
+      "valueType": "NUMBER"
+    },
+    "PACKAGING_COST_1000G": {
+      "value": "10000",
+      "valueType": "NUMBER"
+    },
+    "PACKAGING_COST_5000G": {
+      "value": "15000",
+      "valueType": "NUMBER"
+    },
+    "MIN_VA_AMOUNT_IDR": {
+      "value": "2000000",
+      "valueType": "NUMBER"
+    },
+    "PICKUP_WINDOW": {
+      "value": "{\"days\":\"Monday–Friday\",\"hoursLabel\":\"11:00–18:00\",\"closedNote\":\"We're closed on weekends and public holidays.\",\"pickupGraceLabel\":\"7 days\"}",
+      "valueType": "JSON"
+    },
+    "checkout.enabled": {
+      "value": "false",
+      "valueType": "BOOLEAN"
+    },
+    "checkout.disabled_message": {
+      "value": "Sorry we had to close early! We received too many orders today. Will be back once the new site is up!",
+      "valueType": "STRING"
+    },
+    "NO_BOX_MIN_TOTAL_GRAMS": {
+      "value": "500",
+      "valueType": "NUMBER"
+    },
+    "CHECKOUT_ENABLED": {
+      "value": "false",
+      "valueType": "BOOLEAN"
+    },
+    "WHOLESALE_QRIS_MAX_AMOUNT_IDR": {
+      "value": "1500000",
+      "valueType": "NUMBER"
+    },
+    "WHOLESALE_VA_MAX_AMOUNT_IDR": {
+      "value": "10000000",
+      "valueType": "NUMBER"
+    },
+    "REDUCED_VOLUMETRIC_EXEMPT_MAX_GRAMS": {
+      "value": "1000",
+      "valueType": "NUMBER"
+    },
+    "CHECKOUT_DISABLED_MESSAGE": {
+      "value": "Hello, we're closed on the weekends. Please come back Monday to place an order!",
+      "valueType": "STRING"
+    },
+    "SMART_BREW_GUIDE_ENABLED": {
+      "value": "true",
+      "valueType": "BOOLEAN"
+    },
+    "MIN_CARD_AMOUNT_IDR": {
+      "value": "2000000",
+      "valueType": "NUMBER"
+    },
+    "SHIPPING_SURCHARGE_PERCENT": {
+      "value": "0.7",
+      "valueType": "NUMBER"
+    },
+    "CUSTOMER_CHECKOUT_MAX_QUANTITY": {
+      "value": "100",
+      "valueType": "NUMBER"
+    }
+  }
+}

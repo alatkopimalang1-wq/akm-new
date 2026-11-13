@@ -28,24 +28,29 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->profile(isSimple: false)
             ->brandName('Alat Kopi Malang Admin')
+            ->brandLogo(fn () => asset('brand/logo-circle.png'))
+            ->brandLogoHeight('2.5rem')
+            ->favicon(asset('favicon-32x32.png?v=20261105c'))
             ->maxContentWidth('full')
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(\Crumbls\Layup\LayupPlugin::make())
-            ->plugin(\Wallacemartinss\FilamentIconPicker\FilamentIconPickerPlugin::make())
             ->navigationGroups([
-                'Katalog Peralatan',
-                'Promosi & Konten',
-                'Pengaturan Toko',
+                'Halaman Awal',
+                'Katalog & Toko',
+                'Konten & Media',
+                'Pengaturan',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')
             ->pages([
                 Dashboard::class,
             ])
-            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\\Filament\\Widgets')
+            ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
                 FilamentInfoWidget::class,
@@ -66,4 +71,3 @@ class AdminPanelProvider extends PanelProvider
             ]);
     }
 }
-

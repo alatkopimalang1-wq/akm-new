@@ -1,19 +1,13 @@
-# AGENTS.md
+# Agent Rules — Alat Kopi Malang
 
-## Project Overview
-Alat Kopi Malang (AKM) curated coffee equipment & barista tools web application for Sanubari Roastery Malang. Built with React 19, Tailwind CSS v4, and Vite.
+## Mandatory if asking push to github
 
-## Agent skills
+1. When user asking to push into github, verify the remote backend using SSH credentials in `.server_ssh_access`, remote directory inside `domains/alatkopimalang.co.id/public_html`.
+2. Push command to remote backend or origin: `git push origin main`.
+3. Check the github head against local head and remote hostinger repository.
+4. Verify production frontend at https://alatkopimalang.co.id and admin at https://alatkopimalang.co.id/admin.
 
-### Issue tracker
+## Stack
 
-Issues and specs live as markdown files under `.scratch/<feature-slug>/`. See `docs/agents/issue-tracker.md`.
-
-### Triage labels
-
-Canonical roles mapped to default strings (`needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human`, `wontfix`). See `docs/agents/triage-labels.md`.
-
-### Domain docs
-
-Single-context repo (`GLOSSARY.md` and `docs/adr/` at the repo root). See `docs/agents/domain.md`.
-
+Laravel 13 · Filament 5 · Inertia v2/v3 · React 19 · TypeScript · Tailwind v4 · MariaDB.
+Live URL: https://alatkopimalang.co.id

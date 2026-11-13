@@ -1,0 +1,222 @@
+{
+  "url": "https://ottencoffee.co.id/",
+  "device": "iPhone 14",
+  "viewport": {
+    "width": 390,
+    "height": 664
+  },
+  "dpr": 3,
+  "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.0 Mobile/15E148 Safari/604.1",
+  "pageHeight": 5620,
+  "sections": [
+    {
+      "top": 0,
+      "height": 664,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-ctwKVn huszqG",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 4,
+      "horizontalScroll": false
+    },
+    {
+      "top": 69,
+      "height": 112,
+      "width": 390,
+      "tag": "nav",
+      "cls": "sc-jbWsrJ eJmBlN",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 3,
+      "horizontalScroll": false
+    },
+    {
+      "top": 221,
+      "height": 196,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-kRXbY gUxTdt",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 3,
+      "horizontalScroll": false
+    },
+    {
+      "top": 417,
+      "height": 95,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-cNfOsU OjlSy",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 7,
+      "horizontalScroll": false
+    },
+    {
+      "top": 512,
+      "height": 124,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-iXZchN MYwIe",
+      "radius": "0px 0px 8px 8px",
+      "heading": "Kategori TerpopulerLihat Semua",
+      "imgs": 6,
+      "horizontalScroll": false
+    },
+    {
+      "top": 636,
+      "height": 146,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-kxixoS jvJYiR",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 0,
+      "horizontalScroll": false
+    },
+    {
+      "top": 790,
+      "height": 381,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-fNDUXQ hujqIh",
+      "radius": "0px",
+      "heading": "Bialetti - Travel Mug Stranger Things - 380ML",
+      "imgs": 6,
+      "horizontalScroll": true
+    },
+    {
+      "top": 1179,
+      "height": 296,
+      "width": 390,
+      "tag": "div",
+      "cls": "section-content",
+      "radius": "0px",
+      "heading": "Lu ngantukan tapi minum kopi udah gak…",
+      "imgs": 16,
+      "horizontalScroll": true
+    },
+    {
+      "top": 1483,
+      "height": 269,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-jvJfuv dYjwur",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 0,
+      "horizontalScroll": true
+    },
+    {
+      "top": 1752,
+      "height": 471,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-DkKF gPtczf",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 32,
+      "horizontalScroll": true
+    },
+    {
+      "top": 2223,
+      "height": 432,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-bXfcnN hBeri",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 14,
+      "horizontalScroll": true
+    },
+    {
+      "top": 2663,
+      "height": 426,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-iYscQK bYCnwr",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 4,
+      "horizontalScroll": true
+    },
+    {
+      "top": 3089,
+      "height": 245,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-coJghx ixlmot",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 3,
+      "horizontalScroll": false
+    },
+    {
+      "top": 3342,
+      "height": 561,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-eUqAvv jIJUgX",
+      "radius": "0px",
+      "heading": "",
+      "imgs": 6,
+      "horizontalScroll": false
+    },
+    {
+      "top": 3911,
+      "height": 491,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-fBzaOr dazRUK eo-padding-top-2",
+      "radius": "0px",
+      "heading": "Java Garut Extended Natural 200g Kopi Arabica",
+      "imgs": 19,
+      "horizontalScroll": true
+    },
+    {
+      "top": 4410,
+      "height": 491,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-fBzaOr dazRUK eo-padding-top-2",
+      "radius": "0px",
+      "heading": "Puro Espresso Machine Cleaner 566gr",
+      "imgs": 16,
+      "horizontalScroll": true
+    },
+    {
+      "top": 4909,
+      "height": 687,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-ehkqFD fFIzEa no-border",
+      "radius": "0px",
+      "heading": "DeLonghi - Espresso Coffee Machine Stilosa EC230.BK",
+      "imgs": 16,
+      "horizontalScroll": true
+    },
+    {
+      "top": 5596,
+      "height": 673,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-ehkqFD fFIzEa",
+      "radius": "0px",
+      "heading": "Kaia French Press - Otten Coffee Tea Plunger Glass / Alat Ko",
+      "imgs": 16,
+      "horizontalScroll": true
+    },
+    {
+      "top": 6269,
+      "height": 170,
+      "width": 390,
+      "tag": "div",
+      "cls": "sc-bDFvjO fJzytL",
+      "radius": "0px",
+      "heading": "Majalah Otten",
+      "imgs": 0,
+      "horizontalScroll": false
+    }
+  ]
+}

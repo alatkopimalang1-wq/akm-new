@@ -13,8 +13,7 @@ class ListCategories extends ListRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make()->label('Tambah Kategori Baru'),
+            CreateAction::make(),
         ];
     }
 }
-

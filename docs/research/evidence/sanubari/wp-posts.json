@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "date": "2026-10-15T12:22:05",
+    "slug": "hello-world",
+    "link": "https://sanubariroastery.id/hello-world/",
+    "title": {
+      "rendered": "Hello world!"
+    },
+    "excerpt": {
+      "rendered": "<p>Welcome to WordPress. This is your first post. Edit or delete it, then start writing!</p>\n",
+      "protected": false
+    },
+    "categories": [
+      1
+    ]
+  }
+]

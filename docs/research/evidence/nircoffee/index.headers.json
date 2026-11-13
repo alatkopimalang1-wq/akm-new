@@ -1,0 +1,18 @@
+{
+  "status": 200,
+  "headers": {
+    "cache-control": "no-cache, must-revalidate",
+    "content-encoding": "br",
+    "content-type": "text/html; charset=utf-8",
+    "date": "Wed, 21 Oct 2026 22:47:59 GMT",
+    "etag": "W/\"a1597ca0e38b7297f03d192da4609292\"",
+    "last-modified": "Sat, 17 Oct 2026 09:07:22 GMT",
+    "server": "AmazonS3",
+    "vary": "Accept-Encoding",
+    "via": "1.1 af35b09806745fe30e55cefdd5a55c3c.cloudfront.net (CloudFront)",
+    "x-amz-cf-id": "YjaIILowBlaiXz1vRh1s5bPh5vCR6YQoZizhljRm1k6OZgPhRaKO6w==",
+    "x-amz-cf-pop": "KUL50-P1",
+    "x-amz-server-side-encryption": "AES256",
+    "x-cache": "RefreshHit from cloudfront"
+  }
+}

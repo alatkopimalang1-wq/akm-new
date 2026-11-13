@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Security-Policy" data-nir-csp content="default-src 'self'; script-src 'self' 'sha256-+5XkZFazzJo8n0iOP4ti/cLCMUudTf//Mzkb7xNPXIc=' 'sha256-2BJCfsZzITIzSMIvIB3KXwmCRpSUJpdmp2eoyZ3O2Bk=' 'sha256-76GQhintUKcuMfdp/wuA/Y2x9QJOwPYEeTqYM5KHTUo=' 'sha256-9GDwbKuQT/k0IZKiKB0orXp/uwPICsBDVrKqOXlKoVw=' 'sha256-MS6/3FCg4WjP9gwgaBGwLpRCY6fZBgwmhVCdrPrNf3E=' 'sha256-ZxAi3a7m9Mzbc+Z1LGuCCK5Xee6reDkEPRas66H9KSo=' 'sha256-zJ9V1SD/ewL9W6/5yadH7Kk1kGfqHnntztr8DAmw4Yg=' https://js.xendit.co https://maps.googleapis.com https://maps.gstatic.com https://www.googletagmanager.com https://connect.facebook.net https://js.stripe.com https://*.js.stripe.com; script-src-attr 'none'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdnjs.cloudflare.com; font-src 'self' data: https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: blob: https:; connect-src 'self' https://api.xendit.co https://api-integration.xendit.co https://js.xendit.co https://maps.googleapis.com https://maps.gstatic.com https://*.googleapis.com https://*.gstatic.com https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://www.facebook.com https://connect.facebook.net https://*.nircoffee.id https://fonts.googleapis.com https://api.stripe.com https://js.stripe.com https://*.js.stripe.com; frame-src https://*.xendit.co https://*.xendit.com https://js.stripe.com https://*.js.stripe.com https://hooks.stripe.com; worker-src 'self' blob:; media-src 'self' blob:; manifest-src 'self'; base-uri 'self'; form-action 'self' https://*.xendit.co https://*.xendit.com; object-src 'none'; upgrade-insecure-requests" />
+    <meta name="referrer" content="no-referrer" />
+    <script type="module" crossorigin src="/assets/polyfills-DOkLsETn.js"></script>
+
+    <meta charset="UTF-8" />
+<script>
+      // Apply invoice privacy before the browser loads page resources or the SPA.
+      var nirPrivacySegments = window.location.pathname
+        .split("/")
+        .slice(0, 4)
+        .map(function (segment) {
+          try {
+            return decodeURIComponent(segment).toLowerCase();
+          } catch (_) {
+            return segment.toLowerCase();
+          }
+        });
+      var nirPrivacyOffset = /^[a-z]{2}-[a-z]{2}$/i.test(nirPrivacySegments[1] || "") ? 2 : 1;
+      var nirInvoiceVerificationDocument =
+        nirPrivacySegments[nirPrivacyOffset] === "verify" && nirPrivacySegments[nirPrivacyOffset + 1] === "invoice";
+      if (nirInvoiceVerificationDocument) {
+        var invoiceRobots = document.createElement("meta");
+        invoiceRobots.name = "robots";
+        invoiceRobots.content = "noindex, nofollow";
+        document.head.appendChild(invoiceRobots);
+      } else {
+        // Shopping SDKs such as Maps need the website origin for key restrictions.
+        var storefrontReferrer = document.querySelector('meta[name="referrer"]');
+        if (storefrontReferrer) storefrontReferrer.content = "strict-origin-when-cross-origin";
+      }
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" type="image/png" href="/img/tab.png" />
+    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png" />
+    <title>NiR Coffee</title>
+    <meta
+      name="description"
+      content="NiR Coffee — Honest, Traceable & Transparent. From CV. NGALAM INDONESIA RESERVE COFFEE. Single-origin selections, blends, and brewing guides, roasted in Malang."
+    />
+    <meta name="theme-color" content="#dc2626" />
+    <link rel="canonical" href="https://nircoffee.id/" />
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="NiR Coffee" />
+    <meta property="og:title" content="NiR Coffee - Honest, Traceable & Transparent" />
+    <meta
+      property="og:description"
+      content="Single-origin selections, blends, and brewing guides, roasted in Malang."
+    />
+    <meta property="og:url" content="https://nircoffee.id/" />
+    <meta property="og:image" content="https://nircoffee.id/img/homelogo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="NiR Coffee - Honest, Traceable & Transparent" />
+    <meta
+      name="twitter:description"
+      content="Single-origin selections, blends, and brewing guides, roasted in Malang."
+    />
+    <meta name="twitter:image" content="https://nircoffee.id/img/homelogo.png" />
+
+    <!-- DNS Prefetch for external domains -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
+
+    <!-- Preconnect for faster TLS handshake -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Preload fonts (critical for text rendering) -->
+    <link
+      rel="preload"
+      href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,700&display=swap"
+      as="style"
+    />
+
+    <!-- Load fonts WITHOUT blocking first paint.
+         A plain <link rel="stylesheet"> holds up rendering until the CSS
+         arrives from a third-party origin. The usual fix — media="print"
+         plus onload="this.media='all'" — is impossible here: our CSP sets
+         script-src-attr 'none', so the inline handler would never fire and
+         the sheet would stay media="print", i.e. no webfont at all. Setting
+         .onload as a property from this (hash-allowed) script is equivalent
+         and CSP-safe. <noscript> keeps the blocking path for no-JS clients. -->
+    <script data-nir-font-css>
+      (function () {
+        var nirFontCss = document.createElement("link");
+        nirFontCss.rel = "stylesheet";
+        nirFontCss.href =
+          "https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,700&display=swap";
+        nirFontCss.media = "print";
+        nirFontCss.onload = function () {
+          nirFontCss.media = "all";
+          nirFontCss.onload = null;
+        };
+        document.head.appendChild(nirFontCss);
+      })();
+    </script>
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,900;1,300;1,400;1,700&display=swap"
+      />
+    </noscript>
+
+    <!-- Preload the navbar mark. imagesrcset/imagesizes must mirror what
+         <ResponsiveImage sizes="80px"> requests, or the preload fetches a
+         file the page never uses. The 5549px PNG masters stay as the
+         <picture> fallback; they are 145KB each and the navbar paints the
+         mark at 80x36. -->
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset="/img/homelogo-160.avif 160w, /img/homelogo-320.avif 320w, /img/homelogo-640.avif 640w"
+      imagesizes="80px"
+    />
+    <link
+      rel="preload"
+      as="image"
+      type="image/avif"
+      imagesrcset="/img/logo-160.avif 160w, /img/logo-320.avif 320w, /img/logo-640.avif 640w"
+      imagesizes="80px"
+    />
+
+    <!-- LCP preload for the home hero.
+         The hero is the LCP element but lives inside the React tree, so the
+         browser cannot discover it until the bundle has parsed and mounted.
+         Injected here instead of as a static <link> so it costs nothing on
+         /shop, /cart and every other route. imagesrcset/imagesizes mirror
+         what <ResponsiveImage sizes="100vw"> requests. Stripped from the ROW
+         build, whose home renders a different hero. -->
+    <script data-nir-local-hero-preload>
+      if (!nirInvoiceVerificationDocument) {
+        var nirPath = window.location.pathname;
+        if (nirPath === "/" || nirPath === "/home") {
+          var nirHero = document.createElement("link");
+          nirHero.rel = "preload";
+          nirHero.as = "image";
+          nirHero.type = "image/avif";
+          nirHero.setAttribute(
+            "imagesrcset",
+            "/img/home/hero-640.avif 640w, /img/home/hero-1280.avif 1280w, /img/home/hero-1920.avif 1920w, /img/home/hero-2560.avif 2560w"
+          );
+          nirHero.setAttribute("imagesizes", "100vw");
+          nirHero.setAttribute("fetchpriority", "high");
+          document.head.appendChild(nirHero);
+        }
+      }
+    </script>
+
+    <!-- Xendit.js — loaded directly from Xendit's CDN. PAN never enters
+         our origin regardless (the script POSTs card details directly to
+         Xendit's API), so PCI SAQ A scope is unaffected. We intentionally
+         omit the integrity attribute because Xendit's CDN does not return
+         the Access-Control-Allow-Origin header that SRI verification
+         requires, and Xendit publishes new builds of v1/xendit.min.js
+         without notice (which would invalidate any pinned hash anyway). -->
+    <link rel="preconnect" href="https://js.xendit.co" />
+    <script data-nir-storefront-payment>
+      if (!nirInvoiceVerificationDocument && !/^\/en-(?!id(?:\/|$))[a-z]{2}(?:\/|$)/i.test(window.location.pathname)) {
+        var nirCardScript = document.createElement("script");
+        nirCardScript.src = "https://js.xendit.co/v3/xendit.min.js";
+        nirCardScript.defer = true;
+        document.head.appendChild(nirCardScript);
+      }
+    </script>
+    <script type="module" crossorigin src="/assets/index-7SEoLywR.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/vendor-scheduler-7OC5HNn7.js">
+    <link rel="modulepreload" crossorigin href="/assets/react-DczCgEkp.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-void-elements-BHCUl3yX.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-html-parse-stringify-CWsrg2oA.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-react-i18next-B7WCWaqp.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-axios-Dk7iRFr3.js">
+    <link rel="modulepreload" crossorigin href="/assets/vendor-i18next-DfCl1gXb.js">
+    <link rel="stylesheet" crossorigin href="/assets/index-BgyamdtC.css">
+    <script type="module">import.meta.url;import("_").catch(()=>1);(async function*(){})().next();window.__vite_is_modern_browser=true</script>
+    <script type="module">!function(){if(window.__vite_is_modern_browser)return;console.warn("vite: loading legacy chunks, syntax error above and the same error below should be ignored");var e=document.getElementById("vite-legacy-polyfill"),n=document.createElement("script");n.src=e.src,n.onload=function(){System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))},document.body.appendChild(n)}();</script>
+  
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta name="deployment-timestamp" content="1792227443036" />
+    <meta name="build-id" content="1792227443036" />
+</head>
+  <body>
+    <div id="root"></div>
+    <script nomodule>!function(){var e=document,t=e.createElement("script");if(!("noModule"in t)&&"onbeforeload"in t){var n=!1;e.addEventListener("beforeload",(function(e){if(e.target===t)n=!0;else if(!e.target.hasAttribute("nomodule")||!n)return;e.preventDefault()}),!0),t.type="module",t.src=".",e.head.appendChild(t),t.remove()}}();</script>
+    <script nomodule crossorigin id="vite-legacy-polyfill" src="/assets/polyfills-legacy-OTjFq2Fv.js"></script>
+    <script nomodule crossorigin id="vite-legacy-entry" data-src="/assets/index-legacy-BJl4as5f.js">System.import(document.getElementById('vite-legacy-entry').getAttribute('data-src'))</script>
+  </body>
+</html>

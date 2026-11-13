@@ -12,7 +12,10 @@ class Setting extends Model
     protected $fillable = [
         'key',
         'value',
-        'group',
+    ];
+
+    protected $casts = [
+        'value' => 'array',
     ];
 
     public static function get(string $key, mixed $default = null): mixed
@@ -22,18 +25,19 @@ class Setting extends Model
             return $default;
         }
 
-        $val = $setting->value;
-        $decoded = json_decode($val, true);
-        return (json_last_error() === JSON_ERROR_NONE) ? $decoded : $val;
+        return $setting->value ?? $default;
     }
 
-    public static function set(string $key, mixed $value, string $group = 'general'): void
+    public static function set(string $key, mixed $value): void
     {
-        $encoded = is_array($value) ? json_encode($value) : (string) $value;
+        if ($value === null) {
+            static::where('key', $key)->delete();
+            return;
+        }
+
         static::updateOrCreate(
             ['key' => $key],
-            ['value' => $encoded, 'group' => $group]
+            ['value' => $value]
         );
     }
 }
-

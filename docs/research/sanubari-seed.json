@@ -1,0 +1,3669 @@
+{
+  "source": "https://sanubariroastery.id",
+  "generatedAt": "2026-10-21T22:48:07.865Z",
+  "note": "Reference data only — used to shape dummy seed data for the Sanubari Laravel app.",
+  "brand": {
+    "name": "Sanubari Roastery",
+    "tagline": "Close to Every Brew",
+    "whatsapp": "6285121930454",
+    "mapsUrl": "https://maps.app.goo.gl/PMuxaEtsbEvC4APy7"
+  },
+  "categories": [
+    {
+      "id": 26,
+      "name": "Arabica",
+      "slug": "arabica",
+      "parent": 24,
+      "count": 5,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 29,
+      "name": "Classic Process",
+      "slug": "classic-process-filter-bens",
+      "parent": 28,
+      "count": 6,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 33,
+      "name": "CO – Ferment Proses",
+      "slug": "co-ferment-proses",
+      "parent": 28,
+      "count": 19,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 24,
+      "name": "Espresso Beans",
+      "slug": "espresso-beans",
+      "parent": 0,
+      "count": 11,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 32,
+      "name": "Experimental Process",
+      "slug": "experimental-process",
+      "parent": 28,
+      "count": 20,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 28,
+      "name": "Filter Bens",
+      "slug": "filter-bens",
+      "parent": 0,
+      "count": 45,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 27,
+      "name": "Houseblend",
+      "slug": "houseblend",
+      "parent": 24,
+      "count": 4,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 30,
+      "name": "Kawi",
+      "slug": "kawi",
+      "parent": 0,
+      "count": 7,
+      "description": "",
+      "image": null
+    },
+    {
+      "id": 25,
+      "name": "Robusta",
+      "slug": "robusta",
+      "parent": 24,
+      "count": 2,
+      "description": "",
+      "image": null
+    }
+  ],
+  "products": [
+    {
+      "id": 526,
+      "name": "Arabika Karo Blueberry Wethulled Infused",
+      "slug": "arabika-karo-blueberry-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-karo-blueberry-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": false,
+      "onSale": false,
+      "shortDescription": "Blueberry, Vanilla Milk, Brown Sugar, Chocolate",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/bf630db707ad4003b866ead273c55cadtplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/bfdc353e190f4f3f87ad9752e3c7fa33tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 522,
+      "name": "Arabika Sindoro Sweet Plum Honey Brew Yeast",
+      "slug": "arabika-sindoro-sweet-plum-honey-brew-yeast",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-sindoro-sweet-plum-honey-brew-yeast/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "140000"
+      },
+      "currency": "IDR",
+      "inStock": false,
+      "onSale": false,
+      "shortDescription": "Red Plum, White Flower, Orange Berry, Medium Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/daa1f47566744b47b1c8a876a57e5dfftplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/46b766c87db9409dbaa28e6675036ae1tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 518,
+      "name": "Arabika Ethiopia Yirgachefe Fullwash",
+      "slug": "arabika-ethiopia-yirgachefe-fullwash",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-ethiopia-yirgachefe-fullwash/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "140000"
+      },
+      "currency": "IDR",
+      "inStock": false,
+      "onSale": false,
+      "shortDescription": "Floral, Lemon, Green Tea, Honey",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "classic-process-filter-bens",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b6e7778250a74e7bbe4e3d7d9d42633ctplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/75275aceef054239a861e747237ce352tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 514,
+      "name": "Arabika Gayo Classic Orange Natural Anaerob",
+      "slug": "arabika-gayo-classic-orange-natural-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-gayo-classic-orange-natural-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": false,
+      "onSale": false,
+      "shortDescription": "Orange, Peach, Floral tea-like, Silky Smooth Body, Peach-like acidity, Lingering Finish of Caramel Sweetness",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b7b6c9cc08984ae48529d198e88877e0tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/623cbbe1cd134bc685b836d7b3fe486dtplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 510,
+      "name": "Arabika Nanas Madu Wethulled Co-Ferment",
+      "slug": "arabika-nanas-madu-wethulled-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-nanas-madu-wethulled-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": false,
+      "onSale": false,
+      "shortDescription": "Pineapple, Sweet Honey, Lime Acidity, Ginger, Tropical Fruit, Brown Sugar, Long Sweet",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/a5b2ec298f93417d8c03192e5255bafbtplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/15ef53b9ecfe4717831c8e335c018b12tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 493,
+      "name": "Espresso Roast Arabika Kawi Honey",
+      "slug": "espresso-roast-arabika-kawi-honey",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/espresso-roast-arabika-kawi-honey/",
+      "price": 28000,
+      "regularPrice": 28000,
+      "priceRange": {
+        "min_amount": "28000",
+        "max_amount": "275000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Hints of Floral, Lime, Apple Sweetness, Brown Sugar",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "arabica",
+        "espresso-beans",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "100gr",
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/f19f61167cbf4e348b821cc225888f78tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 488,
+      "name": "Espresso Roast Arabika Kawi Fullwash",
+      "slug": "espresso-roast-arabika-kawi-fullwash",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/espresso-roast-arabika-kawi-fullwash/",
+      "price": 28000,
+      "regularPrice": 28000,
+      "priceRange": {
+        "min_amount": "28000",
+        "max_amount": "275000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "pineapple, strafruit, lemon, brown sugar",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "arabica",
+        "espresso-beans",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "100gr",
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/478b2ac0031146aca2df78c1d3b94ec5tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 483,
+      "name": "Espresso Roast Arabika Kawi Natural",
+      "slug": "espresso-roast-arabika-kawi-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/espresso-roast-arabika-kawi-natural/",
+      "price": 28000,
+      "regularPrice": 28000,
+      "priceRange": {
+        "min_amount": "28000",
+        "max_amount": "275000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Berry, Honey, Hint of orange, Medium body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "arabica",
+        "espresso-beans",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "100gr",
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/c23198ddc0714fe1bad87a57be35a5datplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 479,
+      "name": "House Blend Espresso 100 % Full Arabika",
+      "slug": "house-blend-espresso-100-full-arabika",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/house-blend-espresso-100-full-arabika/",
+      "price": 70000,
+      "regularPrice": 70000,
+      "priceRange": {
+        "min_amount": "70000",
+        "max_amount": "275000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Brown Sugar, Chocolate, Medium Body, Medium Acid, Citrus Lemon, Clean Aftertaste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "espresso-beans",
+        "houseblend"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/a2836a1c998e4d01adb9413c7fb3fec2tplv-o3syd03w52-resize-jpeg_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/10d6208c8bc4454db04f687550ccba58tplv-o3syd03w52-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2471e6955fef4763a0f263d7ba6a894atplv-o3syd03w52-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 475,
+      "name": "House Blend Espresso 30% Robusta : 70% Arabica",
+      "slug": "house-blend-espresso-30-robusta-70-arabica",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/house-blend-espresso-30-robusta-70-arabica/",
+      "price": 65000,
+      "regularPrice": 65000,
+      "priceRange": {
+        "min_amount": "65000",
+        "max_amount": "225000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Brown Sugar, Chocolate, Medium Body, Medium Acid, Lemon Citrus, Clean Aftertaste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "espresso-beans",
+        "houseblend"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/db65665601644a7387cb165a1785ce50tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b8083ee3d23140d8bd72600497a2ffc2tplv-o3syd03w52-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 471,
+      "name": "House Blend Espresso 50% Robusta : 50% Arabica",
+      "slug": "house-blend-espresso-50-robusta-50-arabica",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/house-blend-espresso-50-robusta-50-arabica/",
+      "price": 60000,
+      "regularPrice": 60000,
+      "priceRange": {
+        "min_amount": "60000",
+        "max_amount": "195000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Brown Sugar, Chocolate, Full Body, Low Acid, Lemon Citrus, Clean Aftertaste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "espresso-beans",
+        "houseblend"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/f485c1ca30c445ebabb56372a6abaefatplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/64e55edce9f241bbb981f96da01d5828tplv-o3syd03w52-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 467,
+      "name": "House Blend Espresso 70% Robusta : 30% Arabica",
+      "slug": "house-blend-espresso-70-robusta-30-arabica",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/house-blend-espresso-70-robusta-30-arabica/",
+      "price": 55000,
+      "regularPrice": 55000,
+      "priceRange": {
+        "min_amount": "55000",
+        "max_amount": "175000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Brown Sugar, Full Body, Low Acid, Clean Aftertaste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "espresso-beans",
+        "houseblend"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/48f055b9421b413cae0f6d51ac4dedb6tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fac4a606e4904ce0a6b0dc4f6777d2e8tplv-o3syd03w52-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 439,
+      "name": "Special Houseblend Full Arabica Espresso Roast THE OG",
+      "slug": "special-houseblend-full-arabica-espresso-roast-the-og",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/special-houseblend-full-arabica-espresso-roast-the-og/",
+      "price": 95000,
+      "regularPrice": 95000,
+      "priceRange": {
+        "min_amount": "95000",
+        "max_amount": "320000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Black- Chocolate, Orange, Brown Sugar, Apple Sweetness White- Chocolate, Nutty, Brown Sugar, Caramel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "arabica",
+        "espresso-beans"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "200 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/80604b164c304659b9b931027450b913tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/d15e00ad89fd488092d037d211c73582tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 435,
+      "name": "Special Houseblend Full Arabica Espresso Roast Bright Side",
+      "slug": "special-houseblend-full-arabica-espresso-roast-bright-side",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/special-houseblend-full-arabica-espresso-roast-bright-side/",
+      "price": 140000,
+      "regularPrice": 140000,
+      "priceRange": {
+        "min_amount": "140000",
+        "max_amount": "450000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Black- Blackcurent, Malt, Orange, Grape Milk White- Blueberry, Vanilla, Candylike",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "arabica",
+        "espresso-beans"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "200 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/026369f9fa0743e39d9bbdddd569b7b3tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/7c971fa1687e4ce1b0a45ec2a23f35e7tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 430,
+      "name": "Fine Robusta Dampit",
+      "slug": "fine-robusta-dampit",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/fine-robusta-dampit/",
+      "price": 17000,
+      "regularPrice": 17000,
+      "priceRange": {
+        "min_amount": "17000",
+        "max_amount": "160000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Brown Sugar, Nutty, Chocolate",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "espresso-beans",
+        "robusta"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "100gr",
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/ffa9288416ec48ea9ee616c40b41efe1tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/4a90a7e39d3b48ad823a4c4399986a8ftplv-o3syd03w52-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 425,
+      "name": "Fine Robusta Temanggung",
+      "slug": "fine-robusta-temanggung",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/fine-robusta-temanggung/",
+      "price": 17000,
+      "regularPrice": 17000,
+      "priceRange": {
+        "min_amount": "17000",
+        "max_amount": "160000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Brown Sugar, Malt, Chocolate",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "espresso-beans",
+        "robusta"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "100gr",
+            "250 gr",
+            "500 gr",
+            "1 kg"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "250 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "500 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "1 kg"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/bda6a99183244a05a0aa01f222e21f85tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/45f338926d9d41c48a59483658514c0ftplv-o3syd03w52-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 421,
+      "name": "Arabika Wanoja Crimson Wine",
+      "slug": "arabika-wanoja-crimson-wine",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-wanoja-crimson-wine/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Wine, Funky Berries, Sweet, Medium Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-8-e1791998347586.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-7-e1791998315206.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 417,
+      "name": "Arabika Kamojang Golden Honey Anaerob",
+      "slug": "arabika-kamojang-golden-honey-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kamojang-golden-honey-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "90000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Tropical Fruit, Orange, Sweet, Medium Body, Clean After Taste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-7-e1791998040380.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-6-e1791998010720.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 413,
+      "name": "Arabika Parahyangan Extendeed Natural",
+      "slug": "arabika-parahyangan-extendeed-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-parahyangan-extendeed-natural/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "105000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Funky Berries, Medium Body, Sweet After Taste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-6-e1791997704347.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-5-e1791997674405.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 372,
+      "name": "Arabika Java Jasmine Wash Co-Ferment",
+      "slug": "arabika-java-jasmine-wash-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-java-jasmine-wash-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Jasmine Tea, Apple. Rock Sugar",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b2d51d6506274c9ba8b767ab83d08eedtplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/157710550c7443fbb61a8ec3fb357927tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 368,
+      "name": "Arabika Raspberry Rapshody Wethulled Infused",
+      "slug": "arabika-raspberry-rapshody-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-raspberry-rapshody-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Raspberry, Red Currant, Brown Spice, Blueberry, Caramel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/d7c378ecd7b5428e99d26763438a1fa1tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/3d7281bcfef44230b28463a31c04f02dtplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 364,
+      "name": "Arabika Summer Bloom Wethulled Insfused",
+      "slug": "arabika-summer-bloom-wethulled-insfused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-summer-bloom-wethulled-insfused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Osmanthus Tea, Floral, Apricot, Chamomile, Chrysanthemum, Jasmine",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2906a7facf724293b49e9e351e1afa7etplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b6f9de72fc114d45a857117abaa1aaeatplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 360,
+      "name": "Arabika Tropica Bliss Wethulled Infused",
+      "slug": "arabika-tropica-bliss-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-tropica-bliss-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Passion Fruit, orange, brown sugar, mango",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/df793a4e67444517824e23abd4ddd37ftplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/e618791ddf864fa3be75e9ede84d011dtplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 356,
+      "name": "Arabika Halu Sweet Marry Mix Process (Filter Blend)",
+      "slug": "arabika-halu-sweet-marry-mix-process-filter-blend",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-halu-sweet-marry-mix-process-filter-blend/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Banana Molases, Grape, Golden Raisin, Juicy Medium Body, Long Sweet After Taste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/f74073f75fcb404f9ba3039b773ef556tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/06bc333f8e1043f3959bbc6dd02a6b89tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 352,
+      "name": "Arabika Halu Sweet Punch Mix Process (Filter Blend)",
+      "slug": "arabika-halu-sweet-punch-mix-process-filter-blend",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-halu-sweet-punch-mix-process-filter-blend/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Banana Molases, Grape, Golden Raisin, Juicy Medium Body, Long Sweet After Taste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/bf88c7ce025d452ead31ca2418f09e4etplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/f19c74d2e955488daba43c9762170ad8tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 348,
+      "name": "Arabika Island Peach Natural Co-Ferment",
+      "slug": "arabika-island-peach-natural-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-island-peach-natural-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Peach, Stone Fruit, Pineapple",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/99ba8cac5a7d4ba590621aad2cbd8575tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/00874c15144f41699044c0ea9d30ea9ftplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 310,
+      "name": "Arabika Black Kerinci Natural Anaero Co-Ferment",
+      "slug": "arabika-black-kerinci-natural-anaero-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-black-kerinci-natural-anaero-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Blackcurrant, Peach, Vanilla",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/02ccd7ba0a7c42ba92c5231ade96eea8tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/0cbebc266f6e41d69261f40d894bfad3tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 306,
+      "name": "Arabika Litci Blossom Wethulled Infused",
+      "slug": "arabika-litci-blossom-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-litci-blossom-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Lychee, Lime, Chocolate",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/3f4f33e281a949c8bb30a9ca06c490dbtplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/313004450c464db8a99bee39b3e37160tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 302,
+      "name": "Arabika Ijen Strawberry Smoothies Natural Co-Ferment",
+      "slug": "arabika-ijen-strawberry-smoothies-natural-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-ijen-strawberry-smoothies-natural-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Almond Milk, Chocolate, Strawbery Milk, Vanilla , Citrus Orange",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-5-e1791995331783.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/d1aa907ff5444c53bcba6bb960016c7dtplv-o3syd03w52-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 298,
+      "name": "Arabika Karo Strawberry Wethulled Infused",
+      "slug": "arabika-karo-strawberry-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-karo-strawberry-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Strawberry, Lime, Chocolate, Juicy Mouthfeel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-5-e1791995331783.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-4-e1791995304580.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 294,
+      "name": "Arabika Karo Vanilla Cookie Wethulled Infused",
+      "slug": "arabika-karo-vanilla-cookie-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-karo-vanilla-cookie-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Sweet Caramel Spices,Butter Cookies, vanilla",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/bc9721a052074d189c694c70f6eccc9ctplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/38e6f4f82f3a470096c64965e591c45dtplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 290,
+      "name": "Arabika Fungky Berry Natural Anaerob",
+      "slug": "arabika-fungky-berry-natural-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-fungky-berry-natural-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "140000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Prune, Blackberry, Dark Chocolate, Raisin, Ripe Grape",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/d76963a1d32541dea99c5fe07bc12afbtplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/24495bf63de54f44a5e16b0787e69a7ftplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 286,
+      "name": "Arabika Toraja Rantekarua Natural",
+      "slug": "arabika-toraja-rantekarua-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-toraja-rantekarua-natural/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "125000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Funky, Leci, Dry Banana, Dark Chocolate, Long Sweet Aftertaste, Citric Malic Acidity, Sirupy Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "classic-process-filter-bens",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fe7aa35eecb045418d7df2e16df3cea9tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2f37a66e2fd846e4b1306c1217b63d5ftplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 282,
+      "name": "Arabika Karo Cinnamon Roll Wethulled Infused",
+      "slug": "arabika-karo-cinnamon-roll-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-karo-cinnamon-roll-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Cinnamon, Brown Spice, Milk Chocolate, Vanilla, Brown Sugar, Citrus",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b20539e1be9645b5b2b87204f907ed64tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/3ba9b823501e409b847a5911eaff96dbtplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 241,
+      "name": "Arabika Karo Melon Wethulled Infused",
+      "slug": "arabika-karo-melon-wethulled-infused",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-karo-melon-wethulled-infused/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Melon, Sweet Afetr Taste, Juicy Mouthfeel, Syrupy Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/d0cac467ca1a43f6974e35a9a54dc9dctplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/7fb2138cfd9c46ba932f99323e06a1a1tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 237,
+      "name": "Arabika Kerinci Caramela Wine",
+      "slug": "arabika-kerinci-caramela-wine",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kerinci-caramela-wine/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "120000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Sweet Caramel, Berries, Raisin",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-4-e1791993573923.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-3-e1791993540184.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 233,
+      "name": "Arabika Kerinci Caramela Natural Anaerob",
+      "slug": "arabika-kerinci-caramela-natural-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kerinci-caramela-natural-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "110000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Kiwi, Pineapple, White Grape, Juicy Mouthfeel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-3-e1791993247578.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-2-e1791993155709.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 229,
+      "name": "Arabika Kerinci Caramela Honey Anaerob",
+      "slug": "arabika-kerinci-caramela-honey-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kerinci-caramela-honey-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "95000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Apricot, Nectarine, Hints of Jasmine, Long Sweet Aftertaste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/ea2282fa23264dc8b704927a6417b888tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-1-e1791992703558.jpg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 225,
+      "name": "Arabika Gayo JustJuice Water Melon Co-Ferment",
+      "slug": "arabika-gayo-justjuice-water-melon-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-gayo-justjuice-water-melon-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Watermelon, Pineapple, Cantaloupe, Honeydew, Sirupy Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/d7236b9aca3a42a68832e9bcf500c912tplv-o3syd03w52-resize-jpeg_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/63eb41b9239d4b3a855c90a8898ffe88tplv-o3syd03w52-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 221,
+      "name": "Arabika Taneuh Sunda Gulali Honey",
+      "slug": "arabika-taneuh-sunda-gulali-honey",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-taneuh-sunda-gulali-honey/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Lavender, Honey, Apricot, Black currant",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "classic-process-filter-bens",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/794b704cdc5b465186812409efae1beetplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/f57c213bcd2d4f978258fb50716babc9tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 217,
+      "name": "Arabika Cikole Estate Natural CM 144h",
+      "slug": "arabika-cikole-estate-natural-cm-144h",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-cikole-estate-natural-cm-144h/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "120000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Apricot, Nectarine, Hints of Jasmine, Long Sweet Aftertaste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fd224f25a3dd4f22b3dcd8798b3bc021tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/9109be454cd8488bb2f0d84c1d80ca42tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 176,
+      "name": "Arabika Java Ijen Raung Natural Anaerob",
+      "slug": "arabika-java-ijen-raung-natural-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-java-ijen-raung-natural-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Grape, Raisin, Plum",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/0697285a73624beaa8cfe5e33dbf637btplv-aphluv4xwc-white-pad-v1_1600_1600-2.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2099a473c7c54b4abf2782e91d9f4fa6tplv-aphluv4xwc-resize-jpeg_700_0-2.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 172,
+      "name": "Arabika Tropical Malabar Honey Fermetation",
+      "slug": "arabika-tropical-malabar-honey-fermetation",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-tropical-malabar-honey-fermetation/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Passion Fruit, Tropical Fruit, Palm Sugar",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/94eb4e2a974d45b49ecea053bb3eb136tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/cea14c829d8343f3804861ba9ef8a888tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 168,
+      "name": "Arabika Karaha Rose Bud Tea Co-Ferment",
+      "slug": "arabika-karaha-rose-bud-tea-co-ferment",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-karaha-rose-bud-tea-co-ferment/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Hints of Rose, Tea Like, Orange, Medium Body, Juicy Mouthfeel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/4c6e066e0d1f4f6cab348af7b40df254tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/df35ba2a0b0d4c779e1f0788e458e0cetplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 164,
+      "name": "Arabika Sungokong Persimon Natural SS Tank",
+      "slug": "arabika-sungokong-persimon-natural-ss-tank",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-sungokong-persimon-natural-ss-tank/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Persimmon, White Grape, Mandarin, Raspberry Candy, Honeysuckle",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/c6e992639a194b55bcba2d8abb1674e4tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/4a1fd67ff217495bb7ac056655c3af56tplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 160,
+      "name": "Micro Lot Arabika ABYSSINIA Earl Grey Co-Ferment Wash",
+      "slug": "micro-lot-arabika-abyssinia-earl-grey-co-ferment-wash",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/micro-lot-arabika-abyssinia-earl-grey-co-ferment-wash/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Earl Grey, Bergamot Citrusy, White Flower, Juicy Mouthfeel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/454c0eae20fd483e9fa72db1f08bb4e4tplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/6e91248e019b4b36b811efe7102cf7aatplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 156,
+      "name": "Arabika Cikole Mosto Anaerob Natural",
+      "slug": "arabika-cikole-mosto-anaerob-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-cikole-mosto-anaerob-natural/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "120000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Guava, Pineaple, Medium Body, Long Sweet After Taste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/44d8813c484d45c0a8cb4f1e1bdd0b51tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b30ba4d6294b40cf9e1eba70121af75ctplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 152,
+      "name": "Arabika Cikole Natural Hibicus",
+      "slug": "arabika-cikole-natural-hibicus",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-cikole-natural-hibicus/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Hibiscus, Grape Fruit, Starfruit",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/eae877981cd74d1ba9eeae600a348518tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/aef993b126524f45aebce4a9b4d8a933tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 114,
+      "name": "Arabika Manglayang Natural HSN 72h",
+      "slug": "arabika-manglayang-natural-hsn-72h",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-manglayang-natural-hsn-72h/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "100000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Passion Fruit, Apricot, Mapple Syrup, Medium Acidity, Silky and Syrupy Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/aa5a38cf0cfb4b808d6a4d0dc1b753cbtplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/a691925e319046bda316952507220298tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 110,
+      "name": "Arabika Whizky Bali Berry Co-Ferment Natural",
+      "slug": "arabika-whizky-bali-berry-co-ferment-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-whizky-bali-berry-co-ferment-natural/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "160000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Whisky, Vanilla, Berry",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/c298d5971a0049a2a59fee2d3171d223tplv-aphluv4xwc-white-pad-v1_1600_1600-2.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/bdad5776fcf74fa3b9f6072195be26c5tplv-aphluv4xwc-resize-jpeg_700_0-2.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 106,
+      "name": "Arabika Cikole Earl Grey Bergamot Co-Ferment Wash",
+      "slug": "arabika-cikole-earl-grey-bergamot-co-ferment-wash",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-cikole-earl-grey-bergamot-co-ferment-wash/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "130000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Earl Grey, Black Tea, Rock Sugar",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "co-ferment-proses",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1c5d121438a94a778e88ee653f24996dtplv-aphluv4xwc-white-pad-v1_1600_1600.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/b9573515145a4ee5b012aa2b73cfe8fetplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 102,
+      "name": "Micro Lot- Arabika Bukit Lembang Abisynnia Thermal Shocked Natural",
+      "slug": "micro-lot-arabika-bukit-lembang-abisynnia-thermal-shocked-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/micro-lot-arabika-bukit-lembang-abisynnia-thermal-shocked-natural/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "155000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "White Flower, White Grape, Pear, Apricot, Floral-like, Juicy Mouthfeel",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/c3524206199f4664914ead42bb2dcc2ftplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/13ff60be506f4420b87e423f4e807ac8tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 99,
+      "name": "Arabika Kawi Honey",
+      "slug": "arabika-kawi-honey",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kawi-honey/",
+      "price": 55000,
+      "regularPrice": 55000,
+      "priceRange": {
+        "min_amount": "55000",
+        "max_amount": "80000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Hints of Floral, Lime, Apple Sweetness, Brown Sugar, Light Body",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "classic-process-filter-bens",
+        "filter-bens",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/dffb43e56a824c839001139f7149494atplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/eeaf7f3d1219478fbf0ad9bc668788eatplv-aphluv4xwc-resize-jpeg_700_0.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 95,
+      "name": "Arabika Kawi Natural Anaerob",
+      "slug": "arabika-kawi-natural-anaerob",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kawi-natural-anaerob/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "100000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Grape, Strafruit, Plum",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "experimental-process",
+        "filter-bens",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-1-e1791822845182.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/2-e1791822873619.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 92,
+      "name": "Arabika Kawi Natural",
+      "slug": "arabika-kawi-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kawi-natural/",
+      "price": 45000,
+      "regularPrice": 45000,
+      "priceRange": {
+        "min_amount": "45000",
+        "max_amount": "80000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Lemon, Caramel, Brown Sugar, Apple Sweetness, Light Body, Medium acidity",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "classic-process-filter-bens",
+        "filter-bens",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/1-e1791821306173.jpg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    },
+    {
+      "id": 88,
+      "name": "Arabika Kawi Yellow Catura Natural",
+      "slug": "arabika-kawi-yellow-catura-natural",
+      "type": "variable",
+      "permalink": "https://sanubariroastery.id/product/arabika-kawi-yellow-catura-natural/",
+      "price": 15000,
+      "regularPrice": 15000,
+      "priceRange": {
+        "min_amount": "15000",
+        "max_amount": "120000"
+      },
+      "currency": "IDR",
+      "inStock": true,
+      "onSale": false,
+      "shortDescription": "Process : Natural Notes : Walnut, Brown Spice, Lime, Juicy Medium Body, Long Sweet After Taste",
+      "description": "Sanubari Coffee Beans merupakan biji kopi premium yang dipilih berdasarkan grade terbaik. Yang selalu mempunyai cita rasa yang khas. Dengan level roasting yang disesuaikan dengan kriteria biji kopi. Semua biji kopi yang kopi produksi sudah memiliki ijin edar PIRT dan HALAL.",
+      "categories": [
+        "classic-process-filter-bens",
+        "filter-bens",
+        "kawi"
+      ],
+      "attributes": [
+        {
+          "name": "Kemasan",
+          "terms": [
+            "15 gr",
+            "100 gr",
+            "200 gr"
+          ]
+        }
+      ],
+      "variations": [
+        [
+          {
+            "name": "Kemasan",
+            "value": "15 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "100 gr"
+          }
+        ],
+        [
+          {
+            "name": "Kemasan",
+            "value": "200 gr"
+          }
+        ]
+      ],
+      "images": [
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/6dbe9f6a2d3449adab542afa6edd7060tplv-aphluv4xwc-white-pad-v1_1600_1600-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/a99298089b7346bca3cb7e2995da5a4btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/32eb4f5d5fd5440cad8f63d5ca409865tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/51c77cfd863f4446be8a69299200d5a2tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/fecc765e2d76469aa9b99111437b2e23tplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg",
+        "https://sanubariroastery.id/wp-content/uploads/2026/10/328420077e464fcc9804630b12f7de0btplv-aphluv4xwc-resize-jpeg_700_0-1.jpeg"
+      ],
+      "rating": "0",
+      "reviewCount": 0
+    }
+  ],
+  "pages": [
+    {
+      "id": 28,
+      "slug": "adoraid-homepage-demo",
+      "title": "AdoraID Homepage Demo",
+      "link": "https://sanubariroastery.id/",
+      "parent": 0
+    },
+    {
+      "id": 27,
+      "slug": "konfirmasi-pembayaran",
+      "title": "Konfirmasi Pembayaran",
+      "link": "https://sanubariroastery.id/konfirmasi-pembayaran/",
+      "parent": 0
+    },
+    {
+      "id": 26,
+      "slug": "wishlist",
+      "title": "Wishlist",
+      "link": "https://sanubariroastery.id/wishlist/",
+      "parent": 0
+    },
+    {
+      "id": 15,
+      "slug": "blog",
+      "title": "Blog",
+      "link": "https://sanubariroastery.id/blog/",
+      "parent": 0
+    },
+    {
+      "id": 10,
+      "slug": "my-account",
+      "title": "My account",
+      "link": "https://sanubariroastery.id/my-account/",
+      "parent": 0
+    },
+    {
+      "id": 9,
+      "slug": "checkout",
+      "title": "Checkout",
+      "link": "https://sanubariroastery.id/checkout/",
+      "parent": 0
+    },
+    {
+      "id": 8,
+      "slug": "cart",
+      "title": "Cart",
+      "link": "https://sanubariroastery.id/cart/",
+      "parent": 0
+    },
+    {
+      "id": 7,
+      "slug": "shop",
+      "title": "Shop",
+      "link": "https://sanubariroastery.id/shop/",
+      "parent": 0
+    },
+    {
+      "id": 2,
+      "slug": "sample-page",
+      "title": "Sample Page",
+      "link": "https://sanubariroastery.id/sample-page/",
+      "parent": 0
+    }
+  ],
+  "posts": [
+    {
+      "id": 1,
+      "slug": "hello-world",
+      "title": "Hello world!",
+      "date": "2026-10-15T12:22:05",
+      "excerpt": "Welcome to WordPress. This is your first post. Edit or delete it, then start writing!"
+    }
+  ]
+}
