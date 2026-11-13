@@ -26,6 +26,10 @@ import { CartDrawer } from '@/components/cart-drawer';
 import { SearchModal } from '@/components/search-modal';
 import { NotificationModal } from '@/components/notification-modal';
 
+const DesktopMegaMenu = React.lazy(() =>
+    import('@/components/desktop-mega-menu').then((m) => ({ default: m.DesktopMegaMenu }))
+);
+
 interface PublicLayoutProps {
     title?: string;
     children: React.ReactNode;
@@ -108,6 +112,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
 
     const [isScrolled, setIsScrolled] = useState(false);
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
     const [announcementVisible, setAnnouncementVisible] = useState(true);
     const [isSearchOpen, setIsSearchOpen] = useState(false);
     const [isNotificationOpen, setIsNotificationOpen] = useState(false);
@@ -215,6 +220,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
 
     useEffect(() => {
         setMobileMenuOpen(false);
+        setIsMegaMenuOpen(false);
     }, [url]);
 
     const waNumber = settings?.whatsapp || '6285121930454';
@@ -225,10 +231,15 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
     const xUrl = settings?.x_url || settings?.twitter || 'https://x.com/sanubariroastery';
     const tiktokUrl = settings?.tiktok || 'https://tiktok.com/@sanubariroastery';
 
-    // Global keyboard shortcut (Cmd+K for search, ESC for search dismiss)
+    // Global keyboard shortcut (Cmd+K for search, ESC for search / mega menu dismiss)
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (e.key === 'Escape') {
+                if (isMegaMenuOpen) {
+                    e.preventDefault();
+                    setIsMegaMenuOpen(false);
+                    return;
+                }
                 if (isSearchOpen) {
                     e.preventDefault();
                     setIsSearchOpen(false);
@@ -242,7 +253,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [isSearchOpen]);
+    }, [isMegaMenuOpen, isSearchOpen]);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -378,6 +389,28 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                 </span>
                             </div>
                         </Link>
+
+                        {/* Tombol Menu "Kategori Navigasi" (Desktop & Tablet) */}
+                        <button
+                            type="button"
+                            onClick={() => setIsMegaMenuOpen((prev) => !prev)}
+                            className={`hidden md:flex items-center gap-2 px-3.5 py-2 rounded-xl text-sm font-bold border transition-all cursor-pointer select-none ${
+                                isMegaMenuOpen
+                                    ? 'bg-blue-600 text-white border-blue-500 shadow-sm ring-2 ring-blue-400/40'
+                                    : 'bg-brand-800/90 hover:bg-brand-800 text-white border-brand-700/60 hover:border-blue-500/50'
+                            }`}
+                            aria-expanded={isMegaMenuOpen}
+                            aria-label="Kategori Navigasi"
+                            title="Menu Kategori Produk (Desktop & Tablet)"
+                        >
+                            <LayoutGrid className={`w-4 h-4 transition-colors ${isMegaMenuOpen ? 'text-white' : 'text-blue-400'}`} />
+                            <span>{isEn ? 'Categories' : 'Kategori'}</span>
+                            <ChevronDown
+                                className={`w-3.5 h-3.5 text-brand-300 transition-transform duration-200 ${
+                                    isMegaMenuOpen ? 'rotate-180 text-white' : ''
+                                }`}
+                            />
+                        </button>
                     </div>
 
                     {/* Bagian Tengah: Search Bar Memanjang (Mobile & Desktop) */}
@@ -631,6 +664,17 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                     </motion.div>
                 )}
             </AnimatePresence>
+
+            {/* Desktop & Tablet Mega Menu Dropdown */}
+            {isMegaMenuOpen && (
+                <React.Suspense fallback={null}>
+                    <DesktopMegaMenu
+                        isOpen={isMegaMenuOpen}
+                        onClose={() => setIsMegaMenuOpen(false)}
+                        categories={props.desktopMegaMenuCategories}
+                    />
+                </React.Suspense>
+            )}
             </header>
 
 
