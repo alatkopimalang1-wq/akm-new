@@ -470,30 +470,28 @@ export default function ProductShow({
                     {/* Right Column: Product Info & Purchase Options (7 cols) */}
                     <div className="lg:col-span-6 space-y-6">
                         <div>
-                            {/* Brand Badge */}
-                            {(product.producer || product.series_label || product.series) && (
-                                <div className="mb-2">
-                                    <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-copper/10 border border-accent-copper/25 text-accent-copper text-xs font-extrabold uppercase tracking-wider">
-                                        {product.producer || product.series_label || product.series}
-                                    </span>
+                            {/* Brand & Stock Status Badges (Side by Side on Mobile, Tablet, and Desktop) */}
+                            {((product.producer || product.series_label || product.series) || isProductOutOfStock || product.is_preorder || product.stock_status === 'pre_order') && (
+                                <div className="mb-2.5 flex flex-wrap items-center gap-2">
+                                    {(product.producer || product.series_label || product.series) && (
+                                        <span className="inline-flex items-center px-3 py-1 rounded-full bg-accent-copper/10 border border-accent-copper/25 text-accent-copper text-xs font-extrabold uppercase tracking-wider">
+                                            {product.producer || product.series_label || product.series}
+                                        </span>
+                                    )}
+
+                                    {isProductOutOfStock ? (
+                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-black text-white rounded-full text-xs font-black uppercase tracking-widest border border-white/20 shadow-xs">
+                                            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+                                            <span>STOK HABIS (SOLD OUT)</span>
+                                        </span>
+                                    ) : (product.is_preorder || product.stock_status === 'pre_order') ? (
+                                        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-600 text-white rounded-full text-xs font-black uppercase tracking-widest shadow-xs">
+                                            <span className="w-2 h-2 rounded-full bg-amber-200 animate-pulse" />
+                                            <span>PRE-ORDER</span>
+                                        </span>
+                                    ) : null}
                                 </div>
                             )}
-
-                            {isProductOutOfStock ? (
-                                <div className="mb-2.5">
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-black text-white rounded-md text-xs font-black uppercase tracking-widest border border-white/20 shadow-xs">
-                                        <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                                        <span>STOK HABIS (SOLD OUT)</span>
-                                    </span>
-                                </div>
-                            ) : (product.is_preorder || product.stock_status === 'pre_order') ? (
-                                <div className="mb-2.5">
-                                    <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-600 text-white rounded-md text-xs font-black uppercase tracking-widest shadow-xs">
-                                        <span className="w-2 h-2 rounded-full bg-amber-200 animate-pulse" />
-                                        <span>PRE-ORDER</span>
-                                    </span>
-                                </div>
-                            ) : null}
                             <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-950 tracking-tight leading-tight">
                                 {product.name}
                             </h1>

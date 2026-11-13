@@ -108,12 +108,20 @@ export const ProductCard: React.FC<ProductCardProps> = ({
             {/* Content Body with Compact Padding */}
             <div className="p-2.5 sm:p-3 flex flex-col flex-1 justify-between">
                 <Link href={`/shop/${product.slug}`} className="block">
-                    {/* Brand / Series */}
-                    <span className={`block text-[11px] font-bold uppercase tracking-wider truncate mb-1 ${
-                        isOutOfStock ? 'text-neutral-500' : 'text-accent-copper'
-                    }`}>
-                        {product.producer || product.series_label || (product.series ? product.series.replace('-', ' ') : 'Alat Kopi Malang')}
-                    </span>
+                    {/* Brand / Series + Pre-Order side-by-side */}
+                    <div className="flex items-center flex-wrap gap-1.5 mb-1">
+                        <span className={`text-[11px] font-bold uppercase tracking-wider truncate ${
+                            isOutOfStock ? 'text-neutral-500' : 'text-accent-copper'
+                        }`}>
+                            {product.producer || product.series_label || (product.series ? product.series.replace('-', ' ') : 'Alat Kopi Malang')}
+                        </span>
+                        {!isOutOfStock && (product.is_preorder || product.stock_status === 'pre_order') && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full bg-amber-600 text-white text-[9px] font-black uppercase tracking-wider leading-none shrink-0">
+                                <span className="w-1.5 h-1.5 rounded-full bg-amber-200 animate-pulse" />
+                                <span>PRE-ORDER</span>
+                            </span>
+                        )}
+                    </div>
 
                     {/* Product Name (2 Lines Max) */}
                     <h3 className={`text-sm sm:text-base font-bold line-clamp-2 leading-snug min-h-[2.4rem] transition-colors ${
@@ -208,10 +216,16 @@ export const ProductCard: React.FC<ProductCardProps> = ({
                     ) : null}
                 </div>
 
-                <div className={`text-[12px] font-bold uppercase tracking-wider mb-1.5 ${
+                <div className={`flex items-center flex-wrap gap-2 text-[12px] font-bold uppercase tracking-wider mb-1.5 ${
                     isOutOfStock ? 'text-neutral-500' : 'text-accent-copper'
                 }`}>
                     <span>{product.producer || product.series_label || product.series?.replace('-', ' ') || 'Alat Kopi Malang'}</span>
+                    {!isOutOfStock && (product.is_preorder || product.stock_status === 'pre_order') && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-amber-600 text-white text-[10px] font-black uppercase tracking-wider leading-none shrink-0">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-200 animate-pulse" />
+                            <span>PRE-ORDER</span>
+                        </span>
+                    )}
                 </div>
 
                 <h3 className={`text-base font-bold line-clamp-2 leading-snug mb-2 transition-colors ${
