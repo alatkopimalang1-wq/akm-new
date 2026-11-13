@@ -18,3 +18,4 @@ class ListProducts extends ListRecords
         ];
     }
 }
+

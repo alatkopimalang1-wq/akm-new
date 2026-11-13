@@ -31,3 +31,4 @@ class EditProduct extends EditRecord
         $this->fillForm();
     }
 }
+

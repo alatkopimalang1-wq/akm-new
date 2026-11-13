@@ -458,3 +458,4 @@ class CategorySampleProductsSeeder extends Seeder
         }
     }
 }
+

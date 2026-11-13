@@ -653,12 +653,9 @@ export default function ProductShow({
                                             </>
                                         ) : (
                                             <>
-                                                <ShoppingBag className="hidden sm:inline-block w-4 h-4" />
-                                                <span className="sm:hidden text-xs font-extrabold whitespace-nowrap tracking-wide">
+                                                <ShoppingBag className="w-4 h-4" />
+                                                <span className="text-xs font-extrabold whitespace-nowrap tracking-wide">
                                                     Tambah ke Keranjang
-                                                </span>
-                                                <span className="hidden sm:inline">
-                                                    Tambah ke Keranjang • {formatRupiah(selectedVariant.price * quantity)}
                                                 </span>
                                             </>
                                         )}
