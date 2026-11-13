@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Products\Schemas;
 
+use App\Models\Brand;
 use App\Models\Product;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -41,12 +42,48 @@ class ProductForm
                                 ->required()
                                 ->unique(ignoreRecord: true),
                         ]),
-                        Grid::make(3)->schema([
-                            TextInput::make('producer')
+                        Grid::make(2)->schema([
+                            Select::make('producer')
                                 ->label('Brand Produk')
-                                ->placeholder('Contoh: La Marzocco, Hario, Mahlkönig, Breville...')
+                                ->placeholder('Pilih Brand Produk...')
+                                ->options(function (?Product $record) {
+                                    $options = Brand::query()
+                                        ->orderBy('sort_order')
+                                        ->orderBy('name')
+                                        ->pluck('name', 'name')
+                                        ->toArray();
+
+                                    if ($record && ! empty($record->producer) && ! isset($options[$record->producer])) {
+                                        $options[$record->producer] = $record->producer;
+                                    }
+
+                                    return $options;
+                                })
+                                ->searchable()
+                                ->preload()
                                 ->required()
-                                ->live(onBlur: true)
+                                ->createOptionForm([
+                                    TextInput::make('name')
+                                        ->label('Nama Brand Baru')
+                                        ->placeholder('Contoh: La Marzocco, Hario, Mahlkönig...')
+                                        ->required(),
+                                    TextInput::make('origin')
+                                        ->label('Negara / Kota Asal Brand (Opsional)')
+                                        ->placeholder('Contoh: Florence, Italy'),
+                                ])
+                                ->createOptionUsing(function (array $data): string {
+                                    $brand = Brand::firstOrCreate(
+                                        ['name' => trim($data['name'])],
+                                        [
+                                            'slug' => Str::slug($data['name']),
+                                            'origin' => $data['origin'] ?? null,
+                                            'is_active' => true,
+                                        ]
+                                    );
+
+                                    return $brand->name;
+                                })
+                                ->live()
                                 ->afterStateUpdated(function ($state, callable $set) {
                                     if (! empty($state)) {
                                         $set('series', $state);
@@ -60,10 +97,6 @@ class ProductForm
                                 ->searchable()
                                 ->preload()
                                 ->required(),
-                            TextInput::make('series')
-                                ->label('Label Lini / Brand Tampil')
-                                ->placeholder('Otomatis mengikuti Brand Produk')
-                                ->default('Alat Kopi Malang'),
                         ]),
                         Grid::make(3)->schema([
                             Select::make('status')
