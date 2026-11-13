@@ -18,3 +18,4 @@ class ListCategories extends ListRecords
         ];
     }
 }
+

@@ -20,3 +20,4 @@ class EditCategory extends EditRecord
         ];
     }
 }
+

@@ -179,18 +179,18 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
     };
 
     return (
-        <PublicLayout title="Katalog Biji Kopi Specialty">
+        <PublicLayout title="Katalog Produk">
             {/* Header Banner */}
             <div className="bg-brand-950 text-white py-12 px-4 sm:px-6 lg:px-8 border-b border-brand-900">
                 <div className="max-w-7xl mx-auto space-y-3">
                     <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-                        Katalog Biji Kopi{' '}
+                        Katalog Produk{' '}
                         <span className="font-serif-italic italic font-normal text-accent-copper">
                             Alat Kopi Malang
                         </span>
                     </h1>
                     <p className="text-xs sm:text-sm text-brand-300 max-w-2xl">
-                        Eksplorasi seluruh lini biji kopi artisan Gunung Kawi, filter beans single origin, eksperimen co-fermentasi, hingga espresso house blend.
+                        Eksplorasi seluruh koleksi produk, peralatan kopi, mesin espresso, grinder, dan perlengkapan barista pilihan Alat Kopi Malang.
                     </p>
                 </div>
             </div>
@@ -206,7 +206,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                                 type="text"
                                 value={searchTerm}
                                 onChange={(e) => handleSearchChange(e.target.value)}
-                                placeholder="Cari nama kopi, varietas, rasa (e.g. Kawi, Peach, Washed)..."
+                                placeholder="Cari nama produk, alat kopi, atau kategori..."
                                 className="w-full pl-10 pr-10 py-2.5 rounded-full bg-cream-50 border border-sand-200 text-[16px] sm:text-sm text-brand-950 placeholder-transparent sm:placeholder-brand-400 focus:outline-hidden focus:border-brand-700"
                             />
                             {searchTerm && (
@@ -268,14 +268,6 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                             className="flex items-center gap-2 overflow-x-auto no-scrollbar pt-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden scroll-smooth"
                             style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
                         >
-                            <Link
-                                href="/cybr"
-                                className="flex-shrink-0 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-accent-copper text-white hover:bg-accent-copper/90 transition-colors flex items-center gap-1.5"
-                            >
-                                <SlidersHorizontal className="w-3.5 h-3.5" />
-                                <span>Custom Blend (C.Y.B.R)</span>
-                            </Link>
-
                             {/* All Products */}
                             <button
                                 type="button"
@@ -290,7 +282,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                                         : 'bg-cream-100/80 hover:bg-cream-100 text-brand-700 border border-sand-200/80'
                                 }`}
                             >
-                                Semua Kopi
+                                Semua Produk
                             </button>
 
                             {/* Dynamic Categories from Admin Dashboard */}
@@ -366,7 +358,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                             Tidak ada produk yang cocok dengan pencarian Anda
                         </p>
                         <p className="text-xs text-brand-500 max-w-sm mx-auto">
-                            Coba ubah kata kunci pencarian atau reset filter untuk melihat seluruh koleksi biji kopi Alat Kopi Malang.
+                            Coba ubah kata kunci pencarian atau reset filter untuk melihat seluruh koleksi produk Alat Kopi Malang.
                         </p>
                         <button
                             type="button"
@@ -378,7 +370,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                             }}
                             className="px-5 py-2.5 rounded-full bg-brand-700 text-white text-xs font-semibold cursor-pointer"
                         >
-                            Tampilkan Semua Kopi
+                            Tampilkan Semua Produk
                         </button>
                     </div>
                 ) : (
@@ -423,19 +415,19 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                                     {isLoadingMore ? (
                                         <>
                                             <Loader2 className="w-4 h-4 animate-spin text-accent-copper" />
-                                            <span>Memuat Biji Kopi...</span>
+                                            <span>Memuat Produk...</span>
                                         </>
                                     ) : (
-                                        <span>Muat Lebih Banyak Biji Kopi</span>
+                                        <span>Muat Lebih Banyak Produk</span>
                                     )}
                                 </button>
                                 <span className="text-[11px] text-brand-600 font-medium">
-                                    Menampilkan {allProducts.length} dari {products.total} biji kopi
+                                    Menampilkan {allProducts.length} dari {products.total} produk
                                 </span>
                             </div>
                         ) : (
                             <div className="pt-8 text-center text-xs text-brand-500 font-medium">
-                                Seluruh biji kopi ({allProducts.length}) telah ditampilkan
+                                Seluruh produk ({allProducts.length}) telah ditampilkan
                             </div>
                         )}
                     </>
