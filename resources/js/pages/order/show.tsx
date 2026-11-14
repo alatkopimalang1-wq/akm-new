@@ -628,8 +628,8 @@ export default function OrderShowPage({
                                                     line
                                                         .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
                                                         .replace(
-                                                            /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
-                                                            '$1 ',
+                                                            /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?!\d+x\b)/i,
+                                                            '$1 1x ',
                                                         )
                                                         .trim(),
                                                 )

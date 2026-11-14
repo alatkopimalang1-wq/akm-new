@@ -557,13 +557,13 @@ export default function CartPage({
                                                             {item.customNotes && (
                                                                 <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200/80 text-[11px] text-brand-900 leading-snug space-y-1">
                                                                     {item.customNotes
-                                                                        .split(/\n|\s*\|\s*/)
+                                                                        .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
                                                                         .map((line) =>
                                                                             line
                                                                                 .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
                                                                                 .replace(
-                                                                                    /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
-                                                                                    '$1 ',
+                                                                                    /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?!\d+x\b)/i,
+                                                                                    '$1 1x ',
                                                                                 )
                                                                                 .trim(),
                                                                         )

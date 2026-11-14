@@ -134,13 +134,13 @@ export const CartDrawer: React.FC = () => {
                                                         {item.customNotes && (
                                                             <div className="text-[11px] text-brand-700 font-medium mt-1.5 bg-sand-100/80 px-2.5 py-2 rounded-lg space-y-1 leading-snug">
                                                                 {item.customNotes
-                                                                    .split(/\n|\s*\|\s*/)
+                                                                    .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
                                                                     .map((line) =>
                                                                         line
                                                                             .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
                                                                             .replace(
-                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
-                                                                                '$1 ',
+                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?!\d+x\b)/i,
+                                                                                '$1 1x ',
                                                                             )
                                                                             .trim(),
                                                                     )
