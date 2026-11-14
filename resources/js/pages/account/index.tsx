@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { PublicLayout } from '@/layouts/public-layout';
+import { parseCustomNotes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import PasswordInput from '@/components/password-input';
@@ -390,22 +391,17 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                                             )}
                                                         </div>
                                                         {item.custom_notes && (
-                                                            <div className="text-xs text-brand-900 font-medium bg-sand-50 p-2 rounded-lg border border-sand-200 mt-1 space-y-1">
-                                                                {String(item.custom_notes)
-                                                                    .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
-                                                                    .map((line) =>
-                                                                        line
-                                                                            .trim()
-                                                                            .replace(
-                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?:1x\s+)*(\d+x\s+)?/i,
-                                                                                (_, tag, qty) => `${tag} ${qty || '1x '}`,
-                                                                            )
-                                                                            .trim(),
-                                                                    )
-                                                                    .filter(Boolean)
-                                                                    .map((line, lineIdx) => (
-                                                                        <p key={lineIdx}>{line}</p>
-                                                                    ))}
+                                                            <div className="text-xs text-brand-800 font-normal bg-sand-50 p-2 rounded-lg border border-sand-200 mt-1 space-y-1">
+                                                                {parseCustomNotes(item.custom_notes).map((line, lineIdx) => (
+                                                                    <p key={lineIdx}>
+                                                                        {line.tag && (
+                                                                            <strong className="font-extrabold text-brand-950">
+                                                                                {line.tag}{' '}
+                                                                            </strong>
+                                                                        )}
+                                                                        <span>{line.text}</span>
+                                                                    </p>
+                                                                ))}
                                                             </div>
                                                         )}
                                                     </div>

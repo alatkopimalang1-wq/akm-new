@@ -28,6 +28,7 @@ import {
 import { PublicLayout } from '@/layouts/public-layout';
 import { useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
+import { parseCustomNotes } from '@/lib/utils';
 import { ShippingMapPicker } from '@/components/shipping-map-picker';
 import { getProductContentId, trackInitiateCheckout } from '@/lib/meta-pixel';
 
@@ -555,24 +556,17 @@ export default function CartPage({
                                                                 {item.variant.label} · {item.grindOption}
                                                             </p>
                                                             {item.customNotes && (
-                                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200/80 text-[11px] text-brand-900 leading-snug space-y-1">
-                                                                    {item.customNotes
-                                                                        .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
-                                                                        .map((line) =>
-                                                                            line
-                                                                                .trim()
-                                                                                .replace(
-                                                                                    /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?:1x\s+)*(\d+x\s+)?/i,
-                                                                                    (_, tag, qty) => `${tag} ${qty || '1x '}`,
-                                                                                )
-                                                                                .trim(),
-                                                                        )
-                                                                        .filter(Boolean)
-                                                                        .map((line, lineIdx) => (
-                                                                            <p key={lineIdx} className="font-medium text-brand-900">
-                                                                                {line}
-                                                                            </p>
-                                                                        ))}
+                                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200/80 text-[11px] text-brand-800 leading-snug space-y-1">
+                                                                    {parseCustomNotes(item.customNotes).map((line, lineIdx) => (
+                                                                        <p key={lineIdx} className="font-normal text-brand-800">
+                                                                            {line.tag && (
+                                                                                <strong className="font-extrabold text-brand-950">
+                                                                                    {line.tag}{' '}
+                                                                                </strong>
+                                                                            )}
+                                                                            <span>{line.text}</span>
+                                                                        </p>
+                                                                    ))}
                                                                 </div>
                                                             )}
                                                         </div>

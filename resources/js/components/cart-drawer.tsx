@@ -6,6 +6,7 @@ import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number
 import { transition } from '@animate-ui/react/utils/motion';
 import { useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
+import { parseCustomNotes } from '@/lib/utils';
 
 export const CartDrawer: React.FC = () => {
     const { items, itemCount, subtotal, isCartOpen, setIsCartOpen, updateQuantity, removeItem } = useCart();
@@ -132,22 +133,17 @@ export const CartDrawer: React.FC = () => {
                                                             {item.variant.label} • {item.grindOption}
                                                         </p>
                                                         {item.customNotes && (
-                                                            <div className="text-[11px] text-brand-700 font-medium mt-1.5 bg-sand-100/80 px-2.5 py-2 rounded-lg space-y-1 leading-snug">
-                                                                {item.customNotes
-                                                                    .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
-                                                                    .map((line) =>
-                                                                        line
-                                                                            .trim()
-                                                                            .replace(
-                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?:1x\s+)*(\d+x\s+)?/i,
-                                                                                (_, tag, qty) => `${tag} ${qty || '1x '}`,
-                                                                            )
-                                                                            .trim(),
-                                                                    )
-                                                                    .filter(Boolean)
-                                                                    .map((line, lineIdx) => (
-                                                                        <p key={lineIdx}>{line}</p>
-                                                                    ))}
+                                                            <div className="text-[11px] text-brand-700 font-normal mt-1.5 bg-sand-100/80 px-2.5 py-2 rounded-lg space-y-1 leading-snug">
+                                                                {parseCustomNotes(item.customNotes).map((line, lineIdx) => (
+                                                                    <p key={lineIdx}>
+                                                                        {line.tag && (
+                                                                            <strong className="font-extrabold text-brand-950">
+                                                                                {line.tag}{' '}
+                                                                            </strong>
+                                                                        )}
+                                                                        <span>{line.text}</span>
+                                                                    </p>
+                                                                ))}
                                                             </div>
                                                         )}
                                                     </div>

@@ -11,6 +11,7 @@ import {
     Truck,
 } from 'lucide-react';
 import { formatRupiah } from '@/lib/trans';
+import { parseCustomNotes } from '@/lib/utils';
 
 interface InvoiceItem {
     id: number;
@@ -325,24 +326,17 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
 
                                             {/* Custom Bundle / Notes Display */}
                                             {item.custom_notes && (
-                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200 text-xs text-brand-950 leading-snug space-y-1">
-                                                    {String(item.custom_notes)
-                                                        .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
-                                                        .map((line) =>
-                                                            line
-                                                                .trim()
-                                                                .replace(
-                                                                    /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?:1x\s+)*(\d+x\s+)?/i,
-                                                                    (_, tag, qty) => `${tag} ${qty || '1x '}`,
-                                                                )
-                                                                .trim(),
-                                                        )
-                                                        .filter(Boolean)
-                                                        .map((line, lineIdx) => (
-                                                            <div key={lineIdx} className="font-medium text-brand-900">
-                                                                {line}
-                                                            </div>
-                                                        ))}
+                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200 text-xs text-brand-800 leading-snug space-y-1">
+                                                    {parseCustomNotes(item.custom_notes).map((line, lineIdx) => (
+                                                        <div key={lineIdx} className="font-normal text-brand-800">
+                                                            {line.tag && (
+                                                                <strong className="font-extrabold text-brand-950">
+                                                                    {line.tag}{' '}
+                                                                </strong>
+                                                            )}
+                                                            <span>{line.text}</span>
+                                                        </div>
+                                                    ))}
                                                 </div>
                                             )}
                                         </td>
