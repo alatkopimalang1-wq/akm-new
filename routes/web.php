@@ -16,8 +16,6 @@ use Illuminate\Support\Facades\Route;
 // Public Indonesian Routes (Default)
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-Route::get('/paket-custom', [ShopController::class, 'customBundle'])->name('shop.bundle');
-Route::get('/custom-paket', [ShopController::class, 'customBundle'])->name('shop.bundle.alias');
 Route::get('/kategori', [ShopController::class, 'categories'])->name('categories.index');
 Route::get('/categories', [ShopController::class, 'categories'])->name('categories.alias');
 Route::get('/api/search', [ShopController::class, 'liveSearch'])->name('api.search');
@@ -49,8 +47,6 @@ Route::post('/api/shipping/pickup', [ShippingController::class, 'requestPickup']
 Route::prefix('en')->as('en.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
-    Route::get('/paket-custom', [ShopController::class, 'customBundle'])->name('shop.bundle');
-    Route::get('/custom-bundle', [ShopController::class, 'customBundle'])->name('shop.bundle.en');
     Route::get('/kategori', [ShopController::class, 'categories'])->name('categories.index');
     Route::get('/categories', [ShopController::class, 'categories'])->name('categories.alias');
     Route::get('/api/search', [ShopController::class, 'liveSearch'])->name('api.search');
@@ -68,7 +64,7 @@ Route::prefix('en')->as('en.')->group(function () {
 
 // Dynamic Custom Pages (Format /kunjungi) via Direct Slug
 Route::get('/{slug}', [ContentController::class, 'customVisit'])
-    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|paket-custom|custom-paket|kategori|categories|tentang|syarat-ketentuan-pre-order|pre-order|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
+    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|syarat-ketentuan-pre-order|pre-order|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
     ->name('visit.direct');
 
 // XML Sitemap

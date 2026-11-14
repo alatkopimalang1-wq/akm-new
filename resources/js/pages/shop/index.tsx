@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { Head, Link, router } from '@inertiajs/react';
-import { Filter, Search, SlidersHorizontal, X, Loader2, ChevronLeft, ChevronRight, Gift } from 'lucide-react';
+import { Filter, Search, SlidersHorizontal, X, Loader2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { PublicLayout } from '@/layouts/public-layout';
 import type { Category, Product } from '@/types/sanubari';
 import { ProductCard } from '@/components/product-card';
@@ -182,17 +182,10 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
         <PublicLayout title="Katalog Produk Alat Kopi Malang">
             {/* Header Banner */}
             <div className="bg-brand-950 text-white py-10 px-4 sm:px-6 lg:px-8 border-b border-brand-900">
-                <div className="max-w-7xl mx-auto flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                <div className="max-w-7xl mx-auto">
                     <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
                         Katalog Produk Alat Kopi Malang
                     </h1>
-                    <Link
-                        href="/paket-custom"
-                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-accent-copper hover:bg-amber-600 text-white text-xs sm:text-sm font-extrabold shadow-lg transition-all self-start sm:self-auto active:scale-95"
-                    >
-                        <Gift className="w-4 h-4" />
-                        <span>Buat Paket Custom (Diskon Paket)</span>
-                    </Link>
                 </div>
             </div>
 
@@ -237,15 +230,6 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                             >
                                 Semua Produk
                             </button>
-
-                            {/* Custom Bundle Shortcut Pill */}
-                            <Link
-                                href="/paket-custom"
-                                className="flex-shrink-0 inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-accent-copper/15 hover:bg-accent-copper text-accent-copper hover:text-white border border-accent-copper/40 transition-all"
-                            >
-                                <Gift className="w-3.5 h-3.5" />
-                                <span>Paket Custom</span>
-                            </Link>
 
                             {/* Dynamic Parent Categories from Admin Dashboard */}
                             {categories
