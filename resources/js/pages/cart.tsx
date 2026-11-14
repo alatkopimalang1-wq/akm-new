@@ -144,6 +144,7 @@ export default function CartPage({
         itemCount,
         subtotal,
         hasPreOrderItems,
+        minDpPercentage,
         dpPercentage,
         setDpPercentage,
         updateQuantity,
@@ -1257,6 +1258,7 @@ export default function CartPage({
                                         <PreorderDpSlider
                                             totalAmount={grandTotal}
                                             dpPercentage={dpPercentage}
+                                            minDpPercentage={minDpPercentage}
                                             onChange={setDpPercentage}
                                         />
                                     </div>

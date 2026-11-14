@@ -341,6 +341,7 @@ class ShopController extends Controller
                     'weight_grams' => (int) ($defVar?->weight_grams ?? 500),
                     'is_out_of_stock' => (bool) $cand->is_out_of_stock,
                     'is_preorder' => (bool) ($cand->is_preorder || $cand->stock_status === 'pre_order' || $defVar?->stock_status === 'pre_order'),
+                    'min_dp_percentage' => $cand->min_dp_percentage,
                     'variants' => $variantsList,
                 ];
             })->values()->toArray();

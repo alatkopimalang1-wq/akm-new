@@ -32,6 +32,7 @@ import {
     calculateDpBreakdown,
     DpPercentage,
     normalizeDpPercentage,
+    normalizeMinDpPercentage,
     PreorderDpSlider,
 } from '@/components/preorder-dp-slider';
 import { OrderData } from '@/types/sanubari';
@@ -111,18 +112,25 @@ export default function OrderShowPage({
         order.items?.some((i) => i.is_preorder),
     );
 
+    const orderMinDp = normalizeMinDpPercentage((order.payment_details as any)?.min_dp_percentage ?? 30);
+
     const [dpPercentage, setDpPercentage] = useState<DpPercentage>(() =>
-        normalizeDpPercentage(order.payment_details?.dp_percentage ?? 100),
+        normalizeDpPercentage(order.payment_details?.dp_percentage ?? 100, orderMinDp),
     );
 
     const fullOrderBaseTotal = Number(order.subtotal || 0) + Number(order.shipping_cost || 0);
-    const dpBreakdown = calculateDpBreakdown(fullOrderBaseTotal, orderHasPreOrder ? dpPercentage : 100);
+    const dpBreakdown = calculateDpBreakdown(
+        fullOrderBaseTotal,
+        orderHasPreOrder ? dpPercentage : 100,
+        orderMinDp,
+    );
     const effectiveTotalAmount = orderHasPreOrder
         ? dpBreakdown.dpAmount + Number(order.unique_code || 0)
         : Number(order.total_amount || 0);
 
     const handleUpdateOrderDp = async (nextPct: DpPercentage) => {
-        setDpPercentage(nextPct);
+        const clamped = normalizeDpPercentage(nextPct, orderMinDp);
+        setDpPercentage(clamped);
         try {
             await fetch(`/pesanan/${order.order_number}/update-dp`, {
                 method: 'POST',
@@ -132,7 +140,7 @@ export default function OrderShowPage({
                     'X-CSRF-TOKEN':
                         (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '',
                 },
-                body: JSON.stringify({ dp_percentage: nextPct }),
+                body: JSON.stringify({ dp_percentage: clamped }),
             });
         } catch (err) {
             console.error('Failed to update order DP:', err);
@@ -338,6 +346,7 @@ export default function OrderShowPage({
                         <PreorderDpSlider
                             totalAmount={fullOrderBaseTotal}
                             dpPercentage={dpPercentage}
+                            minDpPercentage={orderMinDp}
                             onChange={handleUpdateOrderDp}
                         />
                     )}

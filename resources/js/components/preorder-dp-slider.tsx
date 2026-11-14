@@ -5,16 +5,31 @@ import { formatRupiah } from '@/lib/trans';
 export const DP_PERCENTAGE_STEPS = [30, 50, 70, 100] as const;
 export type DpPercentage = (typeof DP_PERCENTAGE_STEPS)[number];
 
-export function normalizeDpPercentage(val: unknown): DpPercentage {
+export function normalizeDpPercentage(val: unknown, minVal?: unknown): DpPercentage {
+    const num = Number(val);
+    const normalized: DpPercentage =
+        num === 30 || num === 50 || num === 70 || num === 100 ? num : 100;
+
+    if (minVal !== undefined) {
+        const minNum = Number(minVal);
+        const normalizedMin: DpPercentage =
+            minNum === 30 || minNum === 50 || minNum === 70 || minNum === 100 ? minNum : 30;
+        return (normalized < normalizedMin ? normalizedMin : normalized) as DpPercentage;
+    }
+
+    return normalized;
+}
+
+export function normalizeMinDpPercentage(val: unknown): DpPercentage {
     const num = Number(val);
     if (num === 30 || num === 50 || num === 70 || num === 100) {
         return num;
     }
-    return 100;
+    return 30;
 }
 
-export function calculateDpBreakdown(totalAmount: number, dpPercentage: number) {
-    const pct = normalizeDpPercentage(dpPercentage);
+export function calculateDpBreakdown(totalAmount: number, dpPercentage: number, minDpPercentage?: number) {
+    const pct = normalizeDpPercentage(dpPercentage, minDpPercentage);
     const safeTotal = Math.max(0, Math.round(Number(totalAmount) || 0));
     const dpAmount = pct === 100 ? safeTotal : Math.round((safeTotal * pct) / 100);
     const remainingBalance = Math.max(0, safeTotal - dpAmount);
@@ -32,6 +47,7 @@ export function calculateDpBreakdown(totalAmount: number, dpPercentage: number) 
 interface PreorderDpSliderProps {
     totalAmount: number;
     dpPercentage: DpPercentage;
+    minDpPercentage?: DpPercentage;
     onChange: (nextPercentage: DpPercentage) => void;
     title?: string;
     compact?: boolean;
@@ -40,20 +56,23 @@ interface PreorderDpSliderProps {
 export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
     totalAmount,
     dpPercentage,
+    minDpPercentage = 30,
     onChange,
     title = 'Pengaturan Pembayaran DP (Down Payment) Pre-Order',
     compact = false,
 }) => {
-    const activePct = normalizeDpPercentage(dpPercentage);
+    const minPct = normalizeMinDpPercentage(minDpPercentage);
+    const activePct = normalizeDpPercentage(dpPercentage, minPct);
     const stepIndex = Math.max(0, DP_PERCENTAGE_STEPS.indexOf(activePct));
     const progressPercent = (stepIndex / (DP_PERCENTAGE_STEPS.length - 1)) * 100;
 
-    const breakdown = calculateDpBreakdown(totalAmount, activePct);
+    const breakdown = calculateDpBreakdown(totalAmount, activePct, minPct);
 
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const idx = Number(e.target.value);
-        const nextPct = DP_PERCENTAGE_STEPS[idx] ?? 100;
-        onChange(nextPct);
+        const rawPct = DP_PERCENTAGE_STEPS[idx] ?? 100;
+        const clampedPct = (rawPct < minPct ? minPct : rawPct) as DpPercentage;
+        onChange(clampedPct);
     };
 
     return (
@@ -69,9 +88,16 @@ export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
                         <SlidersHorizontal className="w-3.5 h-3.5" />
                     </span>
                     <div className="min-w-0">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-amber-800 block">
-                            Pre-Order · Down Payment (DP)
-                        </span>
+                        <div className="flex flex-wrap items-center gap-1.5">
+                            <span className="text-[10px] font-black uppercase tracking-wider text-amber-800">
+                                Pre-Order · Down Payment (DP)
+                            </span>
+                            {minPct > 30 && (
+                                <span className="px-1.5 py-0.5 rounded bg-amber-200/80 text-amber-950 text-[9px] font-extrabold uppercase tracking-wider">
+                                    Min. DP {minPct}%
+                                </span>
+                            )}
+                        </div>
                         <h3 className="text-xs sm:text-sm font-extrabold text-brand-950 leading-snug">
                             {title}
                         </h3>
@@ -137,15 +163,28 @@ export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
                 <div className="grid grid-cols-4 gap-1.5">
                     {DP_PERCENTAGE_STEPS.map((pct) => {
                         const isSelected = activePct === pct;
+                        const isBelowMin = pct < minPct;
                         return (
                             <button
                                 key={pct}
                                 type="button"
-                                onClick={() => onChange(pct)}
-                                className={`py-1.5 px-1 rounded-xl text-[11px] sm:text-xs font-extrabold text-center transition-all cursor-pointer border ${
-                                    isSelected
-                                        ? 'bg-brand-900 text-white border-brand-900 shadow-xs'
-                                        : 'bg-white hover:bg-amber-50 text-brand-800 border-sand-200'
+                                disabled={isBelowMin}
+                                title={
+                                    isBelowMin
+                                        ? `Minimal DP untuk produk ini adalah ${minPct}%`
+                                        : undefined
+                                }
+                                onClick={() => {
+                                    if (!isBelowMin) {
+                                        onChange(pct);
+                                    }
+                                }}
+                                className={`py-1.5 px-1 rounded-xl text-[11px] sm:text-xs font-extrabold text-center transition-all border ${
+                                    isBelowMin
+                                        ? 'bg-sand-100 text-brand-400 border-sand-200 opacity-50 cursor-not-allowed line-through'
+                                        : isSelected
+                                            ? 'bg-brand-900 text-white border-brand-900 shadow-xs cursor-pointer'
+                                            : 'bg-white hover:bg-amber-50 text-brand-800 border-sand-200 cursor-pointer'
                                 }`}
                             >
                                 {pct === 100 ? '100% (Lunas)' : `${pct}%`}

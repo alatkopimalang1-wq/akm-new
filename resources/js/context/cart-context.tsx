@@ -1,7 +1,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { CartItem, Product, ProductVariant } from '@/types/sanubari';
 import { getProductContentId, trackAddToCart } from '@/lib/meta-pixel';
-import { DpPercentage, normalizeDpPercentage } from '@/components/preorder-dp-slider';
+import { DpPercentage, normalizeDpPercentage, normalizeMinDpPercentage } from '@/components/preorder-dp-slider';
 
 export type { CartItem, Product, ProductVariant };
 
@@ -14,6 +14,16 @@ export function isCartItemPreOrder(item: CartItem): boolean {
     );
 }
 
+export function getCartItemMinDp(item: CartItem): DpPercentage {
+    if (!isCartItemPreOrder(item)) return 30;
+    return normalizeMinDpPercentage(
+        item.minDpPercentage ??
+        item.product?.min_dp_percentage ??
+        (item.product?.bundle_config as any)?.min_dp_percentage ??
+        30,
+    );
+}
+
 interface CartContextType {
     items: CartItem[];
     addItem: (
@@ -22,7 +32,7 @@ interface CartContextType {
         quantity?: number,
         grindOption?: string,
         customNotes?: string,
-        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage }
+        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage; minDpPercentage?: DpPercentage }
     ) => void;
     removeItem: (variantId: number, grindOption: string, customNotes?: string) => void;
     updateQuantity: (
@@ -35,6 +45,7 @@ interface CartContextType {
     itemCount: number;
     subtotal: number;
     hasPreOrderItems: boolean;
+    minDpPercentage: DpPercentage;
     dpPercentage: DpPercentage;
     setDpPercentage: (pct: DpPercentage) => void;
     isCartOpen: boolean;
@@ -95,7 +106,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         quantity: number = 1,
         grindOption: string = 'Biji Utuh (Whole Bean)',
         customNotes?: string,
-        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage }
+        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage; minDpPercentage?: DpPercentage }
     ) => {
         const itemIsPreOrder = Boolean(
             options?.isPreOrder ||
@@ -104,8 +115,15 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             variant.stock_status === 'pre_order'
         );
 
+        const itemMinDp = normalizeMinDpPercentage(
+            options?.minDpPercentage ??
+            product.min_dp_percentage ??
+            (product.bundle_config as any)?.min_dp_percentage ??
+            30,
+        );
+
         if (itemIsPreOrder && options?.dpPercentage) {
-            setDpPercentageState(normalizeDpPercentage(options.dpPercentage));
+            setDpPercentageState(normalizeDpPercentage(options.dpPercentage, itemMinDp));
         }
 
         setItems((prev) => {
@@ -121,6 +139,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     ...next[existingIndex],
                     quantity: next[existingIndex].quantity + quantity,
                     isPreOrder: next[existingIndex].isPreOrder || itemIsPreOrder,
+                    minDpPercentage: Math.max(next[existingIndex].minDpPercentage || 30, itemMinDp),
                 };
                 return next;
             }
@@ -133,6 +152,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     grindOption,
                     customNotes,
                     isPreOrder: itemIsPreOrder,
+                    minDpPercentage: itemMinDp,
                 },
             ];
         });
@@ -196,6 +216,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
     const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = items.reduce((sum, item) => sum + item.variant.price * item.quantity, 0);
     const hasPreOrderItems = items.some(isCartItemPreOrder);
+    const minDpPercentage = normalizeMinDpPercentage(
+        items.reduce((maxMin, item) => (isCartItemPreOrder(item) ? Math.max(maxMin, getCartItemMinDp(item)) : maxMin), 30),
+    );
+    const effectiveDpPercentage = normalizeDpPercentage(dpPercentage, minDpPercentage);
 
     return (
         <CartContext.Provider
@@ -208,8 +232,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 itemCount,
                 subtotal,
                 hasPreOrderItems,
-                dpPercentage,
-                setDpPercentage,
+                minDpPercentage,
+                dpPercentage: effectiveDpPercentage,
+                setDpPercentage: (pct: DpPercentage) =>
+                    setDpPercentageState(normalizeDpPercentage(pct, minDpPercentage)),
                 isCartOpen,
                 setIsCartOpen,
             }}

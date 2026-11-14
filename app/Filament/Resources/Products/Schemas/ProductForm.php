@@ -179,15 +179,45 @@ class ProductForm
                                 ->label('Produk Paket Custom (Custom Bundling)')
                                 ->live(),
                         ]),
-                        Grid::make(2)
+                        Grid::make(3)
                             ->visible(fn (callable $get): bool => (bool) $get('is_preorder') || ($get('stock_status') ?? '') === 'pre_order')
                             ->schema([
                                 Toggle::make('bundle_config.dp_enabled')
                                     ->label('Aktifkan Pembayaran DP (Down Payment) Pre-Order')
                                     ->helperText('Menampilkan slide geser persentase DP (30%, 50%, 70%, 100% Lunas) dan mengurangi total tagihan otomatis.')
-                                    ->default(true),
+                                    ->default(true)
+                                    ->afterStateHydrated(function ($component, $state) {
+                                        if ($state === null) {
+                                            $component->state(true);
+                                        }
+                                    })
+                                    ->live(),
+                                Select::make('bundle_config.min_dp_percentage')
+                                    ->label('Atur DP Minimum Produk')
+                                    ->options([
+                                        30 => 'Minimal DP 30% (Bisa pilih 30%, 50%, 70%, 100%)',
+                                        50 => 'Minimal DP 50% (Bisa pilih 50%, 70%, 100%)',
+                                        70 => 'Minimal DP 70% (Bisa pilih 70%, 100%)',
+                                        100 => 'Minimal 100% (Wajib Lunas)',
+                                    ])
+                                    ->default(30)
+                                    ->afterStateHydrated(function ($component, $state) {
+                                        if (empty($state)) {
+                                            $component->state(30);
+                                        }
+                                    })
+                                    ->live()
+                                    ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                        $min = (int) ($state ?: 30);
+                                        $currentDefault = (int) ($get('bundle_config.default_dp_percentage') ?: 100);
+                                        if ($currentDefault < $min) {
+                                            $set('bundle_config.default_dp_percentage', $min);
+                                        }
+                                    })
+                                    ->visible(fn (callable $get): bool => (bool) ($get('bundle_config.dp_enabled') ?? true))
+                                    ->helperText('Batas minimum persentase DP yang dapat dipilih pelanggan pada produk ini.'),
                                 Select::make('bundle_config.default_dp_percentage')
-                                    ->label('Persentase DP Default')
+                                    ->label('Persentase DP Default (Pilihan Awal)')
                                     ->options([
                                         30 => 'DP 30%',
                                         50 => 'DP 50%',
@@ -195,6 +225,13 @@ class ProductForm
                                         100 => '100% (Lunas)',
                                     ])
                                     ->default(100)
+                                    ->afterStateHydrated(function ($component, $state, callable $get) {
+                                        $min = (int) ($get('bundle_config.min_dp_percentage') ?: 30);
+                                        $val = (int) ($state ?: 100);
+                                        $component->state(max($min, $val));
+                                    })
+                                    ->disableOptionWhen(fn (string $value, callable $get): bool => (int) $value < (int) ($get('bundle_config.min_dp_percentage') ?: 30))
+                                    ->visible(fn (callable $get): bool => (bool) ($get('bundle_config.dp_enabled') ?? true))
                                     ->helperText('Pilihan awal slide geser DP saat pelanggan membuka produk/checkout Pre-Order.'),
                             ]),
                     ]),

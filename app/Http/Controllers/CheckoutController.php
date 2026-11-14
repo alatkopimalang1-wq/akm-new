@@ -66,6 +66,7 @@ class CheckoutController extends Controller
         $totalWeightGrams = 0;
         $orderLines = [];
         $hasPreOrder = false;
+        $orderMinDp = 30;
 
         foreach ($validated['items'] as $item) {
             $variant = ProductVariant::with('product')->findOrFail($item['variant_id']);
@@ -86,6 +87,10 @@ class CheckoutController extends Controller
                 $variant->product->stock_status === 'pre_order'
             ) {
                 $hasPreOrder = true;
+                $prodMinDp = (int) ($variant->product->min_dp_percentage ?? 30);
+                if (in_array($prodMinDp, [30, 50, 70, 100], true)) {
+                    $orderMinDp = max($orderMinDp, $prodMinDp);
+                }
             }
 
             $qty = $item['quantity'];
@@ -159,6 +164,9 @@ class CheckoutController extends Controller
 
         $requestedDp = (int) ($validated['dp_percentage'] ?? 100);
         $dpPercentage = in_array($requestedDp, [30, 50, 70, 100], true) ? $requestedDp : 100;
+        if ($hasPreOrder) {
+            $dpPercentage = max($orderMinDp, $dpPercentage);
+        }
         $fullTotalAmount = (float) ($subtotal + $shippingCost);
         $isPreOrderDp = ($hasPreOrder || $dpPercentage < 100) && $dpPercentage < 100;
         $dpBaseAmount = $isPreOrderDp
@@ -228,6 +236,7 @@ class CheckoutController extends Controller
             'bank_info' => $matchedBankInfo,
             'has_preorder' => $hasPreOrder || $isPreOrderDp,
             'is_preorder_dp' => $isPreOrderDp,
+            'min_dp_percentage' => $orderMinDp,
             'dp_percentage' => $dpPercentage,
             'full_total_amount' => $fullTotalAmount,
             'dp_amount' => $dpBaseAmount,
@@ -597,7 +606,12 @@ class CheckoutController extends Controller
             'dp_percentage' => 'required|integer|in:30,50,70,100',
         ]);
 
-        $dpPercentage = (int) $validated['dp_percentage'];
+        $minDp = (int) ($order->payment_details['min_dp_percentage'] ?? 30);
+        if (! in_array($minDp, [30, 50, 70, 100], true)) {
+            $minDp = 30;
+        }
+
+        $dpPercentage = max($minDp, (int) $validated['dp_percentage']);
         $fullTotalAmount = (float) ($order->subtotal + $order->shipping_cost);
         $isPreOrderDp = $dpPercentage < 100;
         $dpBaseAmount = $isPreOrderDp

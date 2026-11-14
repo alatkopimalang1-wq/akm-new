@@ -76,6 +76,7 @@ class Product extends Model
         'variant_title',
         'has_variants',
         'dp_enabled',
+        'min_dp_percentage',
         'default_dp_percentage',
     ];
 
@@ -107,11 +108,24 @@ class Product extends Model
         return true;
     }
 
+    public function getMinDpPercentageAttribute(): int
+    {
+        if (! $this->dp_enabled) {
+            return 100;
+        }
+
+        $val = (int) ($this->bundle_config['min_dp_percentage'] ?? 30);
+
+        return in_array($val, [30, 50, 70, 100], true) ? $val : 30;
+    }
+
     public function getDefaultDpPercentageAttribute(): int
     {
+        $min = $this->min_dp_percentage;
         $val = (int) ($this->bundle_config['default_dp_percentage'] ?? 100);
+        $normalized = in_array($val, [30, 50, 70, 100], true) ? $val : 100;
 
-        return in_array($val, [30, 50, 70, 100], true) ? $val : 100;
+        return max($min, $normalized);
     }
 
     public function getHasVariantsAttribute(): bool

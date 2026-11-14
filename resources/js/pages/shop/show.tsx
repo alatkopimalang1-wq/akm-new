@@ -34,6 +34,7 @@ import {
     calculateDpBreakdown,
     DpPercentage,
     normalizeDpPercentage,
+    normalizeMinDpPercentage,
     PreorderDpSlider,
 } from '@/components/preorder-dp-slider';
 import { getProductContentId, trackViewContent } from '@/lib/meta-pixel';
@@ -128,14 +129,19 @@ export default function ProductShow({
 }: ProductShowProps) {
     const { addItem, dpPercentage: cartDpPercentage, setDpPercentage: setCartDpPercentage } = useCart();
 
+    const minDpPct = normalizeMinDpPercentage(
+        (product as any).min_dp_percentage ?? (product.bundle_config as any)?.min_dp_percentage ?? 30,
+    );
     const defaultDpPct = normalizeDpPercentage(
         (product as any).default_dp_percentage ?? (product.bundle_config as any)?.default_dp_percentage ?? cartDpPercentage ?? 100,
+        minDpPct,
     );
     const [selectedDp, setSelectedDp] = useState<DpPercentage>(defaultDpPct);
 
     const handleDpChange = (nextPct: DpPercentage) => {
-        setSelectedDp(nextPct);
-        setCartDpPercentage(nextPct);
+        const clamped = normalizeDpPercentage(nextPct, minDpPct);
+        setSelectedDp(clamped);
+        setCartDpPercentage(clamped);
     };
 
     const hasVariantsEnabled = (product as any).has_variants !== false;
@@ -293,7 +299,7 @@ export default function ProductShow({
     );
     const isDpEnabled = isPreOrderProduct && (product as any).dp_enabled !== false;
     const productTotalAmount = selectedVariant.price * quantity;
-    const dpBreakdown = calculateDpBreakdown(productTotalAmount, isDpEnabled ? selectedDp : 100);
+    const dpBreakdown = calculateDpBreakdown(productTotalAmount, isDpEnabled ? selectedDp : 100, minDpPct);
 
     const isProductOutOfStock = Boolean(
         product.is_out_of_stock ||
@@ -307,6 +313,7 @@ export default function ProductShow({
         addItem(product, selectedVariant, quantity, grindOption, undefined, {
             isPreOrder: isPreOrderProduct,
             dpPercentage: isDpEnabled ? selectedDp : 100,
+            minDpPercentage: minDpPct,
         });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1400);
@@ -625,6 +632,7 @@ export default function ProductShow({
                                     <PreorderDpSlider
                                         totalAmount={productTotalAmount}
                                         dpPercentage={selectedDp}
+                                        minDpPercentage={minDpPct}
                                         onChange={handleDpChange}
                                     />
                                 )}

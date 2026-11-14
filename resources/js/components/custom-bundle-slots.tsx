@@ -8,6 +8,7 @@ import {
     calculateDpBreakdown,
     DpPercentage,
     normalizeDpPercentage,
+    normalizeMinDpPercentage,
     PreorderDpSlider,
 } from '@/components/preorder-dp-slider';
 
@@ -35,6 +36,7 @@ export interface BundleCandidateProduct {
     weight_grams: number;
     is_out_of_stock: boolean;
     is_preorder?: boolean;
+    min_dp_percentage?: number;
     variants?: BundleCandidateVariant[];
 }
 
@@ -67,8 +69,12 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 }) => {
     const { addItem, dpPercentage: cartDpPercentage, setDpPercentage: setCartDpPercentage } = useCart();
 
+    const baseMinDp = normalizeMinDpPercentage(
+        (product as any).min_dp_percentage ?? (product.bundle_config as any)?.min_dp_percentage ?? 30,
+    );
     const defaultDpPct = normalizeDpPercentage(
         (product as any).default_dp_percentage ?? (product.bundle_config as any)?.default_dp_percentage ?? cartDpPercentage ?? 100,
+        baseMinDp,
     );
     const [selectedDp, setSelectedDp] = useState<DpPercentage>(defaultDpPct);
 
@@ -326,11 +332,26 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
         return Object.values(selectedBySlot).some((item) => Boolean(item?.is_preorder));
     }, [product.is_preorder, product.stock_status, defaultVariant.stock_status, selectedBySlot]);
 
+    const bundleMinDpPct = useMemo(() => {
+        let maxMin: number = baseMinDp;
+        Object.values(selectedBySlot).forEach((item) => {
+            if (item?.is_preorder && item.min_dp_percentage) {
+                maxMin = Math.max(maxMin, Number(item.min_dp_percentage));
+            }
+        });
+        return normalizeMinDpPercentage(maxMin);
+    }, [baseMinDp, selectedBySlot]);
+
+    const effectiveSelectedDp = normalizeDpPercentage(selectedDp, bundleMinDpPct);
     const isBundleDpEnabled = isBundlePreOrder && (product as any).dp_enabled !== false;
     const effectiveUnitPrice =
         totalBundlePrice > 0 ? totalBundlePrice : Number(defaultVariant.price || product.min_price || 0);
     const bundleTotalAmount = effectiveUnitPrice * Math.max(1, quantity);
-    const bundleDpBreakdown = calculateDpBreakdown(bundleTotalAmount, isBundleDpEnabled ? selectedDp : 100);
+    const bundleDpBreakdown = calculateDpBreakdown(
+        bundleTotalAmount,
+        isBundleDpEnabled ? effectiveSelectedDp : 100,
+        bundleMinDpPct,
+    );
 
     const handleBuyNow = () => {
         if (!ensureAllRequiredSelected()) return;
@@ -349,7 +370,8 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
         addItem(product, customVariant, Math.max(1, quantity), 'Paket Custom', buildCustomNotes(), {
             isPreOrder: isBundlePreOrder,
-            dpPercentage: isBundleDpEnabled ? selectedDp : 100,
+            dpPercentage: isBundleDpEnabled ? effectiveSelectedDp : 100,
+            minDpPercentage: bundleMinDpPct,
         });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1500);
@@ -677,7 +699,8 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                 {isBundleDpEnabled && (
                     <PreorderDpSlider
                         totalAmount={bundleTotalAmount}
-                        dpPercentage={selectedDp}
+                        dpPercentage={effectiveSelectedDp}
+                        minDpPercentage={bundleMinDpPct}
                         onChange={handleDpChange}
                     />
                 )}

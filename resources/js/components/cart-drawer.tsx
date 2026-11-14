@@ -15,6 +15,7 @@ export const CartDrawer: React.FC = () => {
         itemCount,
         subtotal,
         hasPreOrderItems,
+        minDpPercentage,
         dpPercentage,
         setDpPercentage,
         isCartOpen,
@@ -23,7 +24,11 @@ export const CartDrawer: React.FC = () => {
         removeItem,
     } = useCart();
 
-    const dpBreakdown = calculateDpBreakdown(subtotal, hasPreOrderItems ? dpPercentage : 100);
+    const dpBreakdown = calculateDpBreakdown(
+        subtotal,
+        hasPreOrderItems ? dpPercentage : 100,
+        minDpPercentage,
+    );
 
     const totalNormalSubtotal = items.reduce((sum, item) => {
         const pricing = getBundlePricingSummary({
@@ -270,6 +275,7 @@ export const CartDrawer: React.FC = () => {
                                             compact
                                             totalAmount={subtotal}
                                             dpPercentage={dpPercentage}
+                                            minDpPercentage={minDpPercentage}
                                             onChange={setDpPercentage}
                                         />
                                     </div>
