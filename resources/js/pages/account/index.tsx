@@ -380,6 +380,15 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                                         <h4 className="font-bold text-sm text-brand-950 leading-snug">
                                                             {item.quantity}x {item.product_name}
                                                         </h4>
+                                                        {!isBundleOrderItem({
+                                                            variantLabel: item.variant_label,
+                                                            grindOption: item.grind_option,
+                                                            customNotes: item.custom_notes,
+                                                        }) && item.variant_label && (
+                                                            <p className="text-xs text-accent-copper font-semibold">
+                                                                Varian: {item.variant_label}
+                                                            </p>
+                                                        )}
                                                         {item.custom_notes && (
                                                             <div className="text-xs text-brand-800 font-normal bg-sand-50 p-2 rounded-lg border border-sand-200 mt-1 space-y-1">
                                                                 {parseCustomNotes(item.custom_notes).map((line, lineIdx) => (

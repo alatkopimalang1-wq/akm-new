@@ -320,6 +320,15 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                             <div className="font-bold text-sm text-brand-950">
                                                 {item.product_name}
                                             </div>
+                                            {!isBundleOrderItem({
+                                                variantLabel: item.variant_label,
+                                                grindOption: item.grind_option,
+                                                customNotes: item.custom_notes,
+                                            }) && item.variant_label && (
+                                                <div className="text-[11px] text-accent-copper font-semibold">
+                                                    Varian: {item.variant_label}
+                                                </div>
+                                            )}
 
                                             {/* Custom Bundle / Notes Display */}
                                             {item.custom_notes && (

@@ -158,7 +158,9 @@ class CartController extends Controller
         foreach ($orderLines as $i => $line) {
             $idx = $i + 1;
             $formattedPrice = "Rp " . number_format($line['total'], 0, ',', '.');
-            $linesText .= "{$idx}. *{$line['product_name']}*\n";
+            $isBundleLine = str_contains(strtolower(($line['variant_label'] ?? '') . ' ' . ($line['grind_option'] ?? '')), 'paket custom');
+            $varSuffix = (! $isBundleLine && ! empty($line['variant_label'])) ? " (Varian: {$line['variant_label']})" : '';
+            $linesText .= "{$idx}. *{$line['product_name']}*{$varSuffix}\n";
             if (! empty($line['custom_notes'])) {
                 $linesText .= "   Racikan: {$line['custom_notes']}\n";
             }

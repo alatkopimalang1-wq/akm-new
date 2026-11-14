@@ -552,6 +552,16 @@ export default function CartPage({
                                                             <h3 className="text-xs sm:text-sm font-bold text-brand-950 truncate">
                                                                 {item.product.name}
                                                             </h3>
+                                                            {!isBundleOrderItem({
+                                                                isCustomBundle: item.product.is_custom_bundle,
+                                                                variantLabel: item.variant.label,
+                                                                grindOption: item.grindOption,
+                                                                customNotes: item.customNotes,
+                                                            }) && item.variant?.label && (
+                                                                <p className="text-[11px] text-accent-copper font-semibold mt-0.5">
+                                                                    Varian: {item.variant.label}
+                                                                </p>
+                                                            )}
                                                             {item.customNotes && (
                                                                 <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200/80 text-[11px] text-brand-800 leading-snug space-y-1">
                                                                     {parseCustomNotes(item.customNotes).map((line, lineIdx) => (

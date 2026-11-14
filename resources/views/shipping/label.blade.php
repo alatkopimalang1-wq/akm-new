@@ -381,6 +381,9 @@
                     <div class="item-row">
                         <div>
                             <span class="item-name">• {{ $item['name'] }}</span>
+                            @if(!empty($item['variant']) && !str_contains(strtolower($item['variant']), 'paket custom'))
+                                <span class="item-spec">(Varian: {{ $item['variant'] }})</span>
+                            @endif
                             @if(!empty($item['custom_notes']))
                                 <div style="font-size: 8px; color: #374151; white-space: pre-line; margin-top: 2px;">{{ $item['custom_notes'] }}</div>
                             @endif
