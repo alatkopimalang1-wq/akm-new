@@ -374,8 +374,11 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                         loading="lazy"
                                     />
                                 </div>
-                                <div className="mt-2 space-y-0.5 w-full">
-                                    <p className="text-[11px] sm:text-xs font-extrabold uppercase tracking-wide text-neutral-800">
+                                <div className="mt-2 space-y-1 w-full">
+                                    <p className="text-[11px] sm:text-xs font-medium text-neutral-800 line-clamp-2 leading-snug">
+                                        {chosenFree.name}
+                                    </p>
+                                    <p className="text-[10px] sm:text-[11px] font-extrabold uppercase tracking-wide text-emerald-700">
                                         GRATIS
                                     </p>
                                     {freeMultiVar && (
