@@ -16,6 +16,21 @@ export interface ParsedCustomNoteLine {
     text: string;
 }
 
+export function isBundleOrderItem(item: {
+    variantLabel?: string | null;
+    grindOption?: string | null;
+    customNotes?: string | null;
+    isCustomBundle?: boolean | null;
+}): boolean {
+    if (item.isCustomBundle) return true;
+    const v = (item.variantLabel || '').toLowerCase();
+    const g = (item.grindOption || '').toLowerCase();
+    const n = (item.customNotes || '').toLowerCase();
+    if (v.includes('paket custom') || g.includes('paket custom')) return true;
+    if (/\[(?:slot|item)\s*\d+|\[(?:item\s+)?(?:gratis|opsional|optional)\]/i.test(n)) return true;
+    return false;
+}
+
 export function parseCustomNotes(notes?: string | null): ParsedCustomNoteLine[] {
     if (!notes) return [];
 

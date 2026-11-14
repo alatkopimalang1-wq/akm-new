@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
 import { PublicLayout } from '@/layouts/public-layout';
-import { parseCustomNotes } from '@/lib/utils';
+import { isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import PasswordInput from '@/components/password-input';
@@ -380,16 +380,22 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                                         <h4 className="font-bold text-sm text-brand-950 leading-snug">
                                                             {item.quantity}x {item.product_name}
                                                         </h4>
-                                                        <div className="flex items-center gap-2 text-xs text-brand-600 flex-wrap">
-                                                            <span className="px-2 py-0.5 rounded-md bg-sand-100 font-medium text-[11px]">
-                                                                {item.variant_label}
-                                                            </span>
-                                                            {item.grind_option && (
-                                                                <span className="px-2 py-0.5 rounded-md bg-cream-100 text-brand-800 font-medium text-[11px]">
-                                                                    {item.grind_option}
+                                                        {!isBundleOrderItem({
+                                                            variantLabel: item.variant_label,
+                                                            grindOption: item.grind_option,
+                                                            customNotes: item.custom_notes,
+                                                        }) && (
+                                                            <div className="flex items-center gap-2 text-xs text-brand-600 flex-wrap">
+                                                                <span className="px-2 py-0.5 rounded-md bg-sand-100 font-medium text-[11px]">
+                                                                    {item.variant_label}
                                                                 </span>
-                                                            )}
-                                                        </div>
+                                                                {item.grind_option && (
+                                                                    <span className="px-2 py-0.5 rounded-md bg-cream-100 text-brand-800 font-medium text-[11px]">
+                                                                        {item.grind_option}
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        )}
                                                         {item.custom_notes && (
                                                             <div className="text-xs text-brand-800 font-normal bg-sand-50 p-2 rounded-lg border border-sand-200 mt-1 space-y-1">
                                                                 {parseCustomNotes(item.custom_notes).map((line, lineIdx) => (
