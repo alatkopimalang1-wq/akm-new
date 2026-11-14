@@ -61,16 +61,29 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
     // Map of slotIndex -> selected BundleCandidateProduct (with chosen variant applied)
     const [selectedBySlot, setSelectedBySlot] = useState<Record<number, BundleCandidateProduct>>({});
+    // Map of slotIndex -> chosen quantity of items in that slot (default 1)
+    const [slotQuantities, setSlotQuantities] = useState<Record<number, number>>({});
     const [activeModalSlotIndex, setActiveModalSlotIndex] = useState<number | null>(null);
 
-    // State for mandatory variant selection step inside the modal
+    // State for mandatory variant & quantity selection step inside the modal
     const [pendingCandidate, setPendingCandidate] = useState<BundleCandidateProduct | null>(null);
     const [pendingVariantId, setPendingVariantId] = useState<number | null>(null);
+    const [pendingSlotQty, setPendingSlotQty] = useState<number>(1);
     const [variantError, setVariantError] = useState<string | null>(null);
 
     const [quantity, setQuantity] = useState<number>(1);
     const [validationMessage, setValidationMessage] = useState<string | null>(null);
     const [isAdded, setIsAdded] = useState(false);
+
+    const getSlotQty = (slotIndex: number): number => Math.max(1, slotQuantities[slotIndex] || 1);
+
+    const updateSlotQuantity = (slotIndex: number, nextQty: number) => {
+        const clamped = Math.max(1, Math.min(99, nextQty || 1));
+        setSlotQuantities((prev) => ({
+            ...prev,
+            [slotIndex]: clamped,
+        }));
+    };
 
     const activeModalSlot = useMemo(
         () => (activeModalSlotIndex !== null ? slots.find((s) => s.index === activeModalSlotIndex) || null : null),
@@ -81,6 +94,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
         const targetSlot = slots.find((s) => s.index === slotIndex);
         setActiveModalSlotIndex(slotIndex);
         setVariantError(null);
+        setPendingSlotQty(getSlotQty(slotIndex));
 
         // If opening a free slot that has multiple variants, go straight to variant selection for that free product
         if (targetSlot?.slot_type === 'free' && targetSlot.free_product && hasMultipleVariants(targetSlot.free_product)) {
@@ -122,9 +136,10 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                 } else {
                     const chosen = selectedBySlot[slot.index];
                     if (chosen) {
-                        normalSum += Number(chosen.normal_price) || 0;
-                        bundleSum += Number(chosen.bundle_price) || 0;
-                        weightSum += Number(chosen.weight_grams) || 500;
+                        const sQty = Math.max(1, slotQuantities[slot.index] || 1);
+                        normalSum += (Number(chosen.normal_price) || 0) * sQty;
+                        bundleSum += (Number(chosen.bundle_price) || 0) * sQty;
+                        weightSum += (Number(chosen.weight_grams) || 500) * sQty;
                     } else if (slot.slot_type === 'required') {
                         missingReq.push(slot.index);
                     }
@@ -138,7 +153,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                 unfulfilledRequiredIndices: missingReq,
                 unfulfilledFreeVariantIndices: missingFreeVar,
             };
-        }, [slots, selectedBySlot]);
+        }, [slots, selectedBySlot, slotQuantities]);
 
     React.useEffect(() => {
         if (onTotalChange) {
@@ -146,71 +161,66 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
         }
     }, [totalBundlePrice, totalNormalPrice, onTotalChange]);
 
-    // When clicking a candidate product in the modal
+    // When clicking a candidate product in the modal: open variant (if multi-variant) + quantity selector step
     const handleCandidateClick = (slotIndex: number, candidate: BundleCandidateProduct) => {
         if (candidate.is_out_of_stock) return;
 
-        // If the product has multiple variants, require the customer to pick a variant first!
+        setPendingCandidate(candidate);
+        const currentInSlot = selectedBySlot[slotIndex];
+        setPendingSlotQty(currentInSlot && currentInSlot.id === candidate.id ? getSlotQty(slotIndex) : 1);
+        setVariantError(null);
+
         if (hasMultipleVariants(candidate)) {
-            setPendingCandidate(candidate);
-            const currentInSlot = selectedBySlot[slotIndex];
             setPendingVariantId(
                 currentInSlot && currentInSlot.id === candidate.id ? currentInSlot.variant_id : null,
             );
-            setVariantError(null);
-            return;
+        } else {
+            // Single-variant product: pre-select its single variant so user can directly set quantity & confirm
+            const singleVar = candidate.variants?.[0];
+            setPendingVariantId(singleVar ? singleVar.id : candidate.variant_id);
         }
-
-        // Single-variant product: select immediately
-        const singleVar = candidate.variants?.[0];
-        const finalCandidate: BundleCandidateProduct = singleVar
-            ? {
-                  ...candidate,
-                  variant_id: singleVar.id,
-                  variant_label: singleVar.label,
-                  normal_price: singleVar.normal_price,
-                  bundle_price: singleVar.bundle_price,
-                  weight_grams: singleVar.weight_grams,
-                  image_url: singleVar.image_url || candidate.image_url,
-              }
-            : candidate;
-
-        setSelectedBySlot((prev) => ({
-            ...prev,
-            [slotIndex]: finalCandidate,
-        }));
-        setValidationMessage(null);
-        closeSlotModal();
     };
 
-    // Confirm variant selection for multi-variant product
+    // Confirm variant & quantity selection for slot product
     const handleConfirmVariant = () => {
         if (activeModalSlotIndex === null || !pendingCandidate) return;
 
-        if (pendingVariantId === null) {
+        const multiVar = hasMultipleVariants(pendingCandidate);
+        if (multiVar && pendingVariantId === null) {
             setVariantError('Silakan pilih salah satu variasi produk terlebih dahulu.');
             return;
         }
 
-        const chosenVar = pendingCandidate.variants?.find((v) => v.id === pendingVariantId);
-        if (!chosenVar || chosenVar.is_out_of_stock) {
+        const chosenVar =
+            pendingCandidate.variants?.find((v) => v.id === pendingVariantId) ||
+            (!multiVar ? pendingCandidate.variants?.[0] : undefined);
+
+        if (multiVar && (!chosenVar || chosenVar.is_out_of_stock)) {
             setVariantError('Variasi yang dipilih tidak tersedia.');
             return;
         }
 
-        const finalizedProduct: BundleCandidateProduct = {
-            ...pendingCandidate,
-            variant_id: chosenVar.id,
-            variant_label: chosenVar.label,
-            normal_price: chosenVar.normal_price,
-            bundle_price: chosenVar.bundle_price,
-            weight_grams: chosenVar.weight_grams,
-            image_url: chosenVar.image_url || pendingCandidate.image_url,
-        };
+        const finalizedProduct: BundleCandidateProduct = chosenVar
+            ? {
+                  ...pendingCandidate,
+                  variant_id: chosenVar.id,
+                  variant_label: chosenVar.label,
+                  normal_price: chosenVar.normal_price,
+                  bundle_price: chosenVar.bundle_price,
+                  weight_grams: chosenVar.weight_grams,
+                  image_url: chosenVar.image_url || pendingCandidate.image_url,
+              }
+            : pendingCandidate;
+
+        const finalSlotQty = activeModalSlot?.slot_type === 'free' ? 1 : Math.max(1, Math.min(99, pendingSlotQty || 1));
 
         setSelectedBySlot((prev) => ({
             ...prev,
             [activeModalSlotIndex]: finalizedProduct,
+        }));
+        setSlotQuantities((prev) => ({
+            ...prev,
+            [activeModalSlotIndex]: finalSlotQty,
         }));
         setValidationMessage(null);
         closeSlotModal();
@@ -218,6 +228,11 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
     const handleClearSlot = (slotIndex: number) => {
         setSelectedBySlot((prev) => {
+            const next = { ...prev };
+            delete next[slotIndex];
+            return next;
+        });
+        setSlotQuantities((prev) => {
             const next = { ...prev };
             delete next[slotIndex];
             return next;
@@ -252,17 +267,18 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(slot.free_product) && freeProd.variant_label
                             ? ` - Variasi: ${freeProd.variant_label}`
                             : '';
-                    parts.push(`[GRATIS] ${freeProd.name}${varInfo} (Rp 0)`);
+                    parts.push(`[GRATIS] 1x ${freeProd.name}${varInfo} (Rp 0)`);
                 }
             } else {
                 const chosen = selectedBySlot[slot.index];
                 if (chosen) {
+                    const sQty = getSlotQty(slot.index);
                     const tag = slot.slot_type === 'optional' ? '[OPSIONAL]' : `[Slot ${idx + 1}]`;
                     const varInfo =
                         hasMultipleVariants(chosen) && chosen.variant_label
                             ? ` - Variasi: ${chosen.variant_label}`
                             : '';
-                    parts.push(`${tag} ${chosen.name}${varInfo} (${formatRupiah(chosen.bundle_price)})`);
+                    parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(chosen.bundle_price * sQty)})`);
                 }
             }
         });
@@ -305,15 +321,16 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(slot.free_product) && freeProd.variant_label
                             ? ` (${freeProd.variant_label})`
                             : '';
-                    msg += `${i + 1}. [GRATIS] ${freeProd.name}${varText} — ~~${formatRupiah(freeProd.normal_price)}~~ *Rp 0*\n`;
+                    msg += `${i + 1}. [GRATIS] 1x ${freeProd.name}${varText} — ~~${formatRupiah(freeProd.normal_price)}~~ *Rp 0*\n`;
                 }
             } else {
                 const chosen = selectedBySlot[slot.index];
                 if (chosen) {
+                    const sQty = getSlotQty(slot.index);
                     const label = slot.slot_type === 'optional' ? ' [OPTIONAL]' : '';
                     const varText =
                         hasMultipleVariants(chosen) && chosen.variant_label ? ` (${chosen.variant_label})` : '';
-                    msg += `${i + 1}.${label} ${chosen.name}${varText} — ~~${formatRupiah(chosen.normal_price)}~~ *${formatRupiah(chosen.bundle_price)}*\n`;
+                    msg += `${i + 1}.${label} ${sQty}x ${chosen.name}${varText} — ~~${formatRupiah(chosen.normal_price * sQty)}~~ *${formatRupiah(chosen.bundle_price * sQty)}*\n`;
                 }
             }
         });
@@ -382,6 +399,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                     // Case 2: REQUIRED or OPTIONAL Interactive Slot
                     const chosen = selectedBySlot[slot.index];
                     const isOptional = slot.slot_type === 'optional';
+                    const slotQty = getSlotQty(slot.index);
 
                     return (
                         <button
@@ -401,6 +419,13 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                         OPTIONAL
                                     </span>
                                 </div>
+                            )}
+
+                            {/* Slot Quantity Badge in Top-Right Corner when chosen */}
+                            {chosen && (
+                                <span className="absolute top-1.5 right-1.5 z-10 px-1.5 py-0.5 rounded-md bg-brand-700 text-white text-[10px] font-extrabold shadow-2xs">
+                                    ×{slotQty}
+                                </span>
                             )}
 
                             {chosen ? (
@@ -424,11 +449,11 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                         <div className="space-y-0.5">
                                             {chosen.normal_price > chosen.bundle_price && (
                                                 <p className="text-[10px] sm:text-xs font-semibold text-red-600 line-through leading-none">
-                                                    {formatRupiah(chosen.normal_price)}
+                                                    {formatRupiah(chosen.normal_price * slotQty)}
                                                 </p>
                                             )}
                                             <p className="text-[11px] sm:text-xs font-extrabold text-neutral-950 leading-none">
-                                                {formatRupiah(chosen.bundle_price)}
+                                                {formatRupiah(chosen.bundle_price * slotQty)}
                                             </p>
                                         </div>
                                     </div>
@@ -461,7 +486,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         return (
                             <div
                                 key={`row-${slot.index}`}
-                                className="py-3 flex items-center justify-between gap-3"
+                                className="py-3 flex items-center justify-between gap-2 sm:gap-3"
                             >
                                 <div className="flex-1 min-w-0">
                                     <Link
@@ -482,8 +507,8 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                         </button>
                                     )}
                                 </div>
-                                <div className="w-10 text-center text-neutral-600 font-medium">1</div>
-                                <div className="w-36 sm:w-44 text-right flex items-center justify-end gap-2">
+                                <div className="w-20 sm:w-24 text-center text-neutral-600 font-medium">1</div>
+                                <div className="w-32 sm:w-40 text-right flex items-center justify-end gap-2">
                                     <span className="text-red-600 line-through font-semibold">
                                         {formatRupiah(freeProd.normal_price)}
                                     </span>
@@ -495,13 +520,14 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
                     const chosen = selectedBySlot[slot.index];
                     const isOptional = slot.slot_type === 'optional';
+                    const slotQty = getSlotQty(slot.index);
 
                     if (!chosen) {
                         return (
                             <div
                                 key={`row-${slot.index}`}
                                 onClick={() => openSlotModal(slot.index)}
-                                className="py-3 flex items-center justify-between gap-3 cursor-pointer hover:bg-neutral-50 transition-colors"
+                                className="py-3 flex items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-neutral-50 transition-colors"
                             >
                                 <div className="flex-1 min-w-0 flex flex-wrap items-center gap-1.5">
                                     <span className="text-neutral-700">Please select your product!</span>
@@ -511,8 +537,8 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                         </span>
                                     )}
                                 </div>
-                                <div className="w-10 text-center text-neutral-900 text-base">☛</div>
-                                <div className="w-36 sm:w-44 text-right flex items-center justify-end gap-4 text-neutral-500 font-mono">
+                                <div className="w-20 sm:w-24 text-center text-neutral-900 text-base">☛</div>
+                                <div className="w-32 sm:w-40 text-right flex items-center justify-end gap-4 text-neutral-500 font-mono">
                                     <span>-----</span>
                                     <span>-----</span>
                                 </div>
@@ -523,7 +549,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                     return (
                         <div
                             key={`row-${slot.index}`}
-                            className="py-3 flex items-center justify-between gap-3"
+                            className="py-3 flex items-center justify-between gap-2 sm:gap-3"
                         >
                             <div className="flex-1 min-w-0">
                                 <Link
@@ -538,15 +564,47 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                     </span>
                                 )}
                             </div>
-                            <div className="w-10 text-center text-neutral-600 font-medium">1</div>
-                            <div className="w-36 sm:w-44 text-right">
+
+                            {/* Per-Slot Quantity Stepper & Input */}
+                            <div className="w-20 sm:w-24 flex items-center justify-center">
+                                <div className="inline-flex items-center border border-sand-200 rounded-lg bg-white p-0.5">
+                                    <button
+                                        type="button"
+                                        onClick={() => updateSlotQuantity(slot.index, slotQty - 1)}
+                                        className="w-6 h-6 flex items-center justify-center rounded-md hover:bg-sand-100 text-brand-800 transition-colors cursor-pointer"
+                                        aria-label="Kurangi jumlah barang slot"
+                                    >
+                                        <Minus className="w-3 h-3" />
+                                    </button>
+                                    <input
+                                        type="number"
+                                        min={1}
+                                        max={99}
+                                        value={slotQty}
+                                        onChange={(e) =>
+                                            updateSlotQuantity(slot.index, parseInt(e.target.value, 10) || 1)
+                                        }
+                                        className="w-7 sm:w-8 text-center font-bold text-xs text-brand-950 bg-transparent focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => updateSlotQuantity(slot.index, slotQty + 1)}
+                                        className="w-6 h-6 flex items-center justify-center rounded-md hover:bg-sand-100 text-brand-800 transition-colors cursor-pointer"
+                                        aria-label="Tambah jumlah barang slot"
+                                    >
+                                        <Plus className="w-3 h-3" />
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div className="w-32 sm:w-40 text-right">
                                 {chosen.normal_price > chosen.bundle_price && (
                                     <span className="block text-red-600 line-through font-semibold text-xs">
-                                        {formatRupiah(chosen.normal_price)}
+                                        {formatRupiah(chosen.normal_price * slotQty)}
                                     </span>
                                 )}
                                 <span className="block font-extrabold text-neutral-900">
-                                    {formatRupiah(chosen.bundle_price)}
+                                    {formatRupiah(chosen.bundle_price * slotQty)}
                                 </span>
                             </div>
                         </div>
@@ -665,7 +723,11 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                 </button>
                             )}
                             <h3 className="text-sm sm:text-base font-bold text-neutral-900 text-center w-full">
-                                {pendingCandidate ? 'Pilih Variasi Produk' : 'Please Select Your Product'}
+                                {pendingCandidate
+                                    ? hasMultipleVariants(pendingCandidate)
+                                        ? 'Pilih Variasi & Jumlah Produk'
+                                        : 'Atur Jumlah Produk'
+                                    : 'Please Select Your Product'}
                             </h3>
                             <button
                                 type="button"
@@ -677,7 +739,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                             </button>
                         </div>
 
-                        {/* VIEW A: Mandatory Variant Picker for Multi-Variant Product */}
+                        {/* VIEW A: Variant & Quantity Picker for Chosen Product */}
                         {pendingCandidate ? (
                             <div className="p-4 sm:p-5 overflow-y-auto space-y-4">
                                 <div className="flex items-center gap-3.5 pb-3.5 border-b border-neutral-200">
@@ -699,79 +761,125 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                             {pendingCandidate.name}
                                         </h4>
                                         <p className="text-xs text-neutral-500 mt-0.5">
-                                            Produk ini memiliki beberapa variasi. Silakan pilih variasi terlebih dahulu:
+                                            {hasMultipleVariants(pendingCandidate)
+                                                ? 'Pilih variasi dan jumlah barang yang ingin dimasukkan:'
+                                                : 'Tentukan jumlah barang yang ingin dimasukkan ke dalam slot paket ini:'}
                                         </p>
                                     </div>
                                 </div>
 
-                                <div className="space-y-2">
-                                    <label className="block text-xs font-extrabold uppercase tracking-wider text-brand-900">
-                                        Pilih Warna / Ukuran / Variasi (Wajib):
-                                    </label>
-                                    <div className="grid grid-cols-1 gap-2">
-                                        {(pendingCandidate.variants || []).map((v) => {
-                                            const isSelected = pendingVariantId === v.id;
-                                            return (
-                                                <button
-                                                    key={v.id}
-                                                    type="button"
-                                                    disabled={v.is_out_of_stock}
-                                                    onClick={() => {
-                                                        setPendingVariantId(v.id);
-                                                        setVariantError(null);
-                                                    }}
-                                                    className={`w-full p-3 rounded-xl border-2 text-left flex items-center justify-between gap-3 transition-all ${
-                                                        v.is_out_of_stock
-                                                            ? 'border-neutral-200 bg-neutral-100 opacity-60 cursor-not-allowed'
-                                                            : isSelected
-                                                              ? 'border-accent-copper bg-accent-copper/10 ring-2 ring-accent-copper/20 cursor-pointer'
-                                                              : 'border-neutral-200 hover:border-brand-400 bg-white cursor-pointer'
-                                                    }`}
-                                                >
-                                                    <div className="flex items-center gap-2.5 min-w-0">
-                                                        <div
-                                                            className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 ${
-                                                                isSelected
-                                                                    ? 'border-accent-copper bg-accent-copper text-white'
-                                                                    : 'border-neutral-300 bg-white'
-                                                            }`}
-                                                        >
-                                                            {isSelected && <Check className="w-3 h-3" />}
-                                                        </div>
-                                                        <span className="text-xs sm:text-sm font-bold text-brand-950 truncate">
-                                                            {v.label}{' '}
-                                                            {v.is_out_of_stock ? '(Stok Habis)' : ''}
-                                                        </span>
-                                                    </div>
-
-                                                    <div className="text-right flex-shrink-0">
-                                                        {activeModalSlot.slot_type === 'free' ? (
-                                                            <div className="flex items-center gap-1.5 text-xs">
-                                                                <span className="text-red-600 line-through font-semibold">
-                                                                    {formatRupiah(v.normal_price)}
-                                                                </span>
-                                                                <span className="font-extrabold text-brand-950">
-                                                                    Rp0
-                                                                </span>
+                                {hasMultipleVariants(pendingCandidate) && (
+                                    <div className="space-y-2">
+                                        <label className="block text-xs font-extrabold uppercase tracking-wider text-brand-900">
+                                            Pilih Warna / Ukuran / Variasi (Wajib):
+                                        </label>
+                                        <div className="grid grid-cols-1 gap-2">
+                                            {(pendingCandidate.variants || []).map((v) => {
+                                                const isSelected = pendingVariantId === v.id;
+                                                return (
+                                                    <button
+                                                        key={v.id}
+                                                        type="button"
+                                                        disabled={v.is_out_of_stock}
+                                                        onClick={() => {
+                                                            setPendingVariantId(v.id);
+                                                            setVariantError(null);
+                                                        }}
+                                                        className={`w-full p-3 rounded-xl border-2 text-left flex items-center justify-between gap-3 transition-all ${
+                                                            v.is_out_of_stock
+                                                                ? 'border-neutral-200 bg-neutral-100 opacity-60 cursor-not-allowed'
+                                                                : isSelected
+                                                                  ? 'border-accent-copper bg-accent-copper/10 ring-2 ring-accent-copper/20 cursor-pointer'
+                                                                  : 'border-neutral-200 hover:border-brand-400 bg-white cursor-pointer'
+                                                        }`}
+                                                    >
+                                                        <div className="flex items-center gap-2.5 min-w-0">
+                                                            <div
+                                                                className={`w-5 h-5 rounded-full border flex items-center justify-center flex-shrink-0 ${
+                                                                    isSelected
+                                                                        ? 'border-accent-copper bg-accent-copper text-white'
+                                                                        : 'border-neutral-300 bg-white'
+                                                                }`}
+                                                            >
+                                                                {isSelected && <Check className="w-3 h-3" />}
                                                             </div>
-                                                        ) : (
-                                                            <div className="flex items-center gap-1.5 text-xs">
-                                                                {v.normal_price > v.bundle_price && (
+                                                            <span className="text-xs sm:text-sm font-bold text-brand-950 truncate">
+                                                                {v.label}{' '}
+                                                                {v.is_out_of_stock ? '(Stok Habis)' : ''}
+                                                            </span>
+                                                        </div>
+
+                                                        <div className="text-right flex-shrink-0">
+                                                            {activeModalSlot.slot_type === 'free' ? (
+                                                                <div className="flex items-center gap-1.5 text-xs">
                                                                     <span className="text-red-600 line-through font-semibold">
                                                                         {formatRupiah(v.normal_price)}
                                                                     </span>
-                                                                )}
-                                                                <span className="font-extrabold text-brand-950">
-                                                                    {formatRupiah(v.bundle_price)}
-                                                                </span>
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                </button>
-                                            );
-                                        })}
+                                                                    <span className="font-extrabold text-brand-950">
+                                                                        Rp0
+                                                                    </span>
+                                                                </div>
+                                                            ) : (
+                                                                <div className="flex items-center gap-1.5 text-xs">
+                                                                    {v.normal_price > v.bundle_price && (
+                                                                        <span className="text-red-600 line-through font-semibold">
+                                                                            {formatRupiah(v.normal_price)}
+                                                                        </span>
+                                                                    )}
+                                                                    <span className="font-extrabold text-brand-950">
+                                                                        {formatRupiah(v.bundle_price)}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                        </div>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
+
+                                {/* Quantity Selector for Slot (Shown for Required & Optional Slots) */}
+                                {activeModalSlot.slot_type !== 'free' && (
+                                    <div className="p-3.5 rounded-xl bg-sand-50/70 border border-sand-200 flex items-center justify-between gap-3">
+                                        <div>
+                                            <p className="text-xs font-extrabold uppercase tracking-wider text-brand-900">
+                                                Jumlah Barang
+                                            </p>
+                                            <p className="text-[11px] text-neutral-500">
+                                                Masukkan jumlah unit untuk slot ini
+                                            </p>
+                                        </div>
+                                        <div className="flex items-center border border-sand-300 rounded-xl bg-white p-1">
+                                            <button
+                                                type="button"
+                                                onClick={() => setPendingSlotQty(Math.max(1, pendingSlotQty - 1))}
+                                                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors cursor-pointer"
+                                            >
+                                                <Minus className="w-3.5 h-3.5" />
+                                            </button>
+                                            <input
+                                                type="number"
+                                                min={1}
+                                                max={99}
+                                                value={pendingSlotQty}
+                                                onChange={(e) =>
+                                                    setPendingSlotQty(
+                                                        Math.max(1, Math.min(99, parseInt(e.target.value, 10) || 1)),
+                                                    )
+                                                }
+                                                className="w-10 text-center font-bold text-sm text-brand-950 bg-transparent focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                                            />
+                                            <button
+                                                type="button"
+                                                onClick={() => setPendingSlotQty(Math.min(99, pendingSlotQty + 1))}
+                                                className="w-8 h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors cursor-pointer"
+                                            >
+                                                <Plus className="w-3.5 h-3.5" />
+                                            </button>
+                                        </div>
+                                    </div>
+                                )}
 
                                 {variantError && (
                                     <p className="text-xs font-bold text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2">
@@ -781,16 +889,16 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
                                 <button
                                     type="button"
-                                    disabled={pendingVariantId === null}
+                                    disabled={hasMultipleVariants(pendingCandidate) && pendingVariantId === null}
                                     onClick={handleConfirmVariant}
                                     className={`w-full py-3 px-4 rounded-xl font-bold text-xs sm:text-sm uppercase tracking-wider transition-all ${
-                                        pendingVariantId !== null
-                                            ? 'bg-brand-900 hover:bg-brand-800 text-white shadow-md cursor-pointer active:scale-[0.99]'
+                                        !hasMultipleVariants(pendingCandidate) || pendingVariantId !== null
+                                            ? 'bg-brand-700 hover:bg-brand-800 text-white shadow-md cursor-pointer active:scale-[0.99]'
                                             : 'bg-neutral-200 text-neutral-400 cursor-not-allowed'
                                     }`}
                                 >
-                                    {pendingVariantId !== null
-                                        ? 'Konfirmasi & Masukkan Variasi Ini'
+                                    {!hasMultipleVariants(pendingCandidate) || pendingVariantId !== null
+                                        ? `Masukkan ke Paket (${activeModalSlot.slot_type === 'free' ? 1 : pendingSlotQty} Unit)`
                                         : 'Pilih Variasi Terlebih Dahulu'}
                                 </button>
                             </div>
