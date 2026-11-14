@@ -547,114 +547,115 @@ export default function CartPage({
                                             originalUnitPrice: item.variant.original_price,
                                         });
                                         return (
-                                            <div key={`${item.variant.id}-${item.grindOption}-${idx}`} className="py-4 first:pt-1 last:pb-0 flex gap-3">
-                                                <div className="w-20 h-20 rounded-xl overflow-hidden bg-cream-50 border border-sand-200/50 flex-shrink-0">
-                                                    <img src={img} alt={item.product.name} className="w-full h-full object-cover" />
-                                                </div>
-
-                                                <div className="flex-1 min-w-0 flex flex-col justify-between">
-                                                    <div>
-                                                        <div className="flex items-start justify-between gap-2">
-                                                            <h3 className="text-sm font-semibold text-brand-950 leading-snug">
-                                                                {item.product.name}
-                                                            </h3>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => removeItem(item.variant.id, item.grindOption, item.customNotes)}
-                                                                className="text-gray-400 hover:text-red-500 p-0.5 transition-colors cursor-pointer active:scale-95 shrink-0"
-                                                                aria-label="Hapus item"
-                                                            >
-                                                                <Trash2 className="w-4 h-4" />
-                                                            </button>
-                                                        </div>
-                                                        {!isBundleOrderItem({
-                                                            isCustomBundle: item.product.is_custom_bundle,
-                                                            hasVariants: (item.product as any).has_variants,
-                                                            variantLabel: item.variant.label,
-                                                            grindOption: item.grindOption,
-                                                            customNotes: item.customNotes,
-                                                        }) && item.variant?.label && (
-                                                            <p className="text-xs text-accent-copper font-semibold mt-0.5">
-                                                                Varian: {item.variant.label}
-                                                            </p>
-                                                        )}
-                                                        {item.customNotes && (
-                                                            <div className="text-[11px] sm:text-xs text-brand-700 font-normal mt-1.5 space-y-1.5 leading-snug">
-                                                                {pricing.lines.map((line, lineIdx) => (
-                                                                    <p key={lineIdx}>
-                                                                        {line.tag && (
-                                                                            <strong className="font-extrabold text-brand-950">
-                                                                                {line.tag}{' '}
-                                                                            </strong>
-                                                                        )}
-                                                                        <span>{line.text}</span>
-                                                                        {line.discountPrice && (
-                                                                            <span className="inline-block ml-1">
-                                                                                (
-                                                                                {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
-                                                                                    <span className="text-red-600 line-through mr-1 font-medium">
-                                                                                        {line.normalPrice}
-                                                                                    </span>
-                                                                                )}
-                                                                                <span className="font-bold text-brand-950">
-                                                                                    {line.discountPrice}
-                                                                                </span>
-                                                                                )
-                                                                            </span>
-                                                                        )}
-                                                                    </p>
-                                                                ))}
-                                                                <div className="pt-1.5 mt-1 border-t border-sand-200 space-y-0.5">
-                                                                    {pricing.hasDiscount && (
-                                                                        <div className="flex items-center justify-between text-[11px] sm:text-xs">
-                                                                            <span className="text-brand-600">Total Harga Normal:</span>
-                                                                            <span className="text-red-600 line-through font-semibold">
-                                                                                {formatRupiah(pricing.totalNormalPrice)}
-                                                                            </span>
-                                                                        </div>
-                                                                    )}
-                                                                    <div className="flex items-center justify-between text-[11px] sm:text-xs font-bold text-brand-950">
-                                                                        <span>Total Harga Diskon:</span>
-                                                                        <span className="text-emerald-700">
-                                                                            {formatRupiah(pricing.totalDiscountPrice)}
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        )}
+                                            <div key={`${item.variant.id}-${item.grindOption}-${idx}`} className="py-4 first:pt-1 last:pb-0 flex flex-col gap-3">
+                                                <div className="flex items-center gap-3">
+                                                    <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-xl overflow-hidden bg-cream-50 border border-sand-200/50 flex-shrink-0">
+                                                        <img src={img} alt={item.product.name} className="w-full h-full object-cover" />
                                                     </div>
 
-                                                    <div className="flex items-center justify-between mt-3">
-                                                        <div className="flex items-center border border-sand-200 rounded-lg overflow-hidden bg-white">
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => updateQuantity(item.variant.id, item.grindOption, item.quantity - 1, item.customNotes)}
-                                                                className="p-1 hover:bg-sand-100 text-brand-700 active:scale-95 transition-transform cursor-pointer"
-                                                            >
-                                                                <Minus className="w-3.5 h-3.5" />
-                                                            </button>
-                                                            <span className="px-2 text-xs font-semibold text-brand-950">
-                                                                {item.quantity}
-                                                            </span>
-                                                            <button
-                                                                type="button"
-                                                                onClick={() => updateQuantity(item.variant.id, item.grindOption, item.quantity + 1, item.customNotes)}
-                                                                className="p-1 hover:bg-sand-100 text-brand-700 active:scale-95 transition-transform cursor-pointer"
-                                                            >
-                                                                <Plus className="w-3.5 h-3.5" />
-                                                            </button>
-                                                        </div>
-
-                                                        <div className="text-right">
-                                                            {pricing.hasDiscount && (
-                                                                <span className="block text-[11px] text-red-600 line-through font-semibold leading-tight">
-                                                                    {formatRupiah(pricing.totalNormalPrice)}
-                                                                </span>
+                                                    <div className="flex-1 min-w-0 flex items-start justify-between gap-2">
+                                                        <div className="min-w-0">
+                                                            <h3 className="text-sm sm:text-base font-bold text-brand-950 leading-snug">
+                                                                {item.product.name}
+                                                            </h3>
+                                                            {!isBundleOrderItem({
+                                                                isCustomBundle: item.product.is_custom_bundle,
+                                                                hasVariants: (item.product as any).has_variants,
+                                                                variantLabel: item.variant.label,
+                                                                grindOption: item.grindOption,
+                                                                customNotes: item.customNotes,
+                                                            }) && item.variant?.label && (
+                                                                <p className="text-xs text-accent-copper font-semibold mt-0.5">
+                                                                    Varian: {item.variant.label}
+                                                                </p>
                                                             )}
-                                                            <span className="text-sm font-bold text-brand-900">
-                                                                {formatRupiah(pricing.totalDiscountPrice)}
-                                                            </span>
                                                         </div>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => removeItem(item.variant.id, item.grindOption, item.customNotes)}
+                                                            className="text-gray-400 hover:text-red-500 p-1 transition-colors cursor-pointer active:scale-95 shrink-0"
+                                                            aria-label="Hapus item"
+                                                        >
+                                                            <Trash2 className="w-4 h-4" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+
+                                                {item.customNotes && (
+                                                    <div className="w-full text-xs text-brand-700 font-normal space-y-1.5 leading-snug">
+                                                        {pricing.lines.map((line, lineIdx) => (
+                                                            <p key={lineIdx}>
+                                                                {line.tag && (
+                                                                    <strong className="font-extrabold text-brand-950">
+                                                                        {line.tag}{' '}
+                                                                    </strong>
+                                                                )}
+                                                                <span>{line.text}</span>
+                                                                {line.discountPrice && (
+                                                                    <span className="inline-block ml-1">
+                                                                        (
+                                                                        {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
+                                                                            <span className="text-red-600 line-through mr-1 font-medium">
+                                                                                {line.normalPrice}
+                                                                            </span>
+                                                                        )}
+                                                                        <span className="font-bold text-brand-950">
+                                                                            {line.discountPrice}
+                                                                        </span>
+                                                                        )
+                                                                    </span>
+                                                                )}
+                                                            </p>
+                                                        ))}
+                                                        <div className="pt-2 mt-1.5 border-t border-sand-200 space-y-0.5">
+                                                            {pricing.hasDiscount && (
+                                                                <div className="flex items-center justify-between text-xs">
+                                                                    <span className="text-brand-600">Total Harga Normal:</span>
+                                                                    <span className="text-red-600 line-through font-semibold">
+                                                                        {formatRupiah(pricing.totalNormalPrice)}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                            <div className="flex items-center justify-between text-xs font-bold text-brand-950">
+                                                                <span>Total Harga Diskon:</span>
+                                                                <span className="text-emerald-700">
+                                                                    {formatRupiah(pricing.totalDiscountPrice)}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+
+                                                <div className="w-full flex items-center justify-between pt-0.5">
+                                                    <div className="flex items-center border border-sand-200 rounded-lg overflow-hidden bg-white">
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => updateQuantity(item.variant.id, item.grindOption, item.quantity - 1, item.customNotes)}
+                                                            className="p-1.5 hover:bg-sand-100 text-brand-700 active:scale-95 transition-transform cursor-pointer"
+                                                        >
+                                                            <Minus className="w-3.5 h-3.5" />
+                                                        </button>
+                                                        <span className="px-2.5 text-xs font-semibold text-brand-950">
+                                                            {item.quantity}
+                                                        </span>
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => updateQuantity(item.variant.id, item.grindOption, item.quantity + 1, item.customNotes)}
+                                                            className="p-1.5 hover:bg-sand-100 text-brand-700 active:scale-95 transition-transform cursor-pointer"
+                                                        >
+                                                            <Plus className="w-3.5 h-3.5" />
+                                                        </button>
+                                                    </div>
+
+                                                    <div className="text-right">
+                                                        {pricing.hasDiscount && (
+                                                            <span className="block text-xs text-red-600 line-through font-semibold leading-tight">
+                                                                {formatRupiah(pricing.totalNormalPrice)}
+                                                            </span>
+                                                        )}
+                                                        <span className="text-sm sm:text-base font-extrabold text-brand-950">
+                                                            {formatRupiah(pricing.totalDiscountPrice)}
+                                                        </span>
                                                     </div>
                                                 </div>
                                             </div>
