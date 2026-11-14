@@ -30,6 +30,12 @@ import { formatRupiah } from '@/lib/trans';
 import { useCart } from '@/context/cart-context';
 import { ProductCard } from '@/components/product-card';
 import { CustomBundleSlots, type ResolvedBundleSlot } from '@/components/custom-bundle-slots';
+import {
+    calculateDpBreakdown,
+    DpPercentage,
+    normalizeDpPercentage,
+    PreorderDpSlider,
+} from '@/components/preorder-dp-slider';
 import { getProductContentId, trackViewContent } from '@/lib/meta-pixel';
 import { ImageZoom } from '@animate-ui/react/primitives/effects/image-zoom';
 import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number';
@@ -120,7 +126,17 @@ export default function ProductShow({
     preorderTerms,
     marketplaceDefaults,
 }: ProductShowProps) {
-    const { addItem } = useCart();
+    const { addItem, dpPercentage: cartDpPercentage, setDpPercentage: setCartDpPercentage } = useCart();
+
+    const defaultDpPct = normalizeDpPercentage(
+        (product as any).default_dp_percentage ?? (product.bundle_config as any)?.default_dp_percentage ?? cartDpPercentage ?? 100,
+    );
+    const [selectedDp, setSelectedDp] = useState<DpPercentage>(defaultDpPct);
+
+    const handleDpChange = (nextPct: DpPercentage) => {
+        setSelectedDp(nextPct);
+        setCartDpPercentage(nextPct);
+    };
 
     const hasVariantsEnabled = (product as any).has_variants !== false;
     const rawVariants = (product.variants || []).filter((v) => (v.stock_status as string) !== 'inactive');
@@ -275,6 +291,9 @@ export default function ProductShow({
         product.stock_status === 'pre_order' ||
         selectedVariant.stock_status === 'pre_order'
     );
+    const isDpEnabled = isPreOrderProduct && (product as any).dp_enabled !== false;
+    const productTotalAmount = selectedVariant.price * quantity;
+    const dpBreakdown = calculateDpBreakdown(productTotalAmount, isDpEnabled ? selectedDp : 100);
 
     const isProductOutOfStock = Boolean(
         product.is_out_of_stock ||
@@ -285,7 +304,10 @@ export default function ProductShow({
 
     const handleAddToCart = () => {
         if (isCurrentVariantOutOfStock) return;
-        addItem(product, selectedVariant, quantity, grindOption);
+        addItem(product, selectedVariant, quantity, grindOption, undefined, {
+            isPreOrder: isPreOrderProduct,
+            dpPercentage: isDpEnabled ? selectedDp : 100,
+        });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1400);
     };
@@ -295,12 +317,17 @@ export default function ProductShow({
             ? `\nVarian: ${selectedVariant.label}`
             : '';
 
+    const dpWaText =
+        isDpEnabled && dpBreakdown.isDp
+            ? `\nSkema Pembayaran: DP ${dpBreakdown.dpPercentage}%\nTotal Harga (100%): ${formatRupiah(dpBreakdown.fullTotal)}\nTotal Dibayar Sekarang (DP ${dpBreakdown.dpPercentage}%): *${formatRupiah(dpBreakdown.dpAmount)}*\nSisa Pelunasan (${dpBreakdown.remainingPercentage}%): ${formatRupiah(dpBreakdown.remainingBalance)}`
+            : `\nTotal Harga: ${formatRupiah(productTotalAmount)}`;
+
     const waDirectUrl = isCurrentVariantOutOfStock
         ? `https://wa.me/6285121930454?text=${encodeURIComponent(
             `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*${variantLineText}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
         )}`
         : `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*${variantLineText}\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*${variantLineText}\nJumlah: ${quantity}x${dpWaText}\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
         )}`;
 
     const tokopediaUrl =
@@ -534,12 +561,17 @@ export default function ProductShow({
                                             {formatRupiah(selectedVariant.original_price!)}
                                         </span>
                                     )}
-                                    <div className="flex items-baseline gap-2">
+                                    <div className="flex flex-wrap items-baseline gap-2">
                                         <span className={`text-3xl sm:text-3xl md:text-4xl font-black tracking-tight ${
                                             isCurrentVariantOutOfStock ? 'text-neutral-500' : 'text-brand-950'
                                         }`}>
-                                            {formatRupiah(selectedVariant.price)}
+                                            {formatRupiah(isDpEnabled && dpBreakdown.isDp ? dpBreakdown.dpAmount : selectedVariant.price * quantity)}
                                         </span>
+                                        {isDpEnabled && dpBreakdown.isDp && (
+                                            <span className="px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 text-xs font-extrabold border border-amber-300">
+                                                DP {dpBreakdown.dpPercentage}% dari {formatRupiah(dpBreakdown.fullTotal)}
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
 
@@ -586,6 +618,15 @@ export default function ProductShow({
                                             })}
                                         </div>
                                     </div>
+                                )}
+
+                                {/* Pre-Order Down Payment (DP) Slider */}
+                                {isDpEnabled && !isCurrentVariantOutOfStock && (
+                                    <PreorderDpSlider
+                                        totalAmount={productTotalAmount}
+                                        dpPercentage={selectedDp}
+                                        onChange={handleDpChange}
+                                    />
                                 )}
 
                                 {/* Quantity Stepper & Add to Cart */}

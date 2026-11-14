@@ -4,12 +4,26 @@ import { AnimatePresence, motion } from 'motion/react';
 import { ArrowRight, Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react';
 import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number';
 import { transition } from '@animate-ui/react/utils/motion';
-import { useCart } from '@/context/cart-context';
+import { isCartItemPreOrder, useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
+import { calculateDpBreakdown, PreorderDpSlider } from '@/components/preorder-dp-slider';
 
 export const CartDrawer: React.FC = () => {
-    const { items, itemCount, subtotal, isCartOpen, setIsCartOpen, updateQuantity, removeItem } = useCart();
+    const {
+        items,
+        itemCount,
+        subtotal,
+        hasPreOrderItems,
+        dpPercentage,
+        setDpPercentage,
+        isCartOpen,
+        setIsCartOpen,
+        updateQuantity,
+        removeItem,
+    } = useCart();
+
+    const dpBreakdown = calculateDpBreakdown(subtotal, hasPreOrderItems ? dpPercentage : 100);
 
     const totalNormalSubtotal = items.reduce((sum, item) => {
         const pricing = getBundlePricingSummary({
@@ -103,7 +117,8 @@ export const CartDrawer: React.FC = () => {
                                     </Link>
                                 </div>
                             ) : (
-                                <AnimatePresence initial={false}>
+                                <>
+                                    <AnimatePresence initial={false}>
                                     {items.map((item, idx) => {
                                         const rawImg = item.variant?.image_url || item.variant?.image || item.product.images?.[0]?.path;
                                         const img = rawImg
@@ -133,9 +148,16 @@ export const CartDrawer: React.FC = () => {
                                                     </div>
                                                     <div className="flex-1 min-w-0 flex items-start justify-between gap-2">
                                                         <div className="min-w-0">
-                                                            <h4 className="text-sm sm:text-base font-bold text-brand-950 leading-snug">
-                                                                {item.product.name}
-                                                            </h4>
+                                                            <div className="flex flex-wrap items-center gap-1.5">
+                                                                <h4 className="text-sm sm:text-base font-bold text-brand-950 leading-snug">
+                                                                    {item.product.name}
+                                                                </h4>
+                                                                {isCartItemPreOrder(item) && (
+                                                                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-black uppercase tracking-wider">
+                                                                        Pre-Order
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                             {!isBundleOrderItem({
                                                                 isCustomBundle: item.product.is_custom_bundle,
                                                                 hasVariants: (item.product as any).has_variants,
@@ -241,6 +263,18 @@ export const CartDrawer: React.FC = () => {
                                         );
                                     })}
                                 </AnimatePresence>
+                                {/* Pre-Order DP Slider inside Cart Drawer */}
+                                {hasPreOrderItems && items.length > 0 && (
+                                    <div className="pt-2">
+                                        <PreorderDpSlider
+                                            compact
+                                            totalAmount={subtotal}
+                                            dpPercentage={dpPercentage}
+                                            onChange={setDpPercentage}
+                                        />
+                                    </div>
+                                )}
+                                </>
                             )}
                         </div>
 
@@ -256,14 +290,41 @@ export const CartDrawer: React.FC = () => {
                                             </span>
                                         </div>
                                     )}
-                                    <div className="flex items-center justify-between">
-                                        <span className="text-sm text-brand-700 font-semibold">
-                                            {totalNormalSubtotal > subtotal ? 'Total Harga Diskon (Subtotal)' : 'Subtotal'}
-                                        </span>
-                                        <span className="text-lg font-extrabold text-brand-950">
-                                            {formatRupiah(subtotal)}
-                                        </span>
-                                    </div>
+                                    {hasPreOrderItems && dpBreakdown.isDp ? (
+                                        <>
+                                            <div className="flex items-center justify-between text-xs">
+                                                <span className="text-brand-600">Total Harga Pesanan (100%)</span>
+                                                <span className="font-semibold text-brand-950">
+                                                    {formatRupiah(subtotal)}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center justify-between text-xs">
+                                                <span className="text-amber-800">
+                                                    Dikurangi Sisa Pelunasan ({dpBreakdown.remainingPercentage}%)
+                                                </span>
+                                                <span className="font-bold text-red-600">
+                                                    -{formatRupiah(dpBreakdown.remainingBalance)}
+                                                </span>
+                                            </div>
+                                            <div className="flex items-center justify-between pt-1 border-t border-sand-200">
+                                                <span className="text-sm text-brand-900 font-extrabold">
+                                                    Total Dibayar Sekarang (DP {dpBreakdown.dpPercentage}%)
+                                                </span>
+                                                <span className="text-lg font-extrabold text-emerald-700">
+                                                    {formatRupiah(dpBreakdown.dpAmount)}
+                                                </span>
+                                            </div>
+                                        </>
+                                    ) : (
+                                        <div className="flex items-center justify-between">
+                                            <span className="text-sm text-brand-700 font-semibold">
+                                                {totalNormalSubtotal > subtotal ? 'Total Harga Diskon (Subtotal)' : 'Subtotal'}
+                                            </span>
+                                            <span className="text-lg font-extrabold text-brand-950">
+                                                {formatRupiah(subtotal)}
+                                            </span>
+                                        </div>
+                                    )}
                                 </div>
                                 <p className="text-[11px] text-brand-500 leading-tight">
                                     Checkout langsung di website dengan <strong>QRIS Semua Bank & E-Wallet</strong> atau <strong>Transfer Bank</strong> resmi.

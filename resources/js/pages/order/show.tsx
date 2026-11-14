@@ -28,6 +28,12 @@ import {
 import { PublicLayout } from '@/layouts/public-layout';
 import { formatRupiah } from '@/lib/trans';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
+import {
+    calculateDpBreakdown,
+    DpPercentage,
+    normalizeDpPercentage,
+    PreorderDpSlider,
+} from '@/components/preorder-dp-slider';
 import { OrderData } from '@/types/sanubari';
 import { trackPurchase } from '@/lib/meta-pixel';
 
@@ -97,6 +103,41 @@ export default function OrderShowPage({
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
     const [isUploading, setIsUploading] = useState(false);
     const [previewUrl, setPreviewUrl] = useState<string | null>(null);
+
+    const orderHasPreOrder = Boolean(
+        order.has_preorder ||
+        order.payment_details?.has_preorder ||
+        order.payment_details?.is_preorder_dp ||
+        order.items?.some((i) => i.is_preorder),
+    );
+
+    const [dpPercentage, setDpPercentage] = useState<DpPercentage>(() =>
+        normalizeDpPercentage(order.payment_details?.dp_percentage ?? 100),
+    );
+
+    const fullOrderBaseTotal = Number(order.subtotal || 0) + Number(order.shipping_cost || 0);
+    const dpBreakdown = calculateDpBreakdown(fullOrderBaseTotal, orderHasPreOrder ? dpPercentage : 100);
+    const effectiveTotalAmount = orderHasPreOrder
+        ? dpBreakdown.dpAmount + Number(order.unique_code || 0)
+        : Number(order.total_amount || 0);
+
+    const handleUpdateOrderDp = async (nextPct: DpPercentage) => {
+        setDpPercentage(nextPct);
+        try {
+            await fetch(`/pesanan/${order.order_number}/update-dp`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Accept: 'application/json',
+                    'X-CSRF-TOKEN':
+                        (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '',
+                },
+                body: JSON.stringify({ dp_percentage: nextPct }),
+            });
+        } catch (err) {
+            console.error('Failed to update order DP:', err);
+        }
+    };
 
     const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false);
     const [trackingLoading, setTrackingLoading] = useState(false);
@@ -246,10 +287,26 @@ export default function OrderShowPage({
                     {/* Total Amount Highlight */}
                     <div className="p-4 sm:p-5 rounded-2xl bg-cream-50 border border-sand-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                            <span className="text-xs text-brand-600 font-medium">Total yang Harus Dibayar</span>
-                            <div className="text-2xl sm:text-3xl font-black text-brand-950 mt-0.5">
-                                {formatRupiah(order.total_amount)}
+                            <div className="flex flex-wrap items-center gap-2">
+                                <span className="text-xs text-brand-600 font-medium">
+                                    {orderHasPreOrder && dpBreakdown.isDp
+                                        ? `Total yang Harus Dibayar (DP ${dpBreakdown.dpPercentage}%)`
+                                        : 'Total yang Harus Dibayar'}
+                                </span>
+                                {orderHasPreOrder && dpBreakdown.isDp && (
+                                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-black uppercase tracking-wider">
+                                        DP {dpBreakdown.dpPercentage}% Pre-Order
+                                    </span>
+                                )}
                             </div>
+                            <div className="text-2xl sm:text-3xl font-black text-brand-950 mt-0.5">
+                                {formatRupiah(effectiveTotalAmount)}
+                            </div>
+                            {orderHasPreOrder && dpBreakdown.isDp && (
+                                <p className="text-xs text-brand-700 mt-1">
+                                    Total Penuh (100%): <strong>{formatRupiah(dpBreakdown.fullTotal)}</strong> · Dikurangi Sisa Pelunasan ({dpBreakdown.remainingPercentage}%): <strong className="text-red-600">-{formatRupiah(dpBreakdown.remainingBalance)}</strong>
+                                </p>
+                            )}
                             {order.unique_code > 0 && (
                                 <p className="text-[11px] text-amber-800 mt-1">
                                     * Termasuk 3 digit kode unik <strong>(+{order.unique_code})</strong> untuk identifikasi mutasi otomatis.
@@ -259,7 +316,7 @@ export default function OrderShowPage({
 
                         <button
                             type="button"
-                            onClick={() => handleCopy(order.total_amount.toString(), 'total')}
+                            onClick={() => handleCopy(effectiveTotalAmount.toString(), 'total')}
                             className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-white hover:bg-sand-50 border border-sand-300 text-xs font-bold text-brand-900 shadow-xs cursor-pointer transition-all active:scale-95"
                         >
                             {copiedField === 'total' ? (
@@ -275,6 +332,15 @@ export default function OrderShowPage({
                             )}
                         </button>
                     </div>
+
+                    {/* Interactive Pre-Order DP Slider on Order Show Page */}
+                    {orderHasPreOrder && order.payment_status !== 'paid' && (
+                        <PreorderDpSlider
+                            totalAmount={fullOrderBaseTotal}
+                            dpPercentage={dpPercentage}
+                            onChange={handleUpdateOrderDp}
+                        />
+                    )}
                 </div>
 
                 {/* INVOICE LUNAS DOWNLOAD BANNER (JIKA SUDAH LUNAS / DIKONFIRMASI) */}
@@ -381,7 +447,7 @@ export default function OrderShowPage({
                                         Pastikan nama merchant penerima tertera: <strong className="text-brand-950">{paymentConfig.qris_merchant}</strong>.
                                     </li>
                                     <li>
-                                        Masukkan nominal tepat <strong>{formatRupiah(order.total_amount)}</strong> lalu konfirmasi PIN transaksi Anda.
+                                        Masukkan nominal tepat <strong>{formatRupiah(effectiveTotalAmount)}</strong> lalu konfirmasi PIN transaksi Anda.
                                     </li>
                                     <li>
                                         Simpan tangkapan layar / bukti struk pembayaran untuk diunggah di bawah ini.
@@ -440,7 +506,7 @@ export default function OrderShowPage({
                             </div>
 
                             <div className="p-3 rounded-xl bg-amber-50 border border-amber-200 text-xs text-amber-900 leading-relaxed">
-                                <strong>Penting:</strong> Pastikan Anda mentransfer tepat sejumlah <strong>{formatRupiah(order.total_amount)}</strong> (termasuk kode unik) agar pembayaran dapat diverifikasi secara instan.
+                                <strong>Penting:</strong> Pastikan Anda mentransfer tepat sejumlah <strong>{formatRupiah(effectiveTotalAmount)}</strong> (termasuk kode unik) agar pembayaran dapat diverifikasi secara instan.
                             </div>
                         </div>
 
@@ -452,7 +518,7 @@ export default function OrderShowPage({
                             <ol className="space-y-2 list-decimal list-inside leading-relaxed">
                                 <li>Buka aplikasi m-Banking Anda, pilih menu <strong>Transfer Antar Bank / Sesama Bank</strong>.</li>
                                 <li>Pilih tujuan <strong>{bankDetails.name}</strong> dan masukkan nomor rekening di atas.</li>
-                                <li>Ketikkan nominal transfer tepat <strong>{formatRupiah(order.total_amount)}</strong>.</li>
+                                <li>Ketikkan nominal transfer tepat <strong>{formatRupiah(effectiveTotalAmount)}</strong>.</li>
                                 <li>Pada berita transfer (jika tersedia), cantumkan nomor pesanan: <strong>{order.order_number}</strong>.</li>
                                 <li>Simpan struk / bukti transfer berhasil untuk diunggah di formulir konfirmasi di bawah.</li>
                             </ol>
@@ -767,10 +833,31 @@ export default function OrderShowPage({
                                         <span className="font-semibold text-brand-950">+{order.unique_code}</span>
                                     </div>
                                 )}
-                                <div className="flex items-center justify-between text-base font-extrabold text-brand-950 pt-2 border-t border-sand-200">
-                                    <span>Total Pembayaran</span>
-                                    <span className="text-brand-700 text-lg">{formatRupiah(order.total_amount)}</span>
-                                </div>
+                                {orderHasPreOrder && dpBreakdown.isDp ? (
+                                    <>
+                                        <div className="flex items-center justify-between text-brand-700 pt-1.5 border-t border-sand-200">
+                                            <span>Total Tagihan Penuh (100%)</span>
+                                            <span className="font-semibold text-brand-950">{formatRupiah(dpBreakdown.fullTotal)}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between text-amber-800">
+                                            <span>Dikurangi Sisa Pelunasan ({dpBreakdown.remainingPercentage}%)</span>
+                                            <span className="font-bold text-red-600">-{formatRupiah(dpBreakdown.remainingBalance)}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between text-base font-extrabold text-brand-950 pt-2 border-t border-sand-200">
+                                            <span>Total yang Harus Dibayar (DP {dpBreakdown.dpPercentage}%)</span>
+                                            <span className="text-emerald-700 text-lg">{formatRupiah(effectiveTotalAmount)}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between text-brand-600 bg-amber-50 px-3 py-2 rounded-xl border border-amber-200">
+                                            <span>Sisa Tagihan Pelunasan Saat Barang Siap ({dpBreakdown.remainingPercentage}%)</span>
+                                            <span className="font-bold text-brand-950">{formatRupiah(dpBreakdown.remainingBalance)}</span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <div className="flex items-center justify-between text-base font-extrabold text-brand-950 pt-2 border-t border-sand-200">
+                                        <span>Total Pembayaran</span>
+                                        <span className="text-brand-700 text-lg">{formatRupiah(effectiveTotalAmount)}</span>
+                                    </div>
+                                )}
                             </div>
                         );
                     })()}

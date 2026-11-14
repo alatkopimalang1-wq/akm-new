@@ -26,10 +26,11 @@ import {
     Truck,
 } from 'lucide-react';
 import { PublicLayout } from '@/layouts/public-layout';
-import { useCart } from '@/context/cart-context';
+import { isCartItemPreOrder, useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 import { ShippingMapPicker } from '@/components/shipping-map-picker';
+import { calculateDpBreakdown, PreorderDpSlider } from '@/components/preorder-dp-slider';
 import { getProductContentId, trackInitiateCheckout } from '@/lib/meta-pixel';
 
 export interface BankAccountItem {
@@ -138,7 +139,17 @@ export default function CartPage({
     initialSubdistricts = [],
     origin = { province_id: 18, city_id: 391, subdistrict_id: 3896, city: 'Kota Malang', province: 'Jawa Timur', postal_code: '65144', latitude: -7.9327, longitude: 112.6037 },
 }: CartPageProps) {
-    const { items, itemCount, subtotal, updateQuantity, removeItem, clearCart } = useCart();
+    const {
+        items,
+        itemCount,
+        subtotal,
+        hasPreOrderItems,
+        dpPercentage,
+        setDpPercentage,
+        updateQuantity,
+        removeItem,
+        clearCart,
+    } = useCart();
 
     // Track Meta Pixel InitiateCheckout on checkout page load
     const hasFiredInitiateCheckout = useRef(false);
@@ -359,8 +370,10 @@ export default function CartPage({
     const isFreeShipping = subtotal >= freeShippingMin;
     const shortageForFreeShipping = Math.max(0, freeShippingMin - subtotal);
 
-    // Grand total
+    // Grand total & Pre-Order Down Payment calculation
     const grandTotal = subtotal + shippingCost;
+    const dpBreakdown = calculateDpBreakdown(grandTotal, hasPreOrderItems ? dpPercentage : 100);
+    const payableNow = dpBreakdown.dpAmount;
 
     // Names of selected province and city
     const currentProvince = provinces.find((p) => p.id === selectedProvinceId);
@@ -399,7 +412,9 @@ export default function CartPage({
                     grind_option: i.grindOption,
                     custom_notes: i.customNotes,
                     price: i.variant.price,
+                    is_preorder: isCartItemPreOrder(i),
                 })),
+                dp_percentage: hasPreOrderItems ? dpPercentage : 100,
                 fulfillment_type: fulfillmentType,
                 customer: {
                     name: customerName,
@@ -555,9 +570,16 @@ export default function CartPage({
 
                                                     <div className="flex-1 min-w-0 flex items-start justify-between gap-2">
                                                         <div className="min-w-0">
-                                                            <h3 className="text-sm sm:text-base font-bold text-brand-950 leading-snug">
-                                                                {item.product.name}
-                                                            </h3>
+                                                            <div className="flex flex-wrap items-center gap-1.5">
+                                                                <h3 className="text-sm sm:text-base font-bold text-brand-950 leading-snug">
+                                                                    {item.product.name}
+                                                                </h3>
+                                                                {isCartItemPreOrder(item) && (
+                                                                    <span className="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 border border-amber-300 text-[10px] font-black uppercase tracking-wider">
+                                                                        Pre-Order
+                                                                    </span>
+                                                                )}
+                                                            </div>
                                                             {!isBundleOrderItem({
                                                                 isCustomBundle: item.product.is_custom_bundle,
                                                                 hasVariants: (item.product as any).has_variants,
@@ -664,6 +686,16 @@ export default function CartPage({
                                         );
                                     })}
                                 </div>
+
+                                {hasPreOrderItems && (
+                                    <div className="pt-3 border-t border-sand-200">
+                                        <PreorderDpSlider
+                                            totalAmount={grandTotal}
+                                            dpPercentage={dpPercentage}
+                                            onChange={setDpPercentage}
+                                        />
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -1219,6 +1251,17 @@ export default function CartPage({
                                     </div>
                                 </div>
 
+                                {/* PRE-ORDER DOWN PAYMENT (DP) SLIDER */}
+                                {hasPreOrderItems && (
+                                    <div className="pt-4 border-t border-sand-200">
+                                        <PreorderDpSlider
+                                            totalAmount={grandTotal}
+                                            dpPercentage={dpPercentage}
+                                            onChange={setDpPercentage}
+                                        />
+                                    </div>
+                                )}
+
                                 {/* Order Calculation Summary */}
                                 {(() => {
                                     const totalNormalSubtotal = items.reduce((sum, item) => {
@@ -1272,10 +1315,33 @@ export default function CartPage({
                                                     <span>Otomatis di halaman bayar</span>
                                                 </div>
                                             )}
-                                            <div className="flex items-center justify-between text-base font-extrabold text-brand-950 pt-2 border-t border-sand-100">
-                                                <span>Total Tagihan</span>
-                                                <span className="text-brand-700 text-lg">{formatRupiah(grandTotal)}</span>
-                                            </div>
+                                            {hasPreOrderItems && dpBreakdown.isDp ? (
+                                                <>
+                                                    <div className="flex items-center justify-between text-xs text-brand-700 pt-1.5 border-t border-sand-100">
+                                                        <span>Total Tagihan Penuh (100%)</span>
+                                                        <span className="font-semibold text-brand-950">
+                                                            {formatRupiah(grandTotal)}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-xs text-amber-800">
+                                                        <span>
+                                                            Dikurangi Sisa Pelunasan ({dpBreakdown.remainingPercentage}%)
+                                                        </span>
+                                                        <span className="font-bold text-red-600">
+                                                            -{formatRupiah(dpBreakdown.remainingBalance)}
+                                                        </span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-base font-extrabold text-brand-950 pt-2 border-t border-sand-100">
+                                                        <span>Total yang Harus Dibayar (DP {dpBreakdown.dpPercentage}%)</span>
+                                                        <span className="text-emerald-700 text-lg">{formatRupiah(payableNow)}</span>
+                                                    </div>
+                                                </>
+                                            ) : (
+                                                <div className="flex items-center justify-between text-base font-extrabold text-brand-950 pt-2 border-t border-sand-100">
+                                                    <span>Total Tagihan</span>
+                                                    <span className="text-brand-700 text-lg">{formatRupiah(grandTotal)}</span>
+                                                </div>
+                                            )}
                                         </div>
                                     );
                                 })()}
@@ -1297,9 +1363,9 @@ export default function CartPage({
                                         {isSubmitting
                                             ? 'Memproses Pesanan...'
                                             : paymentMethod === 'qris'
-                                                ? `Bayar dengan QRIS Toko (${formatRupiah(grandTotal)})`
+                                                ? `Bayar dengan QRIS Toko (${formatRupiah(payableNow)})`
                                                 : paymentMethod === 'bank_transfer'
-                                                    ? `Buat Pesanan & Bayar Transfer Bank`
+                                                    ? `Buat Pesanan & Bayar Transfer Bank (${formatRupiah(payableNow)})`
                                                     : isPickup
                                                         ? `Konfirmasi Ambil di Toko via WhatsApp`
                                                         : `Kirim Pesanan ke WhatsApp`}

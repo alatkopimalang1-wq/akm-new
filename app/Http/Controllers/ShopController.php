@@ -324,6 +324,7 @@ class ShopController extends Controller
                         'weight_grams' => (int) ($v->weight_grams ?? 500),
                         'image_url' => $vImg ?: $formatImageUrl($cand),
                         'is_out_of_stock' => $v->stock_status === 'out_of_stock' || (bool) $cand->is_out_of_stock,
+                        'is_preorder' => $v->stock_status === 'pre_order' || (bool) $cand->is_preorder || $cand->stock_status === 'pre_order',
                     ];
                 })->values()->toArray();
 
@@ -339,6 +340,7 @@ class ShopController extends Controller
                     'bundle_price' => $bundlePrice,
                     'weight_grams' => (int) ($defVar?->weight_grams ?? 500),
                     'is_out_of_stock' => (bool) $cand->is_out_of_stock,
+                    'is_preorder' => (bool) ($cand->is_preorder || $cand->stock_status === 'pre_order' || $defVar?->stock_status === 'pre_order'),
                     'variants' => $variantsList,
                 ];
             })->values()->toArray();

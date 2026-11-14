@@ -139,6 +139,7 @@ export interface CartItem {
     quantity: number;
     grindOption: string;
     customNotes?: string;
+    isPreOrder?: boolean;
 }
 
 export interface MegaMenuItem {
@@ -237,6 +238,7 @@ export interface OrderItemData {
     price: number;
     quantity: number;
     subtotal: number;
+    is_preorder?: boolean;
     image?: string | null;
 }
 
@@ -266,6 +268,7 @@ export interface OrderData {
     tracking_number?: string | null;
     unique_code: number;
     total_amount: number;
+    has_preorder?: boolean;
     is_newly_placed?: boolean;
     payment_proof?: string | null;
     payment_details?: any;

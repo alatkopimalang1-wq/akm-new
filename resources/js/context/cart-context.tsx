@@ -1,8 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { CartItem, Product, ProductVariant } from '@/types/sanubari';
 import { getProductContentId, trackAddToCart } from '@/lib/meta-pixel';
+import { DpPercentage, normalizeDpPercentage } from '@/components/preorder-dp-slider';
 
 export type { CartItem, Product, ProductVariant };
+
+export function isCartItemPreOrder(item: CartItem): boolean {
+    return Boolean(
+        item.isPreOrder ||
+        item.product?.is_preorder ||
+        item.product?.stock_status === 'pre_order' ||
+        item.variant?.stock_status === 'pre_order',
+    );
+}
 
 interface CartContextType {
     items: CartItem[];
@@ -11,7 +21,8 @@ interface CartContextType {
         variant: ProductVariant,
         quantity?: number,
         grindOption?: string,
-        customNotes?: string
+        customNotes?: string,
+        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage }
     ) => void;
     removeItem: (variantId: number, grindOption: string, customNotes?: string) => void;
     updateQuantity: (
@@ -23,6 +34,9 @@ interface CartContextType {
     clearCart: () => void;
     itemCount: number;
     subtotal: number;
+    hasPreOrderItems: boolean;
+    dpPercentage: DpPercentage;
+    setDpPercentage: (pct: DpPercentage) => void;
     isCartOpen: boolean;
     setIsCartOpen: (open: boolean) => void;
 }
@@ -30,6 +44,7 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 const STORAGE_KEY = 'sanubari_cart_v1';
+const DP_STORAGE_KEY = 'sanubari_cart_dp_v1';
 
 export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [items, setItems] = useState<CartItem[]>(() => {
@@ -39,6 +54,16 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             return raw ? JSON.parse(raw) : [];
         } catch {
             return [];
+        }
+    });
+
+    const [dpPercentage, setDpPercentageState] = useState<DpPercentage>(() => {
+        if (typeof window === 'undefined') return 100;
+        try {
+            const raw = localStorage.getItem(DP_STORAGE_KEY);
+            return raw ? normalizeDpPercentage(Number(raw)) : 100;
+        } catch {
+            return 100;
         }
     });
 
@@ -52,13 +77,37 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         }
     }, [items]);
 
+    useEffect(() => {
+        try {
+            localStorage.setItem(DP_STORAGE_KEY, String(dpPercentage));
+        } catch (e) {
+            console.error('Failed to save DP percentage to localStorage', e);
+        }
+    }, [dpPercentage]);
+
+    const setDpPercentage = (pct: DpPercentage) => {
+        setDpPercentageState(normalizeDpPercentage(pct));
+    };
+
     const addItem = (
         product: Product,
         variant: ProductVariant,
         quantity: number = 1,
         grindOption: string = 'Biji Utuh (Whole Bean)',
-        customNotes?: string
+        customNotes?: string,
+        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage }
     ) => {
+        const itemIsPreOrder = Boolean(
+            options?.isPreOrder ||
+            product.is_preorder ||
+            product.stock_status === 'pre_order' ||
+            variant.stock_status === 'pre_order'
+        );
+
+        if (itemIsPreOrder && options?.dpPercentage) {
+            setDpPercentageState(normalizeDpPercentage(options.dpPercentage));
+        }
+
         setItems((prev) => {
             const existingIndex = prev.findIndex(
                 (i) =>
@@ -68,10 +117,24 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
             );
             if (existingIndex > -1) {
                 const next = [...prev];
-                next[existingIndex].quantity += quantity;
+                next[existingIndex] = {
+                    ...next[existingIndex],
+                    quantity: next[existingIndex].quantity + quantity,
+                    isPreOrder: next[existingIndex].isPreOrder || itemIsPreOrder,
+                };
                 return next;
             }
-            return [...prev, { product, variant, quantity, grindOption, customNotes }];
+            return [
+                ...prev,
+                {
+                    product,
+                    variant,
+                    quantity,
+                    grindOption,
+                    customNotes,
+                    isPreOrder: itemIsPreOrder,
+                },
+            ];
         });
         setIsCartOpen(true);
 
@@ -132,6 +195,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = items.reduce((sum, item) => sum + item.variant.price * item.quantity, 0);
+    const hasPreOrderItems = items.some(isCartItemPreOrder);
 
     return (
         <CartContext.Provider
@@ -143,6 +207,9 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 clearCart,
                 itemCount,
                 subtotal,
+                hasPreOrderItems,
+                dpPercentage,
+                setDpPercentage,
                 isCartOpen,
                 setIsCartOpen,
             }}

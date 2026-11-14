@@ -55,6 +55,15 @@ interface OrderSummary {
     tracking_number?: string;
     customer_name: string;
     customer_address?: string;
+    has_preorder?: boolean;
+    payment_details?: {
+        has_preorder?: boolean;
+        is_preorder_dp?: boolean;
+        dp_percentage?: number;
+        full_total_amount?: number;
+        dp_amount?: number;
+        remaining_balance?: number;
+    } | null;
     items_count: number;
     items: OrderItem[];
 }
@@ -494,10 +503,19 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
 
                                             <div className="flex items-center justify-between sm:justify-end gap-3 w-full sm:w-auto">
                                                 <div className="text-right sm:mr-3">
-                                                    <span className="text-[11px] text-brand-500 block leading-tight">Total Tagihan</span>
+                                                    <span className="text-[11px] text-brand-500 block leading-tight">
+                                                        {order.payment_details?.is_preorder_dp && Number(order.payment_details.dp_percentage || 100) < 100
+                                                            ? `Total DP (${order.payment_details.dp_percentage}%)`
+                                                            : 'Total Tagihan'}
+                                                    </span>
                                                     <span className="text-base font-black text-brand-950 font-serif">
                                                         {formatRupiah(order.total_amount)}
                                                     </span>
+                                                    {order.payment_details?.is_preorder_dp && Number(order.payment_details.remaining_balance || 0) > 0 && (
+                                                        <span className="text-[10px] text-amber-800 font-semibold block leading-tight mt-0.5">
+                                                            Sisa Pelunasan: {formatRupiah(Number(order.payment_details.remaining_balance || 0))}
+                                                        </span>
+                                                    )}
                                                 </div>
 
                                                 <div className="flex items-center gap-2">

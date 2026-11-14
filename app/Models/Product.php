@@ -75,7 +75,44 @@ class Product extends Model
         'is_out_of_stock',
         'variant_title',
         'has_variants',
+        'dp_enabled',
+        'default_dp_percentage',
     ];
+
+    public function getIsPreorderAttribute($value): bool
+    {
+        if ((bool) $value) {
+            return true;
+        }
+
+        if (($this->attributes['stock_status'] ?? '') === 'pre_order') {
+            return true;
+        }
+
+        if ($this->relationLoaded('variants') && $this->variants->isNotEmpty()) {
+            return $this->variants
+                ->where('stock_status', '!=', 'inactive')
+                ->contains(fn ($v) => $v->stock_status === 'pre_order');
+        }
+
+        return false;
+    }
+
+    public function getDpEnabledAttribute(): bool
+    {
+        if (isset($this->bundle_config['dp_enabled'])) {
+            return (bool) $this->bundle_config['dp_enabled'];
+        }
+
+        return true;
+    }
+
+    public function getDefaultDpPercentageAttribute(): int
+    {
+        $val = (int) ($this->bundle_config['default_dp_percentage'] ?? 100);
+
+        return in_array($val, [30, 50, 70, 100], true) ? $val : 100;
+    }
 
     public function getHasVariantsAttribute(): bool
     {

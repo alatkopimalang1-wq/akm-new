@@ -32,6 +32,8 @@ class CheckoutController extends Controller
             'items.*.price' => 'nullable|numeric|min:0',
             'items.*.grind_option' => 'nullable|string|max:100',
             'items.*.custom_notes' => 'nullable|string|max:2000',
+            'items.*.is_preorder' => 'nullable|boolean',
+            'dp_percentage' => 'nullable|integer|in:30,50,70,100',
             'fulfillment_type' => 'nullable|string|in:delivery,pickup',
             'customer.name' => 'required|string|max:100',
             'customer.phone' => 'required|string|max:30',
@@ -63,6 +65,7 @@ class CheckoutController extends Controller
         $subtotal = 0;
         $totalWeightGrams = 0;
         $orderLines = [];
+        $hasPreOrder = false;
 
         foreach ($validated['items'] as $item) {
             $variant = ProductVariant::with('product')->findOrFail($item['variant_id']);
@@ -74,6 +77,15 @@ class CheckoutController extends Controller
                         'items' => ["Produk '{$variant->product->name}' ({$variant->label}) habis terjual."],
                     ],
                 ], 422);
+            }
+
+            if (
+                ! empty($item['is_preorder']) ||
+                $variant->stock_status === 'pre_order' ||
+                $variant->product->is_preorder ||
+                $variant->product->stock_status === 'pre_order'
+            ) {
+                $hasPreOrder = true;
             }
 
             $qty = $item['quantity'];
@@ -145,7 +157,16 @@ class CheckoutController extends Controller
             $uniqueCode = rand(101, 899);
         }
 
-        $totalAmount = $subtotal + $shippingCost + $uniqueCode;
+        $requestedDp = (int) ($validated['dp_percentage'] ?? 100);
+        $dpPercentage = in_array($requestedDp, [30, 50, 70, 100], true) ? $requestedDp : 100;
+        $fullTotalAmount = (float) ($subtotal + $shippingCost);
+        $isPreOrderDp = ($hasPreOrder || $dpPercentage < 100) && $dpPercentage < 100;
+        $dpBaseAmount = $isPreOrderDp
+            ? (float) round(($fullTotalAmount * $dpPercentage) / 100)
+            : $fullTotalAmount;
+        $remainingBalance = (float) max(0, $fullTotalAmount - $dpBaseAmount);
+
+        $totalAmount = $dpBaseAmount + $uniqueCode;
 
         // Payment Channel Info Snapshot
         $channel = $validated['payment_channel'] ?? ($validated['payment_method'] === 'qris' ? 'qris' : 'bca');
@@ -205,6 +226,12 @@ class CheckoutController extends Controller
             'qris_merchant' => $settings['payment_qris_merchant_name'] ?? 'ALAT KOPI MALANG',
             'qris_nmid' => $settings['payment_qris_nmid'] ?? 'ID1020038829102',
             'bank_info' => $matchedBankInfo,
+            'has_preorder' => $hasPreOrder || $isPreOrderDp,
+            'is_preorder_dp' => $isPreOrderDp,
+            'dp_percentage' => $dpPercentage,
+            'full_total_amount' => $fullTotalAmount,
+            'dp_amount' => $dpBaseAmount,
+            'remaining_balance' => $remainingBalance,
         ];
 
         $order = DB::transaction(function () use (
@@ -276,7 +303,14 @@ class CheckoutController extends Controller
             $waMessage .= "🚚 *Kurir:* {$order->shipping_courier} ({$order->shipping_service})\n";
         }
         $waMessage .= "💳 *Metode Bayar:* " . strtoupper($order->payment_method) . ($order->payment_channel ? " ({$order->payment_channel})" : "") . "\n";
-        $waMessage .= "💰 *Total Tagihan:* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n\n";
+        if ($isPreOrderDp) {
+            $waMessage .= "📊 *Skema Pre-Order:* DP {$dpPercentage}%\n";
+            $waMessage .= "💵 *Total Pesanan (100%):* Rp " . number_format($fullTotalAmount, 0, ',', '.') . "\n";
+            $waMessage .= "💰 *Tagihan DP ({$dpPercentage}%):* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n";
+            $waMessage .= "⏳ *Sisa Pelunasan (" . (100 - $dpPercentage) . "%):* Rp " . number_format($remainingBalance, 0, ',', '.') . "\n\n";
+        } else {
+            $waMessage .= "💰 *Total Tagihan:* Rp " . number_format($order->total_amount, 0, ',', '.') . "\n\n";
+        }
         $waMessage .= "☕ *Rincian Kopi Dipesan:*\n";
         foreach ($orderLines as $idx => $line) {
             $num = $idx + 1;
@@ -350,6 +384,10 @@ class CheckoutController extends Controller
 
         $resolvedShowItems = $order->items->map(function ($item) {
             $pricing = $item->resolveBundlePricing();
+            $isItemPreorder = (bool) (
+                ($item->product && ($item->product->is_preorder || $item->product->stock_status === 'pre_order')) ||
+                ($item->variant && $item->variant->stock_status === 'pre_order')
+            );
 
             return [
                 'id' => $item->id,
@@ -365,11 +403,15 @@ class CheckoutController extends Controller
                 'quantity' => $item->quantity,
                 'original_subtotal' => $pricing['original_subtotal'],
                 'subtotal' => $pricing['subtotal'],
+                'is_preorder' => $isItemPreorder,
                 'image' => $item->variant?->image_url ?? $item->product?->primaryImage?->path,
             ];
         });
 
         $originalSubtotalShow = (float) $resolvedShowItems->sum('original_subtotal');
+        $orderHasPreorder = $resolvedShowItems->contains('is_preorder', true)
+            || ! empty($order->payment_details['has_preorder'])
+            || ! empty($order->payment_details['is_preorder_dp']);
 
         return Inertia::render('order/show', [
             'order' => [
@@ -399,6 +441,7 @@ class CheckoutController extends Controller
                 'tracking_number' => $order->tracking_number,
                 'unique_code' => (int) $order->unique_code,
                 'total_amount' => (float) $order->total_amount,
+                'has_preorder' => $orderHasPreorder,
                 'is_newly_placed' => session('order_placed_token') === $order->order_number,
                 'payment_proof' => $order->payment_proof ? (str_starts_with($order->payment_proof, 'http') ? $order->payment_proof : '/storage/' . ltrim($order->payment_proof, '/')) : null,
                 'payment_details' => $order->payment_details,
@@ -436,6 +479,10 @@ class CheckoutController extends Controller
 
         $resolvedInvoiceItems = $order->items->map(function ($item) {
             $pricing = $item->resolveBundlePricing();
+            $isItemPreorder = (bool) (
+                ($item->product && ($item->product->is_preorder || $item->product->stock_status === 'pre_order')) ||
+                ($item->variant && $item->variant->stock_status === 'pre_order')
+            );
 
             return [
                 'id' => $item->id,
@@ -448,10 +495,14 @@ class CheckoutController extends Controller
                 'quantity' => $item->quantity,
                 'original_subtotal' => $pricing['original_subtotal'],
                 'subtotal' => $pricing['subtotal'],
+                'is_preorder' => $isItemPreorder,
             ];
         });
 
         $originalSubtotalInvoice = (float) $resolvedInvoiceItems->sum('original_subtotal');
+        $invoiceHasPreorder = $resolvedInvoiceItems->contains('is_preorder', true)
+            || ! empty($order->payment_details['has_preorder'])
+            || ! empty($order->payment_details['is_preorder_dp']);
 
         return Inertia::render('order/invoice', [
             'order' => [
@@ -491,6 +542,8 @@ class CheckoutController extends Controller
                 'shipping_cost' => (float) $order->shipping_cost,
                 'unique_code' => (int) $order->unique_code,
                 'total_amount' => (float) $order->total_amount,
+                'has_preorder' => $invoiceHasPreorder,
+                'payment_details' => $order->payment_details,
                 'shipping_courier' => $order->shipping_courier,
                 'shipping_service' => $order->shipping_service,
                 'shipping_etd' => $order->shipping_etd,
@@ -524,6 +577,56 @@ class CheckoutController extends Controller
         $labelData = ShippingService::getPrintableLabelData($order);
 
         return view('shipping.label', $labelData);
+    }
+
+    /**
+     * Update Down Payment (DP) percentage for a pending pre-order.
+     */
+    public function updateDp(Request $request, string $orderNumber): JsonResponse
+    {
+        $order = Order::where('order_number', $orderNumber)->firstOrFail();
+
+        if ($order->payment_status === 'paid') {
+            return response()->json([
+                'success' => false,
+                'message' => 'Pesanan sudah lunas dibayar.',
+            ], 422);
+        }
+
+        $validated = $request->validate([
+            'dp_percentage' => 'required|integer|in:30,50,70,100',
+        ]);
+
+        $dpPercentage = (int) $validated['dp_percentage'];
+        $fullTotalAmount = (float) ($order->subtotal + $order->shipping_cost);
+        $isPreOrderDp = $dpPercentage < 100;
+        $dpBaseAmount = $isPreOrderDp
+            ? (float) round(($fullTotalAmount * $dpPercentage) / 100)
+            : $fullTotalAmount;
+        $remainingBalance = (float) max(0, $fullTotalAmount - $dpBaseAmount);
+        $newTotalAmount = $dpBaseAmount + (int) $order->unique_code;
+
+        $paymentDetails = is_array($order->payment_details) ? $order->payment_details : [];
+        $paymentDetails['has_preorder'] = true;
+        $paymentDetails['is_preorder_dp'] = $isPreOrderDp;
+        $paymentDetails['dp_percentage'] = $dpPercentage;
+        $paymentDetails['full_total_amount'] = $fullTotalAmount;
+        $paymentDetails['dp_amount'] = $dpBaseAmount;
+        $paymentDetails['remaining_balance'] = $remainingBalance;
+
+        $order->update([
+            'total_amount' => $newTotalAmount,
+            'payment_details' => $paymentDetails,
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'dp_percentage' => $dpPercentage,
+            'full_total_amount' => $fullTotalAmount,
+            'dp_amount' => $dpBaseAmount,
+            'remaining_balance' => $remainingBalance,
+            'total_amount' => $newTotalAmount,
+        ]);
     }
 
     /**

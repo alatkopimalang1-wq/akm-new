@@ -33,6 +33,7 @@ Route::get('/pesanan/{orderNumber}', [CheckoutController::class, 'show'])->name(
 Route::get('/pesanan/{orderNumber}/invoice', [CheckoutController::class, 'invoice'])->name('orders.invoice');
 Route::get('/pesanan/{orderNumber}/shipping-label', [CheckoutController::class, 'shippingLabel'])->name('orders.shipping-label');
 Route::post('/pesanan/{orderNumber}/upload-bukti', [CheckoutController::class, 'uploadProof'])->name('orders.upload-proof');
+Route::post('/pesanan/{orderNumber}/update-dp', [CheckoutController::class, 'updateDp'])->name('orders.update-dp');
 Route::get('/lacak-pesanan', [CheckoutController::class, 'track'])->name('orders.track');
 
 // Automatic Indonesian Courier Shipping API (RajaOngkir Gateway)

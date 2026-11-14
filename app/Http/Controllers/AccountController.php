@@ -55,6 +55,7 @@ class AccountController extends Controller
                 'tracking_number' => $order->tracking_number,
                 'customer_name' => $order->customer_name,
                 'customer_address' => $order->customer_address,
+                'payment_details' => $order->payment_details,
                 'items_count' => $order->items->sum('quantity'),
                 'items' => $order->items->map(function ($item) {
                     $pricing = $item->resolveBundlePricing();

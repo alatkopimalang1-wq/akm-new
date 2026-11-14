@@ -4,6 +4,12 @@ import { ArrowLeft, Check, CheckCircle2, Layers, Minus, Plus, ShoppingBag, X } f
 import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number';
 import { Product, ProductVariant, useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
+import {
+    calculateDpBreakdown,
+    DpPercentage,
+    normalizeDpPercentage,
+    PreorderDpSlider,
+} from '@/components/preorder-dp-slider';
 
 export interface BundleCandidateVariant {
     id: number;
@@ -13,6 +19,7 @@ export interface BundleCandidateVariant {
     weight_grams: number;
     image_url: string;
     is_out_of_stock: boolean;
+    is_preorder?: boolean;
 }
 
 export interface BundleCandidateProduct {
@@ -27,6 +34,7 @@ export interface BundleCandidateProduct {
     bundle_price: number;
     weight_grams: number;
     is_out_of_stock: boolean;
+    is_preorder?: boolean;
     variants?: BundleCandidateVariant[];
 }
 
@@ -57,7 +65,17 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
     whatsappNumber = '6285121930454',
     onTotalChange,
 }) => {
-    const { addItem } = useCart();
+    const { addItem, dpPercentage: cartDpPercentage, setDpPercentage: setCartDpPercentage } = useCart();
+
+    const defaultDpPct = normalizeDpPercentage(
+        (product as any).default_dp_percentage ?? (product.bundle_config as any)?.default_dp_percentage ?? cartDpPercentage ?? 100,
+    );
+    const [selectedDp, setSelectedDp] = useState<DpPercentage>(defaultDpPct);
+
+    const handleDpChange = (nextPct: DpPercentage) => {
+        setSelectedDp(nextPct);
+        setCartDpPercentage(nextPct);
+    };
 
     // Map of slotIndex -> selected BundleCandidateProduct (with chosen variant applied)
     const [selectedBySlot, setSelectedBySlot] = useState<Record<number, BundleCandidateProduct>>({});
@@ -209,6 +227,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                   bundle_price: chosenVar.bundle_price,
                   weight_grams: chosenVar.weight_grams,
                   image_url: chosenVar.image_url || pendingCandidate.image_url,
+                  is_preorder: Boolean(chosenVar.is_preorder || pendingCandidate.is_preorder),
               }
             : pendingCandidate;
 
@@ -296,6 +315,23 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
         return parts.join('\n');
     };
 
+    const isBundlePreOrder = useMemo(() => {
+        if (
+            product.is_preorder ||
+            product.stock_status === 'pre_order' ||
+            defaultVariant.stock_status === 'pre_order'
+        ) {
+            return true;
+        }
+        return Object.values(selectedBySlot).some((item) => Boolean(item?.is_preorder));
+    }, [product.is_preorder, product.stock_status, defaultVariant.stock_status, selectedBySlot]);
+
+    const isBundleDpEnabled = isBundlePreOrder && (product as any).dp_enabled !== false;
+    const effectiveUnitPrice =
+        totalBundlePrice > 0 ? totalBundlePrice : Number(defaultVariant.price || product.min_price || 0);
+    const bundleTotalAmount = effectiveUnitPrice * Math.max(1, quantity);
+    const bundleDpBreakdown = calculateDpBreakdown(bundleTotalAmount, isBundleDpEnabled ? selectedDp : 100);
+
     const handleBuyNow = () => {
         if (!ensureAllRequiredSelected()) return;
 
@@ -308,9 +344,13 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
             price: finalUnitPrice,
             original_price: totalNormalPrice > finalUnitPrice ? totalNormalPrice : undefined,
             weight_grams: totalWeightGrams,
+            stock_status: isBundlePreOrder ? 'pre_order' : defaultVariant.stock_status,
         };
 
-        addItem(product, customVariant, Math.max(1, quantity), 'Paket Custom', buildCustomNotes());
+        addItem(product, customVariant, Math.max(1, quantity), 'Paket Custom', buildCustomNotes(), {
+            isPreOrder: isBundlePreOrder,
+            dpPercentage: isBundleDpEnabled ? selectedDp : 100,
+        });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1500);
     };
@@ -351,7 +391,13 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
             msg += `• Harga Normal: ~~${formatRupiah(totalNormalPrice * quantity)}~~\n`;
             msg += `• Hemat: ${formatRupiah((totalNormalPrice - finalUnitPrice) * quantity)}\n`;
         }
-        msg += `• *Total Bayar: ${formatRupiah(finalUnitPrice * quantity)}*\n\nMohon konfirmasi ketersediaan stok & pengiriman. Terima kasih!`;
+        if (isBundleDpEnabled && bundleDpBreakdown.isDp) {
+            msg += `• Total Harga Diskon (100%): ${formatRupiah(bundleDpBreakdown.fullTotal)}\n`;
+            msg += `• *Total Dibayar Sekarang (DP ${bundleDpBreakdown.dpPercentage}%): ${formatRupiah(bundleDpBreakdown.dpAmount)}*\n`;
+            msg += `• Sisa Pelunasan (${bundleDpBreakdown.remainingPercentage}%): ${formatRupiah(bundleDpBreakdown.remainingBalance)}\n\nMohon konfirmasi ketersediaan stok & pengiriman. Terima kasih!`;
+        } else {
+            msg += `• *Total Bayar: ${formatRupiah(finalUnitPrice * quantity)}*\n\nMohon konfirmasi ketersediaan stok & pengiriman. Terima kasih!`;
+        }
 
         window.open(`https://wa.me/${cleanWa}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener,noreferrer');
     };
@@ -628,10 +674,20 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
             {/* Bottom Total Order, Quantity Stepper & Action Buttons (After Daftar Pesanan) */}
             <div className="pt-3 border-t border-neutral-200 space-y-3">
+                {isBundleDpEnabled && (
+                    <PreorderDpSlider
+                        totalAmount={bundleTotalAmount}
+                        dpPercentage={selectedDp}
+                        onChange={handleDpChange}
+                    />
+                )}
+
                 {totalBundlePrice > 0 && (
                     <div className="flex items-center justify-between gap-3">
                         <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-800">
-                            Total Pesanan
+                            {isBundleDpEnabled && bundleDpBreakdown.isDp
+                                ? `Total Dibayar Sekarang (DP ${bundleDpBreakdown.dpPercentage}%)`
+                                : 'Total Pesanan'}
                         </span>
                         <div className="text-right">
                             {totalNormalPrice > totalBundlePrice && (
@@ -640,7 +696,11 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                 </span>
                             )}
                             <span className="text-lg sm:text-xl font-black text-brand-950">
-                                {formatRupiah(totalBundlePrice * quantity)}
+                                {formatRupiah(
+                                    isBundleDpEnabled && bundleDpBreakdown.isDp
+                                        ? bundleDpBreakdown.dpAmount
+                                        : totalBundlePrice * quantity,
+                                )}
                             </span>
                         </div>
                     </div>

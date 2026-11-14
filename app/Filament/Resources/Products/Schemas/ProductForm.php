@@ -166,11 +166,37 @@ class ProductForm
                             Toggle::make('is_new')
                                 ->label('Tandai Sebagai Produk Baru'),
                             Toggle::make('is_preorder')
-                                ->label('Pre-Order'),
+                                ->label('Pre-Order')
+                                ->live()
+                                ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                    if ($state && ($get('stock_status') ?? 'in_stock') === 'in_stock') {
+                                        $set('stock_status', 'pre_order');
+                                    } elseif (! $state && ($get('stock_status') ?? '') === 'pre_order') {
+                                        $set('stock_status', 'in_stock');
+                                    }
+                                }),
                             Toggle::make('is_custom_bundle')
                                 ->label('Produk Paket Custom (Custom Bundling)')
                                 ->live(),
                         ]),
+                        Grid::make(2)
+                            ->visible(fn (callable $get): bool => (bool) $get('is_preorder') || ($get('stock_status') ?? '') === 'pre_order')
+                            ->schema([
+                                Toggle::make('bundle_config.dp_enabled')
+                                    ->label('Aktifkan Pembayaran DP (Down Payment) Pre-Order')
+                                    ->helperText('Menampilkan slide geser persentase DP (30%, 50%, 70%, 100% Lunas) dan mengurangi total tagihan otomatis.')
+                                    ->default(true),
+                                Select::make('bundle_config.default_dp_percentage')
+                                    ->label('Persentase DP Default')
+                                    ->options([
+                                        30 => 'DP 30%',
+                                        50 => 'DP 50%',
+                                        70 => 'DP 70%',
+                                        100 => '100% (Lunas)',
+                                    ])
+                                    ->default(100)
+                                    ->helperText('Pilihan awal slide geser DP saat pelanggan membuka produk/checkout Pre-Order.'),
+                            ]),
                     ]),
 
                 Section::make('Pengaturan Slot Produk Paket Custom (Custom Bundling)')

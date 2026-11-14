@@ -51,6 +51,15 @@ interface InvoiceOrder {
     shipping_etd?: string | null;
     tracking_number?: string | null;
     total_weight_grams?: number;
+    has_preorder?: boolean;
+    payment_details?: {
+        has_preorder?: boolean;
+        is_preorder_dp?: boolean;
+        dp_percentage?: number;
+        full_total_amount?: number;
+        dp_amount?: number;
+        remaining_balance?: number;
+    } | null;
     created_at: string;
     paid_at?: string | null;
     items: InvoiceItem[];
@@ -473,10 +482,36 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                         <span className="font-semibold text-brand-950">+{order.unique_code}</span>
                                     </div>
                                 )}
+                                {order.payment_details?.is_preorder_dp && Number(order.payment_details.remaining_balance || 0) > 0 && (
+                                    <>
+                                        <div className="flex justify-between text-brand-700 pt-1.5 border-t border-sand-200">
+                                            <span>Total Tagihan Penuh (100%)</span>
+                                            <span className="font-semibold text-brand-900">
+                                                {formatRupiah(Number(order.payment_details.full_total_amount || (order.subtotal + order.shipping_cost)) + order.unique_code)}
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between text-amber-800">
+                                            <span>Dikurangi Sisa Pelunasan ({100 - Number(order.payment_details.dp_percentage || 100)}%)</span>
+                                            <span className="font-bold">
+                                                -{formatRupiah(Number(order.payment_details.remaining_balance || 0))}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
                                 <div className="flex justify-between text-sm sm:text-base font-extrabold text-brand-950 pt-2.5 border-t border-sand-200">
-                                    <span>Total Pembayaran</span>
+                                    <span>
+                                        {order.payment_details?.is_preorder_dp && Number(order.payment_details.dp_percentage || 100) < 100
+                                            ? `Total Pembayaran (DP ${order.payment_details.dp_percentage}%)`
+                                            : 'Total Pembayaran'}
+                                    </span>
                                     <span className="text-brand-800 text-base sm:text-lg">{formatRupiah(order.total_amount)}</span>
                                 </div>
+                                {order.payment_details?.is_preorder_dp && Number(order.payment_details.remaining_balance || 0) > 0 && (
+                                    <div className="p-2 rounded-lg bg-amber-50 text-amber-900 text-[11px] font-semibold border border-amber-200 flex justify-between items-center">
+                                        <span>Sisa Pelunasan Saat Barang Siap:</span>
+                                        <span className="font-extrabold">{formatRupiah(Number(order.payment_details.remaining_balance || 0))}</span>
+                                    </div>
+                                )}
                                 {isPaid && (
                                     <div className="p-2 rounded-lg bg-emerald-50 text-center font-extrabold text-emerald-800 text-xs tracking-wider border border-emerald-200">
                                         ★ STATUS: LUNAS DIBAYAR ★
