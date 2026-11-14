@@ -11,7 +11,7 @@ import {
     Truck,
 } from 'lucide-react';
 import { formatRupiah } from '@/lib/trans';
-import { isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
+import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 
 interface InvoiceItem {
     id: number;
@@ -19,8 +19,10 @@ interface InvoiceItem {
     variant_label: string;
     grind_option?: string | null;
     custom_notes?: string | null;
+    original_price?: number;
     price: number;
     quantity: number;
+    original_subtotal?: number;
     subtotal: number;
 }
 
@@ -39,6 +41,7 @@ interface InvoiceOrder {
     payment_status_label: string;
     status: string;
     status_label: string;
+    original_subtotal?: number;
     subtotal: number;
     shipping_cost: number;
     unique_code: number;
@@ -311,89 +314,176 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                 </tr>
                             </thead>
                             <tbody className="divide-y divide-sand-200">
-                                {order.items.map((item, idx) => (
-                                    <tr key={item.id || idx} className="align-top">
-                                        <td className="py-3.5 pr-2 text-brand-400 font-medium">
-                                            {idx + 1}
-                                        </td>
-                                        <td className="py-3.5 px-3 space-y-1">
-                                            <div className="font-bold text-sm text-brand-950">
-                                                {item.product_name}
-                                            </div>
-                                            {!isBundleOrderItem({
-                                                variantLabel: item.variant_label,
-                                                grindOption: item.grind_option,
-                                                customNotes: item.custom_notes,
-                                            }) && item.variant_label && (
-                                                <div className="text-[11px] text-accent-copper font-semibold">
-                                                    Varian: {item.variant_label}
-                                                </div>
-                                            )}
+                                {order.items.map((item, idx) => {
+                                    const pricing = getBundlePricingSummary({
+                                        customNotes: item.custom_notes,
+                                        unitPrice: item.price,
+                                        quantity: item.quantity,
+                                        originalUnitPrice: item.original_price,
+                                    });
 
-                                            {/* Custom Bundle / Notes Display */}
-                                            {item.custom_notes && (
-                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200 text-xs text-brand-800 leading-snug space-y-1">
-                                                    {parseCustomNotes(item.custom_notes).map((line, lineIdx) => (
-                                                        <div key={lineIdx} className="font-normal text-brand-800">
-                                                            {line.tag && (
-                                                                <strong className="font-extrabold text-brand-950">
-                                                                    {line.tag}{' '}
-                                                                </strong>
-                                                            )}
-                                                            <span>{line.text}</span>
-                                                        </div>
-                                                    ))}
+                                    return (
+                                        <tr key={item.id || idx} className="align-top">
+                                            <td className="py-3.5 pr-2 text-brand-400 font-medium">
+                                                {idx + 1}
+                                            </td>
+                                            <td className="py-3.5 px-3 space-y-1">
+                                                <div className="font-bold text-sm text-brand-950">
+                                                    {item.product_name}
                                                 </div>
-                                            )}
-                                        </td>
-                                        <td className="py-3.5 px-3 text-center font-bold text-brand-950">
-                                            {item.quantity}
-                                        </td>
-                                        <td className="py-3.5 px-3 text-right font-medium text-brand-700">
-                                            {formatRupiah(item.price)}
-                                        </td>
-                                        <td className="py-3.5 pl-3 text-right font-extrabold text-brand-950">
-                                            {formatRupiah(item.subtotal)}
-                                        </td>
-                                    </tr>
-                                ))}
+                                                {!isBundleOrderItem({
+                                                    variantLabel: item.variant_label,
+                                                    grindOption: item.grind_option,
+                                                    customNotes: item.custom_notes,
+                                                }) && item.variant_label && (
+                                                    <div className="text-[11px] text-accent-copper font-semibold">
+                                                        Varian: {item.variant_label}
+                                                    </div>
+                                                )}
+
+                                                {/* Custom Bundle / Notes Display */}
+                                                {item.custom_notes && (
+                                                    <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200 text-xs text-brand-800 leading-snug space-y-1">
+                                                        {pricing.lines.map((line, lineIdx) => (
+                                                            <div key={lineIdx} className="font-normal text-brand-800">
+                                                                {line.tag && (
+                                                                    <strong className="font-extrabold text-brand-950">
+                                                                        {line.tag}{' '}
+                                                                    </strong>
+                                                                )}
+                                                                <span>{line.text}</span>
+                                                                {line.discountPrice && (
+                                                                    <span className="inline-block ml-1">
+                                                                        (
+                                                                        {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
+                                                                            <span className="text-red-600 line-through mr-1 font-medium">
+                                                                                {line.normalPrice}
+                                                                            </span>
+                                                                        )}
+                                                                        <span className="font-bold text-brand-950">
+                                                                            {line.discountPrice}
+                                                                        </span>
+                                                                        )
+                                                                    </span>
+                                                                )}
+                                                            </div>
+                                                        ))}
+                                                        <div className="pt-2 mt-1.5 border-t border-sand-200 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs">
+                                                            {pricing.hasDiscount && (
+                                                                <div className="flex items-center gap-1.5">
+                                                                    <span className="text-brand-600 font-medium">Total Harga Normal:</span>
+                                                                    <span className="text-red-600 line-through font-bold">
+                                                                        {formatRupiah(pricing.totalNormalPrice)}
+                                                                    </span>
+                                                                </div>
+                                                            )}
+                                                            <div className="flex items-center gap-1.5">
+                                                                <span className="text-brand-800 font-bold">Total Harga Diskon:</span>
+                                                                <span className="font-extrabold text-emerald-700">
+                                                                    {formatRupiah(pricing.totalDiscountPrice)}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                            </td>
+                                            <td className="py-3.5 px-3 text-center font-bold text-brand-950">
+                                                {item.quantity}
+                                            </td>
+                                            <td className="py-3.5 px-3 text-right font-medium text-brand-700 space-y-0.5">
+                                                {pricing.hasDiscount && (
+                                                    <div className="text-[11px] text-red-600 line-through">
+                                                        {formatRupiah(pricing.unitNormalPrice)}
+                                                    </div>
+                                                )}
+                                                <div className="font-bold text-brand-950">
+                                                    {formatRupiah(item.price)}
+                                                </div>
+                                            </td>
+                                            <td className="py-3.5 pl-3 text-right font-extrabold text-brand-950 space-y-0.5">
+                                                {pricing.hasDiscount && (
+                                                    <div className="text-[11px] text-red-600 line-through font-semibold">
+                                                        {formatRupiah(pricing.totalNormalPrice)}
+                                                    </div>
+                                                )}
+                                                <div>{formatRupiah(item.subtotal)}</div>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
                             </tbody>
                         </table>
                     </div>
                 </div>
 
                 {/* Calculation Summary */}
-                <div className="pt-4 border-t-2 border-sand-200 flex flex-col sm:flex-row justify-end">
-                    <div className="w-full sm:w-80 space-y-2 text-xs">
-                        <div className="flex justify-between text-brand-600">
-                            <span>Subtotal Produk</span>
-                            <span className="font-semibold text-brand-950">{formatRupiah(order.subtotal)}</span>
-                        </div>
-                        <div className="flex justify-between text-brand-600">
-                            <span>
-                                {isPickup ? 'Metode Pengambilan' : `Ongkos Kirim (${order.shipping_courier || 'Kurir'})`}
-                            </span>
-                            <span className={order.shipping_cost === 0 ? 'text-emerald-700 font-bold' : 'font-semibold text-brand-950'}>
-                                {order.shipping_cost === 0 ? (isPickup ? 'GRATIS (Ambil Toko)' : 'GRATIS') : formatRupiah(order.shipping_cost)}
-                            </span>
-                        </div>
-                        {order.unique_code > 0 && (
-                            <div className="flex justify-between text-brand-600">
-                                <span>Kode Unik Verifikasi</span>
-                                <span className="font-semibold text-brand-950">+{order.unique_code}</span>
+                {(() => {
+                    const calcNormalSubtotal = order.items.reduce((sum, item) => {
+                        const p = getBundlePricingSummary({
+                            customNotes: item.custom_notes,
+                            unitPrice: item.price,
+                            quantity: item.quantity,
+                            originalUnitPrice: item.original_price,
+                        });
+                        return sum + p.totalNormalPrice;
+                    }, 0);
+                    const orderNormalSubtotal = Math.max(
+                        Number(order.original_subtotal || 0),
+                        calcNormalSubtotal,
+                        order.subtotal,
+                    );
+                    const hasOrderDiscount = orderNormalSubtotal > order.subtotal;
+
+                    return (
+                        <div className="pt-4 border-t-2 border-sand-200 flex flex-col sm:flex-row justify-end">
+                            <div className="w-full sm:w-80 space-y-2 text-xs">
+                                {hasOrderDiscount && (
+                                    <>
+                                        <div className="flex justify-between text-brand-600">
+                                            <span>Total Harga Normal</span>
+                                            <span className="font-semibold text-red-600 line-through">
+                                                {formatRupiah(orderNormalSubtotal)}
+                                            </span>
+                                        </div>
+                                        <div className="flex justify-between text-emerald-700">
+                                            <span>Hemat / Diskon Bundling</span>
+                                            <span className="font-bold">
+                                                -{formatRupiah(orderNormalSubtotal - order.subtotal)}
+                                            </span>
+                                        </div>
+                                    </>
+                                )}
+                                <div className="flex justify-between text-brand-600">
+                                    <span>{hasOrderDiscount ? 'Total Harga Diskon (Subtotal)' : 'Subtotal Produk'}</span>
+                                    <span className="font-semibold text-brand-950">{formatRupiah(order.subtotal)}</span>
+                                </div>
+                                <div className="flex justify-between text-brand-600">
+                                    <span>
+                                        {isPickup ? 'Metode Pengambilan' : `Ongkos Kirim (${order.shipping_courier || 'Kurir'})`}
+                                    </span>
+                                    <span className={order.shipping_cost === 0 ? 'text-emerald-700 font-bold' : 'font-semibold text-brand-950'}>
+                                        {order.shipping_cost === 0 ? (isPickup ? 'GRATIS (Ambil Toko)' : 'GRATIS') : formatRupiah(order.shipping_cost)}
+                                    </span>
+                                </div>
+                                {order.unique_code > 0 && (
+                                    <div className="flex justify-between text-brand-600">
+                                        <span>Kode Unik Verifikasi</span>
+                                        <span className="font-semibold text-brand-950">+{order.unique_code}</span>
+                                    </div>
+                                )}
+                                <div className="flex justify-between text-sm sm:text-base font-extrabold text-brand-950 pt-2.5 border-t border-sand-200">
+                                    <span>Total Pembayaran</span>
+                                    <span className="text-brand-800 text-base sm:text-lg">{formatRupiah(order.total_amount)}</span>
+                                </div>
+                                {isPaid && (
+                                    <div className="p-2 rounded-lg bg-emerald-50 text-center font-extrabold text-emerald-800 text-xs tracking-wider border border-emerald-200">
+                                        ★ STATUS: LUNAS DIBAYAR ★
+                                    </div>
+                                )}
                             </div>
-                        )}
-                        <div className="flex justify-between text-sm sm:text-base font-extrabold text-brand-950 pt-2.5 border-t border-sand-200">
-                            <span>Total Pembayaran</span>
-                            <span className="text-brand-800 text-base sm:text-lg">{formatRupiah(order.total_amount)}</span>
                         </div>
-                        {isPaid && (
-                            <div className="p-2 rounded-lg bg-emerald-50 text-center font-extrabold text-emerald-800 text-xs tracking-wider border border-emerald-200">
-                                ★ STATUS: LUNAS DIBAYAR ★
-                            </div>
-                        )}
-                    </div>
-                </div>
+                    );
+                })()}
             </div>
         </div>
     );

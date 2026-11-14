@@ -6,10 +6,20 @@ import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number
 import { transition } from '@animate-ui/react/utils/motion';
 import { useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
-import { isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
+import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 
 export const CartDrawer: React.FC = () => {
     const { items, itemCount, subtotal, isCartOpen, setIsCartOpen, updateQuantity, removeItem } = useCart();
+
+    const totalNormalSubtotal = items.reduce((sum, item) => {
+        const pricing = getBundlePricingSummary({
+            customNotes: item.customNotes,
+            unitPrice: item.variant.price,
+            quantity: item.quantity,
+            originalUnitPrice: item.variant.original_price,
+        });
+        return sum + pricing.totalNormalPrice;
+    }, 0);
 
     // Lock body scroll when cart drawer is open on mobile
     React.useEffect(() => {
@@ -101,6 +111,12 @@ export const CartDrawer: React.FC = () => {
                                                 ? rawImg
                                                 : `/storage/${rawImg.replace(/^\/?(public\/|storage\/)?/, '')}`)
                                             : '/brand/logo-akm.png?v=20261113b';
+                                        const pricing = getBundlePricingSummary({
+                                            customNotes: item.customNotes,
+                                            unitPrice: item.variant.price,
+                                            quantity: item.quantity,
+                                            originalUnitPrice: item.variant.original_price,
+                                        });
                                         return (
                                             <motion.div
                                                 key={`${item.variant.id}-${item.grindOption}-${idx}`}
@@ -142,7 +158,7 @@ export const CartDrawer: React.FC = () => {
                                                         )}
                                                         {item.customNotes && (
                                                             <div className="text-[11px] text-brand-700 font-normal mt-1.5 bg-sand-100/80 px-2.5 py-2 rounded-lg space-y-1 leading-snug">
-                                                                {parseCustomNotes(item.customNotes).map((line, lineIdx) => (
+                                                                {pricing.lines.map((line, lineIdx) => (
                                                                     <p key={lineIdx}>
                                                                         {line.tag && (
                                                                             <strong className="font-extrabold text-brand-950">
@@ -150,8 +166,38 @@ export const CartDrawer: React.FC = () => {
                                                                             </strong>
                                                                         )}
                                                                         <span>{line.text}</span>
+                                                                        {line.discountPrice && (
+                                                                            <span className="inline-block ml-1">
+                                                                                (
+                                                                                {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
+                                                                                    <span className="text-red-600 line-through mr-1 font-medium">
+                                                                                        {line.normalPrice}
+                                                                                    </span>
+                                                                                )}
+                                                                                <span className="font-bold text-brand-950">
+                                                                                    {line.discountPrice}
+                                                                                </span>
+                                                                                )
+                                                                            </span>
+                                                                        )}
                                                                     </p>
                                                                 ))}
+                                                                <div className="pt-1.5 mt-1 border-t border-sand-200 space-y-0.5">
+                                                                    {pricing.hasDiscount && (
+                                                                        <div className="flex items-center justify-between text-[11px]">
+                                                                            <span className="text-brand-600">Total Harga Normal:</span>
+                                                                            <span className="text-red-600 line-through font-semibold">
+                                                                                {formatRupiah(pricing.totalNormalPrice)}
+                                                                            </span>
+                                                                        </div>
+                                                                    )}
+                                                                    <div className="flex items-center justify-between text-[11px] font-bold text-brand-950">
+                                                                        <span>Total Harga Diskon:</span>
+                                                                        <span className="text-emerald-700">
+                                                                            {formatRupiah(pricing.totalDiscountPrice)}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                         )}
                                                     </div>
@@ -176,9 +222,16 @@ export const CartDrawer: React.FC = () => {
                                                                 <Plus className="w-3.5 h-3.5" />
                                                             </button>
                                                         </div>
-                                                        <span className="text-sm font-bold text-brand-900">
-                                                            {formatRupiah(item.variant.price * item.quantity)}
-                                                        </span>
+                                                        <div className="text-right">
+                                                            {pricing.hasDiscount && (
+                                                                <span className="block text-[11px] text-red-600 line-through font-semibold leading-tight">
+                                                                    {formatRupiah(pricing.totalNormalPrice)}
+                                                                </span>
+                                                            )}
+                                                            <span className="text-sm font-bold text-brand-900">
+                                                                {formatRupiah(pricing.totalDiscountPrice)}
+                                                            </span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </motion.div>
@@ -191,11 +244,23 @@ export const CartDrawer: React.FC = () => {
                         {/* Footer */}
                         {items.length > 0 && (
                             <div className="p-5 sm:p-6 pb-[calc(1.5rem+env(safe-area-inset-bottom,0px))] border-t border-sand-200 bg-cream-50 space-y-3.5">
-                                <div className="flex items-center justify-between">
-                                    <span className="text-sm text-brand-600">Subtotal</span>
-                                    <span className="text-lg font-extrabold text-brand-950">
-                                        {formatRupiah(subtotal)}
-                                    </span>
+                                <div className="space-y-1">
+                                    {totalNormalSubtotal > subtotal && (
+                                        <div className="flex items-center justify-between text-xs">
+                                            <span className="text-brand-600">Total Harga Normal</span>
+                                            <span className="text-red-600 line-through font-semibold">
+                                                {formatRupiah(totalNormalSubtotal)}
+                                            </span>
+                                        </div>
+                                    )}
+                                    <div className="flex items-center justify-between">
+                                        <span className="text-sm text-brand-700 font-semibold">
+                                            {totalNormalSubtotal > subtotal ? 'Total Harga Diskon (Subtotal)' : 'Subtotal'}
+                                        </span>
+                                        <span className="text-lg font-extrabold text-brand-950">
+                                            {formatRupiah(subtotal)}
+                                        </span>
+                                    </div>
                                 </div>
                                 <p className="text-[11px] text-brand-500 leading-tight">
                                     Checkout langsung di website dengan <strong>QRIS Semua Bank & E-Wallet</strong> atau <strong>Transfer Bank</strong> resmi.

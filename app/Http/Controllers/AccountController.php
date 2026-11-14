@@ -36,7 +36,7 @@ class AccountController extends Controller
                 $q->orWhere('customer_phone', $altPhone);
             }
         })
-        ->with('items')
+        ->with('items.variant')
         ->latest()
         ->get()
         ->map(function ($order) {
@@ -56,15 +56,21 @@ class AccountController extends Controller
                 'customer_name' => $order->customer_name,
                 'customer_address' => $order->customer_address,
                 'items_count' => $order->items->sum('quantity'),
-                'items' => $order->items->map(fn ($item) => [
-                    'product_name' => $item->product_name,
-                    'variant_label' => $item->variant_label,
-                    'grind_option' => $item->grind_option,
-                    'custom_notes' => $item->custom_notes,
-                    'quantity' => $item->quantity,
-                    'price' => (float) $item->price,
-                    'subtotal' => (float) $item->subtotal,
-                ]),
+                'items' => $order->items->map(function ($item) {
+                    $pricing = $item->resolveBundlePricing();
+
+                    return [
+                        'product_name' => $item->product_name,
+                        'variant_label' => $item->variant_label,
+                        'grind_option' => $item->grind_option,
+                        'custom_notes' => $pricing['custom_notes'],
+                        'quantity' => $item->quantity,
+                        'original_price' => $pricing['original_price'],
+                        'price' => $pricing['price'],
+                        'original_subtotal' => $pricing['original_subtotal'],
+                        'subtotal' => $pricing['subtotal'],
+                    ];
+                }),
             ];
         });
 

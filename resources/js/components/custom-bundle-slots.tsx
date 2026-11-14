@@ -267,7 +267,12 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(slot.free_product) && freeProd.variant_label
                             ? ` - Variasi: ${freeProd.variant_label}`
                             : '';
-                    parts.push(`[Item Gratis] 1x ${freeProd.name}${varInfo} (Rp 0)`);
+                    const normPrice = Number(freeProd.normal_price) || 0;
+                    if (normPrice > 0) {
+                        parts.push(`[Item Gratis] 1x ${freeProd.name}${varInfo} (${formatRupiah(normPrice)} -> Rp 0)`);
+                    } else {
+                        parts.push(`[Item Gratis] 1x ${freeProd.name}${varInfo} (Rp 0)`);
+                    }
                 }
             } else {
                 const chosen = selectedBySlot[slot.index];
@@ -278,7 +283,13 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(chosen) && chosen.variant_label
                             ? ` - Variasi: ${chosen.variant_label}`
                             : '';
-                    parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(chosen.bundle_price * sQty)})`);
+                    const normTotal = (Number(chosen.normal_price) || 0) * sQty;
+                    const discTotal = (Number(chosen.bundle_price) || 0) * sQty;
+                    if (normTotal > discTotal) {
+                        parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(normTotal)} -> ${formatRupiah(discTotal)})`);
+                    } else {
+                        parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(discTotal)})`);
+                    }
                 }
             }
         });

@@ -84,13 +84,20 @@ class CheckoutController extends Controller
             $subtotal += $lineTotal;
             $totalWeightGrams += ($variant->weight_grams ?: 200) * $qty;
 
+            $enrichedNotes = OrderItem::enrichCustomNotesAndPricing(
+                $item['custom_notes'] ?? null,
+                $unitPrice,
+                $qty,
+                $variant->original_price ? (float) $variant->original_price : null
+            );
+
             $orderLines[] = [
                 'product_id' => $variant->product_id,
                 'product_variant_id' => $variant->id,
                 'product_name' => $variant->product->name,
                 'variant_label' => ($variant->product->has_variants === false) ? 'Standar' : $variant->label,
                 'grind_option' => $item['grind_option'] ?? 'Biji Utuh (Whole Bean)',
-                'custom_notes' => $item['custom_notes'] ?? null,
+                'custom_notes' => $enrichedNotes['custom_notes'],
                 'price' => $unitPrice,
                 'quantity' => $qty,
                 'subtotal' => $lineTotal,
@@ -341,6 +348,29 @@ class CheckoutController extends Controller
             ],
         ];
 
+        $resolvedShowItems = $order->items->map(function ($item) {
+            $pricing = $item->resolveBundlePricing();
+
+            return [
+                'id' => $item->id,
+                'product_id' => $item->product_id,
+                'variant_id' => $item->product_variant_id,
+                'sku' => $item->variant?->sku ?? ($item->product?->slug ?? (string) $item->product_id),
+                'product_name' => $item->product_name,
+                'variant_label' => $item->variant_label,
+                'grind_option' => $item->grind_option,
+                'custom_notes' => $pricing['custom_notes'],
+                'original_price' => $pricing['original_price'],
+                'price' => $pricing['price'],
+                'quantity' => $item->quantity,
+                'original_subtotal' => $pricing['original_subtotal'],
+                'subtotal' => $pricing['subtotal'],
+                'image' => $item->variant?->image_url ?? $item->product?->primaryImage?->path,
+            ];
+        });
+
+        $originalSubtotalShow = (float) $resolvedShowItems->sum('original_subtotal');
+
         return Inertia::render('order/show', [
             'order' => [
                 'id' => $order->id,
@@ -357,6 +387,7 @@ class CheckoutController extends Controller
                 'payment_status_label' => $order->payment_status_label,
                 'status' => $order->status,
                 'status_label' => $order->status_label,
+                'original_subtotal' => max($originalSubtotalShow, (float) $order->subtotal),
                 'subtotal' => (float) $order->subtotal,
                 'shipping_cost' => (float) $order->shipping_cost,
                 'shipping_courier' => $order->shipping_courier,
@@ -373,20 +404,7 @@ class CheckoutController extends Controller
                 'payment_details' => $order->payment_details,
                 'created_at' => $order->created_at->format('d M Y, H:i'),
                 'paid_at' => $order->paid_at?->format('d M Y, H:i'),
-                'items' => $order->items->map(fn ($item) => [
-                    'id' => $item->id,
-                    'product_id' => $item->product_id,
-                    'variant_id' => $item->product_variant_id,
-                    'sku' => $item->variant?->sku ?? ($item->product?->slug ?? (string) $item->product_id),
-                    'product_name' => $item->product_name,
-                    'variant_label' => $item->variant_label,
-                    'grind_option' => $item->grind_option,
-                    'custom_notes' => $item->custom_notes,
-                    'price' => (float) $item->price,
-                    'quantity' => $item->quantity,
-                    'subtotal' => (float) $item->subtotal,
-                    'image' => $item->variant?->image_url ?? $item->product?->primaryImage?->path,
-                ]),
+                'items' => $resolvedShowItems,
             ],
             'paymentConfig' => [
                 'qris_image_url' => $qrisImageUrl,
@@ -415,6 +433,25 @@ class CheckoutController extends Controller
             ->firstOrFail();
 
         $settings = Setting::all()->pluck('value', 'key')->toArray();
+
+        $resolvedInvoiceItems = $order->items->map(function ($item) {
+            $pricing = $item->resolveBundlePricing();
+
+            return [
+                'id' => $item->id,
+                'product_name' => $item->product_name,
+                'variant_label' => $item->variant_label,
+                'grind_option' => $item->grind_option,
+                'custom_notes' => $pricing['custom_notes'],
+                'original_price' => $pricing['original_price'],
+                'price' => $pricing['price'],
+                'quantity' => $item->quantity,
+                'original_subtotal' => $pricing['original_subtotal'],
+                'subtotal' => $pricing['subtotal'],
+            ];
+        });
+
+        $originalSubtotalInvoice = (float) $resolvedInvoiceItems->sum('original_subtotal');
 
         return Inertia::render('order/invoice', [
             'order' => [
@@ -449,6 +486,7 @@ class CheckoutController extends Controller
                     'cancelled' => 'Dibatalkan',
                     default => 'Menunggu Konfirmasi',
                 },
+                'original_subtotal' => max($originalSubtotalInvoice, (float) $order->subtotal),
                 'subtotal' => (float) $order->subtotal,
                 'shipping_cost' => (float) $order->shipping_cost,
                 'unique_code' => (int) $order->unique_code,
@@ -460,16 +498,7 @@ class CheckoutController extends Controller
                 'total_weight_grams' => (int) ($order->total_weight_grams ?: 0),
                 'created_at' => $order->created_at->format('d M Y, H:i'),
                 'paid_at' => $order->paid_at?->format('d M Y, H:i'),
-                'items' => $order->items->map(fn ($item) => [
-                    'id' => $item->id,
-                    'product_name' => $item->product_name,
-                    'variant_label' => $item->variant_label,
-                    'grind_option' => $item->grind_option,
-                    'custom_notes' => $item->custom_notes,
-                    'price' => (float) $item->price,
-                    'quantity' => $item->quantity,
-                    'subtotal' => (float) $item->subtotal,
-                ]),
+                'items' => $resolvedInvoiceItems,
             ],
             'settings' => [
                 'site_name' => $settings['site_name'] ?? 'Alat Kopi Malang',
