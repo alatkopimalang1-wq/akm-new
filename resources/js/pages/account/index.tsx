@@ -395,9 +395,10 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                                                     .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
                                                                     .map((line) =>
                                                                         line
+                                                                            .trim()
                                                                             .replace(
-                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?!\d+x\b)/i,
-                                                                                '$1 1x ',
+                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*(?:1x\s+)*(\d+x\s+)?/i,
+                                                                                (_, tag, qty) => `${tag} ${qty || '1x '}`,
                                                                             )
                                                                             .trim(),
                                                                     )
