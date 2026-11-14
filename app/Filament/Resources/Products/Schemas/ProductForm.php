@@ -315,6 +315,14 @@ class ProductForm
                                         ->default('in_stock')
                                         ->required(),
                                 ]),
+                                FileUpload::make('image')
+                                    ->label('Foto Varian Produk (Opsional)')
+                                    ->helperText('Upload gambar khusus untuk varian ini (misal warna Hitam, Putih, atau ukuran tertentu).')
+                                    ->disk('public')
+                                    ->directory('products/variants')
+                                    ->image()
+                                    ->imagePreviewHeight('100')
+                                    ->columnSpanFull(),
                             ]),
                     ]),
 
