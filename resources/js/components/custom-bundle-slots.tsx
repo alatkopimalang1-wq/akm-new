@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Link } from '@inertiajs/react';
-import { ArrowLeft, Check, CheckCircle2, Layers, MessageCircle, ShoppingBag, X } from 'lucide-react';
+import { ArrowLeft, Check, CheckCircle2, Layers, Minus, Plus, ShoppingBag, X } from 'lucide-react';
+import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number';
 import { Product, ProductVariant, useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
 
@@ -553,19 +554,14 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                 })}
             </div>
 
-            {/* Bottom Total Order, Quantity Input & Action Buttons (After Daftar Pesanan) */}
-            <div className="pt-3 border-t border-neutral-200 space-y-2.5">
-                <div className="flex items-center gap-3">
-                    <input
-                        type="number"
-                        min={1}
-                        max={50}
-                        value={quantity}
-                        onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                        className="w-28 py-2.5 px-3 text-center text-sm font-bold text-brand-950 bg-white border border-sand-300 rounded-lg focus:outline-none focus:border-brand-700"
-                    />
-                    {totalBundlePrice > 0 && (
-                        <div className="text-right flex-1">
+            {/* Bottom Total Order, Quantity Stepper & Action Buttons (After Daftar Pesanan) */}
+            <div className="pt-3 border-t border-neutral-200 space-y-3">
+                {totalBundlePrice > 0 && (
+                    <div className="flex items-center justify-between gap-3">
+                        <span className="text-xs sm:text-sm font-bold uppercase tracking-wider text-brand-800">
+                            Total Pesanan
+                        </span>
+                        <div className="text-right">
                             {totalNormalPrice > totalBundlePrice && (
                                 <span className="block text-xs font-bold text-red-600 line-through">
                                     {formatRupiah(totalNormalPrice * quantity)}
@@ -575,8 +571,8 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                 {formatRupiah(totalBundlePrice * quantity)}
                             </span>
                         </div>
-                    )}
-                </div>
+                    </div>
+                )}
 
                 {validationMessage && (
                     <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs font-bold text-red-700">
@@ -584,33 +580,61 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                     </div>
                 )}
 
-                <button
-                    type="button"
-                    onClick={handleBuyNow}
-                    className={`w-full py-3.5 px-5 rounded-lg font-bold text-sm text-white shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] ${
-                        isAdded ? 'bg-emerald-700' : 'bg-[#2b7a91] hover:bg-[#236477]'
-                    }`}
-                >
-                    {isAdded ? (
-                        <>
-                            <CheckCircle2 className="w-4 h-4" />
-                            <span>Paket Berhasil Masuk Keranjang!</span>
-                        </>
-                    ) : (
-                        <>
-                            <ShoppingBag className="w-4 h-4" />
-                            <span>Beli sekarang</span>
-                        </>
-                    )}
-                </button>
+                <div className="flex items-center gap-2.5 sm:gap-3">
+                    {/* Stepper */}
+                    <div className="flex items-center border border-sand-200 rounded-xl bg-white p-1 h-12 sm:h-auto">
+                        <button
+                            type="button"
+                            onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                            className="w-9 h-full sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors cursor-pointer"
+                        >
+                            <Minus className="w-3.5 h-3.5" />
+                        </button>
+                        <span className="w-9 sm:w-10 text-center font-bold text-sm text-brand-950 flex items-center justify-center">
+                            <SlidingNumber number={quantity} />
+                        </span>
+                        <button
+                            type="button"
+                            onClick={() => setQuantity(Math.min(50, quantity + 1))}
+                            className="w-9 h-full sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors cursor-pointer"
+                        >
+                            <Plus className="w-3.5 h-3.5" />
+                        </button>
+                    </div>
 
+                    {/* Add to Cart Button */}
+                    <button
+                        type="button"
+                        onClick={handleBuyNow}
+                        className={`flex-1 h-12 sm:h-auto flex items-center justify-center gap-1.5 sm:gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-150 cursor-pointer active:scale-[0.98] ${
+                            isAdded
+                                ? 'bg-emerald-700 text-white'
+                                : 'bg-brand-700 hover:bg-brand-800 active:bg-brand-900 text-white'
+                        }`}
+                    >
+                        {isAdded ? (
+                            <>
+                                <CheckCircle2 className="w-4 h-4 text-emerald-200" />
+                                <span>Berhasil Ditambahkan!</span>
+                            </>
+                        ) : (
+                            <>
+                                <ShoppingBag className="w-4 h-4" />
+                                <span className="text-xs font-extrabold whitespace-nowrap tracking-wide">
+                                    Tambah ke Keranjang
+                                </span>
+                            </>
+                        )}
+                    </button>
+                </div>
+
+                {/* Direct WhatsApp Instant Buy */}
                 <button
                     type="button"
                     onClick={handleBuyViaWhatsApp}
-                    className="w-full py-3.5 px-5 rounded-lg font-bold text-sm text-white bg-[#28a745] hover:bg-[#218838] shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+                    className="w-full h-12 sm:h-auto flex items-center justify-center gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl border bg-white hover:bg-cream-100 border-brand-700 text-brand-700 font-bold text-xs uppercase tracking-wider transition-all cursor-pointer"
                 >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Beli Lewat WhatsApp</span>
+                    <span>Pesan Langsung via WhatsApp</span>
                 </button>
             </div>
 
