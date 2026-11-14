@@ -554,6 +554,7 @@ export default function CartPage({
                                                             </h3>
                                                             {!isBundleOrderItem({
                                                                 isCustomBundle: item.product.is_custom_bundle,
+                                                                hasVariants: (item.product as any).has_variants,
                                                                 variantLabel: item.variant.label,
                                                                 grindOption: item.grindOption,
                                                                 customNotes: item.customNotes,

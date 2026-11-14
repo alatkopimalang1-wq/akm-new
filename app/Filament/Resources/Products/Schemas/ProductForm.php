@@ -280,17 +280,62 @@ class ProductForm
                 Section::make('Varian & Harga Produk')
                     ->columnSpanFull()
                     ->schema([
+                        Toggle::make('bundle_config.has_variants')
+                            ->label('Aktifkan Varian Produk')
+                            ->helperText('Aktifkan jika produk memiliki pilihan varian (misal: Warna, Ukuran, Kapasitas). Nonaktifkan jika produk dijual langsung tanpa pilihan varian.')
+                            ->default(true)
+                            ->live()
+                            ->afterStateUpdated(function ($state, callable $set, callable $get) {
+                                if (! $state) {
+                                    $variants = $get('variants') ?? [];
+                                    $first = is_array($variants) ? reset($variants) : null;
+                                    if (is_array($first)) {
+                                        if (empty($get('min_price')) && ! empty($first['price'])) {
+                                            $set('min_price', $first['price']);
+                                        }
+                                        if (empty($get('bundle_config.single_original_price')) && ! empty($first['original_price'])) {
+                                            $set('bundle_config.single_original_price', $first['original_price']);
+                                        }
+                                        if (empty($get('bundle_config.single_weight_grams')) && ! empty($first['weight_grams'])) {
+                                            $set('bundle_config.single_weight_grams', $first['weight_grams']);
+                                        }
+                                    }
+                                }
+                            }),
+
+                        // Input Harga & Berat saat Varian Dinonaktifkan
+                        Grid::make(3)
+                            ->visible(fn (callable $get): bool => ! (bool) ($get('bundle_config.has_variants') ?? true))
+                            ->schema([
+                                TextInput::make('min_price')
+                                    ->label('Harga Jual (Rp)')
+                                    ->numeric()
+                                    ->prefix('Rp')
+                                    ->required(fn (callable $get): bool => ! (bool) ($get('bundle_config.has_variants') ?? true)),
+                                TextInput::make('bundle_config.single_original_price')
+                                    ->label('Harga Coret / Normal (Opsional)')
+                                    ->numeric()
+                                    ->prefix('Rp'),
+                                TextInput::make('bundle_config.single_weight_grams')
+                                    ->label('Berat Kirim (Gram)')
+                                    ->numeric()
+                                    ->default(1000)
+                                    ->required(fn (callable $get): bool => ! (bool) ($get('bundle_config.has_variants') ?? true)),
+                            ]),
+
                         TextInput::make('bundle_config.variant_title')
                             ->label('Judul / Nama Label Varian')
                             ->placeholder('Contoh: Pilih Warna / Pilih Ukuran / Nama Varian / Satuan')
                             ->default('Nama Varian / Satuan')
                             ->live(onBlur: true)
+                            ->visible(fn (callable $get): bool => (bool) ($get('bundle_config.has_variants') ?? true))
                             ->helperText('Anda dapat mengubah nama label varian ini sesuai jenis varian produk (misal: "Pilih Warna", "Pilih Ukuran", atau "Nama Varian / Satuan").'),
 
                         Repeater::make('variants')
                             ->label('Daftar Varian / Harga')
                             ->relationship('variants')
                             ->defaultItems(1)
+                            ->visible(fn (callable $get): bool => (bool) ($get('bundle_config.has_variants') ?? true))
                             ->itemLabel(fn (array $state): string => ! empty($state['label']) ? "Varian: {$state['label']}" : 'Item Varian')
                             ->schema([
                                 Grid::make(2)->schema([
@@ -300,11 +345,12 @@ class ProductForm
                                         ->default('1 Unit')
                                         ->required(),
                                     Select::make('stock_status')
-                                        ->label('Stok Varian')
+                                        ->label('Status & Stok Varian')
                                         ->options([
-                                            'in_stock' => 'Tersedia',
-                                            'pre_order' => 'Pre-Order',
-                                            'out_of_stock' => 'Habis',
+                                            'in_stock' => 'Aktif — Tersedia',
+                                            'pre_order' => 'Aktif — Pre-Order',
+                                            'out_of_stock' => 'Aktif — Habis',
+                                            'inactive' => 'Nonaktif (Disembunyikan)',
                                         ])
                                         ->default('in_stock')
                                         ->required(),

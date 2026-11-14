@@ -131,6 +131,7 @@ export const CartDrawer: React.FC = () => {
                                                         </div>
                                                         {!isBundleOrderItem({
                                                             isCustomBundle: item.product.is_custom_bundle,
+                                                            hasVariants: (item.product as any).has_variants,
                                                             variantLabel: item.variant.label,
                                                             grindOption: item.grindOption,
                                                             customNotes: item.customNotes,

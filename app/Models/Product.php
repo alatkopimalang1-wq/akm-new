@@ -74,7 +74,17 @@ class Product extends Model
         'series_label',
         'is_out_of_stock',
         'variant_title',
+        'has_variants',
     ];
+
+    public function getHasVariantsAttribute(): bool
+    {
+        if (isset($this->bundle_config['has_variants'])) {
+            return (bool) $this->bundle_config['has_variants'];
+        }
+
+        return true;
+    }
 
     public function getVariantTitleAttribute(): string
     {
@@ -244,10 +254,49 @@ class Product extends Model
 
     public function syncPricesFromVariants(): void
     {
-        if ($this->variants()->exists()) {
+        $hasVariants = $this->bundle_config['has_variants'] ?? true;
+
+        if (! $hasVariants) {
+            $price = (float) ($this->min_price ?? 0);
+            $origPrice = ! empty($this->bundle_config['single_original_price'])
+                ? (float) $this->bundle_config['single_original_price']
+                : null;
+            $weight = (int) ($this->bundle_config['single_weight_grams'] ?? 1000);
+
+            $firstVariant = $this->variants()->first();
+            if ($firstVariant) {
+                $firstVariant->updateQuietly([
+                    'label' => 'Standar',
+                    'price' => $price,
+                    'original_price' => $origPrice,
+                    'weight_grams' => $weight > 0 ? $weight : 1000,
+                    'stock_status' => $this->stock_status ?: 'in_stock',
+                ]);
+                $this->variants()->where('id', '!=', $firstVariant->id)->delete();
+            } else {
+                $this->variants()->create([
+                    'label' => 'Standar',
+                    'price' => $price,
+                    'original_price' => $origPrice,
+                    'weight_grams' => $weight > 0 ? $weight : 1000,
+                    'stock_status' => $this->stock_status ?: 'in_stock',
+                ]);
+            }
+
             $this->updateQuietly([
-                'min_price' => (float) ($this->variants()->min('price') ?? 0),
-                'max_price' => (float) ($this->variants()->max('price') ?? 0),
+                'min_price' => $price,
+                'max_price' => $price,
+            ]);
+
+            return;
+        }
+
+        if ($this->variants()->exists()) {
+            $activeQuery = $this->variants()->where('stock_status', '!=', 'inactive');
+            $query = $activeQuery->exists() ? $activeQuery : $this->variants();
+            $this->updateQuietly([
+                'min_price' => (float) ($query->min('price') ?? 0),
+                'max_price' => (float) ($query->max('price') ?? 0),
             ]);
         }
     }

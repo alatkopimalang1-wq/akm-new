@@ -296,7 +296,11 @@ class ShopController extends Controller
                 // Ensure normal_price is at least basePrice so strikethrough works when discounted
                 $normalPrice = max($origPrice, $basePrice);
 
-                $variantsList = $cand->variants->map(function ($v) use ($cand, $effDiscountType, $effDiscountValue, $formatImageUrl) {
+                $sourceVariants = ($cand->has_variants === false)
+                    ? collect($defVar ? [$defVar] : [])
+                    : $cand->variants->filter(fn ($v) => $v->stock_status !== 'inactive');
+
+                $variantsList = $sourceVariants->map(function ($v) use ($cand, $effDiscountType, $effDiscountValue, $formatImageUrl) {
                     $vBasePrice = (float) ($v->price ?? $cand->min_price ?? 0);
                     $vOrigPrice = (float) ($v->original_price > $vBasePrice ? $v->original_price : $vBasePrice);
                     $vBundlePrice = $vBasePrice;

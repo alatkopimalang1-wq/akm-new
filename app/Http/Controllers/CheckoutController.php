@@ -88,7 +88,7 @@ class CheckoutController extends Controller
                 'product_id' => $variant->product_id,
                 'product_variant_id' => $variant->id,
                 'product_name' => $variant->product->name,
-                'variant_label' => $variant->label,
+                'variant_label' => ($variant->product->has_variants === false) ? 'Standar' : $variant->label,
                 'grind_option' => $item['grind_option'] ?? 'Biji Utuh (Whole Bean)',
                 'custom_notes' => $item['custom_notes'] ?? null,
                 'price' => $unitPrice,
@@ -273,8 +273,9 @@ class CheckoutController extends Controller
         $waMessage .= "☕ *Rincian Kopi Dipesan:*\n";
         foreach ($orderLines as $idx => $line) {
             $num = $idx + 1;
-            $isBundleLine = str_contains(strtolower(($line['variant_label'] ?? '') . ' ' . ($line['grind_option'] ?? '')), 'paket custom');
-            $varSuffix = (!$isBundleLine && !empty($line['variant_label'])) ? " (Varian: {$line['variant_label']})" : '';
+            $vLabel = trim((string) ($line['variant_label'] ?? ''));
+            $isHiddenVar = $vLabel === '' || strtolower($vLabel) === 'standar' || str_contains(strtolower($vLabel . ' ' . ($line['grind_option'] ?? '')), 'paket custom');
+            $varSuffix = ! $isHiddenVar ? " (Varian: {$vLabel})" : '';
             $waMessage .= "{$num}. {$line['product_name']}{$varSuffix} x{$line['quantity']}\n";
             if (!empty($line['custom_notes'])) {
                 $waMessage .= "   ↳ *{$line['custom_notes']}*\n";

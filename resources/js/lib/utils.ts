@@ -21,12 +21,16 @@ export function isBundleOrderItem(item: {
     grindOption?: string | null;
     customNotes?: string | null;
     isCustomBundle?: boolean | null;
+    hasVariants?: boolean | null;
 }): boolean {
     if (item.isCustomBundle) return true;
-    const v = (item.variantLabel || '').toLowerCase();
-    const g = (item.grindOption || '').toLowerCase();
+    if (item.hasVariants === false) return true;
+    const v = (item.variantLabel || '').trim().toLowerCase();
+    const g = (item.grindOption || '').trim().toLowerCase();
     const n = (item.customNotes || '').toLowerCase();
-    if (v.includes('paket custom') || g.includes('paket custom')) return true;
+    if (!v || v === 'standar' || v === 'tanpa varian' || v.includes('paket custom') || g.includes('paket custom')) {
+        return true;
+    }
     if (/\[(?:slot|item)\s*\d+|\[(?:item\s+)?(?:gratis|opsional|optional)\]/i.test(n)) return true;
     return false;
 }

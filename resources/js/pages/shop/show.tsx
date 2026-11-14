@@ -122,18 +122,21 @@ export default function ProductShow({
 }: ProductShowProps) {
     const { addItem } = useCart();
 
-    const variants = product.variants && product.variants.length > 0
-        ? product.variants
-        : [
-              {
-                  id: product.id,
-                  product_id: product.id,
-                  label: '200 gr',
-                  weight_grams: 200,
-                  price: product.min_price || 45000,
-                  stock_status: 'in_stock' as const,
-              },
-          ];
+    const hasVariantsEnabled = (product as any).has_variants !== false;
+    const rawVariants = (product.variants || []).filter((v) => (v.stock_status as string) !== 'inactive');
+    const variants: ProductVariant[] =
+        rawVariants.length > 0
+            ? rawVariants
+            : [
+                  {
+                      id: product.id,
+                      product_id: product.id,
+                      label: 'Standar',
+                      weight_grams: 1000,
+                      price: product.min_price || 45000,
+                      stock_status: 'in_stock' as const,
+                  },
+              ];
 
     const [selectedVariant, setSelectedVariant] = useState<ProductVariant>(variants[0]);
     const [selectedImage, setSelectedImage] = useState(0);
@@ -287,12 +290,17 @@ export default function ProductShow({
         setTimeout(() => setIsAdded(false), 1400);
     };
 
+    const variantLineText =
+        hasVariantsEnabled && selectedVariant.label && selectedVariant.label !== 'Standar'
+            ? `\nVarian: ${selectedVariant.label}`
+            : '';
+
     const waDirectUrl = isCurrentVariantOutOfStock
         ? `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*\nVarian: ${selectedVariant.label}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*${variantLineText}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
         )}`
         : `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*\nVarian: ${selectedVariant.label}\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*${variantLineText}\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
         )}`;
 
     const tokopediaUrl =
@@ -536,47 +544,49 @@ export default function ProductShow({
                                 </div>
 
                                 {/* Variant Selection */}
-                                <div className="space-y-2">
-                                    <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                        {(product as any).variant_title || 'Pilih Warna / Ukuran'}:
-                                    </label>
-                                    <div className="flex flex-wrap gap-2">
-                                        {variants.map((v) => {
-                                            const active = selectedVariant.id === v.id;
-                                            const vOutOfStock = isProductOutOfStock || v.stock_status === 'out_of_stock';
-                                            const vImage = v.image_url || (v.image ? resolveImageUrl(v.image) : null);
-                                            return (
-                                                <button
-                                                    key={v.id}
-                                                    type="button"
-                                                    onClick={() => {
-                                                        setSelectedVariant(v);
-                                                        const targetIdx = combinedImages.findIndex(
-                                                            (img) => img.isVariant && img.variantId === v.id
-                                                        );
-                                                        if (targetIdx !== -1) {
-                                                            scrollToMobileImage(targetIdx);
-                                                        }
-                                                    }}
-                                                    className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm sm:text-sm md:text-base font-bold transition-all cursor-pointer border-2 ${
-                                                        active
-                                                            ? 'bg-accent-copper/10 border-accent-copper text-accent-copper shadow-2xs ring-2 ring-accent-copper/20'
-                                                            : 'bg-white hover:bg-sand-100/70 text-brand-800 border-sand-200 hover:border-brand-300'
-                                                    } ${vOutOfStock ? 'opacity-60 line-through decoration-neutral-500' : ''}`}
-                                                >
-                                                    {vImage && (
-                                                        <img
-                                                            src={vImage}
-                                                            alt={v.label}
-                                                            className="w-5 h-5 rounded-md object-cover border border-sand-300 flex-shrink-0"
-                                                        />
-                                                    )}
-                                                    <span>{v.label} {vOutOfStock ? '(Habis)' : ''}</span>
-                                                </button>
-                                            );
-                                        })}
+                                {hasVariantsEnabled && (
+                                    <div className="space-y-2">
+                                        <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
+                                            {(product as any).variant_title || 'Pilih Warna / Ukuran'}:
+                                        </label>
+                                        <div className="flex flex-wrap gap-2">
+                                            {variants.map((v) => {
+                                                const active = selectedVariant.id === v.id;
+                                                const vOutOfStock = isProductOutOfStock || v.stock_status === 'out_of_stock';
+                                                const vImage = v.image_url || (v.image ? resolveImageUrl(v.image) : null);
+                                                return (
+                                                    <button
+                                                        key={v.id}
+                                                        type="button"
+                                                        onClick={() => {
+                                                            setSelectedVariant(v);
+                                                            const targetIdx = combinedImages.findIndex(
+                                                                (img) => img.isVariant && img.variantId === v.id
+                                                            );
+                                                            if (targetIdx !== -1) {
+                                                                scrollToMobileImage(targetIdx);
+                                                            }
+                                                        }}
+                                                        className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm sm:text-sm md:text-base font-bold transition-all cursor-pointer border-2 ${
+                                                            active
+                                                                ? 'bg-accent-copper/10 border-accent-copper text-accent-copper shadow-2xs ring-2 ring-accent-copper/20'
+                                                                : 'bg-white hover:bg-sand-100/70 text-brand-800 border-sand-200 hover:border-brand-300'
+                                                        } ${vOutOfStock ? 'opacity-60 line-through decoration-neutral-500' : ''}`}
+                                                    >
+                                                        {vImage && (
+                                                            <img
+                                                                src={vImage}
+                                                                alt={v.label}
+                                                                className="w-5 h-5 rounded-md object-cover border border-sand-300 flex-shrink-0"
+                                                            />
+                                                        )}
+                                                        <span>{v.label} {vOutOfStock ? '(Habis)' : ''}</span>
+                                                    </button>
+                                                );
+                                            })}
+                                        </div>
                                     </div>
-                                </div>
+                                )}
 
                                 {/* Quantity Stepper & Add to Cart */}
                                 <div className="space-y-3 pt-2">
