@@ -353,33 +353,35 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                                                 )}
                                                                 <span>{line.text}</span>
                                                                 {line.discountPrice && (
-                                                                    <span className="inline-block ml-1">
-                                                                        (
+                                                                    <span>
+                                                                        {' ('}
                                                                         {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
-                                                                            <span className="text-red-600 line-through mr-1 font-medium">
-                                                                                {line.normalPrice}
-                                                                            </span>
+                                                                            <>
+                                                                                <span className="text-red-600 line-through font-medium whitespace-nowrap">
+                                                                                    {line.normalPrice}
+                                                                                </span>{' '}
+                                                                            </>
                                                                         )}
-                                                                        <span className="font-bold text-brand-950">
+                                                                        <span className="font-bold text-brand-950 whitespace-nowrap">
                                                                             {line.discountPrice}
                                                                         </span>
-                                                                        )
+                                                                        {')'}
                                                                     </span>
                                                                 )}
                                                             </div>
                                                         ))}
-                                                        <div className="pt-2 mt-1.5 border-t border-sand-200 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs">
+                                                        <div className="pt-2 mt-1.5 border-t border-sand-200 space-y-0.5 text-xs">
                                                             {pricing.hasDiscount && (
-                                                                <div className="flex items-center gap-1.5">
+                                                                <div className="flex items-center justify-between">
                                                                     <span className="text-brand-600 font-medium">Total Harga Normal:</span>
-                                                                    <span className="text-red-600 line-through font-bold">
+                                                                    <span className="text-red-600 line-through font-bold whitespace-nowrap">
                                                                         {formatRupiah(pricing.totalNormalPrice)}
                                                                     </span>
                                                                 </div>
                                                             )}
-                                                            <div className="flex items-center gap-1.5">
+                                                            <div className="flex items-center justify-between">
                                                                 <span className="text-brand-800 font-bold">Total Harga Diskon:</span>
-                                                                <span className="font-extrabold text-emerald-700">
+                                                                <span className="font-extrabold text-emerald-700 whitespace-nowrap">
                                                                     {formatRupiah(pricing.totalDiscountPrice)}
                                                                 </span>
                                                             </div>

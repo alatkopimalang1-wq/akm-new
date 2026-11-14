@@ -592,17 +592,19 @@ export default function CartPage({
                                                                 )}
                                                                 <span>{line.text}</span>
                                                                 {line.discountPrice && (
-                                                                    <span className="inline-block ml-1">
-                                                                        (
+                                                                    <span>
+                                                                        {' ('}
                                                                         {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
-                                                                            <span className="text-red-600 line-through mr-1 font-medium">
-                                                                                {line.normalPrice}
-                                                                            </span>
+                                                                            <>
+                                                                                <span className="text-red-600 line-through font-medium whitespace-nowrap">
+                                                                                    {line.normalPrice}
+                                                                                </span>{' '}
+                                                                            </>
                                                                         )}
-                                                                        <span className="font-bold text-brand-950">
+                                                                        <span className="font-bold text-brand-950 whitespace-nowrap">
                                                                             {line.discountPrice}
                                                                         </span>
-                                                                        )
+                                                                        {')'}
                                                                     </span>
                                                                 )}
                                                             </p>
@@ -611,14 +613,14 @@ export default function CartPage({
                                                             {pricing.hasDiscount && (
                                                                 <div className="flex items-center justify-between text-xs">
                                                                     <span className="text-brand-600">Total Harga Normal:</span>
-                                                                    <span className="text-red-600 line-through font-semibold">
+                                                                    <span className="text-red-600 line-through font-semibold whitespace-nowrap">
                                                                         {formatRupiah(pricing.totalNormalPrice)}
                                                                     </span>
                                                                 </div>
                                                             )}
                                                             <div className="flex items-center justify-between text-xs font-bold text-brand-950">
                                                                 <span>Total Harga Diskon:</span>
-                                                                <span className="text-emerald-700">
+                                                                <span className="text-emerald-700 whitespace-nowrap">
                                                                     {formatRupiah(pricing.totalDiscountPrice)}
                                                                 </span>
                                                             </div>

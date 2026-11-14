@@ -585,7 +585,7 @@ export default function OrderShowPage({
 
                 {/* ORDER DETAILS & SHIPPING SUMMARY */}
                 <div className="bg-white rounded-3xl p-6 sm:p-8 border border-sand-200/80 shadow-xs space-y-6">
-                    <div className="flex items-center justify-between pb-3 border-b border-sand-200">
+                    <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-sand-200">
                         <h2 className="text-base font-bold text-brand-950">
                             Rincian Barang yang Dipesan
                         </h2>
@@ -622,87 +622,86 @@ export default function OrderShowPage({
                             });
 
                             return (
-                                <div key={item.id} className="py-3.5 flex items-start justify-between gap-4">
-                                    <div className="space-y-1 flex-1 min-w-0">
-                                        <h3 className="text-sm font-bold text-brand-950">
-                                            {item.product_name}
-                                        </h3>
-                                        {!isBundleOrderItem({
-                                            variantLabel: item.variant_label,
-                                            grindOption: item.grind_option,
-                                            customNotes: notesStr,
-                                        }) && item.variant_label && (
-                                            <p className="text-xs text-accent-copper font-semibold">
-                                                Varian: {item.variant_label}
-                                            </p>
-                                        )}
-                                        {notesStr && (
-                                            <div className="mt-1.5 p-2.5 rounded-xl bg-sand-50 border border-sand-200/80 text-xs text-brand-800 leading-snug space-y-1">
-                                                {pricing.lines.map((line, lineIdx) => (
-                                                    <p key={lineIdx} className="font-normal text-brand-800">
-                                                        {line.tag && (
-                                                            <strong className="font-extrabold text-brand-950">
-                                                                {line.tag}{' '}
-                                                            </strong>
-                                                        )}
-                                                        <span>{line.text}</span>
-                                                        {line.discountPrice && (
-                                                            <span className="inline-block ml-1">
-                                                                (
-                                                                {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
-                                                                    <span className="text-red-600 line-through mr-1 font-medium">
-                                                                        {line.normalPrice}
-                                                                    </span>
-                                                                )}
-                                                                <span className="font-bold text-brand-950">
-                                                                    {line.discountPrice}
-                                                                </span>
-                                                                )
-                                                            </span>
-                                                        )}
-                                                    </p>
-                                                ))}
-                                                <div className="pt-2 mt-1.5 border-t border-sand-200 flex flex-wrap items-center justify-between gap-x-4 gap-y-1 text-xs">
-                                                    {pricing.hasDiscount && (
-                                                        <div className="flex items-center gap-1.5">
-                                                            <span className="text-brand-600 font-medium">Total Harga Normal:</span>
-                                                            <span className="text-red-600 line-through font-bold">
-                                                                {formatRupiah(pricing.totalNormalPrice)}
-                                                            </span>
-                                                        </div>
-                                                    )}
-                                                    <div className="flex items-center gap-1.5">
-                                                        <span className="text-brand-800 font-bold">Total Harga Diskon:</span>
-                                                        <span className="font-extrabold text-emerald-700">
-                                                            {formatRupiah(pricing.totalDiscountPrice)}
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </div>
-
-                                    <div className="text-right flex-shrink-0 space-y-0.5">
-                                        <span className="text-xs text-brand-500 font-medium block">
-                                            {item.quantity}x @{' '}
-                                            {pricing.hasDiscount && (
-                                                <span className="text-red-600 line-through mr-1">
-                                                    {formatRupiah(pricing.unitNormalPrice)}
-                                                </span>
+                                <div key={item.id} className="py-4 first:pt-1 last:pb-0 flex flex-col gap-2.5">
+                                    <div className="flex items-start justify-between gap-3">
+                                        <div className="space-y-0.5 flex-1 min-w-0">
+                                            <h3 className="text-sm sm:text-base font-bold text-brand-950 leading-snug">
+                                                {item.product_name}
+                                            </h3>
+                                            {!isBundleOrderItem({
+                                                variantLabel: item.variant_label,
+                                                grindOption: item.grind_option,
+                                                customNotes: notesStr,
+                                            }) && item.variant_label && (
+                                                <p className="text-xs text-accent-copper font-semibold">
+                                                    Varian: {item.variant_label}
+                                                </p>
                                             )}
-                                            <span className="font-bold text-brand-800">
-                                                {formatRupiah(item.price)}
+                                        </div>
+
+                                        <div className="text-right shrink-0 space-y-0.5">
+                                            <span className="text-[11px] sm:text-xs text-brand-500 font-medium block whitespace-nowrap">
+                                                {item.quantity > 1
+                                                    ? `${item.quantity}x @ ${formatRupiah(item.price)}`
+                                                    : `Qty: ${item.quantity}x`}
                                             </span>
-                                        </span>
-                                        {pricing.hasDiscount && (
-                                            <div className="text-xs text-red-600 line-through font-semibold">
-                                                {formatRupiah(pricing.totalNormalPrice)}
+                                            {pricing.hasDiscount && (
+                                                <div className="text-xs text-red-600 line-through font-semibold whitespace-nowrap">
+                                                    {formatRupiah(pricing.totalNormalPrice)}
+                                                </div>
+                                            )}
+                                            <div className="text-sm sm:text-base font-extrabold text-brand-950 whitespace-nowrap">
+                                                {formatRupiah(item.subtotal)}
                                             </div>
-                                        )}
-                                        <div className="text-sm font-extrabold text-brand-950">
-                                            {formatRupiah(item.subtotal)}
                                         </div>
                                     </div>
+
+                                    {notesStr && (
+                                        <div className="w-full text-xs text-brand-700 font-normal space-y-1.5 leading-snug">
+                                            {pricing.lines.map((line, lineIdx) => (
+                                                <p key={lineIdx}>
+                                                    {line.tag && (
+                                                        <strong className="font-extrabold text-brand-950">
+                                                            {line.tag}{' '}
+                                                        </strong>
+                                                    )}
+                                                    <span>{line.text}</span>
+                                                    {line.discountPrice && (
+                                                        <span>
+                                                            {' ('}
+                                                            {line.normalPrice && (line.normalPriceNum || 0) > (line.discountPriceNum || 0) && (
+                                                                <>
+                                                                    <span className="text-red-600 line-through font-medium whitespace-nowrap">
+                                                                        {line.normalPrice}
+                                                                    </span>{' '}
+                                                                </>
+                                                            )}
+                                                            <span className="font-bold text-brand-950 whitespace-nowrap">
+                                                                {line.discountPrice}
+                                                            </span>
+                                                            {')'}
+                                                        </span>
+                                                    )}
+                                                </p>
+                                            ))}
+                                            <div className="pt-2 mt-1.5 border-t border-sand-200 space-y-0.5">
+                                                {pricing.hasDiscount && (
+                                                    <div className="flex items-center justify-between text-xs">
+                                                        <span className="text-brand-600">Total Harga Normal:</span>
+                                                        <span className="text-red-600 line-through font-semibold whitespace-nowrap">
+                                                            {formatRupiah(pricing.totalNormalPrice)}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                                <div className="flex items-center justify-between text-xs font-bold text-brand-950">
+                                                    <span>Total Harga Diskon:</span>
+                                                    <span className="text-emerald-700 whitespace-nowrap">
+                                                        {formatRupiah(pricing.totalDiscountPrice)}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
