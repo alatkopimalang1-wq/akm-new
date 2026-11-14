@@ -329,67 +329,6 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
     return (
         <div className="space-y-5">
-            {/* Top Quantity Input & Action Buttons (Matching Video 00:00) */}
-            <div className="space-y-2.5">
-                <div className="flex items-center gap-3">
-                    <input
-                        type="number"
-                        min={1}
-                        max={50}
-                        value={quantity}
-                        onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value, 10) || 1))}
-                        className="w-28 py-2.5 px-3 text-center text-sm font-bold text-brand-950 bg-white border border-sand-300 rounded-lg focus:outline-none focus:border-brand-700"
-                    />
-                    {totalBundlePrice > 0 && (
-                        <div className="text-right flex-1">
-                            {totalNormalPrice > totalBundlePrice && (
-                                <span className="block text-xs font-bold text-red-600 line-through">
-                                    {formatRupiah(totalNormalPrice * quantity)}
-                                </span>
-                            )}
-                            <span className="text-lg sm:text-xl font-black text-brand-950">
-                                {formatRupiah(totalBundlePrice * quantity)}
-                            </span>
-                        </div>
-                    )}
-                </div>
-
-                {validationMessage && (
-                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs font-bold text-red-700">
-                        {validationMessage}
-                    </div>
-                )}
-
-                <button
-                    type="button"
-                    onClick={handleBuyNow}
-                    className={`w-full py-3.5 px-5 rounded-lg font-bold text-sm text-white shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] ${
-                        isAdded ? 'bg-emerald-700' : 'bg-[#2b7a91] hover:bg-[#236477]'
-                    }`}
-                >
-                    {isAdded ? (
-                        <>
-                            <CheckCircle2 className="w-4 h-4" />
-                            <span>Paket Berhasil Masuk Keranjang!</span>
-                        </>
-                    ) : (
-                        <>
-                            <ShoppingBag className="w-4 h-4" />
-                            <span>Beli sekarang</span>
-                        </>
-                    )}
-                </button>
-
-                <button
-                    type="button"
-                    onClick={handleBuyViaWhatsApp}
-                    className="w-full py-3.5 px-5 rounded-lg font-bold text-sm text-white bg-[#28a745] hover:bg-[#218838] shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
-                >
-                    <MessageCircle className="w-4 h-4" />
-                    <span>Beli Lewat WhatsApp</span>
-                </button>
-            </div>
-
             {/* 3-Column Grid of Slot Boxes (Matching Video 00:01 - 00:26) */}
             <div className="grid grid-cols-3 gap-2.5 sm:gap-3.5 pt-2">
                 {slots.map((slot) => {
@@ -612,6 +551,67 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         </div>
                     );
                 })}
+            </div>
+
+            {/* Bottom Total Order, Quantity Input & Action Buttons (After Daftar Pesanan) */}
+            <div className="pt-3 border-t border-neutral-200 space-y-2.5">
+                <div className="flex items-center gap-3">
+                    <input
+                        type="number"
+                        min={1}
+                        max={50}
+                        value={quantity}
+                        onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value, 10) || 1))}
+                        className="w-28 py-2.5 px-3 text-center text-sm font-bold text-brand-950 bg-white border border-sand-300 rounded-lg focus:outline-none focus:border-brand-700"
+                    />
+                    {totalBundlePrice > 0 && (
+                        <div className="text-right flex-1">
+                            {totalNormalPrice > totalBundlePrice && (
+                                <span className="block text-xs font-bold text-red-600 line-through">
+                                    {formatRupiah(totalNormalPrice * quantity)}
+                                </span>
+                            )}
+                            <span className="text-lg sm:text-xl font-black text-brand-950">
+                                {formatRupiah(totalBundlePrice * quantity)}
+                            </span>
+                        </div>
+                    )}
+                </div>
+
+                {validationMessage && (
+                    <div className="p-3 rounded-xl bg-red-50 border border-red-200 text-xs font-bold text-red-700">
+                        {validationMessage}
+                    </div>
+                )}
+
+                <button
+                    type="button"
+                    onClick={handleBuyNow}
+                    className={`w-full py-3.5 px-5 rounded-lg font-bold text-sm text-white shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99] ${
+                        isAdded ? 'bg-emerald-700' : 'bg-[#2b7a91] hover:bg-[#236477]'
+                    }`}
+                >
+                    {isAdded ? (
+                        <>
+                            <CheckCircle2 className="w-4 h-4" />
+                            <span>Paket Berhasil Masuk Keranjang!</span>
+                        </>
+                    ) : (
+                        <>
+                            <ShoppingBag className="w-4 h-4" />
+                            <span>Beli sekarang</span>
+                        </>
+                    )}
+                </button>
+
+                <button
+                    type="button"
+                    onClick={handleBuyViaWhatsApp}
+                    className="w-full py-3.5 px-5 rounded-lg font-bold text-sm text-white bg-[#28a745] hover:bg-[#218838] shadow-sm transition-all flex items-center justify-center gap-2 cursor-pointer active:scale-[0.99]"
+                >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Beli Lewat WhatsApp</span>
+                </button>
             </div>
 
             {/* Pop-up Modal: "Please Select Your Product" & Mandatory Variant Selector */}
