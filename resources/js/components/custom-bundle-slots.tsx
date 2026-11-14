@@ -267,7 +267,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(slot.free_product) && freeProd.variant_label
                             ? ` - Variasi: ${freeProd.variant_label}`
                             : '';
-                    parts.push(`[GRATIS] 1x ${freeProd.name}${varInfo}`);
+                    parts.push(`[GRATIS] 1x ${freeProd.name}${varInfo} (Rp 0)`);
                 }
             } else {
                 const chosen = selectedBySlot[slot.index];
@@ -278,7 +278,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(chosen) && chosen.variant_label
                             ? ` - Variasi: ${chosen.variant_label}`
                             : '';
-                    parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo}`);
+                    parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(chosen.bundle_price * sQty)})`);
                 }
             }
         });
