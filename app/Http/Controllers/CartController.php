@@ -129,7 +129,7 @@ class CartController extends Controller
         foreach ($validated['items'] as $item) {
             $variant = ProductVariant::with('product')->findOrFail($item['variant_id']);
             $qty = $item['quantity'];
-            $unitPrice = ($variant->product->slug === 'byob' && isset($item['price']) && is_numeric($item['price']))
+            $unitPrice = (($variant->product->slug === 'byob' || $variant->product->is_custom_bundle) && isset($item['price']) && is_numeric($item['price']))
                 ? (float) $item['price']
                 : (float) $variant->price;
             $lineTotal = $unitPrice * $qty;

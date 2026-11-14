@@ -302,6 +302,20 @@ class ManageCustomBundleSettings extends Page
             ->send();
     }
 
+    protected function getHeaderActions(): array
+    {
+        return [
+            Action::make('createBundleProduct')
+                ->label('+ Buat Produk Paket Custom di Katalog')
+                ->color('primary')
+                ->url('/admin/products/create'),
+            Action::make('viewCatalogProducts')
+                ->label('Lihat Semua Produk Katalog')
+                ->color('gray')
+                ->url('/admin/products'),
+        ];
+    }
+
     protected function getFormActions(): array
     {
         return [
@@ -311,3 +325,4 @@ class ManageCustomBundleSettings extends Page
         ];
     }
 }
+

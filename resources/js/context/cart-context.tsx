@@ -2,6 +2,8 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { CartItem, Product, ProductVariant } from '@/types/sanubari';
 import { getProductContentId, trackAddToCart } from '@/lib/meta-pixel';
 
+export type { CartItem, Product, ProductVariant };
+
 interface CartContextType {
     items: CartItem[];
     addItem: (

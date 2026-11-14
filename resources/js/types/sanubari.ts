@@ -60,6 +60,8 @@ export interface Product {
     is_featured: boolean;
     is_new: boolean;
     is_preorder?: boolean;
+    is_custom_bundle?: boolean;
+    bundle_config?: Record<string, any> | null;
     is_flash_sale?: boolean;
     tokopedia_url?: string | null;
     shopee_url?: string | null;

@@ -29,6 +29,7 @@ import type { Product, ProductVariant } from '@/types/sanubari';
 import { formatRupiah } from '@/lib/trans';
 import { useCart } from '@/context/cart-context';
 import { ProductCard } from '@/components/product-card';
+import { CustomBundleSlots, type ResolvedBundleSlot } from '@/components/custom-bundle-slots';
 import { getProductContentId, trackViewContent } from '@/lib/meta-pixel';
 import { ImageZoom } from '@animate-ui/react/primitives/effects/image-zoom';
 import { SlidingNumber } from '@animate-ui/react/primitives/texts/sliding-number';
@@ -43,6 +44,8 @@ import {
 interface ProductShowProps {
     product: Product;
     relatedProducts: Product[];
+    bundleSlots?: ResolvedBundleSlot[];
+    whatsappNumber?: string;
     preorderTerms?: {
         hero_title?: string;
         intro_text?: string;
@@ -112,6 +115,8 @@ const resolveImageUrl = (path: string | undefined | null) => {
 export default function ProductShow({
     product,
     relatedProducts = [],
+    bundleSlots = [],
+    whatsappNumber = '6285121930454',
     preorderTerms,
     marketplaceDefaults,
 }: ProductShowProps) {
@@ -517,174 +522,185 @@ export default function ProductShow({
                             </h1>
                         </div>
 
-                        {/* Price Display */}
-                        <div className="space-y-1">
-                            {isDiscounted && (
-                                <span className="block text-sm sm:text-sm md:text-base text-gray-400 line-through font-medium">
-                                    {formatRupiah(selectedVariant.original_price!)}
-                                </span>
-                            )}
-                            <div className="flex items-baseline gap-2">
-                                <span className={`text-3xl sm:text-3xl md:text-4xl font-black tracking-tight ${
-                                    isCurrentVariantOutOfStock ? 'text-neutral-500' : 'text-brand-950'
-                                }`}>
-                                    {formatRupiah(selectedVariant.price)}
-                                </span>
-                            </div>
-                        </div>
+                        {product.is_custom_bundle && bundleSlots.length > 0 ? (
+                            <CustomBundleSlots
+                                product={product}
+                                defaultVariant={selectedVariant}
+                                slots={bundleSlots}
+                                whatsappNumber={whatsappNumber}
+                            />
+                        ) : (
+                            <>
+                                {/* Price Display */}
+                                <div className="space-y-1">
+                                    {isDiscounted && (
+                                        <span className="block text-sm sm:text-sm md:text-base text-gray-400 line-through font-medium">
+                                            {formatRupiah(selectedVariant.original_price!)}
+                                        </span>
+                                    )}
+                                    <div className="flex items-baseline gap-2">
+                                        <span className={`text-3xl sm:text-3xl md:text-4xl font-black tracking-tight ${
+                                            isCurrentVariantOutOfStock ? 'text-neutral-500' : 'text-brand-950'
+                                        }`}>
+                                            {formatRupiah(selectedVariant.price)}
+                                        </span>
+                                    </div>
+                                </div>
 
-                        {/* Variant Selection */}
-                        <div className="space-y-2">
-                            <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                Pilih Warna / Ukuran:
-                            </label>
-                            <div className="flex flex-wrap gap-2">
-                                {variants.map((v) => {
-                                    const active = selectedVariant.id === v.id;
-                                    const vOutOfStock = isProductOutOfStock || v.stock_status === 'out_of_stock';
-                                    const vImage = v.image_url || (v.image ? resolveImageUrl(v.image) : null);
-                                    return (
-                                        <button
-                                            key={v.id}
-                                            type="button"
-                                            onClick={() => {
-                                                setSelectedVariant(v);
-                                                const targetIdx = combinedImages.findIndex(
-                                                    (img) => img.isVariant && img.variantId === v.id
-                                                );
-                                                if (targetIdx !== -1) {
-                                                    scrollToMobileImage(targetIdx);
-                                                }
-                                            }}
-                                            className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm sm:text-sm md:text-base font-bold transition-all cursor-pointer border-2 ${
-                                                active
-                                                    ? 'bg-accent-copper/10 border-accent-copper text-accent-copper shadow-2xs ring-2 ring-accent-copper/20'
-                                                    : 'bg-white hover:bg-sand-100/70 text-brand-800 border-sand-200 hover:border-brand-300'
-                                            } ${vOutOfStock ? 'opacity-60 line-through decoration-neutral-500' : ''}`}
-                                        >
-                                            {vImage && (
-                                                <img
-                                                    src={vImage}
-                                                    alt={v.label}
-                                                    className="w-5 h-5 rounded-md object-cover border border-sand-300 flex-shrink-0"
-                                                />
-                                            )}
-                                            <span>{v.label} {vOutOfStock ? '(Habis)' : ''}</span>
-                                        </button>
-                                    );
-                                })}
-                            </div>
-                        </div>
-
-                        {/* Grind Size Selection (Only if roast_level is specified) */}
-                        {product.roast_level && (
-                            <div className="space-y-2">
-                                <div className="flex items-center justify-between">
+                                {/* Variant Selection */}
+                                <div className="space-y-2">
                                     <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                        Pilihan Gilingan:
+                                        Pilih Warna / Ukuran:
                                     </label>
-                                    <span className="text-xs sm:text-xs md:text-sm text-accent-copper font-medium">
-                                        Gratis giling sesuai metode seduh
-                                    </span>
+                                    <div className="flex flex-wrap gap-2">
+                                        {variants.map((v) => {
+                                            const active = selectedVariant.id === v.id;
+                                            const vOutOfStock = isProductOutOfStock || v.stock_status === 'out_of_stock';
+                                            const vImage = v.image_url || (v.image ? resolveImageUrl(v.image) : null);
+                                            return (
+                                                <button
+                                                    key={v.id}
+                                                    type="button"
+                                                    onClick={() => {
+                                                        setSelectedVariant(v);
+                                                        const targetIdx = combinedImages.findIndex(
+                                                            (img) => img.isVariant && img.variantId === v.id
+                                                        );
+                                                        if (targetIdx !== -1) {
+                                                            scrollToMobileImage(targetIdx);
+                                                        }
+                                                    }}
+                                                    className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-sm sm:text-sm md:text-base font-bold transition-all cursor-pointer border-2 ${
+                                                        active
+                                                            ? 'bg-accent-copper/10 border-accent-copper text-accent-copper shadow-2xs ring-2 ring-accent-copper/20'
+                                                            : 'bg-white hover:bg-sand-100/70 text-brand-800 border-sand-200 hover:border-brand-300'
+                                                    } ${vOutOfStock ? 'opacity-60 line-through decoration-neutral-500' : ''}`}
+                                                >
+                                                    {vImage && (
+                                                        <img
+                                                            src={vImage}
+                                                            alt={v.label}
+                                                            className="w-5 h-5 rounded-md object-cover border border-sand-300 flex-shrink-0"
+                                                        />
+                                                    )}
+                                                    <span>{v.label} {vOutOfStock ? '(Habis)' : ''}</span>
+                                                </button>
+                                            );
+                                        })}
+                                    </div>
                                 </div>
-                                <Select value={grindOption} onValueChange={setGrindOption}>
-                                    <SelectTrigger className="w-full py-2.5 px-3.5 h-auto rounded-xl bg-white border border-sand-200 text-sm sm:text-sm md:text-base font-semibold text-brand-950 focus:outline-hidden focus:border-brand-700 shadow-xs flex justify-between items-center cursor-pointer">
-                                        <SelectValue placeholder="Pilih tingkat gilingan" />
-                                    </SelectTrigger>
-                                    <SelectContent className="bg-white border border-sand-200 rounded-xl shadow-xl z-50 p-1.5">
-                                        {grindOptions.map((opt) => (
-                                            <SelectItem
-                                                key={opt}
-                                                value={opt}
-                                                className="text-sm sm:text-sm md:text-base font-medium py-2.5 px-3 rounded-lg cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent data-[highlighted]:bg-transparent text-brand-900 hover:text-accent-copper focus:text-accent-copper data-[highlighted]:text-accent-copper data-[state=checked]:font-bold data-[state=checked]:text-brand-950 transition-colors"
+
+                                {/* Grind Size Selection (Only if roast_level is specified) */}
+                                {product.roast_level && (
+                                    <div className="space-y-2">
+                                        <div className="flex items-center justify-between">
+                                            <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
+                                                Pilihan Gilingan:
+                                            </label>
+                                            <span className="text-xs sm:text-xs md:text-sm text-accent-copper font-medium">
+                                                Gratis giling sesuai metode seduh
+                                            </span>
+                                        </div>
+                                        <Select value={grindOption} onValueChange={setGrindOption}>
+                                            <SelectTrigger className="w-full py-2.5 px-3.5 h-auto rounded-xl bg-white border border-sand-200 text-sm sm:text-sm md:text-base font-semibold text-brand-950 focus:outline-hidden focus:border-brand-700 shadow-xs flex justify-between items-center cursor-pointer">
+                                                <SelectValue placeholder="Pilih tingkat gilingan" />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-white border border-sand-200 rounded-xl shadow-xl z-50 p-1.5">
+                                                {grindOptions.map((opt) => (
+                                                    <SelectItem
+                                                        key={opt}
+                                                        value={opt}
+                                                        className="text-sm sm:text-sm md:text-base font-medium py-2.5 px-3 rounded-lg cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent data-[highlighted]:bg-transparent text-brand-900 hover:text-accent-copper focus:text-accent-copper data-[highlighted]:text-accent-copper data-[state=checked]:font-bold data-[state=checked]:text-brand-950 transition-colors"
+                                                    >
+                                                        {opt}
+                                                    </SelectItem>
+                                                ))}
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                )}
+
+                                {/* Quantity Stepper & Add to Cart */}
+                                <div className="space-y-3 pt-2">
+                                    <div className="flex items-center gap-2.5 sm:gap-3">
+                                        {/* Stepper */}
+                                        <div className={`flex items-center border border-sand-200 rounded-xl bg-white p-1 h-12 sm:h-auto ${
+                                            isCurrentVariantOutOfStock ? 'opacity-50 pointer-events-none' : ''
+                                        }`}>
+                                            <button
+                                                type="button"
+                                                disabled={isCurrentVariantOutOfStock}
+                                                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                                                className="w-9 h-full sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors disabled:cursor-not-allowed"
                                             >
-                                                {opt}
-                                            </SelectItem>
-                                        ))}
-                                    </SelectContent>
-                                </Select>
-                            </div>
-                        )}
+                                                <Minus className="w-3.5 h-3.5" />
+                                            </button>
+                                            <span className="w-9 sm:w-10 text-center font-bold text-sm text-brand-950 flex items-center justify-center">
+                                                <SlidingNumber number={quantity} />
+                                            </span>
+                                            <button
+                                                type="button"
+                                                disabled={isCurrentVariantOutOfStock}
+                                                onClick={() => setQuantity(quantity + 1)}
+                                                className="w-9 h-full sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors disabled:cursor-not-allowed"
+                                            >
+                                                <Plus className="w-3.5 h-3.5" />
+                                            </button>
+                                        </div>
 
-                        {/* Quantity Stepper & Add to Cart */}
-                        <div className="space-y-3 pt-2">
-                            <div className="flex items-center gap-2.5 sm:gap-3">
-                                {/* Stepper */}
-                                <div className={`flex items-center border border-sand-200 rounded-xl bg-white p-1 h-12 sm:h-auto ${
-                                    isCurrentVariantOutOfStock ? 'opacity-50 pointer-events-none' : ''
-                                }`}>
-                                    <button
-                                        type="button"
-                                        disabled={isCurrentVariantOutOfStock}
-                                        onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                                        className="w-9 h-full sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors disabled:cursor-not-allowed"
-                                    >
-                                        <Minus className="w-3.5 h-3.5" />
-                                    </button>
-                                    <span className="w-9 sm:w-10 text-center font-bold text-sm text-brand-950 flex items-center justify-center">
-                                        <SlidingNumber number={quantity} />
-                                    </span>
-                                    <button
-                                        type="button"
-                                        disabled={isCurrentVariantOutOfStock}
-                                        onClick={() => setQuantity(quantity + 1)}
-                                        className="w-9 h-full sm:w-8 sm:h-8 flex items-center justify-center rounded-lg hover:bg-sand-100 text-brand-800 transition-colors disabled:cursor-not-allowed"
-                                    >
-                                        <Plus className="w-3.5 h-3.5" />
-                                    </button>
-                                </div>
+                                        {/* Add to Cart with Animate UI Status Button pattern */}
+                                        {isCurrentVariantOutOfStock ? (
+                                            <button
+                                                type="button"
+                                                disabled
+                                                className="flex-1 h-12 sm:h-auto flex items-center justify-center gap-1.5 sm:gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-bold text-xs uppercase tracking-wider bg-neutral-800 text-neutral-400 cursor-not-allowed opacity-90 shadow-none"
+                                            >
+                                                <ShoppingBag className="w-4 h-4 opacity-50" />
+                                                <span>Stok Habis (Sold Out)</span>
+                                            </button>
+                                        ) : (
+                                            <button
+                                                type="button"
+                                                onClick={handleAddToCart}
+                                                className={`flex-1 h-12 sm:h-auto flex items-center justify-center gap-1.5 sm:gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-150 active:scale-[0.98] ${
+                                                    isAdded
+                                                        ? 'bg-emerald-700 text-white'
+                                                        : 'bg-brand-700 hover:bg-brand-800 active:bg-brand-900 text-white'
+                                                }`}
+                                            >
+                                                {isAdded ? (
+                                                    <>
+                                                        <CheckCircle2 className="w-4 h-4 text-emerald-200" />
+                                                        <span>Berhasil Ditambahkan!</span>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <ShoppingBag className="w-4 h-4" />
+                                                        <span className="text-xs font-extrabold whitespace-nowrap tracking-wide">
+                                                            Tambah ke Keranjang
+                                                        </span>
+                                                    </>
+                                                )}
+                                            </button>
+                                        )}
+                                    </div>
 
-                                {/* Add to Cart with Animate UI Status Button pattern */}
-                                {isCurrentVariantOutOfStock ? (
-                                    <button
-                                        type="button"
-                                        disabled
-                                        className="flex-1 h-12 sm:h-auto flex items-center justify-center gap-1.5 sm:gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-bold text-xs uppercase tracking-wider bg-neutral-800 text-neutral-400 cursor-not-allowed opacity-90 shadow-none"
-                                    >
-                                        <ShoppingBag className="w-4 h-4 opacity-50" />
-                                        <span>Stok Habis (Sold Out)</span>
-                                    </button>
-                                ) : (
-                                    <button
-                                        type="button"
-                                        onClick={handleAddToCart}
-                                        className={`flex-1 h-12 sm:h-auto flex items-center justify-center gap-1.5 sm:gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl font-bold text-xs uppercase tracking-wider shadow-sm transition-all duration-150 active:scale-[0.98] ${
-                                            isAdded
-                                                ? 'bg-emerald-700 text-white'
-                                                : 'bg-brand-700 hover:bg-brand-800 active:bg-brand-900 text-white'
+                                    {/* Direct WhatsApp Instant Buy / Restock Inquiry */}
+                                    <a
+                                        href={waDirectUrl}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className={`w-full h-12 sm:h-auto flex items-center justify-center gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl border font-bold text-xs uppercase tracking-wider transition-all ${
+                                            isCurrentVariantOutOfStock
+                                                ? 'bg-sand-100 hover:bg-sand-200 border-sand-300 text-brand-800'
+                                                : 'bg-white hover:bg-cream-100 border-brand-700 text-brand-700'
                                         }`}
                                     >
-                                        {isAdded ? (
-                                            <>
-                                                <CheckCircle2 className="w-4 h-4 text-emerald-200" />
-                                                <span>Berhasil Ditambahkan!</span>
-                                            </>
-                                        ) : (
-                                            <>
-                                                <ShoppingBag className="w-4 h-4" />
-                                                <span className="text-xs font-extrabold whitespace-nowrap tracking-wide">
-                                                    Tambah ke Keranjang
-                                                </span>
-                                            </>
-                                        )}
-                                    </button>
-                                )}
-                            </div>
-
-                            {/* Direct WhatsApp Instant Buy / Restock Inquiry */}
-                            <a
-                                href={waDirectUrl}
-                                target="_blank"
-                                rel="noreferrer"
-                                className={`w-full h-12 sm:h-auto flex items-center justify-center gap-2 py-3 px-4 sm:py-3 sm:px-6 rounded-xl border font-bold text-xs uppercase tracking-wider transition-all ${
-                                    isCurrentVariantOutOfStock
-                                        ? 'bg-sand-100 hover:bg-sand-200 border-sand-300 text-brand-800'
-                                        : 'bg-white hover:bg-cream-100 border-brand-700 text-brand-700'
-                                }`}
-                            >
-                                <span>{isCurrentVariantOutOfStock ? 'Tanyakan Restock via WhatsApp' : 'Pesan Langsung via WhatsApp'}</span>
-                            </a>
-                        </div>
+                                        <span>{isCurrentVariantOutOfStock ? 'Tanyakan Restock via WhatsApp' : 'Pesan Langsung via WhatsApp'}</span>
+                                    </a>
+                                </div>
+                            </>
+                        )}
 
                         {/* Ketentuan PO Menu (Only shown when product has Pre-Order stock status) */}
                         {isPreOrderProduct && (

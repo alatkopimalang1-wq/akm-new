@@ -20,6 +20,7 @@ class ProductsTable
             ->columns([
                 TextColumn::make('name')
                     ->label('Nama Produk')
+                    ->description(fn (Product $record): ?string => $record->is_custom_bundle ? '🎁 Produk Paket Custom (Custom Bundling)' : null)
                     ->searchable()
                     ->sortable()
                     ->limit(45),

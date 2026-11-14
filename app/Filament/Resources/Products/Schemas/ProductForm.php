@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Products\Schemas;
 
 use App\Models\Brand;
+use App\Models\Category;
 use App\Models\Product;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\FileUpload;
@@ -18,8 +19,41 @@ use Illuminate\Support\Str;
 
 class ProductForm
 {
+    public static function getCategoryOptions(): array
+    {
+        return Category::query()
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get()
+            ->mapWithKeys(function ($cat) {
+                $name = is_array($cat->name) ? ($cat->name['id'] ?? reset($cat->name)) : ($cat->name ?: $cat->slug);
+                $prefix = $cat->parent_id ? '↳ ' : '';
+
+                return [(string) $cat->id => $prefix . $name];
+            })
+            ->toArray();
+    }
+
+    public static function getProductOptions(): array
+    {
+        return Product::query()
+            ->where('slug', '!=', 'byob')
+            ->orderBy('name')
+            ->get()
+            ->mapWithKeys(function ($prod) {
+                $brand = $prod->producer ? "[{$prod->producer}] " : '';
+                $price = 'Rp ' . number_format((float) $prod->min_price, 0, ',', '.');
+
+                return [(string) $prod->id => "{$brand}{$prod->name} ({$price})"];
+            })
+            ->toArray();
+    }
+
     public static function configure(Schema $schema): Schema
     {
+        $categoryOptions = static::getCategoryOptions();
+        $productOptions = static::getProductOptions();
+
         return $schema
             ->columns(1)
             ->components([
@@ -126,14 +160,127 @@ class ProductForm
                                 ->label('Tanggal Rilis')
                                 ->default(now()),
                         ]),
-                        Grid::make(3)->schema([
+                        Grid::make(4)->schema([
                             Toggle::make('is_featured')
                                 ->label('Produk Unggulan (Best Seller)'),
                             Toggle::make('is_new')
                                 ->label('Tandai Sebagai Produk Baru'),
                             Toggle::make('is_preorder')
                                 ->label('Pre-Order'),
+                            Toggle::make('is_custom_bundle')
+                                ->label('Produk Paket Custom (Custom Bundling)')
+                                ->live(),
                         ]),
+                    ]),
+
+                Section::make('Pengaturan Slot Produk Paket Custom (Custom Bundling)')
+                    ->description('Atur kotak-kotak slot pemilihan produk (Slot Wajib +, Slot GRATIS Rp0, dan Slot OPTIONAL) serta diskon harga coret otomatis untuk paket ini.')
+                    ->columnSpanFull()
+                    ->visible(fn (callable $get): bool => (bool) $get('is_custom_bundle'))
+                    ->schema([
+                        Grid::make(2)->schema([
+                            Select::make('bundle_config.discount_type')
+                                ->label('Tipe Diskon Paket Default (Untuk Harga Coret Produk di Slot)')
+                                ->options([
+                                    'percentage' => 'Persentase Diskon (%) dari Harga Normal Produk',
+                                    'fixed' => 'Potongan Nominal (Rp) per Produk di Slot',
+                                ])
+                                ->default('percentage')
+                                ->required(),
+                            TextInput::make('bundle_config.discount_value')
+                                ->label('Nilai Diskon Default Paket')
+                                ->numeric()
+                                ->default(2)
+                                ->helperText('Contoh: Isi 2 untuk diskon 2% (sehingga produk Rp 13.500.000 otomatis tampil dicoret merah menjadi Rp 13.230.000), atau isi nominal Rp.'),
+                        ]),
+
+                        Repeater::make('bundle_config.slots')
+                            ->label('Daftar Kotak Slot Paket (Urutan Kotak di Halaman Produk)')
+                            ->defaultItems(0)
+                            ->reorderable()
+                            ->collapsible()
+                            ->addActionLabel('+ Tambah Kotak Slot Paket')
+                            ->itemLabel(function (array $state): string {
+                                $type = match ($state['slot_type'] ?? 'required') {
+                                    'free' => '🎁 SLOT GRATIS (Rp 0)',
+                                    'optional' => '🏷️ SLOT OPTIONAL (Opsional)',
+                                    default => '➕ SLOT WAJIB (Pilih Produk)',
+                                };
+                                $label = ! empty($state['slot_label']) ? " — {$state['slot_label']}" : '';
+
+                                return "{$type}{$label}";
+                            })
+                            ->schema([
+                                Grid::make(2)->schema([
+                                    Select::make('slot_type')
+                                        ->label('Jenis Kotak Slot')
+                                        ->options([
+                                            'required' => 'Slot Produk Wajib (+ Please select a product!)',
+                                            'optional' => 'Slot Produk Opsional (Pita OPTIONAL + Please select a product!)',
+                                            'free' => 'Slot Produk GRATIS / Bonus Bawaan (GRATIS Rp0)',
+                                        ])
+                                        ->default('required')
+                                        ->required()
+                                        ->live(),
+                                    TextInput::make('slot_label')
+                                        ->label('Judul / Petunjuk Slot (Opsional)')
+                                        ->placeholder('Contoh: Pilih Mesin Espresso / Please select a product!')
+                                        ->default('Please select a product!'),
+                                ]),
+
+                                // Untuk Slot Wajib & Slot Optional: Pilih berdasarkan Kategori dan/atau Produk Spesifik
+                                Grid::make(2)
+                                    ->visible(fn (callable $get): bool => in_array($get('slot_type') ?? 'required', ['required', 'optional']))
+                                    ->schema([
+                                        Select::make('category_ids')
+                                            ->label('Pilih Berdasarkan Kategori Produk (Otomatis Memuat Produk di Kategori Ini)')
+                                            ->multiple()
+                                            ->searchable()
+                                            ->preload()
+                                            ->options($categoryOptions)
+                                            ->helperText('Contoh: Pilih kategori "Espresso Machine" untuk Slot 1, atau "Coffee Grinder" untuk Slot 2.'),
+                                        Select::make('product_ids')
+                                            ->label('Atau Pilih Produk Spesifik Satu per Satu')
+                                            ->multiple()
+                                            ->searchable()
+                                            ->preload()
+                                            ->options($productOptions)
+                                            ->helperText('Anda bebas memilih kategori saja, produk spesifik saja, atau gabungan keduanya.'),
+                                    ]),
+
+                                Grid::make(2)
+                                    ->visible(fn (callable $get): bool => in_array($get('slot_type') ?? 'required', ['required', 'optional']))
+                                    ->schema([
+                                        Select::make('discount_mode')
+                                            ->label('Pengaturan Diskon Harga Coret pada Slot Ini')
+                                            ->options([
+                                                'inherit' => 'Ikuti Diskon Default Paket di Atas',
+                                                'percentage' => 'Diskon Persentase (%) Khusus Slot Ini',
+                                                'fixed' => 'Potongan Nominal (Rp) Khusus Slot Ini',
+                                                'none' => 'Harga Normal (Tanpa Diskon)',
+                                            ])
+                                            ->default('inherit')
+                                            ->live(),
+                                        TextInput::make('discount_value')
+                                            ->label('Nilai Diskon Khusus Slot Ini')
+                                            ->numeric()
+                                            ->default(0)
+                                            ->visible(fn (callable $get): bool => in_array($get('discount_mode'), ['percentage', 'fixed'])),
+                                    ]),
+
+                                // Untuk Slot GRATIS / Bonus Bawaan
+                                Grid::make(1)
+                                    ->visible(fn (callable $get): bool => ($get('slot_type') ?? 'required') === 'free')
+                                    ->schema([
+                                        Select::make('free_product_id')
+                                            ->label('Pilih Produk Katalog yang Digratiskan (GRATIS Rp 0)')
+                                            ->searchable()
+                                            ->preload()
+                                            ->options($productOptions)
+                                            ->required(fn (callable $get): bool => ($get('slot_type') ?? 'required') === 'free')
+                                            ->helperText('Produk ini akan langsung tampil di kotak slot dengan label GRATIS, harga asli dicoret merah, dan harga paket Rp 0.'),
+                                    ]),
+                            ]),
                     ]),
 
                 Section::make('Deskripsi Produk')

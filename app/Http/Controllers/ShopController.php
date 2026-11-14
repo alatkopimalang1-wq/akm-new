@@ -173,12 +173,21 @@ class ShopController extends Controller
             })
             ->values();
 
+        $bundleProducts = Product::active()
+            ->where('slug', '!=', 'byob')
+            ->where('is_custom_bundle', true)
+            ->with(['variants', 'images', 'categories'])
+            ->orderBy('is_featured', 'desc')
+            ->orderBy('id', 'desc')
+            ->get();
+
         return Inertia::render('shop/custom-bundle', [
             'bundleSettings' => $bundleSettings,
             'products' => $products,
             'categories' => $categories,
             'byobProduct' => $byobProduct,
             'byobVariant' => $byobVariant,
+            'bundleProducts' => $bundleProducts,
         ]);
     }
 
@@ -210,15 +219,171 @@ class ShopController extends Controller
             is_array($savedPreorderTerms) ? $savedPreorderTerms : []
         );
 
+        $bundleSlots = $product->is_custom_bundle ? $this->resolveProductBundleSlots($product) : [];
+
         return Inertia::render('shop/show', [
             'product' => $product,
             'relatedProducts' => $relatedProducts,
             'preorderTerms' => $preorderTerms,
+            'bundleSlots' => $bundleSlots,
+            'whatsappNumber' => Setting::get('whatsapp', '6285121930454'),
             'marketplaceDefaults' => [
                 'tokopedia' => Setting::get('tokopedia', 'https://www.tokopedia.com/alatkopimalang'),
                 'shopee' => Setting::get('shopee', 'https://shopee.co.id/alatkopimalang'),
             ],
         ]);
+    }
+
+    protected function resolveProductBundleSlots(Product $product): array
+    {
+        $config = is_array($product->bundle_config) ? $product->bundle_config : [];
+        $slotsConfig = is_array($config['slots'] ?? null) ? $config['slots'] : [];
+
+        $defaultDiscountType = $config['discount_type'] ?? 'percentage';
+        $defaultDiscountValue = (float) ($config['discount_value'] ?? 2);
+
+        $formatImageUrl = function (?Product $prod): string {
+            if (! $prod) {
+                return '/brand/logo-akm.png?v=20261113b';
+            }
+            $primary = $prod->images->firstWhere('is_primary', true) ?: $prod->images->first();
+            $path = $primary?->path;
+            if (! $path) {
+                return '/brand/logo-akm.png?v=20261113b';
+            }
+            if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+                return $path;
+            }
+
+            return '/storage/' . preg_replace('/^\/?(public\/|storage\/)?/', '', $path);
+        };
+
+        $resolved = [];
+
+        foreach (array_values($slotsConfig) as $idx => $slot) {
+            $slotType = $slot['slot_type'] ?? 'required';
+            $slotLabel = $slot['slot_label'] ?? 'Please select a product!';
+
+            if ($slotType === 'free') {
+                $freeId = (int) ($slot['free_product_id'] ?? 0);
+                $freeProd = $freeId > 0
+                    ? Product::with(['variants', 'images'])->find($freeId)
+                    : null;
+
+                $freeData = null;
+                if ($freeProd) {
+                    $defVar = $freeProd->variants->first();
+                    $normalPrice = (float) ($defVar?->original_price > $defVar?->price ? $defVar->original_price : ($defVar?->price ?? $freeProd->min_price ?? 100000));
+                    $freeData = [
+                        'id' => $freeProd->id,
+                        'variant_id' => $defVar?->id ?? $freeProd->id,
+                        'name' => $freeProd->name,
+                        'slug' => $freeProd->slug,
+                        'producer' => $freeProd->producer,
+                        'image_url' => $formatImageUrl($freeProd),
+                        'normal_price' => $normalPrice,
+                        'bundle_price' => 0,
+                        'weight_grams' => (int) ($defVar?->weight_grams ?? 250),
+                        'is_out_of_stock' => false,
+                    ];
+                }
+
+                $resolved[] = [
+                    'index' => $idx,
+                    'slot_type' => 'free',
+                    'slot_label' => 'GRATIS',
+                    'free_product' => $freeData,
+                    'candidates' => [],
+                ];
+
+                continue;
+            }
+
+            // Required or Optional slot
+            $discountMode = $slot['discount_mode'] ?? 'inherit';
+            $effDiscountType = $defaultDiscountType;
+            $effDiscountValue = $defaultDiscountValue;
+
+            if ($discountMode === 'percentage' || $discountMode === 'fixed') {
+                $effDiscountType = $discountMode;
+                $effDiscountValue = (float) ($slot['discount_value'] ?? 0);
+            } elseif ($discountMode === 'none') {
+                $effDiscountValue = 0;
+            }
+
+            $catIds = array_values(array_filter(array_map('intval', (array) ($slot['category_ids'] ?? []))));
+            $prodIds = array_values(array_filter(array_map('intval', (array) ($slot['product_ids'] ?? []))));
+
+            $allCatIds = [];
+            if (! empty($catIds)) {
+                $allCatIds = Category::whereIn('id', $catIds)
+                    ->orWhereIn('parent_id', $catIds)
+                    ->pluck('id')
+                    ->toArray();
+            }
+
+            $candQuery = Product::active()
+                ->where('slug', '!=', 'byob')
+                ->where('id', '!=', $product->id)
+                ->where('is_custom_bundle', false)
+                ->with(['variants', 'images']);
+
+            if (! empty($prodIds) || ! empty($allCatIds)) {
+                $candQuery->where(function ($q) use ($prodIds, $allCatIds) {
+                    if (! empty($prodIds)) {
+                        $q->whereIn('products.id', $prodIds);
+                    }
+                    if (! empty($allCatIds)) {
+                        $q->orWhereHas('categories', function ($cq) use ($allCatIds) {
+                            $cq->whereIn('categories.id', $allCatIds);
+                        });
+                    }
+                });
+            } else {
+                $candQuery->limit(12);
+            }
+
+            $candidates = $candQuery->get()->map(function (Product $cand) use ($effDiscountType, $effDiscountValue, $formatImageUrl) {
+                $defVar = $cand->variants->first();
+                $basePrice = (float) ($defVar?->price ?? $cand->min_price ?? 0);
+                $origPrice = (float) ($defVar?->original_price > $basePrice ? $defVar->original_price : $basePrice);
+
+                $bundlePrice = $basePrice;
+                if ($effDiscountValue > 0 && $basePrice > 0) {
+                    if ($effDiscountType === 'percentage') {
+                        $bundlePrice = round($basePrice * (1 - ($effDiscountValue / 100)));
+                    } else {
+                        $bundlePrice = max(0, $basePrice - $effDiscountValue);
+                    }
+                }
+
+                // Ensure normal_price is at least basePrice so strikethrough works when discounted
+                $normalPrice = max($origPrice, $basePrice);
+
+                return [
+                    'id' => $cand->id,
+                    'variant_id' => $defVar?->id ?? $cand->id,
+                    'name' => $cand->name,
+                    'slug' => $cand->slug,
+                    'producer' => $cand->producer,
+                    'image_url' => $formatImageUrl($cand),
+                    'normal_price' => $normalPrice,
+                    'bundle_price' => $bundlePrice,
+                    'weight_grams' => (int) ($defVar?->weight_grams ?? 500),
+                    'is_out_of_stock' => (bool) $cand->is_out_of_stock,
+                ];
+            })->values()->toArray();
+
+            $resolved[] = [
+                'index' => $idx,
+                'slot_type' => $slotType === 'optional' ? 'optional' : 'required',
+                'slot_label' => $slotLabel,
+                'free_product' => null,
+                'candidates' => $candidates,
+            ];
+        }
+
+        return $resolved;
     }
 
     public function liveSearch(Request $request): \Illuminate\Http\JsonResponse

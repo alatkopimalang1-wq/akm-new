@@ -75,6 +75,7 @@ interface CustomBundlePageProps {
     categories: CategoryItem[];
     byobProduct: Product;
     byobVariant: ProductVariant;
+    bundleProducts?: ExtendedProduct[];
 }
 
 function getProductImageUrl(product: ExtendedProduct, variant?: ProductVariant): string {
@@ -99,6 +100,7 @@ export default function CustomBundlePage({
     categories,
     byobProduct,
     byobVariant,
+    bundleProducts = [],
 }: CustomBundlePageProps) {
     const { addItem } = useCart();
 
@@ -679,6 +681,65 @@ export default function CustomBundlePage({
                     )}
                 </div>
 
+                {/* Pilihan Produk Paket Usaha Custom Bundling (Slot-Based Bundles) */}
+                {bundleProducts.length > 0 && (
+                    <section className="bg-white rounded-3xl p-6 sm:p-8 border border-sand-200/90 shadow-xs space-y-6">
+                        <div className="space-y-1 pb-4 border-b border-sand-200">
+                            <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-accent-copper text-white text-[10px] font-extrabold uppercase tracking-wider">
+                                Pilihan Paket Usaha Siap Kustomisasi
+                            </span>
+                            <h2 className="text-xl sm:text-2xl font-extrabold text-brand-950">
+                                Pilih Paket Usaha Kedai Kopi &amp; Cafe (Custom Bundling)
+                            </h2>
+                            <p className="text-xs sm:text-sm text-brand-600">
+                                Klik salah satu paket di bawah ini untuk memilih sendiri Mesin Espresso, Grinder, dan Alat Barista pada setiap slot (+) dilengkapi bonus item GRATIS (Rp 0) dan slot OPTIONAL.
+                            </p>
+                        </div>
+
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {bundleProducts.map((bp) => {
+                                const bpImg = getProductImageUrl(bp, bp.variants?.[0]);
+                                const slotCount = Array.isArray(bp.bundle_config?.slots) ? bp.bundle_config.slots.length : 0;
+                                return (
+                                    <Link
+                                        key={bp.id}
+                                        href={`/shop/${bp.slug}`}
+                                        className="group bg-white rounded-2xl border border-sand-200/90 hover:border-accent-copper shadow-xs hover:shadow-lg transition-all overflow-hidden flex flex-col justify-between"
+                                    >
+                                        <div>
+                                            <div className="relative aspect-square bg-cream-50 overflow-hidden">
+                                                <img
+                                                    src={bpImg}
+                                                    alt={bp.name}
+                                                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                                />
+                                                <span className="absolute top-3 left-3 px-3 py-1 rounded-full bg-brand-950/90 text-white text-[10px] font-extrabold uppercase tracking-wider shadow-sm">
+                                                    Custom Bundling ({slotCount} Slot)
+                                                </span>
+                                            </div>
+                                            <div className="p-4 space-y-1.5">
+                                                <h3 className="text-base font-extrabold text-brand-950 group-hover:text-accent-copper transition-colors">
+                                                    {bp.name}
+                                                </h3>
+                                                {bp.short_description && (
+                                                    <p className="text-xs text-brand-600 line-clamp-2 leading-relaxed">
+                                                        {bp.short_description}
+                                                    </p>
+                                                )}
+                                            </div>
+                                        </div>
+                                        <div className="px-4 pb-4 pt-2 border-t border-sand-100 flex items-center justify-between">
+                                            <span className="text-xs font-extrabold text-accent-copper uppercase tracking-wider">
+                                                Pilih Komponen Paket →
+                                            </span>
+                                        </div>
+                                    </Link>
+                                );
+                            })}
+                        </div>
+                    </section>
+                )}
+
                 {/* Main Grid: Left Builder (8 cols) + Right Sticky Summary (4 cols) */}
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
                     {/* Left Column: Step 1 (Produk Wajib) & Step 2 (Produk Opsional) */}
@@ -1093,3 +1154,4 @@ export default function CustomBundlePage({
         </PublicLayout>
     );
 }
+
