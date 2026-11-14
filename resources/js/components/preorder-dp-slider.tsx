@@ -28,15 +28,46 @@ export function normalizeMinDpPercentage(val: unknown): DpPercentage {
     return 30;
 }
 
-export function calculateDpBreakdown(totalAmount: number, dpPercentage: number, minDpPercentage?: number) {
+export function calculateDpBreakdown(
+    totalAmount: number,
+    dpPercentage: number,
+    minDpPercentage?: number,
+    preOrderAmount?: number,
+    nonPreOrderAmount?: number,
+) {
     const pct = normalizeDpPercentage(dpPercentage, minDpPercentage);
     const safeTotal = Math.max(0, Math.round(Number(totalAmount) || 0));
-    const dpAmount = pct === 100 ? safeTotal : Math.round((safeTotal * pct) / 100);
-    const remainingBalance = Math.max(0, safeTotal - dpAmount);
+
+    const hasExplicitSplit =
+        typeof preOrderAmount === 'number' &&
+        preOrderAmount >= 0 &&
+        (preOrderAmount < safeTotal || (typeof nonPreOrderAmount === 'number' && nonPreOrderAmount > 0));
+
+    const preOrderTotal = hasExplicitSplit
+        ? Math.min(safeTotal, Math.max(0, Math.round(Number(preOrderAmount) || 0)))
+        : safeTotal;
+
+    const nonPreOrderTotal =
+        typeof nonPreOrderAmount === 'number' && nonPreOrderAmount >= 0
+            ? Math.max(0, Math.round(Number(nonPreOrderAmount) || 0))
+            : Math.max(0, safeTotal - preOrderTotal);
+
+    const extraFullAmount = Math.max(0, safeTotal - preOrderTotal - nonPreOrderTotal);
+
+    // DP percentage applies ONLY to Pre-Order products; Non-Pre-Order products are paid 100% (Lunas)
+    const dpPreOrderAmount =
+        pct === 100 ? preOrderTotal : Math.round((preOrderTotal * pct) / 100);
+    const remainingBalance = Math.max(0, preOrderTotal - dpPreOrderAmount);
+    const dpAmount = Math.max(0, safeTotal - remainingBalance);
 
     return {
         dpPercentage: pct,
-        isDp: pct < 100,
+        isDp: pct < 100 && remainingBalance > 0,
+        hasMixedItems: nonPreOrderTotal > 0 && preOrderTotal > 0,
+        preOrderTotal,
+        nonPreOrderTotal,
+        extraFullAmount,
+        dpPreOrderAmount,
         fullTotal: safeTotal,
         dpAmount,
         remainingBalance,
@@ -48,6 +79,8 @@ interface PreorderDpSliderProps {
     totalAmount: number;
     dpPercentage: DpPercentage;
     minDpPercentage?: DpPercentage;
+    preOrderAmount?: number;
+    nonPreOrderAmount?: number;
     onChange: (nextPercentage: DpPercentage) => void;
     title?: string;
     compact?: boolean;
@@ -57,6 +90,8 @@ export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
     totalAmount,
     dpPercentage,
     minDpPercentage = 30,
+    preOrderAmount,
+    nonPreOrderAmount,
     onChange,
     title = 'Pengaturan Pembayaran DP (Down Payment) Pre-Order',
     compact = false,
@@ -66,7 +101,13 @@ export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
     const stepIndex = Math.max(0, DP_PERCENTAGE_STEPS.indexOf(activePct));
     const progressPercent = (stepIndex / (DP_PERCENTAGE_STEPS.length - 1)) * 100;
 
-    const breakdown = calculateDpBreakdown(totalAmount, activePct, minPct);
+    const breakdown = calculateDpBreakdown(
+        totalAmount,
+        activePct,
+        minPct,
+        preOrderAmount,
+        nonPreOrderAmount,
+    );
 
     const handleSliderChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const idx = Number(e.target.value);
@@ -196,6 +237,23 @@ export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
 
             {/* Automatic Calculation & Reduction Box */}
             <div className="pt-2.5 border-t border-amber-200/80 space-y-1.5 text-xs">
+                {breakdown.hasMixedItems && (
+                    <div className="p-2.5 rounded-xl bg-white/90 border border-amber-200/80 space-y-1 mb-1">
+                        <div className="flex items-center justify-between text-brand-700">
+                            <span>Akumulasi Produk Pre-Order (Berlaku DP):</span>
+                            <span className="font-bold text-amber-800 whitespace-nowrap">
+                                {formatRupiah(breakdown.preOrderTotal)}
+                            </span>
+                        </div>
+                        <div className="flex items-center justify-between text-brand-700">
+                            <span>Akumulasi Produk Non Pre-Order (Wajib Lunas 100%):</span>
+                            <span className="font-bold text-brand-950 whitespace-nowrap">
+                                {formatRupiah(breakdown.nonPreOrderTotal)}
+                            </span>
+                        </div>
+                    </div>
+                )}
+
                 <div className="flex items-center justify-between text-brand-700">
                     <span>Total Harga Penuh (100%):</span>
                     <span className="font-semibold text-brand-950 whitespace-nowrap">
@@ -205,20 +263,36 @@ export const PreorderDpSlider: React.FC<PreorderDpSliderProps> = ({
 
                 {breakdown.isDp ? (
                     <>
+                        {breakdown.hasMixedItems && (
+                            <div className="flex items-center justify-between text-brand-700">
+                                <span>DP Produk Pre-Order ({breakdown.dpPercentage}%):</span>
+                                <span className="font-semibold text-emerald-700 whitespace-nowrap">
+                                    {formatRupiah(breakdown.dpPreOrderAmount)}
+                                </span>
+                            </div>
+                        )}
                         <div className="flex items-center justify-between text-amber-800">
-                            <span>Sisa Pelunasan ({breakdown.remainingPercentage}% — Dikurangi dari Total Sekarang):</span>
+                            <span>
+                                {breakdown.hasMixedItems
+                                    ? `Sisa Pelunasan Pre-Order (${breakdown.remainingPercentage}% — Dikurangi dari Total):`
+                                    : `Sisa Pelunasan (${breakdown.remainingPercentage}% — Dikurangi dari Total Sekarang):`}
+                            </span>
                             <span className="font-bold text-red-600 whitespace-nowrap">
                                 -{formatRupiah(breakdown.remainingBalance)}
                             </span>
                         </div>
                         <div className="flex items-center justify-between pt-1.5 border-t border-amber-200/60 text-xs sm:text-sm font-black text-brand-950">
-                            <span>Total yang Harus Dibayar (DP {breakdown.dpPercentage}%):</span>
+                            <span>
+                                {breakdown.hasMixedItems
+                                    ? `Total yang Harus Dibayar (DP ${breakdown.dpPercentage}% PO + Non-PO Lunas):`
+                                    : `Total yang Harus Dibayar (DP ${breakdown.dpPercentage}%):`}
+                            </span>
                             <span className="text-emerald-700 text-sm sm:text-base whitespace-nowrap">
                                 {formatRupiah(breakdown.dpAmount)}
                             </span>
                         </div>
                         <div className="flex items-center justify-between text-[11px] text-brand-600 bg-amber-100/60 px-2.5 py-1.5 rounded-lg border border-amber-200/80">
-                            <span>Sisa yang Dilunasi Saat Barang Siap ({breakdown.remainingPercentage}%):</span>
+                            <span>Sisa yang Dilunasi Saat Barang Pre-Order Siap ({breakdown.remainingPercentage}%):</span>
                             <span className="font-bold text-brand-950 whitespace-nowrap">
                                 {formatRupiah(breakdown.remainingBalance)}
                             </span>

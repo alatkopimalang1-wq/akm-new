@@ -139,45 +139,62 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
     };
 
     // Calculate totals across all selected required/optional slots + free slots
-    const { totalNormalPrice, totalBundlePrice, totalWeightGrams, unfulfilledRequiredIndices, unfulfilledFreeVariantIndices } =
-        useMemo(() => {
-            let normalSum = 0;
-            let bundleSum = 0;
-            let weightSum = 0;
-            const missingReq: number[] = [];
-            const missingFreeVar: number[] = [];
+    const {
+        totalNormalPrice,
+        totalBundlePrice,
+        preOrderBundlePrice,
+        nonPreOrderBundlePrice,
+        totalWeightGrams,
+        unfulfilledRequiredIndices,
+        unfulfilledFreeVariantIndices,
+    } = useMemo(() => {
+        let normalSum = 0;
+        let bundleSum = 0;
+        let preOrderSum = 0;
+        let nonPreOrderSum = 0;
+        let weightSum = 0;
+        const missingReq: number[] = [];
+        const missingFreeVar: number[] = [];
 
-            for (const slot of slots) {
-                if (slot.slot_type === 'free') {
-                    const freeProd = selectedBySlot[slot.index] || slot.free_product;
-                    if (freeProd) {
-                        normalSum += Number(freeProd.normal_price) || 0;
-                        weightSum += Number(freeProd.weight_grams) || 200;
-                        if (hasMultipleVariants(slot.free_product) && !selectedBySlot[slot.index]) {
-                            missingFreeVar.push(slot.index);
-                        }
-                    }
-                } else {
-                    const chosen = selectedBySlot[slot.index];
-                    if (chosen) {
-                        const sQty = Math.max(1, slotQuantities[slot.index] || 1);
-                        normalSum += (Number(chosen.normal_price) || 0) * sQty;
-                        bundleSum += (Number(chosen.bundle_price) || 0) * sQty;
-                        weightSum += (Number(chosen.weight_grams) || 500) * sQty;
-                    } else if (slot.slot_type === 'required') {
-                        missingReq.push(slot.index);
+        for (const slot of slots) {
+            if (slot.slot_type === 'free') {
+                const freeProd = selectedBySlot[slot.index] || slot.free_product;
+                if (freeProd) {
+                    normalSum += Number(freeProd.normal_price) || 0;
+                    weightSum += Number(freeProd.weight_grams) || 200;
+                    if (hasMultipleVariants(slot.free_product) && !selectedBySlot[slot.index]) {
+                        missingFreeVar.push(slot.index);
                     }
                 }
+            } else {
+                const chosen = selectedBySlot[slot.index];
+                if (chosen) {
+                    const sQty = Math.max(1, slotQuantities[slot.index] || 1);
+                    const lineBundlePrice = (Number(chosen.bundle_price) || 0) * sQty;
+                    normalSum += (Number(chosen.normal_price) || 0) * sQty;
+                    bundleSum += lineBundlePrice;
+                    if (chosen.is_preorder) {
+                        preOrderSum += lineBundlePrice;
+                    } else {
+                        nonPreOrderSum += lineBundlePrice;
+                    }
+                    weightSum += (Number(chosen.weight_grams) || 500) * sQty;
+                } else if (slot.slot_type === 'required') {
+                    missingReq.push(slot.index);
+                }
             }
+        }
 
-            return {
-                totalNormalPrice: normalSum,
-                totalBundlePrice: bundleSum,
-                totalWeightGrams: Math.max(500, weightSum),
-                unfulfilledRequiredIndices: missingReq,
-                unfulfilledFreeVariantIndices: missingFreeVar,
-            };
-        }, [slots, selectedBySlot, slotQuantities]);
+        return {
+            totalNormalPrice: normalSum,
+            totalBundlePrice: bundleSum,
+            preOrderBundlePrice: preOrderSum,
+            nonPreOrderBundlePrice: nonPreOrderSum,
+            totalWeightGrams: Math.max(500, weightSum),
+            unfulfilledRequiredIndices: missingReq,
+            unfulfilledFreeVariantIndices: missingFreeVar,
+        };
+    }, [slots, selectedBySlot, slotQuantities]);
 
     React.useEffect(() => {
         if (onTotalChange) {
@@ -308,12 +325,13 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(chosen) && chosen.variant_label
                             ? ` - Variasi: ${chosen.variant_label}`
                             : '';
+                    const poTag = chosen.is_preorder ? ' [Pre-Order]' : '';
                     const normTotal = (Number(chosen.normal_price) || 0) * sQty;
                     const discTotal = (Number(chosen.bundle_price) || 0) * sQty;
                     if (normTotal > discTotal) {
-                        parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(normTotal)} -> ${formatRupiah(discTotal)})`);
+                        parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo}${poTag} (${formatRupiah(normTotal)} -> ${formatRupiah(discTotal)})`);
                     } else {
-                        parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(discTotal)})`);
+                        parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo}${poTag} (${formatRupiah(discTotal)})`);
                     }
                 }
             }
@@ -321,16 +339,21 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
         return parts.join('\n');
     };
 
+    const hasPreOrderSlotSelected = useMemo(
+        () => Object.values(selectedBySlot).some((item) => Boolean(item?.is_preorder)),
+        [selectedBySlot],
+    );
+
     const isBundlePreOrder = useMemo(() => {
-        if (
+        if (slots.length > 0) {
+            return hasPreOrderSlotSelected;
+        }
+        return Boolean(
             product.is_preorder ||
             product.stock_status === 'pre_order' ||
-            defaultVariant.stock_status === 'pre_order'
-        ) {
-            return true;
-        }
-        return Object.values(selectedBySlot).some((item) => Boolean(item?.is_preorder));
-    }, [product.is_preorder, product.stock_status, defaultVariant.stock_status, selectedBySlot]);
+            defaultVariant.stock_status === 'pre_order',
+        );
+    }, [slots.length, hasPreOrderSlotSelected, product.is_preorder, product.stock_status, defaultVariant.stock_status]);
 
     const bundleMinDpPct = useMemo(() => {
         let maxMin: number = baseMinDp;
@@ -346,11 +369,23 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
     const isBundleDpEnabled = isBundlePreOrder && (product as any).dp_enabled !== false;
     const effectiveUnitPrice =
         totalBundlePrice > 0 ? totalBundlePrice : Number(defaultVariant.price || product.min_price || 0);
-    const bundleTotalAmount = effectiveUnitPrice * Math.max(1, quantity);
+    const effectivePreOrderUnitPrice =
+        slots.length > 0
+            ? preOrderBundlePrice
+            : isBundlePreOrder
+              ? effectiveUnitPrice
+              : 0;
+    const effectiveNonPreOrderUnitPrice = Math.max(0, effectiveUnitPrice - effectivePreOrderUnitPrice);
+    const qtyCount = Math.max(1, quantity);
+    const bundleTotalAmount = effectiveUnitPrice * qtyCount;
+    const preOrderTotalAmount = effectivePreOrderUnitPrice * qtyCount;
+    const nonPreOrderTotalAmount = effectiveNonPreOrderUnitPrice * qtyCount;
     const bundleDpBreakdown = calculateDpBreakdown(
         bundleTotalAmount,
         isBundleDpEnabled ? effectiveSelectedDp : 100,
         bundleMinDpPct,
+        preOrderTotalAmount,
+        nonPreOrderTotalAmount,
     );
 
     const handleBuyNow = () => {
@@ -372,6 +407,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
             isPreOrder: isBundlePreOrder,
             dpPercentage: isBundleDpEnabled ? effectiveSelectedDp : 100,
             minDpPercentage: bundleMinDpPct,
+            unitPreOrderPrice: effectivePreOrderUnitPrice,
         });
         setIsAdded(true);
         setTimeout(() => setIsAdded(false), 1500);
@@ -414,9 +450,14 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
             msg += `• Hemat: ${formatRupiah((totalNormalPrice - finalUnitPrice) * quantity)}\n`;
         }
         if (isBundleDpEnabled && bundleDpBreakdown.isDp) {
+            if (bundleDpBreakdown.hasMixedItems) {
+                msg += `• Total Produk Pre-Order (Berlaku DP): ${formatRupiah(bundleDpBreakdown.preOrderTotal)}\n`;
+                msg += `• Total Produk Non Pre-Order (Lunas 100%): ${formatRupiah(bundleDpBreakdown.nonPreOrderTotal)}\n`;
+                msg += `• DP Produk Pre-Order (${bundleDpBreakdown.dpPercentage}%): ${formatRupiah(bundleDpBreakdown.dpPreOrderAmount)}\n`;
+            }
             msg += `• Total Harga Diskon (100%): ${formatRupiah(bundleDpBreakdown.fullTotal)}\n`;
-            msg += `• *Total Dibayar Sekarang (DP ${bundleDpBreakdown.dpPercentage}%): ${formatRupiah(bundleDpBreakdown.dpAmount)}*\n`;
-            msg += `• Sisa Pelunasan (${bundleDpBreakdown.remainingPercentage}%): ${formatRupiah(bundleDpBreakdown.remainingBalance)}\n\nMohon konfirmasi ketersediaan stok & pengiriman. Terima kasih!`;
+            msg += `• *Total Dibayar Sekarang: ${formatRupiah(bundleDpBreakdown.dpAmount)}*\n`;
+            msg += `• Sisa Pelunasan Pre-Order (${bundleDpBreakdown.remainingPercentage}%): ${formatRupiah(bundleDpBreakdown.remainingBalance)}\n\nMohon konfirmasi ketersediaan stok & pengiriman. Terima kasih!`;
         } else {
             msg += `• *Total Bayar: ${formatRupiah(finalUnitPrice * quantity)}*\n\nMohon konfirmasi ketersediaan stok & pengiriman. Terima kasih!`;
         }
@@ -634,12 +675,19 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                             className="py-3 flex items-center justify-between gap-2 sm:gap-3"
                         >
                             <div className="flex-1 min-w-0">
-                                <Link
-                                    href={`/shop/${chosen.slug}`}
-                                    className="text-neutral-700 underline hover:text-brand-900 line-clamp-2"
-                                >
-                                    {chosen.name}
-                                </Link>
+                                <div className="flex flex-wrap items-center gap-1.5">
+                                    <Link
+                                        href={`/shop/${chosen.slug}`}
+                                        className="text-neutral-700 underline hover:text-brand-900 line-clamp-2"
+                                    >
+                                        {chosen.name}
+                                    </Link>
+                                    {chosen.is_preorder && (
+                                        <span className="px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 text-[9px] font-extrabold uppercase tracking-wider shrink-0">
+                                            Pre-Order
+                                        </span>
+                                    )}
+                                </div>
                                 {hasMultipleVariants(chosen) && chosen.variant_label && (
                                     <span className="block text-[11px] font-bold text-accent-copper mt-0.5">
                                         Variasi: {chosen.variant_label}
@@ -696,9 +744,32 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
             {/* Bottom Total Order, Quantity Stepper & Action Buttons (After Daftar Pesanan) */}
             <div className="pt-3 border-t border-neutral-200 space-y-3">
+                {/* Akumulasi Harga Produk Pre-Order & Non Pre-Order */}
+                {totalBundlePrice > 0 && isBundlePreOrder && (
+                    <div className="p-3.5 rounded-2xl bg-sand-50/80 border border-sand-200 space-y-1.5 text-xs">
+                        <div className="text-[10px] font-black uppercase tracking-wider text-brand-700 pb-1 border-b border-sand-200/80">
+                            Rincian Akumulasi Produk Pre-Order & Non Pre-Order
+                        </div>
+                        <div className="flex items-center justify-between gap-2 text-brand-800">
+                            <span>Total Harga Produk Pre-Order (Berlaku DP):</span>
+                            <span className="font-extrabold text-amber-800 whitespace-nowrap">
+                                {formatRupiah(preOrderTotalAmount)}
+                            </span>
+                        </div>
+                        <div className="flex items-center justify-between gap-2 text-brand-800">
+                            <span>Total Harga Produk Non Pre-Order (Dibayar Lunas 100%):</span>
+                            <span className="font-extrabold text-brand-950 whitespace-nowrap">
+                                {formatRupiah(nonPreOrderTotalAmount)}
+                            </span>
+                        </div>
+                    </div>
+                )}
+
                 {isBundleDpEnabled && (
                     <PreorderDpSlider
                         totalAmount={bundleTotalAmount}
+                        preOrderAmount={preOrderTotalAmount}
+                        nonPreOrderAmount={nonPreOrderTotalAmount}
                         dpPercentage={effectiveSelectedDp}
                         minDpPercentage={bundleMinDpPct}
                         onChange={handleDpChange}

@@ -119,10 +119,37 @@ export default function OrderShowPage({
     );
 
     const fullOrderBaseTotal = Number(order.subtotal || 0) + Number(order.shipping_cost || 0);
+    const computedPreOrderSubtotal = order.items.reduce((sum, item) => {
+        const p = getBundlePricingSummary({
+            customNotes: String(item.custom_notes || (item as any).customNotes || ''),
+            unitPrice: item.price,
+            quantity: item.quantity,
+            originalUnitPrice: (item as any).original_price,
+        });
+        if (p.lines.length > 0 && p.hasPreOrderSubItem) {
+            return sum + p.totalPreOrderPrice;
+        }
+        if (item.is_preorder && p.lines.length === 0) {
+            return sum + Number(item.subtotal || item.price * item.quantity);
+        }
+        return sum;
+    }, 0);
+    const orderPreOrderSubtotal =
+        Number((order.payment_details as any)?.preorder_subtotal || 0) > 0
+            ? Number((order.payment_details as any)?.preorder_subtotal)
+            : computedPreOrderSubtotal > 0
+              ? computedPreOrderSubtotal
+              : orderHasPreOrder
+                ? Number(order.subtotal || 0)
+                : 0;
+    const orderNonPreOrderSubtotal = Math.max(0, Number(order.subtotal || 0) - orderPreOrderSubtotal);
+
     const dpBreakdown = calculateDpBreakdown(
         fullOrderBaseTotal,
         orderHasPreOrder ? dpPercentage : 100,
         orderMinDp,
+        orderPreOrderSubtotal,
+        orderNonPreOrderSubtotal,
     );
     const effectiveTotalAmount = orderHasPreOrder
         ? dpBreakdown.dpAmount + Number(order.unique_code || 0)
@@ -345,6 +372,8 @@ export default function OrderShowPage({
                     {orderHasPreOrder && order.payment_status !== 'paid' && (
                         <PreorderDpSlider
                             totalAmount={fullOrderBaseTotal}
+                            preOrderAmount={orderPreOrderSubtotal}
+                            nonPreOrderAmount={orderNonPreOrderSubtotal}
                             dpPercentage={dpPercentage}
                             minDpPercentage={orderMinDp}
                             onChange={handleUpdateOrderDp}
@@ -741,6 +770,11 @@ export default function OrderShowPage({
                                                         </strong>
                                                     )}
                                                     <span>{line.text}</span>
+                                                    {line.isPreOrder && (
+                                                        <span className="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 text-[9px] font-extrabold uppercase tracking-wider whitespace-nowrap">
+                                                            Pre-Order
+                                                        </span>
+                                                    )}
                                                     {line.discountPrice && (
                                                         <span>
                                                             {' ('}
@@ -774,6 +808,22 @@ export default function OrderShowPage({
                                                         {formatRupiah(pricing.totalDiscountPrice)}
                                                     </span>
                                                 </div>
+                                                {pricing.hasPreOrderSubItem && (
+                                                    <div className="pt-1 mt-1 border-t border-sand-100 space-y-0.5">
+                                                        <div className="flex items-center justify-between text-[11px] text-amber-800">
+                                                            <span>Total Produk Pre-Order (Berlaku DP):</span>
+                                                            <span className="font-bold whitespace-nowrap">
+                                                                {formatRupiah(pricing.totalPreOrderPrice)}
+                                                            </span>
+                                                        </div>
+                                                        <div className="flex items-center justify-between text-[11px] text-brand-700">
+                                                            <span>Total Produk Non Pre-Order (Lunas 100%):</span>
+                                                            <span className="font-bold text-brand-950 whitespace-nowrap">
+                                                                {formatRupiah(pricing.totalNonPreOrderPrice)}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
                                     )}
@@ -841,6 +891,18 @@ export default function OrderShowPage({
                                         <span>Kode Unik Verifikasi</span>
                                         <span className="font-semibold text-brand-950">+{order.unique_code}</span>
                                     </div>
+                                )}
+                                {orderHasPreOrder && orderNonPreOrderSubtotal > 0 && (
+                                    <>
+                                        <div className="flex items-center justify-between text-amber-800">
+                                            <span>Akumulasi Produk Pre-Order (Berlaku DP)</span>
+                                            <span className="font-bold">{formatRupiah(orderPreOrderSubtotal)}</span>
+                                        </div>
+                                        <div className="flex items-center justify-between text-brand-700">
+                                            <span>Akumulasi Produk Non Pre-Order (Lunas 100%)</span>
+                                            <span className="font-bold text-brand-950">{formatRupiah(orderNonPreOrderSubtotal)}</span>
+                                        </div>
+                                    </>
                                 )}
                                 {orderHasPreOrder && dpBreakdown.isDp ? (
                                     <>

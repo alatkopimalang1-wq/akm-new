@@ -33,6 +33,7 @@ class CheckoutController extends Controller
             'items.*.grind_option' => 'nullable|string|max:100',
             'items.*.custom_notes' => 'nullable|string|max:2000',
             'items.*.is_preorder' => 'nullable|boolean',
+            'items.*.pre_order_subtotal' => 'nullable|numeric|min:0',
             'dp_percentage' => 'nullable|integer|in:30,50,70,100',
             'fulfillment_type' => 'nullable|string|in:delivery,pickup',
             'customer.name' => 'required|string|max:100',
@@ -63,6 +64,7 @@ class CheckoutController extends Controller
         $storeAddress = $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144');
 
         $subtotal = 0;
+        $preOrderSubtotal = 0.0;
         $totalWeightGrams = 0;
         $orderLines = [];
         $hasPreOrder = false;
@@ -80,19 +82,6 @@ class CheckoutController extends Controller
                 ], 422);
             }
 
-            if (
-                ! empty($item['is_preorder']) ||
-                $variant->stock_status === 'pre_order' ||
-                $variant->product->is_preorder ||
-                $variant->product->stock_status === 'pre_order'
-            ) {
-                $hasPreOrder = true;
-                $prodMinDp = (int) ($variant->product->min_dp_percentage ?? 30);
-                if (in_array($prodMinDp, [30, 50, 70, 100], true)) {
-                    $orderMinDp = max($orderMinDp, $prodMinDp);
-                }
-            }
-
             $qty = $item['quantity'];
             $unitPrice = (($variant->product->slug === 'byob' || $variant->product->is_custom_bundle) && isset($item['price']) && is_numeric($item['price']))
                 ? (float) $item['price']
@@ -107,6 +96,36 @@ class CheckoutController extends Controller
                 $qty,
                 $variant->original_price ? (float) $variant->original_price : null
             );
+
+            $itemPreOrderSub = 0.0;
+            if (! empty($enrichedNotes['has_bundle_lines'])) {
+                $itemPreOrderSub = (float) ($enrichedNotes['preorder_subtotal'] ?? 0.0);
+                if ($itemPreOrderSub <= 0 && isset($item['pre_order_subtotal'])) {
+                    $itemPreOrderSub = min($lineTotal, max(0.0, (float) $item['pre_order_subtotal']));
+                }
+            } elseif (
+                ! empty($item['is_preorder']) ||
+                $variant->stock_status === 'pre_order' ||
+                $variant->product->is_preorder ||
+                $variant->product->stock_status === 'pre_order'
+            ) {
+                $itemPreOrderSub = $lineTotal;
+            }
+
+            if (
+                $itemPreOrderSub > 0 ||
+                ! empty($item['is_preorder']) ||
+                $variant->stock_status === 'pre_order' ||
+                $variant->product->is_preorder ||
+                $variant->product->stock_status === 'pre_order'
+            ) {
+                $hasPreOrder = true;
+                $preOrderSubtotal += $itemPreOrderSub;
+                $prodMinDp = (int) ($variant->product->min_dp_percentage ?? 30);
+                if (in_array($prodMinDp, [30, 50, 70, 100], true)) {
+                    $orderMinDp = max($orderMinDp, $prodMinDp);
+                }
+            }
 
             $orderLines[] = [
                 'product_id' => $variant->product_id,
@@ -168,11 +187,16 @@ class CheckoutController extends Controller
             $dpPercentage = max($orderMinDp, $dpPercentage);
         }
         $fullTotalAmount = (float) ($subtotal + $shippingCost);
-        $isPreOrderDp = ($hasPreOrder || $dpPercentage < 100) && $dpPercentage < 100;
-        $dpBaseAmount = $isPreOrderDp
-            ? (float) round(($fullTotalAmount * $dpPercentage) / 100)
-            : $fullTotalAmount;
-        $remainingBalance = (float) max(0, $fullTotalAmount - $dpBaseAmount);
+        $effectivePreOrderBase = $preOrderSubtotal > 0
+            ? min((float) $subtotal, $preOrderSubtotal)
+            : ($hasPreOrder ? (float) $subtotal : 0.0);
+        $nonPreOrderSubtotal = (float) max(0, $subtotal - $effectivePreOrderBase);
+        $isPreOrderDp = ($hasPreOrder || $dpPercentage < 100) && $dpPercentage < 100 && $effectivePreOrderBase > 0;
+        $dpPreOrderAmount = $isPreOrderDp
+            ? (float) round(($effectivePreOrderBase * $dpPercentage) / 100)
+            : $effectivePreOrderBase;
+        $remainingBalance = (float) max(0, $effectivePreOrderBase - $dpPreOrderAmount);
+        $dpBaseAmount = (float) max(0, $fullTotalAmount - $remainingBalance);
 
         $totalAmount = $dpBaseAmount + $uniqueCode;
 
@@ -238,6 +262,9 @@ class CheckoutController extends Controller
             'is_preorder_dp' => $isPreOrderDp,
             'min_dp_percentage' => $orderMinDp,
             'dp_percentage' => $dpPercentage,
+            'preorder_subtotal' => $effectivePreOrderBase,
+            'non_preorder_subtotal' => $nonPreOrderSubtotal,
+            'dp_preorder_amount' => $dpPreOrderAmount,
             'full_total_amount' => $fullTotalAmount,
             'dp_amount' => $dpBaseAmount,
             'remaining_balance' => $remainingBalance,
@@ -613,17 +640,43 @@ class CheckoutController extends Controller
 
         $dpPercentage = max($minDp, (int) $validated['dp_percentage']);
         $fullTotalAmount = (float) ($order->subtotal + $order->shipping_cost);
-        $isPreOrderDp = $dpPercentage < 100;
-        $dpBaseAmount = $isPreOrderDp
-            ? (float) round(($fullTotalAmount * $dpPercentage) / 100)
-            : $fullTotalAmount;
-        $remainingBalance = (float) max(0, $fullTotalAmount - $dpBaseAmount);
+
+        $preOrderBase = (float) ($order->payment_details['preorder_subtotal'] ?? 0);
+        if ($preOrderBase <= 0) {
+            $order->loadMissing(['items.product', 'items.variant']);
+            foreach ($order->items as $item) {
+                $pricing = $item->resolveBundlePricing();
+                if (! empty($pricing['has_bundle_lines']) && ($pricing['preorder_subtotal'] ?? 0) > 0) {
+                    $preOrderBase += (float) $pricing['preorder_subtotal'];
+                } elseif (
+                    ($item->product && ($item->product->is_preorder || $item->product->stock_status === 'pre_order')) ||
+                    ($item->variant && $item->variant->stock_status === 'pre_order')
+                ) {
+                    $preOrderBase += (float) $item->subtotal;
+                }
+            }
+            if ($preOrderBase <= 0) {
+                $preOrderBase = (float) $order->subtotal;
+            }
+        }
+        $preOrderBase = min((float) $order->subtotal, $preOrderBase);
+        $nonPreOrderBase = (float) max(0, $order->subtotal - $preOrderBase);
+
+        $isPreOrderDp = $dpPercentage < 100 && $preOrderBase > 0;
+        $dpPreOrderAmount = $isPreOrderDp
+            ? (float) round(($preOrderBase * $dpPercentage) / 100)
+            : $preOrderBase;
+        $remainingBalance = (float) max(0, $preOrderBase - $dpPreOrderAmount);
+        $dpBaseAmount = (float) max(0, $fullTotalAmount - $remainingBalance);
         $newTotalAmount = $dpBaseAmount + (int) $order->unique_code;
 
         $paymentDetails = is_array($order->payment_details) ? $order->payment_details : [];
         $paymentDetails['has_preorder'] = true;
         $paymentDetails['is_preorder_dp'] = $isPreOrderDp;
         $paymentDetails['dp_percentage'] = $dpPercentage;
+        $paymentDetails['preorder_subtotal'] = $preOrderBase;
+        $paymentDetails['non_preorder_subtotal'] = $nonPreOrderBase;
+        $paymentDetails['dp_preorder_amount'] = $dpPreOrderAmount;
         $paymentDetails['full_total_amount'] = $fullTotalAmount;
         $paymentDetails['dp_amount'] = $dpBaseAmount;
         $paymentDetails['remaining_balance'] = $remainingBalance;

@@ -144,6 +144,7 @@ export interface CartItem {
     customNotes?: string;
     isPreOrder?: boolean;
     minDpPercentage?: number;
+    unitPreOrderPrice?: number;
 }
 
 export interface MegaMenuItem {

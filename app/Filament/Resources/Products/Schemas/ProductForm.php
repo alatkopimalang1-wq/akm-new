@@ -180,7 +180,7 @@ class ProductForm
                                 ->live(),
                         ]),
                         Grid::make(3)
-                            ->visible(fn (callable $get): bool => (bool) $get('is_preorder') || ($get('stock_status') ?? '') === 'pre_order')
+                            ->visible(fn (callable $get): bool => (bool) $get('is_preorder') || ($get('stock_status') ?? '') === 'pre_order' || (bool) $get('is_custom_bundle'))
                             ->schema([
                                 Toggle::make('bundle_config.dp_enabled')
                                     ->label('Aktifkan Pembayaran DP (Down Payment) Pre-Order')

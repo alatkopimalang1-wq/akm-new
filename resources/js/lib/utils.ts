@@ -18,6 +18,7 @@ export interface ParsedCustomNoteLine {
     discountPrice?: string | null;
     normalPriceNum?: number;
     discountPriceNum?: number;
+    isPreOrder?: boolean;
 }
 
 function parseRupiahToNumber(str?: string | null): number {
@@ -78,7 +79,9 @@ export function parseCustomNotes(notes?: string | null): ParsedCustomNoteLine[] 
                 /^(.*?)\s*\(\s*(Rp[\s\u00a0]*[\d.]+)\s*(?:->|→)\s*(Rp[\s\u00a0]*[\d.]+)\s*\)\s*$/i,
             );
             if (dualPriceMatch) {
-                const itemText = dualPriceMatch[1].trim();
+                const rawItemText = dualPriceMatch[1].trim();
+                const isPreOrder = /\[pre-?order\]/i.test(rawItemText) || /pre-?order/i.test(tag);
+                const itemText = rawItemText.replace(/\s*\[pre-?order\]\s*/gi, ' ').trim();
                 const normStr = dualPriceMatch[2].replace(/\u00a0/g, ' ').trim();
                 const discStr = dualPriceMatch[3].replace(/\u00a0/g, ' ').trim();
                 const normNum = parseRupiahToNumber(normStr);
@@ -90,13 +93,16 @@ export function parseCustomNotes(notes?: string | null): ParsedCustomNoteLine[] 
                     discountPrice: discStr,
                     normalPriceNum: Math.max(normNum, discNum),
                     discountPriceNum: discNum,
+                    isPreOrder,
                 };
             }
 
             // Check for single "(Rp Diskon)" at end of line
             const singlePriceMatch = fullRest.match(/^(.*?)\s*\(\s*(Rp[\s\u00a0]*[\d.]+)\s*\)\s*$/i);
             if (singlePriceMatch) {
-                const itemText = singlePriceMatch[1].trim();
+                const rawItemText = singlePriceMatch[1].trim();
+                const isPreOrder = /\[pre-?order\]/i.test(rawItemText) || /pre-?order/i.test(tag);
+                const itemText = rawItemText.replace(/\s*\[pre-?order\]\s*/gi, ' ').trim();
                 const discStr = singlePriceMatch[2].replace(/\u00a0/g, ' ').trim();
                 const discNum = parseRupiahToNumber(discStr);
                 return {
@@ -106,16 +112,19 @@ export function parseCustomNotes(notes?: string | null): ParsedCustomNoteLine[] 
                     discountPrice: discStr,
                     normalPriceNum: discNum,
                     discountPriceNum: discNum,
+                    isPreOrder,
                 };
             }
 
+            const isPreOrderFallback = /\[pre-?order\]/i.test(fullRest) || /pre-?order/i.test(tag);
             return {
                 tag,
-                text: fullRest,
+                text: fullRest.replace(/\s*\[pre-?order\]\s*/gi, ' ').trim(),
                 normalPrice: null,
                 discountPrice: null,
                 normalPriceNum: 0,
                 discountPriceNum: 0,
+                isPreOrder: isPreOrderFallback,
             };
         });
 }
@@ -138,6 +147,14 @@ export function getBundlePricingSummary(params: {
     const totalNormalPrice = unitNormalPrice * qty;
     const totalDiscountPrice = unitDiscountPrice * qty;
 
+    const unitPreOrderPrice = Math.min(
+        unitDiscountPrice,
+        lines.reduce((sum, l) => (l.isPreOrder ? sum + (l.discountPriceNum || 0) : sum), 0),
+    );
+    const unitNonPreOrderPrice = Math.max(0, unitDiscountPrice - unitPreOrderPrice);
+    const totalPreOrderPrice = unitPreOrderPrice * qty;
+    const totalNonPreOrderPrice = unitNonPreOrderPrice * qty;
+
     return {
         lines,
         unitNormalPrice,
@@ -145,5 +162,10 @@ export function getBundlePricingSummary(params: {
         totalNormalPrice,
         totalDiscountPrice,
         hasDiscount: totalNormalPrice > totalDiscountPrice,
+        hasPreOrderSubItem: unitPreOrderPrice > 0,
+        unitPreOrderPrice,
+        unitNonPreOrderPrice,
+        totalPreOrderPrice,
+        totalNonPreOrderPrice,
     };
 }

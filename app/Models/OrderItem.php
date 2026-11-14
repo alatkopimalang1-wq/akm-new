@@ -56,13 +56,66 @@ class OrderItem extends Model
                 'price' => $unitDiscountPrice,
                 'original_subtotal' => $unitNorm * $qty,
                 'subtotal' => $unitDiscountPrice * $qty,
+                'has_bundle_lines' => false,
+                'preorder_subtotal' => 0.0,
+                'non_preorder_subtotal' => $unitDiscountPrice * $qty,
             ];
         }
 
         $rawLines = preg_split('/\r\n|\r|\n/', trim($customNotes)) ?: [];
         $enrichedLines = [];
         $sumNormal = 0.0;
+        $sumPreOrderDiscount = 0.0;
         $hasBundleLines = false;
+
+        $checkLinePreOrder = function (string $prefix): array {
+            $hasPoTag = (bool) preg_match('/\[pre-?order\]/iu', $prefix);
+            $cleanPrefixNoPo = trim((string) preg_replace('/\s*\[pre-?order\]\s*/iu', ' ', $prefix));
+            $cleanPrefix = preg_replace('/^\[[^\]]+\]\s*/u', '', $cleanPrefixNoPo);
+            $slotQty = 1;
+            if (preg_match('/^(?:1x\s+)*(\d+)x\s+(.*)$/iu', (string) $cleanPrefix, $qm)) {
+                $slotQty = max(1, (int) $qm[1]);
+                $restName = trim($qm[2]);
+            } else {
+                $restName = trim((string) $cleanPrefix);
+            }
+
+            $varLabel = null;
+            if (preg_match('/^(.*?)\s+-\s+Variasi:\s*(.+)$/iu', $restName, $vm)) {
+                $prodName = trim($vm[1]);
+                $varLabel = trim($vm[2]);
+            } else {
+                $prodName = $restName;
+            }
+
+            $candProd = $prodName !== ''
+                ? Product::with('variants')->where('name', $prodName)->first()
+                : null;
+            $matchedVar = null;
+            if ($candProd) {
+                $matchedVar = $varLabel
+                    ? ($candProd->variants->first(fn ($v) => strtolower(trim((string) $v->label)) === strtolower($varLabel)) ?? $candProd->variants->first())
+                    : $candProd->variants->first();
+            }
+
+            $isPo = $hasPoTag || (bool) (
+                $candProd && (
+                    $candProd->is_preorder ||
+                    $candProd->stock_status === 'pre_order' ||
+                    $matchedVar?->stock_status === 'pre_order'
+                )
+            );
+
+            $finalPrefix = $isPo && ! $hasPoTag ? "{$cleanPrefixNoPo} [Pre-Order]" : $prefix;
+
+            return [
+                'is_preorder' => $isPo,
+                'slot_qty' => $slotQty,
+                'product' => $candProd,
+                'variant' => $matchedVar,
+                'prefix' => $finalPrefix,
+            ];
+        };
 
         foreach ($rawLines as $line) {
             $trimmed = trim($line);
@@ -71,12 +124,21 @@ class OrderItem extends Model
             }
 
             // Case 1: Line already has "(Rp Normal -> Rp Diskon)"
-            if (preg_match('/\(\s*Rp[\s\x{00a0}]*([\d.]+)\s*(?:->|→)\s*Rp[\s\x{00a0}]*([\d.]+)\s*\)\s*$/iu', $trimmed, $m)) {
-                $normVal = (float) str_replace('.', '', $m[1]);
-                $discVal = (float) str_replace('.', '', $m[2]);
+            if (preg_match('/^(.*)\(\s*Rp[\s\x{00a0}]*([\d.]+)\s*(?:->|→)\s*Rp[\s\x{00a0}]*([\d.]+)\s*\)\s*$/iu', $trimmed, $m)) {
+                $prefix = trim($m[1]);
+                $normVal = (float) str_replace('.', '', $m[2]);
+                $discVal = (float) str_replace('.', '', $m[3]);
                 $sumNormal += max($normVal, $discVal);
                 $hasBundleLines = true;
-                $enrichedLines[] = $trimmed;
+
+                $meta = $checkLinePreOrder($prefix);
+                if ($meta['is_preorder']) {
+                    $sumPreOrderDiscount += $discVal;
+                }
+
+                $normFmt = 'Rp ' . number_format(max($normVal, $discVal), 0, ',', '.');
+                $discFmt = 'Rp ' . number_format($discVal, 0, ',', '.');
+                $enrichedLines[] = "{$meta['prefix']} ({$normFmt} -> {$discFmt})";
                 continue;
             }
 
@@ -86,37 +148,21 @@ class OrderItem extends Model
                 $discVal = (float) str_replace('.', '', $m[2]);
                 $hasBundleLines = true;
 
-                // Strip leading tag e.g. [Item 1], [Slot 1], [Item Gratis], [Item Opsional]
-                $cleanPrefix = preg_replace('/^\[[^\]]+\]\s*/u', '', $prefix);
-                $slotQty = 1;
-                if (preg_match('/^(?:1x\s+)*(\d+)x\s+(.*)$/iu', (string) $cleanPrefix, $qm)) {
-                    $slotQty = max(1, (int) $qm[1]);
-                    $restName = trim($qm[2]);
-                } else {
-                    $restName = trim((string) $cleanPrefix);
-                }
+                $meta = $checkLinePreOrder($prefix);
+                $slotQty = $meta['slot_qty'];
+                $candProd = $meta['product'];
+                $matchedVar = $meta['variant'];
 
-                $varLabel = null;
-                if (preg_match('/^(.*?)\s+-\s+Variasi:\s*(.+)$/iu', $restName, $vm)) {
-                    $prodName = trim($vm[1]);
-                    $varLabel = trim($vm[2]);
-                } else {
-                    $prodName = $restName;
+                if ($meta['is_preorder']) {
+                    $sumPreOrderDiscount += $discVal;
                 }
 
                 $lineNorm = $discVal;
-                if ($prodName !== '') {
-                    $candProd = Product::with('variants')->where('name', $prodName)->first();
-                    if ($candProd) {
-                        $matchedVar = $varLabel
-                            ? ($candProd->variants->first(fn ($v) => strtolower(trim((string) $v->label)) === strtolower($varLabel)) ?? $candProd->variants->first())
-                            : $candProd->variants->first();
-
-                        $vBase = (float) ($matchedVar?->price ?? $candProd->min_price ?? 0);
-                        $vOrig = (float) (($matchedVar?->original_price ?? 0) > $vBase ? $matchedVar->original_price : $vBase);
-                        $unitNorm = max($vOrig, $vBase);
-                        $lineNorm = max($unitNorm * $slotQty, $discVal);
-                    }
+                if ($candProd) {
+                    $vBase = (float) ($matchedVar?->price ?? $candProd->min_price ?? 0);
+                    $vOrig = (float) (($matchedVar?->original_price ?? 0) > $vBase ? $matchedVar->original_price : $vBase);
+                    $unitNorm = max($vOrig, $vBase);
+                    $lineNorm = max($unitNorm * $slotQty, $discVal);
                 }
 
                 $sumNormal += $lineNorm;
@@ -124,9 +170,10 @@ class OrderItem extends Model
                 if ($lineNorm > $discVal) {
                     $normFmt = 'Rp ' . number_format($lineNorm, 0, ',', '.');
                     $discFmt = 'Rp ' . number_format($discVal, 0, ',', '.');
-                    $enrichedLines[] = "{$prefix} ({$normFmt} -> {$discFmt})";
+                    $enrichedLines[] = "{$meta['prefix']} ({$normFmt} -> {$discFmt})";
                 } else {
-                    $enrichedLines[] = $trimmed;
+                    $discFmt = 'Rp ' . number_format($discVal, 0, ',', '.');
+                    $enrichedLines[] = "{$meta['prefix']} ({$discFmt})";
                 }
 
                 continue;
@@ -139,12 +186,18 @@ class OrderItem extends Model
             ? $sumNormal
             : max((float) ($variantOriginalPrice ?? 0), $unitDiscountPrice);
 
+        $unitPreOrderDiscount = min($unitDiscountPrice, max(0.0, $sumPreOrderDiscount));
+        $unitNonPreOrderDiscount = max(0.0, $unitDiscountPrice - $unitPreOrderDiscount);
+
         return [
             'custom_notes' => implode("\n", $enrichedLines),
             'original_price' => $unitNormalPrice,
             'price' => $unitDiscountPrice,
             'original_subtotal' => $unitNormalPrice * $qty,
             'subtotal' => $unitDiscountPrice * $qty,
+            'has_bundle_lines' => $hasBundleLines,
+            'preorder_subtotal' => $unitPreOrderDiscount * $qty,
+            'non_preorder_subtotal' => $unitNonPreOrderDiscount * $qty,
         ];
     }
 

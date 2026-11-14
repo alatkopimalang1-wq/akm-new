@@ -26,7 +26,7 @@ import {
     Truck,
 } from 'lucide-react';
 import { PublicLayout } from '@/layouts/public-layout';
-import { isCartItemPreOrder, useCart } from '@/context/cart-context';
+import { getCartItemPreOrderBreakdown, isCartItemPreOrder, useCart } from '@/context/cart-context';
 import { formatRupiah } from '@/lib/trans';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 import { ShippingMapPicker } from '@/components/shipping-map-picker';
@@ -143,6 +143,8 @@ export default function CartPage({
         items,
         itemCount,
         subtotal,
+        preOrderSubtotal,
+        nonPreOrderSubtotal,
         hasPreOrderItems,
         minDpPercentage,
         dpPercentage,
@@ -371,9 +373,15 @@ export default function CartPage({
     const isFreeShipping = subtotal >= freeShippingMin;
     const shortageForFreeShipping = Math.max(0, freeShippingMin - subtotal);
 
-    // Grand total & Pre-Order Down Payment calculation
+    // Grand total & Pre-Order Down Payment calculation (DP applies ONLY to Pre-Order products; Non-Pre-Order + shipping paid 100%)
     const grandTotal = subtotal + shippingCost;
-    const dpBreakdown = calculateDpBreakdown(grandTotal, hasPreOrderItems ? dpPercentage : 100);
+    const dpBreakdown = calculateDpBreakdown(
+        grandTotal,
+        hasPreOrderItems ? dpPercentage : 100,
+        minDpPercentage,
+        preOrderSubtotal,
+        nonPreOrderSubtotal + shippingCost,
+    );
     const payableNow = dpBreakdown.dpAmount;
 
     // Names of selected province and city
@@ -414,6 +422,7 @@ export default function CartPage({
                     custom_notes: i.customNotes,
                     price: i.variant.price,
                     is_preorder: isCartItemPreOrder(i),
+                    pre_order_subtotal: getCartItemPreOrderBreakdown(i).preOrderSubtotal,
                 })),
                 dp_percentage: hasPreOrderItems ? dpPercentage : 100,
                 fulfillment_type: fulfillmentType,
@@ -614,6 +623,11 @@ export default function CartPage({
                                                                     </strong>
                                                                 )}
                                                                 <span>{line.text}</span>
+                                                                {line.isPreOrder && (
+                                                                    <span className="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 text-[9px] font-extrabold uppercase tracking-wider whitespace-nowrap">
+                                                                        Pre-Order
+                                                                    </span>
+                                                                )}
                                                                 {line.discountPrice && (
                                                                     <span>
                                                                         {' ('}
@@ -647,6 +661,22 @@ export default function CartPage({
                                                                     {formatRupiah(pricing.totalDiscountPrice)}
                                                                 </span>
                                                             </div>
+                                                            {pricing.hasPreOrderSubItem && (
+                                                                <div className="pt-1 mt-1 border-t border-sand-100 space-y-0.5">
+                                                                    <div className="flex items-center justify-between text-[11px] text-amber-800">
+                                                                        <span>Total Produk Pre-Order (Berlaku DP):</span>
+                                                                        <span className="font-bold whitespace-nowrap">
+                                                                            {formatRupiah(pricing.totalPreOrderPrice)}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex items-center justify-between text-[11px] text-brand-700">
+                                                                        <span>Total Produk Non Pre-Order (Lunas 100%):</span>
+                                                                        <span className="font-bold text-brand-950 whitespace-nowrap">
+                                                                            {formatRupiah(pricing.totalNonPreOrderPrice)}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 )}
@@ -1257,6 +1287,8 @@ export default function CartPage({
                                     <div className="pt-4 border-t border-sand-200">
                                         <PreorderDpSlider
                                             totalAmount={grandTotal}
+                                            preOrderAmount={preOrderSubtotal}
+                                            nonPreOrderAmount={nonPreOrderSubtotal}
                                             dpPercentage={dpPercentage}
                                             minDpPercentage={minDpPercentage}
                                             onChange={setDpPercentage}
@@ -1311,6 +1343,18 @@ export default function CartPage({
                                                     {shippingCost === 0 ? (isPickup ? 'GRATIS (Ambil di Toko)' : 'GRATIS (Promo)') : formatRupiah(shippingCost)}
                                                 </span>
                                             </div>
+                                            {hasPreOrderItems && nonPreOrderSubtotal > 0 && (
+                                                <>
+                                                    <div className="flex items-center justify-between text-xs text-amber-800">
+                                                        <span>Akumulasi Produk Pre-Order (Berlaku DP)</span>
+                                                        <span className="font-bold">{formatRupiah(preOrderSubtotal)}</span>
+                                                    </div>
+                                                    <div className="flex items-center justify-between text-xs text-brand-700">
+                                                        <span>Akumulasi Produk Non Pre-Order (Lunas 100%)</span>
+                                                        <span className="font-bold text-brand-950">{formatRupiah(nonPreOrderSubtotal)}</span>
+                                                    </div>
+                                                </>
+                                            )}
                                             {paymentMethod === 'bank_transfer' && (
                                                 <div className="flex items-center justify-between text-[11px] text-brand-500 italic">
                                                     <span>Kode Unik Transfer</span>

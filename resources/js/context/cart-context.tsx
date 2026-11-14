@@ -1,17 +1,72 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import type { CartItem, Product, ProductVariant } from '@/types/sanubari';
 import { getProductContentId, trackAddToCart } from '@/lib/meta-pixel';
+import { getBundlePricingSummary } from '@/lib/utils';
 import { DpPercentage, normalizeDpPercentage, normalizeMinDpPercentage } from '@/components/preorder-dp-slider';
 
 export type { CartItem, Product, ProductVariant };
 
 export function isCartItemPreOrder(item: CartItem): boolean {
+    if (typeof item.unitPreOrderPrice === 'number') {
+        return item.unitPreOrderPrice > 0;
+    }
+    const pricing = getBundlePricingSummary({
+        customNotes: item.customNotes,
+        unitPrice: item.variant.price,
+        quantity: item.quantity,
+        originalUnitPrice: item.variant.original_price,
+    });
+    if (pricing.lines.length > 0) {
+        return pricing.hasPreOrderSubItem;
+    }
     return Boolean(
         item.isPreOrder ||
         item.product?.is_preorder ||
         item.product?.stock_status === 'pre_order' ||
         item.variant?.stock_status === 'pre_order',
     );
+}
+
+export function getCartItemPreOrderBreakdown(item: CartItem): {
+    preOrderSubtotal: number;
+    nonPreOrderSubtotal: number;
+} {
+    const qty = Math.max(1, Number(item.quantity) || 1);
+    const lineTotal = (Number(item.variant.price) || 0) * qty;
+
+    const pricing = getBundlePricingSummary({
+        customNotes: item.customNotes,
+        unitPrice: item.variant.price,
+        quantity: qty,
+        originalUnitPrice: item.variant.original_price,
+    });
+
+    if (pricing.lines.length > 0 && pricing.hasPreOrderSubItem) {
+        return {
+            preOrderSubtotal: pricing.totalPreOrderPrice,
+            nonPreOrderSubtotal: pricing.totalNonPreOrderPrice,
+        };
+    }
+
+    if (typeof item.unitPreOrderPrice === 'number') {
+        const poSub = Math.min(lineTotal, Math.max(0, item.unitPreOrderPrice * qty));
+        return {
+            preOrderSubtotal: poSub,
+            nonPreOrderSubtotal: Math.max(0, lineTotal - poSub),
+        };
+    }
+
+    if (pricing.lines.length === 0 && isCartItemPreOrder(item)) {
+        return {
+            preOrderSubtotal: lineTotal,
+            nonPreOrderSubtotal: 0,
+        };
+    }
+
+    return {
+        preOrderSubtotal: 0,
+        nonPreOrderSubtotal: lineTotal,
+    };
 }
 
 export function getCartItemMinDp(item: CartItem): DpPercentage {
@@ -32,7 +87,12 @@ interface CartContextType {
         quantity?: number,
         grindOption?: string,
         customNotes?: string,
-        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage; minDpPercentage?: DpPercentage }
+        options?: {
+            isPreOrder?: boolean;
+            dpPercentage?: DpPercentage;
+            minDpPercentage?: DpPercentage;
+            unitPreOrderPrice?: number;
+        }
     ) => void;
     removeItem: (variantId: number, grindOption: string, customNotes?: string) => void;
     updateQuantity: (
@@ -44,6 +104,8 @@ interface CartContextType {
     clearCart: () => void;
     itemCount: number;
     subtotal: number;
+    preOrderSubtotal: number;
+    nonPreOrderSubtotal: number;
     hasPreOrderItems: boolean;
     minDpPercentage: DpPercentage;
     dpPercentage: DpPercentage;
@@ -106,13 +168,19 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
         quantity: number = 1,
         grindOption: string = 'Biji Utuh (Whole Bean)',
         customNotes?: string,
-        options?: { isPreOrder?: boolean; dpPercentage?: DpPercentage; minDpPercentage?: DpPercentage }
+        options?: {
+            isPreOrder?: boolean;
+            dpPercentage?: DpPercentage;
+            minDpPercentage?: DpPercentage;
+            unitPreOrderPrice?: number;
+        }
     ) => {
         const itemIsPreOrder = Boolean(
-            options?.isPreOrder ||
-            product.is_preorder ||
-            product.stock_status === 'pre_order' ||
-            variant.stock_status === 'pre_order'
+            options?.isPreOrder !== undefined
+                ? options.isPreOrder
+                : product.is_preorder ||
+                  product.stock_status === 'pre_order' ||
+                  variant.stock_status === 'pre_order'
         );
 
         const itemMinDp = normalizeMinDpPercentage(
@@ -140,6 +208,10 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     quantity: next[existingIndex].quantity + quantity,
                     isPreOrder: next[existingIndex].isPreOrder || itemIsPreOrder,
                     minDpPercentage: Math.max(next[existingIndex].minDpPercentage || 30, itemMinDp),
+                    unitPreOrderPrice:
+                        options?.unitPreOrderPrice !== undefined
+                            ? options.unitPreOrderPrice
+                            : next[existingIndex].unitPreOrderPrice,
                 };
                 return next;
             }
@@ -153,6 +225,7 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                     customNotes,
                     isPreOrder: itemIsPreOrder,
                     minDpPercentage: itemMinDp,
+                    unitPreOrderPrice: options?.unitPreOrderPrice,
                 },
             ];
         });
@@ -215,7 +288,12 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
     const itemCount = items.reduce((sum, item) => sum + item.quantity, 0);
     const subtotal = items.reduce((sum, item) => sum + item.variant.price * item.quantity, 0);
-    const hasPreOrderItems = items.some(isCartItemPreOrder);
+    const preOrderSubtotal = items.reduce(
+        (sum, item) => sum + getCartItemPreOrderBreakdown(item).preOrderSubtotal,
+        0,
+    );
+    const nonPreOrderSubtotal = Math.max(0, subtotal - preOrderSubtotal);
+    const hasPreOrderItems = preOrderSubtotal > 0 || items.some(isCartItemPreOrder);
     const minDpPercentage = normalizeMinDpPercentage(
         items.reduce((maxMin, item) => (isCartItemPreOrder(item) ? Math.max(maxMin, getCartItemMinDp(item)) : maxMin), 30),
     );
@@ -231,6 +309,8 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 clearCart,
                 itemCount,
                 subtotal,
+                preOrderSubtotal,
+                nonPreOrderSubtotal,
                 hasPreOrderItems,
                 minDpPercentage,
                 dpPercentage: effectiveDpPercentage,

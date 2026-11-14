@@ -484,6 +484,22 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                 )}
                                 {order.payment_details?.is_preorder_dp && Number(order.payment_details.remaining_balance || 0) > 0 && (
                                     <>
+                                        {Number((order.payment_details as any)?.non_preorder_subtotal || 0) > 0 && (
+                                            <>
+                                                <div className="flex justify-between text-amber-800 pt-1 border-t border-sand-200">
+                                                    <span>Akumulasi Produk Pre-Order (Berlaku DP)</span>
+                                                    <span className="font-bold">
+                                                        {formatRupiah(Number((order.payment_details as any).preorder_subtotal || 0))}
+                                                    </span>
+                                                </div>
+                                                <div className="flex justify-between text-brand-700">
+                                                    <span>Akumulasi Produk Non Pre-Order (Lunas 100%)</span>
+                                                    <span className="font-bold text-brand-950">
+                                                        {formatRupiah(Number((order.payment_details as any).non_preorder_subtotal || 0))}
+                                                    </span>
+                                                </div>
+                                            </>
+                                        )}
                                         <div className="flex justify-between text-brand-700 pt-1.5 border-t border-sand-200">
                                             <span>Total Tagihan Penuh (100%)</span>
                                             <span className="font-semibold text-brand-900">

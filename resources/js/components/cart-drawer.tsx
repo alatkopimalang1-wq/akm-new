@@ -14,6 +14,8 @@ export const CartDrawer: React.FC = () => {
         items,
         itemCount,
         subtotal,
+        preOrderSubtotal,
+        nonPreOrderSubtotal,
         hasPreOrderItems,
         minDpPercentage,
         dpPercentage,
@@ -28,6 +30,8 @@ export const CartDrawer: React.FC = () => {
         subtotal,
         hasPreOrderItems ? dpPercentage : 100,
         minDpPercentage,
+        preOrderSubtotal,
+        nonPreOrderSubtotal,
     );
 
     const totalNormalSubtotal = items.reduce((sum, item) => {
@@ -196,6 +200,11 @@ export const CartDrawer: React.FC = () => {
                                                                     </strong>
                                                                 )}
                                                                 <span>{line.text}</span>
+                                                                {line.isPreOrder && (
+                                                                    <span className="ml-1 px-1.5 py-0.5 rounded bg-amber-100 text-amber-800 border border-amber-300 text-[9px] font-extrabold uppercase tracking-wider whitespace-nowrap">
+                                                                        Pre-Order
+                                                                    </span>
+                                                                )}
                                                                 {line.discountPrice && (
                                                                     <span>
                                                                         {' ('}
@@ -229,6 +238,22 @@ export const CartDrawer: React.FC = () => {
                                                                     {formatRupiah(pricing.totalDiscountPrice)}
                                                                 </span>
                                                             </div>
+                                                            {pricing.hasPreOrderSubItem && (
+                                                                <div className="pt-1 mt-1 border-t border-sand-100 space-y-0.5">
+                                                                    <div className="flex items-center justify-between text-[11px] text-amber-800">
+                                                                        <span>Total Produk Pre-Order (Berlaku DP):</span>
+                                                                        <span className="font-bold whitespace-nowrap">
+                                                                            {formatRupiah(pricing.totalPreOrderPrice)}
+                                                                        </span>
+                                                                    </div>
+                                                                    <div className="flex items-center justify-between text-[11px] text-brand-700">
+                                                                        <span>Total Produk Non Pre-Order (Lunas):</span>
+                                                                        <span className="font-bold text-brand-950 whitespace-nowrap">
+                                                                            {formatRupiah(pricing.totalNonPreOrderPrice)}
+                                                                        </span>
+                                                                    </div>
+                                                                </div>
+                                                            )}
                                                         </div>
                                                     </div>
                                                 )}
@@ -274,6 +299,8 @@ export const CartDrawer: React.FC = () => {
                                         <PreorderDpSlider
                                             compact
                                             totalAmount={subtotal}
+                                            preOrderAmount={preOrderSubtotal}
+                                            nonPreOrderAmount={nonPreOrderSubtotal}
                                             dpPercentage={dpPercentage}
                                             minDpPercentage={minDpPercentage}
                                             onChange={setDpPercentage}
