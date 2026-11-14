@@ -192,9 +192,29 @@ class ShopController extends Controller
                 if ($freeProd) {
                     $defVar = $freeProd->variants->first();
                     $normalPrice = (float) ($defVar?->original_price > $defVar?->price ? $defVar->original_price : ($defVar?->price ?? $freeProd->min_price ?? 100000));
+                    $freeVariants = $freeProd->variants->map(function ($v) use ($freeProd, $formatImageUrl) {
+                        $vBasePrice = (float) ($v->price ?? $freeProd->min_price ?? 100000);
+                        $vOrigPrice = (float) ($v->original_price > $vBasePrice ? $v->original_price : $vBasePrice);
+                        $vImg = $v->image_url ?? $v->image;
+                        if ($vImg && ! str_starts_with($vImg, 'http://') && ! str_starts_with($vImg, 'https://')) {
+                            $vImg = '/storage/' . preg_replace('/^\/?(public\/|storage\/)?/', '', $vImg);
+                        }
+
+                        return [
+                            'id' => $v->id,
+                            'label' => $v->label,
+                            'normal_price' => max($vOrigPrice, $vBasePrice),
+                            'bundle_price' => 0,
+                            'weight_grams' => (int) ($v->weight_grams ?? 250),
+                            'image_url' => $vImg ?: $formatImageUrl($freeProd),
+                            'is_out_of_stock' => $v->stock_status === 'out_of_stock' || (bool) $freeProd->is_out_of_stock,
+                        ];
+                    })->values()->toArray();
+
                     $freeData = [
                         'id' => $freeProd->id,
                         'variant_id' => $defVar?->id ?? $freeProd->id,
+                        'variant_label' => $defVar?->label,
                         'name' => $freeProd->name,
                         'slug' => $freeProd->slug,
                         'producer' => $freeProd->producer,
@@ -203,6 +223,7 @@ class ShopController extends Controller
                         'bundle_price' => 0,
                         'weight_grams' => (int) ($defVar?->weight_grams ?? 250),
                         'is_out_of_stock' => false,
+                        'variants' => $freeVariants,
                     ];
                 }
 
@@ -275,9 +296,37 @@ class ShopController extends Controller
                 // Ensure normal_price is at least basePrice so strikethrough works when discounted
                 $normalPrice = max($origPrice, $basePrice);
 
+                $variantsList = $cand->variants->map(function ($v) use ($cand, $effDiscountType, $effDiscountValue, $formatImageUrl) {
+                    $vBasePrice = (float) ($v->price ?? $cand->min_price ?? 0);
+                    $vOrigPrice = (float) ($v->original_price > $vBasePrice ? $v->original_price : $vBasePrice);
+                    $vBundlePrice = $vBasePrice;
+                    if ($effDiscountValue > 0 && $vBasePrice > 0) {
+                        if ($effDiscountType === 'percentage') {
+                            $vBundlePrice = round($vBasePrice * (1 - ($effDiscountValue / 100)));
+                        } else {
+                            $vBundlePrice = max(0, $vBasePrice - $effDiscountValue);
+                        }
+                    }
+                    $vImg = $v->image_url ?? $v->image;
+                    if ($vImg && ! str_starts_with($vImg, 'http://') && ! str_starts_with($vImg, 'https://')) {
+                        $vImg = '/storage/' . preg_replace('/^\/?(public\/|storage\/)?/', '', $vImg);
+                    }
+
+                    return [
+                        'id' => $v->id,
+                        'label' => $v->label,
+                        'normal_price' => max($vOrigPrice, $vBasePrice),
+                        'bundle_price' => $vBundlePrice,
+                        'weight_grams' => (int) ($v->weight_grams ?? 500),
+                        'image_url' => $vImg ?: $formatImageUrl($cand),
+                        'is_out_of_stock' => $v->stock_status === 'out_of_stock' || (bool) $cand->is_out_of_stock,
+                    ];
+                })->values()->toArray();
+
                 return [
                     'id' => $cand->id,
                     'variant_id' => $defVar?->id ?? $cand->id,
+                    'variant_label' => $defVar?->label,
                     'name' => $cand->name,
                     'slug' => $cand->slug,
                     'producer' => $cand->producer,
@@ -286,6 +335,7 @@ class ShopController extends Controller
                     'bundle_price' => $bundlePrice,
                     'weight_grams' => (int) ($defVar?->weight_grams ?? 500),
                     'is_out_of_stock' => (bool) $cand->is_out_of_stock,
+                    'variants' => $variantsList,
                 ];
             })->values()->toArray();
 
