@@ -81,15 +81,13 @@ class CustomBundleProductsSeeder extends Seeder
                 'stock_status' => 'in_stock',
                 'released_at' => now(),
                 'bundle_config' => [
-                    'discount_type' => 'percentage',
-                    'discount_value' => 2,
                     'slots' => [
                         [
                             'slot_type' => 'required',
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $espressoCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 2,
                         ],
                         [
@@ -97,7 +95,7 @@ class CustomBundleProductsSeeder extends Seeder
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $grinderCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 2,
                         ],
                         [
@@ -105,7 +103,7 @@ class CustomBundleProductsSeeder extends Seeder
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $toolsCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 2,
                         ],
                         [
@@ -113,7 +111,7 @@ class CustomBundleProductsSeeder extends Seeder
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $manualBrewCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 2,
                         ],
                         [
@@ -197,15 +195,13 @@ class CustomBundleProductsSeeder extends Seeder
                 'stock_status' => 'in_stock',
                 'released_at' => now(),
                 'bundle_config' => [
-                    'discount_type' => 'percentage',
-                    'discount_value' => 5,
                     'slots' => [
                         [
                             'slot_type' => 'required',
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $espressoCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 5,
                         ],
                         [
@@ -213,7 +209,7 @@ class CustomBundleProductsSeeder extends Seeder
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $grinderCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 5,
                         ],
                         [
@@ -221,7 +217,7 @@ class CustomBundleProductsSeeder extends Seeder
                             'slot_label' => 'Please select a product!',
                             'category_ids' => array_map('strval', $toolsCatIds),
                             'product_ids' => [],
-                            'discount_mode' => 'inherit',
+                            'discount_mode' => 'percentage',
                             'discount_value' => 5,
                         ],
                         [
@@ -279,3 +275,4 @@ class CustomBundleProductsSeeder extends Seeder
         );
     }
 }
+

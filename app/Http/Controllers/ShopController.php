@@ -239,9 +239,6 @@ class ShopController extends Controller
         $config = is_array($product->bundle_config) ? $product->bundle_config : [];
         $slotsConfig = is_array($config['slots'] ?? null) ? $config['slots'] : [];
 
-        $defaultDiscountType = $config['discount_type'] ?? 'percentage';
-        $defaultDiscountValue = (float) ($config['discount_value'] ?? 2);
-
         $formatImageUrl = function (?Product $prod): string {
             if (! $prod) {
                 return '/brand/logo-akm.png?v=20261113b';
@@ -299,17 +296,14 @@ class ShopController extends Controller
                 continue;
             }
 
-            // Required or Optional slot
-            $discountMode = $slot['discount_mode'] ?? 'inherit';
-            $effDiscountType = $defaultDiscountType;
-            $effDiscountValue = $defaultDiscountValue;
-
-            if ($discountMode === 'percentage' || $discountMode === 'fixed') {
-                $effDiscountType = $discountMode;
-                $effDiscountValue = (float) ($slot['discount_value'] ?? 0);
-            } elseif ($discountMode === 'none') {
-                $effDiscountValue = 0;
+            // Required or Optional slot: discount is configured per-slot
+            $discountMode = $slot['discount_mode'] ?? 'percentage';
+            if ($discountMode === 'inherit') {
+                $discountMode = 'percentage';
             }
+
+            $effDiscountType = $discountMode === 'fixed' ? 'fixed' : 'percentage';
+            $effDiscountValue = $discountMode === 'none' ? 0.0 : (float) ($slot['discount_value'] ?? 0);
 
             $catIds = array_values(array_filter(array_map('intval', (array) ($slot['category_ids'] ?? []))));
             $prodIds = array_values(array_filter(array_map('intval', (array) ($slot['product_ids'] ?? []))));

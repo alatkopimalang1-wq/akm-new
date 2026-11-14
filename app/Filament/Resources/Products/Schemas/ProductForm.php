@@ -174,26 +174,10 @@ class ProductForm
                     ]),
 
                 Section::make('Pengaturan Slot Produk Paket Custom (Custom Bundling)')
-                    ->description('Atur kotak-kotak slot pemilihan produk (Slot Wajib +, Slot GRATIS Rp0, dan Slot OPTIONAL) serta diskon harga coret otomatis untuk paket ini.')
+                    ->description('Atur kotak-kotak slot pemilihan produk (Slot Wajib +, Slot GRATIS Rp0, dan Slot OPTIONAL) beserta diskon harga coret pada masing-masing slot.')
                     ->columnSpanFull()
                     ->visible(fn (callable $get): bool => (bool) $get('is_custom_bundle'))
                     ->schema([
-                        Grid::make(2)->schema([
-                            Select::make('bundle_config.discount_type')
-                                ->label('Tipe Diskon Paket Default (Untuk Harga Coret Produk di Slot)')
-                                ->options([
-                                    'percentage' => 'Persentase Diskon (%) dari Harga Normal Produk',
-                                    'fixed' => 'Potongan Nominal (Rp) per Produk di Slot',
-                                ])
-                                ->default('percentage')
-                                ->required(),
-                            TextInput::make('bundle_config.discount_value')
-                                ->label('Nilai Diskon Default Paket')
-                                ->numeric()
-                                ->default(2)
-                                ->helperText('Contoh: Isi 2 untuk diskon 2% (sehingga produk Rp 13.500.000 otomatis tampil dicoret merah menjadi Rp 13.230.000), atau isi nominal Rp.'),
-                        ]),
-
                         Repeater::make('bundle_config.slots')
                             ->label('Daftar Kotak Slot Paket (Urutan Kotak di Halaman Produk)')
                             ->defaultItems(0)
@@ -252,20 +236,21 @@ class ProductForm
                                     ->visible(fn (callable $get): bool => in_array($get('slot_type') ?? 'required', ['required', 'optional']))
                                     ->schema([
                                         Select::make('discount_mode')
-                                            ->label('Pengaturan Diskon Harga Coret pada Slot Ini')
+                                            ->label('Tipe Diskon pada Slot Ini')
                                             ->options([
-                                                'inherit' => 'Ikuti Diskon Default Paket di Atas',
-                                                'percentage' => 'Diskon Persentase (%) Khusus Slot Ini',
-                                                'fixed' => 'Potongan Nominal (Rp) Khusus Slot Ini',
+                                                'percentage' => 'Diskon Persentase (%)',
+                                                'fixed' => 'Potongan Nominal (Rp)',
                                                 'none' => 'Harga Normal (Tanpa Diskon)',
                                             ])
-                                            ->default('inherit')
+                                            ->default('percentage')
+                                            ->required()
                                             ->live(),
                                         TextInput::make('discount_value')
-                                            ->label('Nilai Diskon Khusus Slot Ini')
+                                            ->label('Nilai Diskon pada Slot Ini')
                                             ->numeric()
-                                            ->default(0)
-                                            ->visible(fn (callable $get): bool => in_array($get('discount_mode'), ['percentage', 'fixed'])),
+                                            ->default(2)
+                                            ->helperText('Contoh: Isi 2 untuk diskon 2%, atau isi 250000 untuk potongan Rp 250.000 pada produk di slot ini.')
+                                            ->visible(fn (callable $get): bool => ($get('discount_mode') ?? 'percentage') !== 'none'),
                                     ]),
 
                                 // Untuk Slot GRATIS / Bonus Bawaan
