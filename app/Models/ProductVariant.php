@@ -99,21 +99,9 @@ class ProductVariant extends Model
     protected static function booted(): void
     {
         static::saving(function (ProductVariant $variant) {
-            $weight = (int) $variant->weight_grams;
-            $label = (string) $variant->label;
-
-            if ($variant->isDirty('weight_grams') && ! $variant->isDirty('label') && $weight > 0) {
-                $variant->label = static::syncLabelWithWeight($label, $weight);
-            } elseif ($variant->isDirty('label') && ! $variant->isDirty('weight_grams')) {
-                $parsed = static::parseWeightFromLabel($label);
-                if ($parsed !== null && $parsed > 0) {
-                    $variant->weight_grams = $parsed;
-                }
-            } elseif ($weight <= 0 && ! empty($label)) {
-                $parsed = static::parseWeightFromLabel($label);
-                if ($parsed !== null && $parsed > 0) {
-                    $variant->weight_grams = $parsed;
-                }
+            if ((int) $variant->weight_grams <= 0) {
+                $parsed = static::parseWeightFromLabel((string) $variant->label);
+                $variant->weight_grams = ($parsed !== null && $parsed > 0) ? $parsed : 1000;
             }
         });
 

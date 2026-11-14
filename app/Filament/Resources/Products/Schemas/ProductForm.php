@@ -280,17 +280,36 @@ class ProductForm
                 Section::make('Varian & Harga Produk')
                     ->columnSpanFull()
                     ->schema([
+                        TextInput::make('bundle_config.variant_title')
+                            ->label('Judul / Nama Label Varian')
+                            ->placeholder('Contoh: Pilih Warna / Pilih Ukuran / Nama Varian / Satuan')
+                            ->default('Nama Varian / Satuan')
+                            ->live(onBlur: true)
+                            ->helperText('Anda dapat mengubah nama label varian ini sesuai jenis varian produk (misal: "Pilih Warna", "Pilih Ukuran", atau "Nama Varian / Satuan").'),
+
                         Repeater::make('variants')
                             ->label('Daftar Varian / Harga')
                             ->relationship('variants')
                             ->defaultItems(1)
+                            ->itemLabel(fn (array $state): string => ! empty($state['label']) ? "Varian: {$state['label']}" : 'Item Varian')
                             ->schema([
-                                Grid::make(5)->schema([
+                                Grid::make(2)->schema([
                                     TextInput::make('label')
-                                        ->label('Nama Varian / Satuan')
-                                        ->placeholder('Contoh: 1 Unit / 1 Set / 500ml')
+                                        ->label(fn (callable $get): string => $get('../../bundle_config.variant_title') ?: 'Nama Varian / Satuan')
+                                        ->placeholder('Contoh: Hitam / Putih / Merah / 1 Unit / 500ml')
                                         ->default('1 Unit')
                                         ->required(),
+                                    Select::make('stock_status')
+                                        ->label('Stok Varian')
+                                        ->options([
+                                            'in_stock' => 'Tersedia',
+                                            'pre_order' => 'Pre-Order',
+                                            'out_of_stock' => 'Habis',
+                                        ])
+                                        ->default('in_stock')
+                                        ->required(),
+                                ]),
+                                Grid::make(3)->schema([
                                     TextInput::make('price')
                                         ->label('Harga Jual (Rp)')
                                         ->numeric()
@@ -304,15 +323,6 @@ class ProductForm
                                         ->label('Berat Kirim (Gram)')
                                         ->numeric()
                                         ->default(1000)
-                                        ->required(),
-                                    Select::make('stock_status')
-                                        ->label('Stok Varian')
-                                        ->options([
-                                            'in_stock' => 'Tersedia',
-                                            'pre_order' => 'Pre-Order',
-                                            'out_of_stock' => 'Habis',
-                                        ])
-                                        ->default('in_stock')
                                         ->required(),
                                 ]),
                                 FileUpload::make('image')

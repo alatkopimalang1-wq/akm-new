@@ -73,7 +73,15 @@ class Product extends Model
         'is_flash_sale',
         'series_label',
         'is_out_of_stock',
+        'variant_title',
     ];
+
+    public function getVariantTitleAttribute(): string
+    {
+        $title = $this->bundle_config['variant_title'] ?? null;
+
+        return ! empty($title) ? (string) $title : 'Pilih Warna / Ukuran';
+    }
 
     public function getIsOutOfStockAttribute(): bool
     {
