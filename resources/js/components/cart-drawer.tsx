@@ -132,9 +132,23 @@ export const CartDrawer: React.FC = () => {
                                                             {item.variant.label} • {item.grindOption}
                                                         </p>
                                                         {item.customNotes && (
-                                                            <p className="text-[11px] text-brand-600 font-medium mt-1 bg-sand-100/80 px-2 py-0.5 rounded text-balance">
-                                                                {item.customNotes}
-                                                            </p>
+                                                            <div className="text-[11px] text-brand-700 font-medium mt-1.5 bg-sand-100/80 px-2.5 py-2 rounded-lg space-y-1 leading-snug">
+                                                                {item.customNotes
+                                                                    .split(/\n|\s*\|\s*/)
+                                                                    .map((line) =>
+                                                                        line
+                                                                            .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
+                                                                            .replace(
+                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
+                                                                                '$1 ',
+                                                                            )
+                                                                            .trim(),
+                                                                    )
+                                                                    .filter(Boolean)
+                                                                    .map((line, lineIdx) => (
+                                                                        <p key={lineIdx}>{line}</p>
+                                                                    ))}
+                                                            </div>
                                                         )}
                                                     </div>
 

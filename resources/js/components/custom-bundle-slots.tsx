@@ -267,22 +267,23 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                         hasMultipleVariants(slot.free_product) && freeProd.variant_label
                             ? ` - Variasi: ${freeProd.variant_label}`
                             : '';
-                    parts.push(`[GRATIS] 1x ${freeProd.name}${varInfo} (Rp 0)`);
+                    parts.push(`[GRATIS] ${freeProd.name}${varInfo}`);
                 }
             } else {
                 const chosen = selectedBySlot[slot.index];
                 if (chosen) {
                     const sQty = getSlotQty(slot.index);
                     const tag = slot.slot_type === 'optional' ? '[OPSIONAL]' : `[Slot ${idx + 1}]`;
+                    const qtyPrefix = sQty > 1 ? `${sQty}x ` : '';
                     const varInfo =
                         hasMultipleVariants(chosen) && chosen.variant_label
                             ? ` - Variasi: ${chosen.variant_label}`
                             : '';
-                    parts.push(`${tag} ${sQty}x ${chosen.name}${varInfo} (${formatRupiah(chosen.bundle_price * sQty)})`);
+                    parts.push(`${tag} ${qtyPrefix}${chosen.name}${varInfo}`);
                 }
             }
         });
-        return parts.join(' | ');
+        return parts.join('\n');
     };
 
     const handleBuyNow = () => {

@@ -555,14 +555,24 @@ export default function CartPage({
                                                                 {item.variant.label} · {item.grindOption}
                                                             </p>
                                                             {item.customNotes && (
-                                                                <div className="mt-1.5 p-2 rounded-lg bg-amber-50/80 border border-amber-200/70 text-[11px] text-brand-900 leading-snug">
-                                                                    <div className="flex items-center gap-1 font-bold text-accent-copper text-[10px] uppercase tracking-wider">
-                                                                        <SlidersHorizontal className="w-3 h-3" />
-                                                                        <span>Rasio Racikan Blend (C.Y.B.R):</span>
-                                                                    </div>
-                                                                    <p className="font-semibold text-brand-950 mt-0.5">
-                                                                        {item.customNotes}
-                                                                    </p>
+                                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200/80 text-[11px] text-brand-900 leading-snug space-y-1">
+                                                                    {item.customNotes
+                                                                        .split(/\n|\s*\|\s*/)
+                                                                        .map((line) =>
+                                                                            line
+                                                                                .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
+                                                                                .replace(
+                                                                                    /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
+                                                                                    '$1 ',
+                                                                                )
+                                                                                .trim(),
+                                                                        )
+                                                                        .filter(Boolean)
+                                                                        .map((line, lineIdx) => (
+                                                                            <p key={lineIdx} className="font-medium text-brand-900">
+                                                                                {line}
+                                                                            </p>
+                                                                        ))}
                                                                 </div>
                                                             )}
                                                         </div>
