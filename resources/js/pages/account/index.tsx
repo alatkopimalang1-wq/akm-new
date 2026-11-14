@@ -390,9 +390,23 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                                             )}
                                                         </div>
                                                         {item.custom_notes && (
-                                                            <p className="text-xs text-accent-copper font-medium bg-amber-50/70 p-2 rounded-lg border border-amber-200/50 mt-1">
-                                                                {item.custom_notes}
-                                                            </p>
+                                                            <div className="text-xs text-brand-900 font-medium bg-sand-50 p-2 rounded-lg border border-sand-200 mt-1 space-y-1">
+                                                                {String(item.custom_notes)
+                                                                    .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
+                                                                    .map((line) =>
+                                                                        line
+                                                                            .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
+                                                                            .replace(
+                                                                                /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
+                                                                                '$1 ',
+                                                                            )
+                                                                            .trim(),
+                                                                    )
+                                                                    .filter(Boolean)
+                                                                    .map((line, lineIdx) => (
+                                                                        <p key={lineIdx}>{line}</p>
+                                                                    ))}
+                                                            </div>
                                                         )}
                                                     </div>
                                                     <div className="text-right shrink-0">

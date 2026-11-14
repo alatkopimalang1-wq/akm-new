@@ -621,14 +621,24 @@ export default function OrderShowPage({
                                         Kemasan: {item.variant_label} · Gilingan: {item.grind_option || 'Biji Utuh'}
                                     </p>
                                     {(item.custom_notes || (item as any).customNotes) && (
-                                        <div className="mt-1.5 p-2.5 rounded-xl bg-amber-50/80 border border-amber-200/70 text-xs text-brand-900 leading-snug">
-                                            <div className="flex items-center gap-1.5 font-bold text-accent-copper text-[11px] uppercase tracking-wider">
-                                                <SlidersHorizontal className="w-3.5 h-3.5" />
-                                                <span>Rasio & Komposisi Kopi (C.Y.B.R):</span>
-                                            </div>
-                                            <p className="font-semibold text-brand-950 mt-1">
-                                                {item.custom_notes || (item as any).customNotes}
-                                            </p>
+                                        <div className="mt-1.5 p-2.5 rounded-xl bg-sand-50 border border-sand-200/80 text-xs text-brand-900 leading-snug space-y-1">
+                                            {String(item.custom_notes || (item as any).customNotes)
+                                                .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
+                                                .map((line) =>
+                                                    line
+                                                        .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
+                                                        .replace(
+                                                            /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
+                                                            '$1 ',
+                                                        )
+                                                        .trim(),
+                                                )
+                                                .filter(Boolean)
+                                                .map((line, lineIdx) => (
+                                                    <p key={lineIdx} className="font-medium text-brand-950">
+                                                        {line}
+                                                    </p>
+                                                ))}
                                         </div>
                                     )}
                                 </div>

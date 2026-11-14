@@ -303,7 +303,7 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                             <thead>
                                 <tr className="border-b-2 border-brand-950 text-brand-950 font-bold uppercase tracking-wider text-[11px]">
                                     <th className="py-2.5 pr-2 w-8">No</th>
-                                    <th className="py-2.5 px-3">Keterangan Produk & Racikan Kopi</th>
+                                    <th className="py-2.5 px-3">Keterangan Produk</th>
                                     <th className="py-2.5 px-3 text-center w-16">Qty</th>
                                     <th className="py-2.5 px-3 text-right w-28">Harga Satuan</th>
                                     <th className="py-2.5 pl-3 text-right w-28">Subtotal</th>
@@ -323,16 +323,26 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                                 Kemasan: {item.variant_label} · Gilingan: {item.grind_option || 'Biji Utuh (Whole Bean)'}
                                             </div>
 
-                                            {/* Prominent BYOB Blend Ratio Display */}
+                                            {/* Custom Bundle / Notes Display */}
                                             {item.custom_notes && (
-                                                <div className="mt-1.5 p-2.5 rounded-lg bg-amber-50/90 border border-amber-200 text-xs text-brand-950 leading-snug">
-                                                    <div className="flex items-center gap-1 font-bold text-accent-copper text-[10px] uppercase tracking-wider">
-                                                        <SlidersHorizontal className="w-3 h-3" />
-                                                        <span>Komposisi Biji Kopi & Rasio Blend (C.Y.B.R):</span>
-                                                    </div>
-                                                    <div className="font-semibold text-brand-900 mt-0.5">
-                                                        {item.custom_notes}
-                                                    </div>
+                                                <div className="mt-1.5 p-2.5 rounded-lg bg-sand-50 border border-sand-200 text-xs text-brand-950 leading-snug space-y-1">
+                                                    {String(item.custom_notes)
+                                                        .split(/\n|\s*\|\s*|(?=\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])/i)
+                                                        .map((line) =>
+                                                            line
+                                                                .replace(/\s*\(Rp\s*[\d.,]+\)\s*$/i, '')
+                                                                .replace(
+                                                                    /^(\[(?:Slot\s*\d+|GRATIS|OPSIONAL|OPTIONAL)\])\s*1x\s+/i,
+                                                                    '$1 ',
+                                                                )
+                                                                .trim(),
+                                                        )
+                                                        .filter(Boolean)
+                                                        .map((line, lineIdx) => (
+                                                            <div key={lineIdx} className="font-medium text-brand-900">
+                                                                {line}
+                                                            </div>
+                                                        ))}
                                                 </div>
                                             )}
                                         </td>

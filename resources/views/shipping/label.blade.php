@@ -383,7 +383,7 @@
                             <span class="item-name">• {{ $item['name'] }}</span>
                             <span class="item-spec">({{ $item['variant'] }} · {{ $item['grind'] }})</span>
                             @if(!empty($item['custom_notes']))
-                                <div style="font-size: 8px; color: #92400e;">Racikan: {{ $item['custom_notes'] }}</div>
+                                <div style="font-size: 8px; color: #374151; white-space: pre-line; margin-top: 2px;">{{ $item['custom_notes'] }}</div>
                             @endif
                         </div>
                         <div style="font-weight: 800;">x{{ $item['qty'] }}</div>
