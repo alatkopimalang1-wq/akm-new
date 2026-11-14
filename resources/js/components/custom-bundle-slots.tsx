@@ -530,7 +530,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                 className="py-3 flex items-center justify-between gap-2 sm:gap-3 cursor-pointer hover:bg-neutral-50 transition-colors"
                             >
                                 <div className="flex-1 min-w-0 flex flex-wrap items-center gap-1.5">
-                                    <span className="text-neutral-700">Please select your product!</span>
+                                    <span className="text-neutral-700">{slot.slot_label || 'Please select your product!'}</span>
                                     {isOptional && (
                                         <span className="px-1.5 py-0.5 rounded bg-[#ff4d6d] text-white text-[9px] font-extrabold uppercase">
                                             OPTIONAL
@@ -727,7 +727,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
                                     ? hasMultipleVariants(pendingCandidate)
                                         ? 'Pilih Variasi & Jumlah Produk'
                                         : 'Atur Jumlah Produk'
-                                    : 'Please Select Your Product'}
+                                    : activeModalSlot.slot_label || 'Please Select Your Product'}
                             </h3>
                             <button
                                 type="button"
