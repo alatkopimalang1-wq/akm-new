@@ -394,25 +394,6 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                         )}
                     </div>
                 </div>
-
-                {/* Invoice Footer Notes */}
-                <div className="mt-10 pt-6 border-t border-sand-200/80 text-[11px] text-brand-500 space-y-1">
-                    <p className="font-semibold text-brand-800">
-                        Catatan Resmi Alat Kopi Malang:
-                    </p>
-                    <p>
-                        • Biji kopi diroasting secara berkala untuk menjaga kesegaran rasa (*peak flavor* 7–21 hari setelah roasting).
-                    </p>
-                    <p>
-                        • Dokumen ini merupakan bukti transaksi sah yang diterbitkan oleh sistem resmi Alat Kopi Malang.
-                    </p>
-                    <p>
-                        • Jika ada pertanyaan seputar pesanan atau membutuhkan bantuan panduan seduh, hubungi kami via WhatsApp: {settings.phone}.
-                    </p>
-                    <p className="pt-2 text-center text-brand-400 font-medium">
-                        Terima kasih telah memilih seduhan Alat Kopi Malang — Close to Every Brew.
-                    </p>
-                </div>
             </div>
         </div>
     );
