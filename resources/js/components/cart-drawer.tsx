@@ -129,16 +129,6 @@ export const CartDrawer: React.FC = () => {
                                                                 <Trash2 className="w-4 h-4" />
                                                             </button>
                                                         </div>
-                                                        {!isBundleOrderItem({
-                                                            isCustomBundle: item.product.is_custom_bundle,
-                                                            variantLabel: item.variant.label,
-                                                            grindOption: item.grindOption,
-                                                            customNotes: item.customNotes,
-                                                        }) && (
-                                                            <p className="text-xs text-accent-copper font-medium">
-                                                                {item.variant.label} • {item.grindOption}
-                                                            </p>
-                                                        )}
                                                         {item.customNotes && (
                                                             <div className="text-[11px] text-brand-700 font-normal mt-1.5 bg-sand-100/80 px-2.5 py-2 rounded-lg space-y-1 leading-snug">
                                                                 {parseCustomNotes(item.customNotes).map((line, lineIdx) => (

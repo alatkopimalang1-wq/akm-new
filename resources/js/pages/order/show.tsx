@@ -618,15 +618,6 @@ export default function OrderShowPage({
                                     <h3 className="text-sm font-bold text-brand-950">
                                         {item.product_name}
                                     </h3>
-                                    {!isBundleOrderItem({
-                                        variantLabel: item.variant_label,
-                                        grindOption: item.grind_option,
-                                        customNotes: String(item.custom_notes || (item as any).customNotes || ''),
-                                    }) && (
-                                        <p className="text-xs text-accent-copper font-medium">
-                                            Kemasan: {item.variant_label} · Gilingan: {item.grind_option || 'Biji Utuh'}
-                                        </p>
-                                    )}
                                     {(item.custom_notes || (item as any).customNotes) && (
                                         <div className="mt-1.5 p-2.5 rounded-xl bg-sand-50 border border-sand-200/80 text-xs text-brand-800 leading-snug space-y-1">
                                             {parseCustomNotes(String(item.custom_notes || (item as any).customNotes)).map((line, lineIdx) => (

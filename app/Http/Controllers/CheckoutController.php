@@ -273,9 +273,7 @@ class CheckoutController extends Controller
         $waMessage .= "☕ *Rincian Kopi Dipesan:*\n";
         foreach ($orderLines as $idx => $line) {
             $num = $idx + 1;
-            $isBundleLine = str_contains(strtolower(($line['variant_label'] ?? '') . ' ' . ($line['grind_option'] ?? '')), 'paket custom');
-            $specSuffix = $isBundleLine ? '' : " ({$line['variant_label']} · {$line['grind_option']})";
-            $waMessage .= "{$num}. {$line['product_name']}{$specSuffix} x{$line['quantity']}\n";
+            $waMessage .= "{$num}. {$line['product_name']} x{$line['quantity']}\n";
             if (!empty($line['custom_notes'])) {
                 $waMessage .= "   ↳ *{$line['custom_notes']}*\n";
             }

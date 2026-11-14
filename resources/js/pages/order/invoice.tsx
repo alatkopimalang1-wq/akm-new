@@ -320,15 +320,6 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                             <div className="font-bold text-sm text-brand-950">
                                                 {item.product_name}
                                             </div>
-                                            {!isBundleOrderItem({
-                                                variantLabel: item.variant_label,
-                                                grindOption: item.grind_option,
-                                                customNotes: item.custom_notes,
-                                            }) && (
-                                                <div className="text-[11px] text-accent-copper font-medium">
-                                                    Kemasan: {item.variant_label} · Gilingan: {item.grind_option || 'Biji Utuh (Whole Bean)'}
-                                                </div>
-                                            )}
 
                                             {/* Custom Bundle / Notes Display */}
                                             {item.custom_notes && (

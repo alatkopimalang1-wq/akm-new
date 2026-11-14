@@ -289,10 +289,10 @@ export default function ProductShow({
 
     const waDirectUrl = isCurrentVariantOutOfStock
         ? `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*\nUkuran: ${selectedVariant.label}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*\n\nMohon info estimasi ready stock kembali. Terima kasih!`
         )}`
         : `https://wa.me/6285121930454?text=${encodeURIComponent(
-            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*\nUkuran: ${selectedVariant.label}\nGilingan: ${grindOption}\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
+            `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*\nJumlah: ${quantity}x (${formatRupiah(selectedVariant.price * quantity)})\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
         )}`;
 
     const tokopediaUrl =
@@ -345,12 +345,6 @@ export default function ProductShow({
                                                     Stok Habis
                                                 </span>
                                             </div>
-                                        )}
-                                        {imgItem.isVariant && (
-                                            <span className="absolute bottom-4 left-4 px-3 py-1 bg-brand-950/80 backdrop-blur-md text-white text-[11px] font-semibold rounded-lg shadow-sm flex items-center gap-1.5 pointer-events-none">
-                                                <Package className="w-3.5 h-3.5 text-accent-copper" />
-                                                Kemasan {imgItem.variantLabel || selectedVariant.label}
-                                            </span>
                                         )}
                                     </div>
                                 ))}
@@ -447,12 +441,6 @@ export default function ProductShow({
                                         Hemat {discountPercent}%
                                     </span>
                                 ) : null}
-                                {activeImageItem.isVariant && (
-                                    <span className="absolute bottom-4 left-4 px-3 py-1 bg-brand-950/80 backdrop-blur-md text-white text-[11px] font-semibold rounded-lg shadow-sm flex items-center gap-1.5 pointer-events-none">
-                                        <Package className="w-3.5 h-3.5 text-accent-copper" />
-                                        Kemasan {activeImageItem.variantLabel || selectedVariant.label}
-                                    </span>
-                                )}
                             </div>
 
                             {/* Thumbnails (Desktop Only) */}
@@ -589,36 +577,6 @@ export default function ProductShow({
                                         })}
                                     </div>
                                 </div>
-
-                                {/* Grind Size Selection (Only if roast_level is specified) */}
-                                {product.roast_level && (
-                                    <div className="space-y-2">
-                                        <div className="flex items-center justify-between">
-                                            <label className="block text-sm sm:text-sm md:text-base font-bold uppercase tracking-wider text-brand-800">
-                                                Pilihan Gilingan:
-                                            </label>
-                                            <span className="text-xs sm:text-xs md:text-sm text-accent-copper font-medium">
-                                                Gratis giling sesuai metode seduh
-                                            </span>
-                                        </div>
-                                        <Select value={grindOption} onValueChange={setGrindOption}>
-                                            <SelectTrigger className="w-full py-2.5 px-3.5 h-auto rounded-xl bg-white border border-sand-200 text-sm sm:text-sm md:text-base font-semibold text-brand-950 focus:outline-hidden focus:border-brand-700 shadow-xs flex justify-between items-center cursor-pointer">
-                                                <SelectValue placeholder="Pilih tingkat gilingan" />
-                                            </SelectTrigger>
-                                            <SelectContent className="bg-white border border-sand-200 rounded-xl shadow-xl z-50 p-1.5">
-                                                {grindOptions.map((opt) => (
-                                                    <SelectItem
-                                                        key={opt}
-                                                        value={opt}
-                                                        className="text-sm sm:text-sm md:text-base font-medium py-2.5 px-3 rounded-lg cursor-pointer bg-transparent hover:bg-transparent focus:bg-transparent data-[highlighted]:bg-transparent text-brand-900 hover:text-accent-copper focus:text-accent-copper data-[highlighted]:text-accent-copper data-[state=checked]:font-bold data-[state=checked]:text-brand-950 transition-colors"
-                                                    >
-                                                        {opt}
-                                                    </SelectItem>
-                                                ))}
-                                            </SelectContent>
-                                        </Select>
-                                    </div>
-                                )}
 
                                 {/* Quantity Stepper & Add to Cart */}
                                 <div className="space-y-3 pt-2">
