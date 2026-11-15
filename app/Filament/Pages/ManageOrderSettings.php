@@ -53,6 +53,11 @@ class ManageOrderSettings extends Page
         ]);
     }
 
+    public function defaultForm(Schema $schema): Schema
+    {
+        return $schema->statePath('data');
+    }
+
     public function content(Schema $schema): Schema
     {
         return $schema
