@@ -18,6 +18,7 @@ class ShippingService
     public const DEFAULT_ORIGIN_PROVINCE_ID = 18;
     public const DEFAULT_ORIGIN_CITY_ID = 391;
     public const DEFAULT_ORIGIN_SUBDISTRICT_ID = 3896;
+    public const DEFAULT_ORIGIN_SUBDISTRICT_NAME = 'Lowokwaru';
     public const DEFAULT_ORIGIN_CITY_NAME = 'Kota Malang';
     public const DEFAULT_ORIGIN_PROVINCE_NAME = 'Jawa Timur';
     public const DEFAULT_ORIGIN_POSTAL_CODE = '65144';

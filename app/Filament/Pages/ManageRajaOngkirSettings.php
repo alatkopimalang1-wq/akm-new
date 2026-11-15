@@ -59,15 +59,15 @@ class ManageRajaOngkirSettings extends Page
             'rajaongkir_fallback_enabled' => isset($settings['rajaongkir_fallback_enabled']) ? (bool) $settings['rajaongkir_fallback_enabled'] : true,
 
             // 2. Titik Asal Pengiriman (Origin Roastery Malang)
-            'shipping_origin_province' => $settings['shipping_origin_province'] ?? ShippingService::DEFAULT_ORIGIN_PROVINCE_NAME,
-            'shipping_origin_province_id' => $settings['shipping_origin_province_id'] ?? ShippingService::DEFAULT_ORIGIN_PROVINCE_ID,
-            'shipping_origin_city' => $settings['shipping_origin_city'] ?? ShippingService::DEFAULT_ORIGIN_CITY_NAME,
-            'shipping_origin_city_id' => $settings['shipping_origin_city_id'] ?? ShippingService::DEFAULT_ORIGIN_CITY_ID,
-            'shipping_origin_subdistrict' => $settings['shipping_origin_subdistrict'] ?? ShippingService::DEFAULT_ORIGIN_SUBDISTRICT_NAME,
-            'shipping_origin_subdistrict_id' => $settings['shipping_origin_subdistrict_id'] ?? ShippingService::DEFAULT_ORIGIN_SUBDISTRICT_ID,
-            'shipping_origin_postal_code' => $settings['shipping_origin_postal_code'] ?? ShippingService::DEFAULT_ORIGIN_POSTAL_CODE,
-            'shipping_origin_latitude' => $settings['shipping_origin_latitude'] ?? ShippingService::DEFAULT_ORIGIN_LATITUDE,
-            'shipping_origin_longitude' => $settings['shipping_origin_longitude'] ?? ShippingService::DEFAULT_ORIGIN_LONGITUDE,
+            'shipping_origin_province' => $settings['shipping_origin_province'] ?? 'Jawa Timur',
+            'shipping_origin_province_id' => $settings['shipping_origin_province_id'] ?? 18,
+            'shipping_origin_city' => $settings['shipping_origin_city'] ?? 'Kota Malang',
+            'shipping_origin_city_id' => $settings['shipping_origin_city_id'] ?? 391,
+            'shipping_origin_subdistrict' => $settings['shipping_origin_subdistrict'] ?? 'Lowokwaru',
+            'shipping_origin_subdistrict_id' => $settings['shipping_origin_subdistrict_id'] ?? 3896,
+            'shipping_origin_postal_code' => $settings['shipping_origin_postal_code'] ?? '65144',
+            'shipping_origin_latitude' => $settings['shipping_origin_latitude'] ?? -7.9327,
+            'shipping_origin_longitude' => $settings['shipping_origin_longitude'] ?? 112.6037,
 
             // 3. Ekspedisi Kurir Aktif
             'rajaongkir_couriers' => $activeCouriers,
