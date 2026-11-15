@@ -82,7 +82,7 @@ export default function VisitPage({ page }: VisitPageProps) {
     const welcomeTitle = page?.welcome_title || 'Selamat Datang di Malang';
     const address = page?.address || 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang, Jawa Timur 65116 (Gedung Alat Kopi Malang)';
     const hours = page?.hours || 'Buka Setiap Hari: 09.00–23.00 WIB (Layanan Seduh di Tempat & Pembelian Beans)';
-    const phone = page?.phone || '+62 851-2193-0454';
+    const phone = page?.phone || '082132095241';
     const mapsUrl = page?.maps_url || 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7';
 
     const mainImage = page?.main_image
