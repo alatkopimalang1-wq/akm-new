@@ -69,9 +69,26 @@ interface InvoiceProps {
     order: InvoiceOrder;
     settings: {
         site_name: string;
+        tagline?: string;
+        logo?: string | null;
         address: string;
         phone: string;
         email: string;
+        website?: string;
+        title_label?: string;
+        prefix?: string;
+        paper_size?: string;
+        show_paid_stamp?: boolean;
+        stamp_text?: string;
+        show_discount_breakdown?: boolean;
+        bank_info?: string;
+        footer_notes?: string;
+        terms?: string;
+        enable_signature?: boolean;
+        signature_city?: string;
+        signer_name?: string;
+        signer_title?: string;
+        signature_image?: string | null;
         pickup_store_name?: string;
         pickup_store_address?: string;
         pickup_store_hours?: string;
@@ -105,9 +122,17 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
         order.shipping_service === 'Self Pick Up' ||
         order.customer_address.toLowerCase().includes('ambil di toko');
 
+    const logoSrc = settings.logo
+        ? (settings.logo.startsWith('http') ? settings.logo : `/storage/${settings.logo.replace(/^\/?(public\/|storage\/)?/, '')}`)
+        : '/brand/logo-circle.png';
+
+    const signatureSrc = settings.signature_image
+        ? (settings.signature_image.startsWith('http') ? settings.signature_image : `/storage/${settings.signature_image.replace(/^\/?(public\/|storage\/)?/, '')}`)
+        : null;
+
     const pageTitle = isPaid
-        ? `Invoice-LUNAS-${order.order_number}-Alat Kopi Malang-Roastery`
-        : `Invoice-${order.order_number}-Alat Kopi Malang-Roastery`;
+        ? `Invoice-LUNAS-${order.order_number}-${settings.site_name || 'Alat Kopi Malang'}`
+        : `Invoice-${order.order_number}-${settings.site_name || 'Alat Kopi Malang'}`;
 
     return (
         <div className="min-h-screen bg-sand-100/60 py-6 sm:py-10 px-4 sm:px-6 print:bg-white print:p-0 print:m-0 font-sans text-brand-950 selection:bg-brand-700 selection:text-white">
@@ -115,7 +140,7 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                 <style>{`
                     @media print {
                         @page {
-                            size: A4 portrait;
+                            size: ${settings.paper_size === 'Letter' ? 'letter' : 'A4'} portrait;
                             margin: 10mm;
                         }
                         body {
@@ -164,8 +189,8 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                 <div className="flex flex-col sm:flex-row sm:items-start justify-between gap-6 pb-6 border-b border-sand-200">
                     <div className="flex items-start gap-3.5">
                         <img
-                            src="/brand/logo-circle.png"
-                            alt="Alat Kopi Malang Logo"
+                            src={logoSrc}
+                            alt={`${settings.site_name || 'Alat Kopi Malang'} Logo`}
                             className="w-12 h-12 rounded-full object-cover shrink-0 mt-0.5 border border-sand-200"
                         />
                         <div className="space-y-0.5">
@@ -173,22 +198,27 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                 {settings.site_name || 'Alat Kopi Malang'}
                             </h1>
                             <p className="text-xs text-brand-600 font-medium">
-                                Specialty Coffee Roaster Malang · Close to Every Brew
+                                {settings.tagline || 'Specialty Coffee Roaster Malang · Close to Every Brew'}
                             </p>
                             <p className="text-[11px] text-brand-500 pt-1 leading-relaxed max-w-sm">
                                 {settings.address}
                                 <br />
                                 WhatsApp: {settings.phone} · Email: {settings.email}
+                                {settings.website && (
+                                    <>
+                                        {' '}· Web: {settings.website.replace(/^https?:\/\//, '')}
+                                    </>
+                                )}
                             </p>
                         </div>
                     </div>
 
                     <div className="sm:text-right space-y-1">
                         <span className="text-[10px] font-black uppercase tracking-widest text-accent-copper block">
-                            FAKTUR PEMBELIAN / INVOICE
+                            {settings.title_label || 'FAKTUR PEMBELIAN / INVOICE'}
                         </span>
                         <div className="text-base sm:text-lg font-mono font-extrabold text-brand-950">
-                            #{order.order_number}
+                            {settings.prefix || '#'}{order.order_number}
                         </div>
                         <div className="text-xs text-brand-600 font-medium">
                             Tanggal Order: {order.created_at} WIB
@@ -229,11 +259,13 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                         </div>
 
                         {/* Stempel Fisik LUNAS Model Roastery */}
-                        <div className="border-2 sm:border-3 border-emerald-700 bg-white/70 text-emerald-700 px-4 py-1.5 rounded-xl font-black text-xs sm:text-sm tracking-widest uppercase rotate-[-3deg] shadow-xs select-none shrink-0 text-center self-start sm:self-auto">
-                            <div className="text-[9px] tracking-normal font-bold">ALAT KOPI MALANG</div>
-                            <div className="text-base font-black text-emerald-700 leading-none my-0.5">★ LUNAS ★</div>
-                            <div className="text-[8px] font-mono tracking-tighter">PAID · {order.paid_at || order.created_at}</div>
-                        </div>
+                        {settings.show_paid_stamp !== false && (
+                            <div className="border-2 sm:border-3 border-emerald-700 bg-white/70 text-emerald-700 px-4 py-1.5 rounded-xl font-black text-xs sm:text-sm tracking-widest uppercase rotate-[-3deg] shadow-xs select-none shrink-0 text-center self-start sm:self-auto">
+                                <div className="text-[9px] tracking-normal font-bold">{settings.site_name || 'ALAT KOPI MALANG'}</div>
+                                <div className="text-base font-black text-emerald-700 leading-none my-0.5">{settings.stamp_text || '★ LUNAS ★'}</div>
+                                <div className="text-[8px] font-mono tracking-tighter">PAID · {order.paid_at || order.created_at}</div>
+                            </div>
+                        )}
                     </div>
                 )}
 
@@ -444,11 +476,12 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                         order.subtotal,
                     );
                     const hasOrderDiscount = orderNormalSubtotal > order.subtotal;
+                    const showDiscountBreakdown = settings.show_discount_breakdown !== false;
 
                     return (
                         <div className="pt-4 border-t-2 border-sand-200 flex flex-col sm:flex-row justify-end">
                             <div className="w-full sm:w-80 space-y-2 text-xs">
-                                {hasOrderDiscount && (
+                                {showDiscountBreakdown && hasOrderDiscount && (
                                     <>
                                         <div className="flex justify-between text-brand-600">
                                             <span>Total Harga Normal</span>
@@ -465,7 +498,7 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                                     </>
                                 )}
                                 <div className="flex justify-between text-brand-600">
-                                    <span>{hasOrderDiscount ? 'Total Harga Diskon (Subtotal)' : 'Subtotal Produk'}</span>
+                                    <span>{showDiscountBreakdown && hasOrderDiscount ? 'Total Harga Diskon (Subtotal)' : 'Subtotal Produk'}</span>
                                     <span className="font-semibold text-brand-950">{formatRupiah(order.subtotal)}</span>
                                 </div>
                                 <div className="flex justify-between text-brand-600">
@@ -537,6 +570,76 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                         </div>
                     );
                 })()}
+
+                {/* Informasi Pembayaran Bank / Pre-Order Pelunasan */}
+                {settings.bank_info && (
+                    <div className="mt-6 p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs">
+                        <span className="font-bold text-slate-800 block mb-1">
+                            Informasi Rekening Resmi Pembayaran:
+                        </span>
+                        <p className="whitespace-pre-line text-slate-600 font-mono text-[11px] leading-relaxed">
+                            {settings.bank_info}
+                        </p>
+                    </div>
+                )}
+
+                {/* Syarat Ketentuan & Garansi */}
+                {settings.terms && (
+                    <div className="mt-4 p-4 rounded-xl bg-amber-50/60 border border-amber-200/70 text-xs text-amber-950">
+                        <span className="font-bold block mb-1">Ketentuan Garansi & Pengiriman:</span>
+                        <ul className="list-disc list-inside space-y-0.5 text-[11px] text-amber-900/90 leading-relaxed">
+                            {settings.terms
+                                .split('\n')
+                                .filter((t) => t.trim() !== '')
+                                .map((term, idx) => (
+                                    <li key={idx}>{term.replace(/^[0-9]+\.\s*/, '')}</li>
+                                ))}
+                        </ul>
+                    </div>
+                )}
+
+                {/* Footer Notes & Tanda Tangan Pengesahan */}
+                <div className="mt-8 pt-6 border-t border-sand-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 text-xs">
+                    <div className="max-w-md space-y-1">
+                        {settings.footer_notes && (
+                            <p className="text-brand-700 italic text-[11px] leading-relaxed">
+                                &ldquo;{settings.footer_notes}&rdquo;
+                            </p>
+                        )}
+                        <p className="text-[10px] text-brand-400">
+                            Faktur ini sah dan diproses otomatis oleh sistem komputerisasi {settings.site_name || 'Alat Kopi Malang'}.
+                        </p>
+                    </div>
+
+                    {settings.enable_signature !== false && (
+                        <div className="text-center sm:text-right shrink-0 min-w-[180px] self-end sm:self-auto">
+                            <span className="text-[11px] text-brand-600 block">
+                                {settings.signature_city || 'Malang'}, {order.created_at.split(',')[0]}
+                            </span>
+                            <span className="text-[10px] font-bold text-brand-400 uppercase tracking-wider block mt-0.5">
+                                {settings.signer_title || 'Alat Kopi Malang Official'}
+                            </span>
+
+                            <div className="h-16 flex items-center justify-center sm:justify-end my-1">
+                                {signatureSrc ? (
+                                    <img
+                                        src={signatureSrc}
+                                        alt="Stempel & Tanda Tangan"
+                                        className="h-14 object-contain"
+                                    />
+                                ) : (
+                                    <div className="text-[10px] font-mono text-emerald-700 border border-emerald-300 rounded px-2 py-1 bg-emerald-50/50">
+                                        [ Divalidasi Sistem ]
+                                    </div>
+                                )}
+                            </div>
+
+                            <span className="font-bold text-brand-950 underline decoration-brand-400 decoration-1 underline-offset-4 block text-xs">
+                                {settings.signer_name || 'Finance & Sales Roastery'}
+                            </span>
+                        </div>
+                    )}
+                </div>
             </div>
         </div>
     );
