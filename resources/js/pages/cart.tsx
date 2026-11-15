@@ -30,7 +30,7 @@ import { getCartItemPreOrderBreakdown, isCartItemPreOrder, useCart } from '@/con
 import { formatRupiah } from '@/lib/trans';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 import { ShippingMapPicker } from '@/components/shipping-map-picker';
-import { calculateDpBreakdown, PreorderDpSlider } from '@/components/preorder-dp-slider';
+import { calculateDpBreakdown } from '@/components/preorder-dp-slider';
 import { getProductContentId, trackInitiateCheckout } from '@/lib/meta-pixel';
 
 export interface BankAccountItem {
@@ -748,16 +748,6 @@ export default function CartPage({
                                         );
                                     })}
                                 </div>
-
-                                {hasPreOrderItems && (
-                                    <div className="pt-3 border-t border-sand-200">
-                                        <PreorderDpSlider
-                                            totalAmount={grandTotal}
-                                            dpPercentage={dpPercentage}
-                                            onChange={setDpPercentage}
-                                        />
-                                    </div>
-                                )}
                             </div>
                         </div>
 
@@ -1312,20 +1302,6 @@ export default function CartPage({
                                         </div>
                                     </div>
                                 </div>
-
-                                {/* PRE-ORDER DOWN PAYMENT (DP) SLIDER */}
-                                {hasPreOrderItems && (
-                                    <div className="pt-4 border-t border-sand-200">
-                                        <PreorderDpSlider
-                                            totalAmount={grandTotal}
-                                            preOrderAmount={preOrderSubtotal}
-                                            nonPreOrderAmount={nonPreOrderSubtotal}
-                                            dpPercentage={dpPercentage}
-                                            minDpPercentage={minDpPercentage}
-                                            onChange={setDpPercentage}
-                                        />
-                                    </div>
-                                )}
 
                                 {/* Order Calculation Summary */}
                                 {(() => {
