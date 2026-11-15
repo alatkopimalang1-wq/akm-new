@@ -363,7 +363,7 @@ class ManageGeneralSettings extends Page
                     ]),
 
                 Section::make('Integrasi Kurir & Ongkos Kirim Otomatis (RajaOngkir)')
-                    ->description('Pengaturan API kurir (JNE, J&T, SiCepat, AnterAja, POS Indonesia) dari origin Kota Malang.')
+                    ->description('Pengaturan cepat API kurir. Untuk konfigurasi mendalam (pilihan ekspedisi, GoSend, promo bebas ongkir), gunakan menu "Pengaturan RajaOngkir".')
                     ->icon(Heroicon::Truck)
                     ->collapsible()
                     ->schema([
@@ -375,7 +375,7 @@ class ManageGeneralSettings extends Page
                             TextInput::make('rajaongkir_api_key')
                                 ->label('RajaOngkir API Key (Opsional)')
                                 ->placeholder('Contoh: 8a4b2c9... (Starter / Pro Key)')
-                                ->helperText('Jika dikosongkan, sistem secara otomatis menghitung tarif kurir resmi Malang Raya ke seluruh wilayah Indonesia melalui database tarif terintegrasi.'),
+                                ->helperText('Jika dikosongkan, sistem otomatis menggunakan default Pro Key. Pengaturan lengkap tersedia pada menu "Pengaturan RajaOngkir".'),
                         ]),
                     ]),
 
