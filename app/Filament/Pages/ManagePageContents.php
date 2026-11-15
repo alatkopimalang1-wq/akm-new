@@ -137,6 +137,7 @@ class ManagePageContents extends Page
             'home_announcement_text' => $settings['announcement_text'] ?? 'Gratis ongkir ke seluruh Jawa untuk pesanan di atas Rp 250.000 · Roasting segar setiap minggu di Kota Malang',
             'home_announcement_link' => $settings['announcement_link'] ?? '/shop',
             'home_promo_banner_enabled' => (bool) ($settings['home_promo_banner_enabled'] ?? true),
+            'home_promo_banner_position' => $settings['home_promo_banner_position'] ?? 'below_brands',
             'home_promo_banner_image' => $settings['home_promo_banner_image'] ?? 'banners/banner-event-komunitas.jpg',
             'home_promo_banner_link' => $settings['home_promo_banner_link'] ?? 'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering',
             'home_promo_banner_alt' => $settings['home_promo_banner_alt'] ?? 'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang',
@@ -433,12 +434,23 @@ class ManagePageContents extends Page
                                         ]),
                                     ]),
 
-                                Section::make('Banner Gambar Promo / Event (Bawah Kategori Pilihan)')
-                                    ->description('Banner visual memanjang yang tampil tepat di bawah bagian Kategori Pilihan di halaman depan.')
+                                Section::make('Banner Gambar Promo / Event (Beranda)')
+                                    ->description('Banner visual memanjang yang tampil pada halaman depan (dapat diletakkan di bawah Brand Pilihan atau di bawah Kategori Pilihan).')
                                     ->schema([
-                                        Toggle::make('home_promo_banner_enabled')
-                                            ->label('Tampilkan Banner Gambar Promo di Beranda')
-                                            ->default(true),
+                                        Grid::make(2)->schema([
+                                            Toggle::make('home_promo_banner_enabled')
+                                                ->label('Tampilkan Banner Gambar Promo di Beranda')
+                                                ->default(true),
+                                            Select::make('home_promo_banner_position')
+                                                ->label('Posisi Penempatan Banner')
+                                                ->options([
+                                                    'below_brands' => 'Di Bawah Brand Pilihan (Default)',
+                                                    'below_categories' => 'Di Bawah Kategori Pilihan',
+                                                    'both' => 'Tampilkan di Kedua Posisi (Bawah Kategori & Bawah Brand)',
+                                                ])
+                                                ->default('below_brands')
+                                                ->required(),
+                                        ]),
                                         FileUpload::make('home_promo_banner_image')
                                             ->label('Gambar Banner Promo')
                                             ->helperText('Unggah gambar banner promo. Format yang disarankan: Landscape (Rasio ~2.5:1 atau 3:1).')
@@ -677,6 +689,9 @@ class ManagePageContents extends Page
         }
         if (isset($data['home_promo_banner_enabled'])) {
             Setting::set('home_promo_banner_enabled', (bool) $data['home_promo_banner_enabled']);
+        }
+        if (isset($data['home_promo_banner_position'])) {
+            Setting::set('home_promo_banner_position', $data['home_promo_banner_position']);
         }
         if (array_key_exists('home_promo_banner_image', $data)) {
             $bannerImg = $data['home_promo_banner_image'];

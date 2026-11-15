@@ -62,6 +62,42 @@ export default function Welcome(_props: WelcomeProps) {
         return defaultCategoryMenuItems;
     }, [settings?.home_category_menu_items, defaultCategoryMenuItems]);
 
+    const bannerPos = settings?.home_promo_banner_position || 'below_brands';
+    const showBelowCategories = bannerPos === 'below_categories' || bannerPos === 'both';
+    const showBelowBrands = bannerPos === 'below_brands' || bannerPos === 'both';
+
+    const promoBannerNode = settings?.home_promo_banner_enabled !== false && (
+        <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <a
+                href={
+                    settings?.home_promo_banner_link ||
+                    'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering'
+                }
+                target={
+                    (settings?.home_promo_banner_link || '').startsWith('http') || !settings?.home_promo_banner_link
+                        ? '_blank'
+                        : '_self'
+                }
+                rel="noopener noreferrer"
+                className="group block relative w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.008] active:scale-[0.995]"
+            >
+                <img
+                    src={
+                        settings?.home_promo_banner_image
+                            ? resolveImageUrl(settings.home_promo_banner_image, '/images/banners/banner-event-komunitas.png')
+                            : '/images/banners/banner-event-komunitas.png'
+                    }
+                    alt={
+                        settings?.home_promo_banner_alt ||
+                        'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang'
+                    }
+                    className="w-full h-auto object-cover block rounded-2xl sm:rounded-3xl"
+                    loading="lazy"
+                />
+            </a>
+        </section>
+    );
+
     return (
         <PublicLayout title="Your Trusted Coffee Business Partner">
             <div className="space-y-10 sm:space-y-16 pb-8 sm:pb-16 w-full max-w-full overflow-x-hidden">
@@ -197,38 +233,8 @@ export default function Welcome(_props: WelcomeProps) {
                     </div>
                 </section>
 
-                {/* 3.5 BANNER GAMBAR PROMO (Di Bawah Kategori Pilihan) */}
-                {settings?.home_promo_banner_enabled !== false && (
-                    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <a
-                            href={
-                                settings?.home_promo_banner_link ||
-                                'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering'
-                            }
-                            target={
-                                (settings?.home_promo_banner_link || '').startsWith('http') || !settings?.home_promo_banner_link
-                                    ? '_blank'
-                                    : '_self'
-                            }
-                            rel="noopener noreferrer"
-                            className="group block relative w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.008] active:scale-[0.995]"
-                        >
-                            <img
-                                src={
-                                    settings?.home_promo_banner_image
-                                        ? resolveImageUrl(settings.home_promo_banner_image, '/images/banners/banner-event-komunitas.png')
-                                        : '/images/banners/banner-event-komunitas.png'
-                                }
-                                alt={
-                                    settings?.home_promo_banner_alt ||
-                                    'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang'
-                                }
-                                className="w-full h-auto object-cover block rounded-2xl sm:rounded-3xl"
-                                loading="lazy"
-                            />
-                        </a>
-                    </section>
-                )}
+                {/* 3.5 BANNER GAMBAR PROMO (Di Bawah Kategori Pilihan jika diaktifkan) */}
+                {showBelowCategories && promoBannerNode}
 
                 {/* 4. BRAND PILIHAN (Brand Carousel) */}
                 {_props.brands && _props.brands.length > 0 && (
@@ -239,6 +245,9 @@ export default function Welcome(_props: WelcomeProps) {
                         viewAllLabel="Semua Brand"
                     />
                 )}
+
+                {/* 5. BANNER GAMBAR PROMO (Di Bawah Brand Pilihan - Default) */}
+                {showBelowBrands && promoBannerNode}
             </div>
         </PublicLayout>
     );
