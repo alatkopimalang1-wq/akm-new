@@ -211,13 +211,13 @@ export default function Welcome(_props: WelcomeProps) {
                                     : '_self'
                             }
                             rel="noopener noreferrer"
-                            className="group block relative w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.005] active:scale-[0.995] border border-sand-200/80 bg-sand-100"
+                            className="group block relative w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-xl transition-all duration-300 hover:scale-[1.008] active:scale-[0.995]"
                         >
                             <img
                                 src={
                                     settings?.home_promo_banner_image
-                                        ? resolveImageUrl(settings.home_promo_banner_image, '/images/banners/banner-event-komunitas.jpg')
-                                        : '/images/banners/banner-event-komunitas.jpg'
+                                        ? resolveImageUrl(settings.home_promo_banner_image, '/images/banners/banner-event-komunitas.png')
+                                        : '/images/banners/banner-event-komunitas.png'
                                 }
                                 alt={
                                     settings?.home_promo_banner_alt ||

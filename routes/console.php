@@ -16,7 +16,7 @@ Artisan::command('akm:update-orders-code', function () {
 
 Artisan::command('akm:setup-promo-banner', function () {
     \App\Models\Setting::set('home_promo_banner_enabled', true);
-    \App\Models\Setting::set('home_promo_banner_image', 'banners/banner-event-komunitas.jpg');
+    \App\Models\Setting::set('home_promo_banner_image', 'banners/banner-event-komunitas.png');
     \App\Models\Setting::set('home_promo_banner_link', 'https://wa.me/6282132095241?text=' . rawurlencode('Halo Alat Kopi Malang, saya ingin reservasi/booking tempat untuk event komunitas & gathering.'));
     \App\Models\Setting::set('home_promo_banner_alt', 'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang');
     \Illuminate\Support\Facades\Cache::forget('sanubari_settings');
