@@ -93,12 +93,6 @@ export default function BrandsIndex({ brands = [] }: BrandsIndexProps) {
                                         {brand.origin}
                                     </span>
                                 )}
-
-                                {typeof brand.products_count === 'number' && brand.products_count > 0 && (
-                                    <span className="mt-2 text-[11px] font-semibold text-indigo-600 bg-indigo-50 px-2 py-0.5 rounded-full">
-                                        {brand.products_count} Produk
-                                    </span>
-                                )}
                             </Link>
                         ))}
                     </div>
