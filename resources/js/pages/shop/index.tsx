@@ -23,15 +23,24 @@ interface ShopIndexProps {
         links: Array<{ url: string | null; label: string; active: boolean }>;
     };
     categories: Category[];
+    selectedBrand?: {
+        id?: number;
+        name: string;
+        slug: string;
+        origin?: string;
+        description?: string;
+    } | null;
     filters: {
         q?: string;
         category?: string;
         series?: string;
+        brand?: string;
+        producer?: string;
         sort?: string;
     };
 }
 
-export default function ShopIndex({ products, categories = [], filters }: ShopIndexProps) {
+export default function ShopIndex({ products, categories = [], selectedBrand, filters }: ShopIndexProps) {
     const [searchTerm, setSearchTerm] = useState(filters.q || '');
     const [selectedCategory, setSelectedCategory] = useState(filters.category || '');
     const [selectedSeries, setSelectedSeries] = useState(filters.series || '');
@@ -112,6 +121,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                 q: searchTerm,
                 category: selectedCategory,
                 series: selectedSeries,
+                brand: filters.brand || filters.producer || '',
                 sort: selectedSort,
                 page: nextPage,
             },
@@ -122,7 +132,7 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                 onFinish: () => setIsLoadingMore(false),
             }
         );
-    }, [isLoadingMore, hasMore, currentPage, searchTerm, selectedCategory, selectedSeries, selectedSort]);
+    }, [isLoadingMore, hasMore, currentPage, searchTerm, selectedCategory, selectedSeries, selectedSort, filters.brand, filters.producer]);
 
     // IntersectionObserver for automatic lazy loading when scrolling
     useEffect(() => {
@@ -165,13 +175,14 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
         applyFilters({ q: searchTerm });
     };
 
-    const applyFilters = (newFilters: Partial<typeof filters>) => {
+    const applyFilters = (newFilters: Partial<typeof filters> & { brand?: string }) => {
         router.get(
             '/shop',
             {
                 q: newFilters.q !== undefined ? newFilters.q : searchTerm,
                 category: newFilters.category !== undefined ? newFilters.category : selectedCategory,
                 series: newFilters.series !== undefined ? newFilters.series : selectedSeries,
+                brand: newFilters.brand !== undefined ? newFilters.brand : (filters.brand || filters.producer || ''),
                 sort: newFilters.sort !== undefined ? newFilters.sort : selectedSort,
             },
             { preserveState: true, preserveScroll: true }
@@ -277,13 +288,36 @@ export default function ShopIndex({ products, categories = [], filters }: ShopIn
                     </div>
                 </div>
 
+                {/* Active Brand Banner / Pill */}
+                {(filters.brand || filters.producer) && (
+                    <div className="flex items-center justify-between bg-indigo-50/80 border border-indigo-200/80 rounded-xl px-4 py-2.5 text-xs text-indigo-950">
+                        <div className="flex items-center gap-2">
+                            <span className="font-medium text-indigo-700">Filter Brand:</span>
+                            <span className="font-bold text-indigo-950 bg-white px-2.5 py-1 rounded-full border border-indigo-200 shadow-2xs">
+                                {selectedBrand?.name || filters.brand || filters.producer}
+                            </span>
+                            {selectedBrand?.origin && (
+                                <span className="text-indigo-600 hidden sm:inline">({selectedBrand.origin})</span>
+                            )}
+                        </div>
+                        <button
+                            type="button"
+                            onClick={() => applyFilters({ brand: '' })}
+                            className="inline-flex items-center gap-1 font-semibold text-indigo-600 hover:text-indigo-900 transition-colors cursor-pointer"
+                        >
+                            <X className="w-3.5 h-3.5" />
+                            <span>Hapus Filter</span>
+                        </button>
+                    </div>
+                )}
+
                 {/* Result Status */}
                 <div className="flex items-center justify-between text-xs text-brand-500 px-1">
                     <span>
                         Menampilkan <strong className="text-brand-900">{products.data.length}</strong> dari{' '}
                         <strong className="text-brand-900">{products.total}</strong> produk
                     </span>
-                    {(filters.q || filters.series || filters.category) && (
+                    {(filters.q || filters.series || filters.category || filters.brand || filters.producer) && (
                         <button
                             type="button"
                             onClick={() => {

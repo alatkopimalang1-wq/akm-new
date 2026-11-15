@@ -456,6 +456,13 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                     >
                                         {isEn ? 'All Categories' : 'Semua Kategori'}
                                     </Link>
+                                    <Link
+                                        href={isEn ? '/en/brands' : '/brands'}
+                                        onClick={() => setMobileMenuOpen(false)}
+                                        className="block py-1 text-sm font-medium text-brand-800"
+                                    >
+                                        {isEn ? 'Official Brands' : 'Semua Brand'}
+                                    </Link>
                                 </div>
                             </div>
 
@@ -662,6 +669,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                 const defaultCol3Links = [
                     { label: isEn ? 'Product Catalog' : 'Katalog Produk', url: isEn ? '/en/shop' : '/shop', is_external: false, is_active: true },
                     { label: isEn ? 'All Categories' : 'Semua Kategori', url: isEn ? '/en/categories' : '/kategori', is_external: false, is_active: true },
+                    { label: isEn ? 'Official Brands' : 'Semua Brand', url: isEn ? '/en/brands' : '/brands', is_external: false, is_active: true },
                     { label: isEn ? 'Visit Showroom' : 'Kunjungi Showroom', url: isEn ? '/en/visit' : '/kunjungi', is_external: false, is_active: true },
                 ];
 

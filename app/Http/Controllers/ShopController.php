@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Setting;
@@ -65,6 +66,28 @@ class ShopController extends Controller
             });
         }
 
+        // Filter by brand or producer
+        $brandParam = $request->input('brand') ?: $request->input('producer');
+        $selectedBrand = null;
+        if ($brandParam) {
+            $brandObj = Brand::where('slug', $brandParam)->orWhere('name', $brandParam)->first();
+            $brandName = $brandObj ? $brandObj->name : $brandParam;
+            $selectedBrand = $brandObj ? [
+                'id' => $brandObj->id,
+                'name' => $brandObj->name,
+                'slug' => $brandObj->slug,
+                'origin' => $brandObj->origin,
+                'description' => $brandObj->description,
+            ] : ['name' => $brandParam, 'slug' => \Illuminate\Support\Str::slug($brandParam)];
+
+            $query->where(function ($q) use ($brandName, $brandParam) {
+                $q->where('producer', 'like', "%{$brandName}%")
+                  ->orWhere('series', 'like', "%{$brandName}%")
+                  ->orWhere('name', 'like', "%{$brandName}%")
+                  ->orWhere('producer', 'like', "%{$brandParam}%");
+            });
+        }
+
         // Filter by process
         if ($process = $request->input('process')) {
             $query->where('process', 'like', "%{$process}%");
@@ -103,10 +126,12 @@ class ShopController extends Controller
         return Inertia::render('shop/index', [
             'products' => $products,
             'categories' => $categories,
+            'selectedBrand' => $selectedBrand,
             'filters' => [
                 'q' => $request->input('q', ''),
                 'category' => $request->input('category', ''),
                 'series' => $request->input('series', ''),
+                'brand' => $brandParam ?: '',
                 'sort' => $sort,
             ],
         ]);

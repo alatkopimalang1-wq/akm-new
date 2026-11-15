@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\Auth\GoogleAuthController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\ContentController;
@@ -16,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 // Public Indonesian Routes (Default)
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/brand', [BrandController::class, 'index'])->name('brands.index');
+Route::get('/brands', [BrandController::class, 'index'])->name('brands.alias');
 Route::get('/kategori', [ShopController::class, 'categories'])->name('categories.index');
 Route::get('/categories', [ShopController::class, 'categories'])->name('categories.alias');
 Route::get('/api/search', [ShopController::class, 'liveSearch'])->name('api.search');
@@ -48,6 +51,8 @@ Route::post('/api/shipping/pickup', [ShippingController::class, 'requestPickup']
 Route::prefix('en')->as('en.')->group(function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
     Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+    Route::get('/brand', [BrandController::class, 'index'])->name('brands.index');
+    Route::get('/brands', [BrandController::class, 'index'])->name('brands.alias');
     Route::get('/kategori', [ShopController::class, 'categories'])->name('categories.index');
     Route::get('/categories', [ShopController::class, 'categories'])->name('categories.alias');
     Route::get('/api/search', [ShopController::class, 'liveSearch'])->name('api.search');
@@ -65,7 +70,7 @@ Route::prefix('en')->as('en.')->group(function () {
 
 // Dynamic Custom Pages (Format /kunjungi) via Direct Slug
 Route::get('/{slug}', [ContentController::class, 'customVisit'])
-    ->where('slug', '^(?!admin|api|auth|akun|account|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|syarat-ketentuan-pre-order|pre-order|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
+    ->where('slug', '^(?!admin|api|auth|akun|account|brand|brands|dashboard|settings|storage|build|en|shop|kategori|categories|tentang|syarat-ketentuan-pre-order|pre-order|kunjungi|halaman|keranjang|checkout|pesanan|lacak-pesanan|sitemap\.xml)[a-zA-Z0-9\-_]+$')
     ->name('visit.direct');
 
 // XML Sitemap
@@ -76,8 +81,8 @@ Route::get('/sitemap.xml', function () {
     $xml .= '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
 
     $staticRoutes = [
-        '/', '/shop', '/kategori', '/tentang', '/kunjungi', '/keranjang', '/lacak-pesanan',
-        '/en', '/en/shop', '/en/categories', '/en/about', '/en/visit', '/en/cart', '/en/track-order',
+        '/', '/shop', '/brands', '/kategori', '/tentang', '/kunjungi', '/keranjang', '/lacak-pesanan',
+        '/en', '/en/shop', '/en/brands', '/en/categories', '/en/about', '/en/visit', '/en/cart', '/en/track-order',
     ];
 
     foreach ($staticRoutes as $r) {

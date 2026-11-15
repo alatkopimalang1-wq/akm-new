@@ -5,9 +5,12 @@ import type { Category, SanubariSharedProps } from '@/types/sanubari';
 import { HeroSlider } from '@/components/hero-slider';
 import { DynamicCategoryIcon } from '@/components/dynamic-category-icon';
 import { CountingNumber } from '@animate-ui/react/primitives/texts/counting-number';
+import { BrandCarousel } from '@/components/brand-carousel';
+import type { BrandData } from '@/components/brand-avatar';
 
 interface WelcomeProps {
     categories?: Category[];
+    brands?: BrandData[];
 }
 
 const resolveImageUrl = (img: unknown, fallback = ''): string => {
@@ -193,6 +196,16 @@ export default function Welcome(_props: WelcomeProps) {
                         ))}
                     </div>
                 </section>
+
+                {/* 4. BRAND PILIHAN (Brand Carousel) */}
+                {_props.brands && _props.brands.length > 0 && (
+                    <BrandCarousel
+                        brands={_props.brands}
+                        title="Brand Pilihan"
+                        viewAllHref="/brands"
+                        viewAllLabel="Semua Brand"
+                    />
+                )}
             </div>
         </PublicLayout>
     );
