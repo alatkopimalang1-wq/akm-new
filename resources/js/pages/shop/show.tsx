@@ -806,18 +806,10 @@ export default function ProductShow({
                 {/* Related Products Section */}
                 {relatedProducts.length > 0 && (
                     <div className="pt-16 border-t border-sand-200 space-y-6">
-                        <div className="flex items-center justify-between">
-                            <div>
-                                <h2 className="text-xl font-extrabold text-brand-950">
-                                    Produk Terkait Lainnya
-                                </h2>
-                                <p className="text-xs text-brand-500">
-                                    Eksplorasi produk pilihan lainnya dari katalog Alat Kopi Malang
-                                </p>
-                            </div>
-                            <Link href="/shop" className="text-xs font-bold text-accent-copper hover:underline">
-                                Lihat Semua
-                            </Link>
+                        <div>
+                            <h2 className="text-xl font-extrabold text-brand-950">
+                                Produk Terkait Lainnya
+                            </h2>
                         </div>
 
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-6">
