@@ -137,7 +137,7 @@ class ManagePageContents extends Page
             'home_announcement_text' => $settings['announcement_text'] ?? 'Gratis ongkir ke seluruh Jawa untuk pesanan di atas Rp 250.000 · Roasting segar setiap minggu di Kota Malang',
             'home_announcement_link' => $settings['announcement_link'] ?? '/shop',
             'home_promo_banner_enabled' => (bool) ($settings['home_promo_banner_enabled'] ?? true),
-            'home_promo_banner_position' => $settings['home_promo_banner_position'] ?? 'below_brands',
+            'home_promo_banner_position' => $settings['home_promo_banner_position'] ?? 'both',
             'home_promo_banner_image' => $settings['home_promo_banner_image'] ?? 'banners/banner-event-komunitas.jpg',
             'home_promo_banner_link' => $settings['home_promo_banner_link'] ?? 'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering',
             'home_promo_banner_alt' => $settings['home_promo_banner_alt'] ?? 'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang',
@@ -444,11 +444,11 @@ class ManagePageContents extends Page
                                             Select::make('home_promo_banner_position')
                                                 ->label('Posisi Penempatan Banner')
                                                 ->options([
-                                                    'below_brands' => 'Di Bawah Brand Pilihan (Default)',
-                                                    'below_categories' => 'Di Bawah Kategori Pilihan',
-                                                    'both' => 'Tampilkan di Kedua Posisi (Bawah Kategori & Bawah Brand)',
+                                                    'both' => 'Tampilkan di Kedua Posisi (Bawah Kategori & Bawah Brand - Default)',
+                                                    'below_brands' => 'Hanya di Bawah Brand Pilihan',
+                                                    'below_categories' => 'Hanya di Bawah Kategori Pilihan',
                                                 ])
-                                                ->default('below_brands')
+                                                ->default('both')
                                                 ->required(),
                                         ]),
                                         FileUpload::make('home_promo_banner_image')

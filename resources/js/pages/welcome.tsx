@@ -62,7 +62,7 @@ export default function Welcome(_props: WelcomeProps) {
         return defaultCategoryMenuItems;
     }, [settings?.home_category_menu_items, defaultCategoryMenuItems]);
 
-    const bannerPos = settings?.home_promo_banner_position || 'below_brands';
+    const bannerPos = settings?.home_promo_banner_position || 'both';
     const showBelowCategories = bannerPos === 'below_categories' || bannerPos === 'both';
     const showBelowBrands = bannerPos === 'below_brands' || bannerPos === 'both';
 
