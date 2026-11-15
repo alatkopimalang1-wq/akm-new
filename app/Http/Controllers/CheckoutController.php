@@ -59,7 +59,7 @@ class CheckoutController extends Controller
 
         $settings = Setting::all()->pluck('value', 'key')->toArray();
         $freeShippingMin = (int) ($settings['free_shipping_min'] ?? 250000);
-        $waNumber = $settings['whatsapp'] ?? '6285121930454';
+        $waNumber = $settings['whatsapp'] ?? '6282132095241';
         $storeName = $settings['pickup_store_name'] ?? 'Alat Kopi Malang (Tlogomas, Malang)';
         $storeAddress = $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144');
 
@@ -390,7 +390,7 @@ class CheckoutController extends Controller
             ? (str_starts_with($settings['payment_qris_image'], 'http') ? $settings['payment_qris_image'] : '/storage/' . ltrim($settings['payment_qris_image'], '/'))
             : '/brand/qris-Alat Kopi Malang.svg';
 
-        $waNumber = $settings['whatsapp'] ?? '6285121930454';
+        $waNumber = $settings['whatsapp'] ?? '6282132095241';
         $waConfirmText = "Halo Alat Kopi Malang! Saya sudah melakukan pembayaran untuk Pesanan #{$order->order_number} sebesar Rp " . number_format($order->total_amount, 0, ',', '.') . ". Mohon dicek dan diproses ya. Terima kasih!";
         $waConfirmUrl = "https://wa.me/{$waNumber}?text=" . rawurlencode($waConfirmText);
 
@@ -594,7 +594,7 @@ class CheckoutController extends Controller
                 'tagline' => $settings['invoice_company_tagline'] ?? 'Specialty Coffee Roaster Malang · Close to Every Brew',
                 'logo' => $settings['invoice_logo'] ?? null,
                 'address' => $settings['invoice_company_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
-                'phone' => $settings['invoice_phone'] ?? ($settings['phone'] ?? ($settings['whatsapp'] ?? '+6285121930454')),
+                'phone' => $settings['invoice_phone'] ?? ($settings['phone'] ?? ($settings['whatsapp'] ?? '+6282132095241')),
                 'email' => $settings['invoice_email'] ?? ($settings['email'] ?? 'info@alatkopimalang.co.id'),
                 'website' => $settings['invoice_website'] ?? 'https://alatkopimalang.co.id',
                 'title_label' => $settings['invoice_title_label'] ?? 'FAKTUR PEMBELIAN / INVOICE',

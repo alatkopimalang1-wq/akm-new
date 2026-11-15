@@ -19,7 +19,7 @@ export default function CartDrawer({
     onUpdateQuantity,
     onRemoveItem,
     onClearCart,
-    whatsappNumber = '6281234567890',
+    whatsappNumber = '6282132095241',
 }: CartDrawerProps) {
     if (!isOpen) return null;
 

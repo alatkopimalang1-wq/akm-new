@@ -68,7 +68,7 @@ class ManagePreOrderTerms extends Page
             'cta_title' => 'Butuh Konsultasi Sebelum Pre-Order?',
             'cta_description' => 'Tim spesialis peralatan kopi kami siap membantu Anda memastikan spesifikasi mesin, daya listrik, dan estimasi jadwal pengiriman terbaik untuk kebutuhan kedai maupun rumah Anda.',
             'cta_button_text' => 'Konsultasi via WhatsApp',
-            'whatsapp_number' => '6285121930454',
+            'whatsapp_number' => '6282132095241',
             'last_updated' => 'Diperbarui oleh Manajemen Alat Kopi Malang',
         ];
     }
@@ -167,7 +167,7 @@ class ManagePreOrderTerms extends Page
                         ]),
                         TextInput::make('whatsapp_number')
                             ->label('Nomor WhatsApp Tujuan (Format 628xxx)')
-                            ->placeholder('6285121930454')
+                            ->placeholder('6282132095241')
                             ->required(),
                         Textarea::make('cta_description')
                             ->label('Deskripsi Kotak Bantuan')

@@ -1850,7 +1850,7 @@ class ShippingService
 
         $sender = [
             'name' => $settings['shipping_sender_name'] ?? 'ALAT KOPI MALANG TLOGOMAS',
-            'phone' => $settings['whatsapp'] ?? '0851-2193-0454',
+            'phone' => $settings['whatsapp'] ?? '0821-3209-5241',
             'address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang 65144'),
             'city' => 'Kota Malang',
             'province' => 'Jawa Timur',

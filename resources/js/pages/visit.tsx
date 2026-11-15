@@ -109,7 +109,7 @@ export default function VisitPage({ page }: VisitPageProps) {
     ];
 
     const cleanPhone = phone.replace(/[^0-9]/g, '');
-    const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : 'https://wa.me/6285121930454';
+    const waLink = cleanPhone ? `https://wa.me/${cleanPhone}` : 'https://wa.me/6282132095241';
 
     return (
         <PublicLayout title="Kunjungi Roastery & Showroom Malang">

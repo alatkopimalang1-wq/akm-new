@@ -74,8 +74,8 @@ class ManageFooterSettings extends Page
             // Kolom 4: Operasional & Kontak
             'column_4_title' => 'Jam Operasional & Kontak',
             'hours' => 'Buka setiap hari: 09.00 – 23.00 WIB',
-            'phone' => '+6285121930454',
-            'whatsapp' => '6285121930454',
+            'phone' => '+6282132095241',
+            'whatsapp' => '6282132095241',
             'city' => 'Kota Malang, Jawa Timur',
             'whatsapp_cta_text' => 'Pesan via WhatsApp',
             'whatsapp_message' => 'Halo Alat Kopi Malang! Saya ingin bertanya tentang produk kopi.',
@@ -308,11 +308,11 @@ class ManageFooterSettings extends Page
                             TextInput::make('phone')
                                 ->label('Nomor Telepon Tampil')
                                 ->required()
-                                ->placeholder('+6285121930454'),
+                                ->placeholder('+6282132095241'),
                             TextInput::make('whatsapp')
                                 ->label('Nomor WhatsApp (Format internasional tanpa simbol)')
                                 ->required()
-                                ->placeholder('6285121930454'),
+                                ->placeholder('6282132095241'),
                         ]),
                         Grid::make(2)->schema([
                             TextInput::make('whatsapp_cta_text')

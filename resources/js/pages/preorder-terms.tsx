@@ -66,7 +66,7 @@ export default function PreorderTermsPage({ page }: PreOrderTermsPageProps) {
         page?.cta_description ||
         'Tim spesialis peralatan kopi kami siap membantu Anda memastikan spesifikasi mesin, daya listrik, dan estimasi jadwal pengiriman terbaik untuk kebutuhan kedai maupun rumah Anda.';
     const ctaButtonText = page?.cta_button_text || 'Konsultasi via WhatsApp';
-    const whatsappNumber = (page?.whatsapp_number || '6285121930454').replace(/[^0-9]/g, '');
+    const whatsappNumber = (page?.whatsapp_number || '6282132095241').replace(/[^0-9]/g, '');
     const lastUpdated = page?.last_updated || 'Diperbarui oleh Manajemen Alat Kopi Malang';
 
     const waUrl = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(

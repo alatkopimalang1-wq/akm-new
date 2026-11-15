@@ -7,7 +7,7 @@ interface FooterProps {
 }
 
 export default function Footer({
-    whatsappNumber = '6281234567890',
+    whatsappNumber = '6282132095241',
     address = 'Malang, Jawa Timur, Indonesia',
 }: FooterProps) {
     return (

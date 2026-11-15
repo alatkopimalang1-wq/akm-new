@@ -48,7 +48,7 @@ class ManageInvoiceSettings extends Page
             'invoice_company_tagline' => $settings['invoice_company_tagline'] ?? 'Specialty Coffee Roaster Malang · Close to Every Brew',
             'invoice_logo' => $settings['invoice_logo'] ?? null,
             'invoice_company_address' => $settings['invoice_company_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
-            'invoice_phone' => $settings['invoice_phone'] ?? ($settings['whatsapp'] ?? '+6285121930454'),
+            'invoice_phone' => $settings['invoice_phone'] ?? ($settings['whatsapp'] ?? '+6282132095241'),
             'invoice_email' => $settings['invoice_email'] ?? ($settings['email'] ?? 'info@alatkopimalang.co.id'),
             'invoice_website' => $settings['invoice_website'] ?? 'https://alatkopimalang.co.id',
 
@@ -61,7 +61,7 @@ class ManageInvoiceSettings extends Page
             'invoice_show_discount_breakdown' => (bool) ($settings['invoice_show_discount_breakdown'] ?? true),
 
             // Rekening & Petunjuk Pelunasan
-            'invoice_bank_info' => $settings['invoice_bank_info'] ?? "BCA: 0113271701 a.n Alat Kopi Malang\nMandiri: 1440012345678 a.n Alat Kopi Malang\nKonfirmasi transfer hubungi WhatsApp: 0851-2193-0454",
+            'invoice_bank_info' => $settings['invoice_bank_info'] ?? "BCA: 0113271701 a.n Alat Kopi Malang\nMandiri: 1440012345678 a.n Alat Kopi Malang\nKonfirmasi transfer hubungi WhatsApp: 0821-3209-5241",
 
             // Catatan Kaki & Garansi
             'invoice_footer_notes' => $settings['invoice_footer_notes'] ?? 'Terima kasih atas kepercayaan Anda berbelanja peralatan seduh kopi di Alat Kopi Malang. Silakan simpan invoice ini sebagai bukti transaksi resmi.',
@@ -120,7 +120,7 @@ class ManageInvoiceSettings extends Page
                         Grid::make(3)->schema([
                             TextInput::make('invoice_phone')
                                 ->label('Nomor Telepon / WhatsApp')
-                                ->placeholder('+6285121930454'),
+                                ->placeholder('+6282132095241'),
                             TextInput::make('invoice_email')
                                 ->label('Email Resmi')
                                 ->email()

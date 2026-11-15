@@ -50,10 +50,10 @@ class ManageGeneralSettings extends Page
             'site_logo' => $settings['site_logo'] ?? null,
             'site_favicon' => $settings['site_favicon'] ?? null,
 
-            'whatsapp' => $settings['whatsapp'] ?? '6285121930454',
+            'whatsapp' => $settings['whatsapp'] ?? '6282132095241',
             'whatsapp_gateway_provider' => $settings['whatsapp_gateway_provider'] ?? 'auto',
             'whatsapp_gateway_token' => $settings['whatsapp_gateway_token'] ?? null,
-            'phone' => $settings['phone'] ?? '+6285121930454',
+            'phone' => $settings['phone'] ?? '+6282132095241',
             'email' => $settings['email'] ?? 'info@alatkopimalang.co.id',
 
             'address' => $settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
@@ -191,11 +191,11 @@ class ManageGeneralSettings extends Page
                         Grid::make(3)->schema([
                             TextInput::make('whatsapp')
                                 ->label('Nomor WhatsApp (Format: 628...)')
-                                ->helperText('Tanpa tanda +, contoh: 6285121930454')
+                                ->helperText('Tanpa tanda +, contoh: 6282132095241')
                                 ->required(),
                             TextInput::make('phone')
                                 ->label('Nomor Telepon Tampilan')
-                                ->placeholder('+6285121930454'),
+                                ->placeholder('+6282132095241'),
                             TextInput::make('email')
                                 ->label('Email Resmi')
                                 ->email()

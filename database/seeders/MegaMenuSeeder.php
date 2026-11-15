@@ -116,7 +116,7 @@ class MegaMenuSeeder extends Seeder
                 'featured_title' => 'Showroom & Lab Roastery',
                 'featured_subtitle' => 'Jl. Terusan Kawi No. 12, Klojen, Kota Malang. Buka Setiap Hari: 09.00 - 23.00 WIB',
                 'featured_image' => 'mega-menu/showroom.jpg',
-                'featured_url' => 'https://wa.me/6285121930454?text=Halo%20Alat Kopi Malang%20Roastery!%20Saya%20ingin%20konsultasi%20pasokan%20kopi%20grosir%20dan%20sample%20kedai.',
+                'featured_url' => 'https://wa.me/6282132095241?text=Halo%20Alat Kopi Malang%20Roastery!%20Saya%20ingin%20konsultasi%20pasokan%20kopi%20grosir%20dan%20sample%20kedai.',
                 'featured_button_text' => 'Hubungi Tim Wholesale (WhatsApp)',
             ]
         );

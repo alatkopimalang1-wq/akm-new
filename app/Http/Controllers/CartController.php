@@ -67,7 +67,7 @@ class CartController extends Controller
             'bank_enabled' => (bool) ($settings['payment_bank_enabled'] ?? true),
             'free_shipping_min' => (int) ($settings['free_shipping_min'] ?? 250000),
             'shipping_flat_rate' => 15000,
-            'whatsapp' => $settings['whatsapp'] ?? '6285121930454',
+            'whatsapp' => $settings['whatsapp'] ?? '6282132095241',
             'instructions' => $settings['payment_instructions'] ?? 'Silakan lakukan pembayaran sesuai nominal tepat. Pesanan akan otomatis diproses setelah pembayaran terverifikasi.',
         ];
 
@@ -154,7 +154,7 @@ class CartController extends Controller
         }
 
         // WhatsApp number
-        $waNumber = Setting::get('whatsapp', '6285121930454');
+        $waNumber = Setting::get('whatsapp', '6282132095241');
         $cust = $validated['customer'];
 
         // Build message

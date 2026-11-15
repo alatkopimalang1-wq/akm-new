@@ -172,7 +172,7 @@ class ShopController extends Controller
             'relatedProducts' => $relatedProducts,
             'preorderTerms' => $preorderTerms,
             'bundleSlots' => $bundleSlots,
-            'whatsappNumber' => Setting::get('whatsapp', '6285121930454'),
+            'whatsappNumber' => Setting::get('whatsapp', '6282132095241'),
             'marketplaceDefaults' => [
                 'tokopedia' => Setting::get('tokopedia', 'https://www.tokopedia.com/alatkopimalang'),
                 'shopee' => Setting::get('shopee', 'https://shopee.co.id/alatkopimalang'),

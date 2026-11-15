@@ -13,7 +13,7 @@ export default function ProductModal({
     product,
     onClose,
     onAddToCart,
-    whatsappNumber = '6281234567890',
+    whatsappNumber = '6282132095241',
 }: ProductModalProps) {
     if (!product) return null;
 

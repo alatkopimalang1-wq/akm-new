@@ -64,7 +64,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
     product,
     defaultVariant,
     slots,
-    whatsappNumber = '6285121930454',
+    whatsappNumber = '6282132095241',
     onTotalChange,
 }) => {
     const { addItem, dpPercentage: cartDpPercentage, setDpPercentage: setCartDpPercentage } = useCart();
@@ -418,7 +418,7 @@ export const CustomBundleSlots: React.FC<CustomBundleSlotsProps> = ({
 
         const finalUnitPrice =
             totalBundlePrice > 0 ? totalBundlePrice : Number(defaultVariant.price || product.min_price || 0);
-        const cleanWa = whatsappNumber.replace(/[^0-9]/g, '') || '6285121930454';
+        const cleanWa = whatsappNumber.replace(/[^0-9]/g, '') || '6282132095241';
 
         let msg = `Halo Alat Kopi Malang! Saya ingin memesan paket:\n*${product.name}* (Qty: ${quantity} Paket)\n\n*RINCIAN ISI PAKET:*\n`;
 

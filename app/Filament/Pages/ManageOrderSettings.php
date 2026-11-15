@@ -45,7 +45,7 @@ class ManageOrderSettings extends Page
             'order_acceptance_status' => $settings['order_acceptance_status'] ?? 'open',
             'order_acceptance_announcement' => $settings['order_acceptance_announcement'] ?? '',
             'order_admin_wa_notification' => (bool) ($settings['order_admin_wa_notification'] ?? true),
-            'order_admin_wa_number' => $settings['order_admin_wa_number'] ?? ($settings['whatsapp'] ?? '6285121930454'),
+            'order_admin_wa_number' => $settings['order_admin_wa_number'] ?? ($settings['whatsapp'] ?? '6282132095241'),
             'order_audio_alert_enabled' => (bool) ($settings['order_audio_alert_enabled'] ?? true),
             'order_auto_cancel_hours' => (int) ($settings['order_auto_cancel_hours'] ?? 24),
             'order_preorder_default_min_dp' => (int) ($settings['order_preorder_default_min_dp'] ?? 30),
@@ -109,8 +109,8 @@ class ManageOrderSettings extends Page
 
                         TextInput::make('order_admin_wa_number')
                             ->label('Nomor WhatsApp Admin Penerima Notifikasi')
-                            ->placeholder('6285121930454')
-                            ->helperText('Gunakan kode negara (contoh: 6285121930454 tanpa tanda plus atau spasi).')
+                            ->placeholder('6282132095241')
+                            ->helperText('Gunakan kode negara (contoh: 6282132095241 tanpa tanda plus atau spasi).')
                             ->required(),
                     ]),
 

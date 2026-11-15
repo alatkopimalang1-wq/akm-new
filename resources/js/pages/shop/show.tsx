@@ -123,7 +123,7 @@ export default function ProductShow({
     product,
     relatedProducts = [],
     bundleSlots = [],
-    whatsappNumber = '6285121930454',
+    whatsappNumber = '6282132095241',
     preorderTerms,
     marketplaceDefaults,
 }: ProductShowProps) {
@@ -329,11 +329,12 @@ export default function ProductShow({
             ? `\nSkema Pembayaran: DP ${dpBreakdown.dpPercentage}%\nTotal Harga (100%): ${formatRupiah(dpBreakdown.fullTotal)}\nTotal Dibayar Sekarang (DP ${dpBreakdown.dpPercentage}%): *${formatRupiah(dpBreakdown.dpAmount)}*\nSisa Pelunasan (${dpBreakdown.remainingPercentage}%): ${formatRupiah(dpBreakdown.remainingBalance)}`
             : `\nTotal Harga: ${formatRupiah(productTotalAmount)}`;
 
+    const cleanWaTarget = whatsappNumber.replace(/[^0-9]/g, '') || '6282132095241';
     const waDirectUrl = isCurrentVariantOutOfStock
-        ? `https://wa.me/6285121930454?text=${encodeURIComponent(
+        ? `https://wa.me/${cleanWaTarget}?text=${encodeURIComponent(
             `Halo Alat Kopi Malang! Saya ingin menanyakan ketersediaan restock produk:\n*${product.name}*${variantLineText}\n\nMohon info estimasi ready stock kembali. Terima kasih!`
         )}`
-        : `https://wa.me/6285121930454?text=${encodeURIComponent(
+        : `https://wa.me/${cleanWaTarget}?text=${encodeURIComponent(
             `Halo Alat Kopi Malang! Saya ingin memesan langsung:\n*${product.name}*${variantLineText}\nJumlah: ${quantity}x${dpWaText}\n\nMohon info ketersediaan stok & ongkir ke alamat saya. Terima kasih!`
         )}`;
 
