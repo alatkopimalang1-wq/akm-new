@@ -512,7 +512,7 @@ class CheckoutController extends Controller
                 'store_address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
                 'store_hours' => $settings['pickup_store_hours'] ?? ($settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB'),
                 'notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan.',
-                'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
+                'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
             ],
         ]);
     }

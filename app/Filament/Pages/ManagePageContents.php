@@ -107,7 +107,7 @@ class ManagePageContents extends Page
             'visit_address' => $visit['address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
             'visit_hours' => $visit['hours'] ?? 'Buka Setiap Hari: 09.00 – 23.00 WIB (Layanan Seduh di Tempat & Pembelian Beans)',
             'visit_phone' => $visit['phone'] ?? ($settings['whatsapp'] ?? '082132095241'),
-            'visit_maps_url' => $visit['maps_url'] ?? ($settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7'),
+            'visit_maps_url' => $visit['maps_url'] ?? ($settings['maps_url'] ?? 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7'),
             'visit_main_image' => $visit['main_image'] ?? null,
             'visit_facilities' => $visit['facilities'] ?? [
                 [

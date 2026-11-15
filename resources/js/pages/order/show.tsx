@@ -62,7 +62,7 @@ export default function OrderShowPage({
         store_address: 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
         store_hours: 'Buka setiap hari: 09.00 - 23.00 WIB',
         notes: 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
-        maps_url: 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
+        maps_url: 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
     },
 }: OrderShowProps) {
     const { flash } = usePage().props as any;

@@ -79,7 +79,7 @@ weightGrams, sku, stockStatus, pricing[]}], options[]` — `evidence/nircoffee/a
 | Products | 56, variable (Kemasan: 15 g … 1 kg), Rp 15.000 – Rp 155.000+ |
 | Product description fields | Origin, Varietas, Process, Altitude, Brew Method, Taste Profile (parsed from text) |
 | Brand copy | "Close to Every Brew", "Jejak Rasa di Gunung Kawi", Wholesale & B2B, "Sanubari Roastery x Alat Kopi Malang — one stop shopping", hours 09.00–23.00 |
-| Contact | WhatsApp `6285121930454`, Maps `https://maps.app.goo.gl/PMuxaEtsbEvC4APy7` |
+| Contact | WhatsApp `6285121930454`, Maps `https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7` |
 
 Normalised data for seeders: [`sanubari-seed.json`](sanubari-seed.json).
 

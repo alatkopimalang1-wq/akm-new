@@ -22,3 +22,18 @@ Artisan::command('akm:setup-promo-banner', function () {
     \Illuminate\Support\Facades\Cache::forget('sanubari_settings');
     $this->info("Home promo banner configured successfully.");
 })->purpose('Setup home promo banner settings');
+
+Artisan::command('akm:update-maps-url', function () {
+    $newUrl = 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7';
+    \App\Models\Setting::set('maps_url', $newUrl);
+    
+    // Also update in page_visit setting if present
+    $visit = \App\Models\Setting::get('page_visit');
+    if (is_array($visit)) {
+        $visit['maps_url'] = $newUrl;
+        \App\Models\Setting::set('page_visit', $visit);
+    }
+    
+    \Illuminate\Support\Facades\Cache::forget('sanubari_settings');
+    $this->info("Maps URL updated to {$newUrl} in database and cache cleared.");
+})->purpose('Update Google Maps URL across database settings');

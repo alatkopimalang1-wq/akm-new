@@ -6,12 +6,14 @@ interface ShowroomSectionProps {
     showroomItems?: ShowroomItem[];
     address?: string;
     hours?: string;
+    mapsUrl?: string;
 }
 
 export default function ShowroomSection({
     showroomItems = [],
     address = 'Jl. Terusan Dieng No. 42, Malang, Jawa Timur',
     hours = 'Senin - Minggu: 09.00 - 21.00 WIB',
+    mapsUrl = 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
 }: ShowroomSectionProps) {
     const items = showroomItems.length > 0 ? showroomItems : [
         {
@@ -85,7 +87,7 @@ export default function ShowroomSection({
                     </div>
 
                     <a
-                        href="https://maps.google.com"
+                        href={mapsUrl}
                         target="_blank"
                         rel="noreferrer"
                         className="px-6 py-3 rounded-xl bg-[#0e1015] hover:bg-black text-stone-200 hover:text-white border border-[#232838] text-xs font-bold transition-all shrink-0"

@@ -58,7 +58,7 @@ class ManageGeneralSettings extends Page
 
             'address' => $settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144',
             'hours' => $settings['hours'] ?? 'Buka setiap hari: 09.00 - 23.00 WIB',
-            'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
+            'maps_url' => $settings['maps_url'] ?? 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
 
             'instagram' => $settings['instagram'] ?? 'https://instagram.com/alatkopimalang',
             'facebook' => $settings['facebook'] ?? 'https://facebook.com/alatkopimalang',

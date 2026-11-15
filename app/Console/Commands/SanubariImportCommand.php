@@ -85,7 +85,7 @@ class SanubariImportCommand extends Command
                 'en' => 'Alat Kopi Malang curates manual brew equipment, espresso machines, grinders, and barista tools in Malang since 2017.',
             ],
             'whatsapp' => '6282132095241',
-            'maps_url' => 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
+            'maps_url' => 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
             'address' => 'Malang, Jawa Timur',
             'opening_hours' => '09.00 – 21.00 WIB (Setiap Hari)',
             'instagram' => 'https://instagram.com/alatkopimalang',

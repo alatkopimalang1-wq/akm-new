@@ -133,7 +133,7 @@ export default function CartPage({
         store_address: 'Malang, Jawa Timur',
         store_hours: 'Buka setiap hari: 09.00 - 21.00 WIB',
         notes: 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
-        maps_url: 'https://maps.app.goo.gl/PMuxaEtsbEvC4APy7',
+        maps_url: 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
     },
     deliverySettings = {
         enabled: true,
