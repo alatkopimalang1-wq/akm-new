@@ -30,10 +30,8 @@ import { formatRupiah } from '@/lib/trans';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 import {
     calculateDpBreakdown,
-    DpPercentage,
     normalizeDpPercentage,
     normalizeMinDpPercentage,
-    PreorderDpSlider,
 } from '@/components/preorder-dp-slider';
 import { OrderData } from '@/types/sanubari';
 import { trackPurchase } from '@/lib/meta-pixel';
@@ -113,10 +111,7 @@ export default function OrderShowPage({
     );
 
     const orderMinDp = normalizeMinDpPercentage((order.payment_details as any)?.min_dp_percentage ?? 30);
-
-    const [dpPercentage, setDpPercentage] = useState<DpPercentage>(() =>
-        normalizeDpPercentage(order.payment_details?.dp_percentage ?? 100, orderMinDp),
-    );
+    const dpPercentage = normalizeDpPercentage(order.payment_details?.dp_percentage ?? 100, orderMinDp);
 
     const fullOrderBaseTotal = Number(order.subtotal || 0) + Number(order.shipping_cost || 0);
     const computedPreOrderSubtotal = order.items.reduce((sum, item) => {
@@ -151,28 +146,7 @@ export default function OrderShowPage({
         orderPreOrderSubtotal,
         orderNonPreOrderSubtotal,
     );
-    const effectiveTotalAmount = orderHasPreOrder
-        ? dpBreakdown.dpAmount + Number(order.unique_code || 0)
-        : Number(order.total_amount || 0);
-
-    const handleUpdateOrderDp = async (nextPct: DpPercentage) => {
-        const clamped = normalizeDpPercentage(nextPct, orderMinDp);
-        setDpPercentage(clamped);
-        try {
-            await fetch(`/pesanan/${order.order_number}/update-dp`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    Accept: 'application/json',
-                    'X-CSRF-TOKEN':
-                        (document.querySelector('meta[name="csrf-token"]') as HTMLMetaElement)?.content || '',
-                },
-                body: JSON.stringify({ dp_percentage: clamped }),
-            });
-        } catch (err) {
-            console.error('Failed to update order DP:', err);
-        }
-    };
+    const effectiveTotalAmount = Number(order.total_amount || 0);
 
     const [isTrackingModalOpen, setIsTrackingModalOpen] = useState(false);
     const [trackingLoading, setTrackingLoading] = useState(false);
@@ -367,18 +341,6 @@ export default function OrderShowPage({
                             )}
                         </button>
                     </div>
-
-                    {/* Interactive Pre-Order DP Slider on Order Show Page */}
-                    {orderHasPreOrder && order.payment_status !== 'paid' && (
-                        <PreorderDpSlider
-                            totalAmount={fullOrderBaseTotal}
-                            preOrderAmount={orderPreOrderSubtotal}
-                            nonPreOrderAmount={orderNonPreOrderSubtotal}
-                            dpPercentage={dpPercentage}
-                            minDpPercentage={orderMinDp}
-                            onChange={handleUpdateOrderDp}
-                        />
-                    )}
                 </div>
 
                 {/* INVOICE LUNAS DOWNLOAD BANNER (JIKA SUDAH LUNAS / DIKONFIRMASI) */}
