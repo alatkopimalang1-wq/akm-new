@@ -40,7 +40,9 @@ class AdminPanelProvider extends PanelProvider
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(\Crumbls\Layup\LayupPlugin::make())
             ->navigationGroups([
+                'Pesanan & Transaksi',
                 'Halaman Awal',
+                'Katalog & Produk',
                 'Katalog & Toko',
                 'Konten & Media',
                 'Pengaturan',

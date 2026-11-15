@@ -88,6 +88,10 @@ class CartController extends Controller
         return Inertia::render('cart', [
             'paymentSettings' => $paymentSettings,
             'pickupSettings' => $pickupSettings,
+            'orderAcceptance' => [
+                'status' => $settings['order_acceptance_status'] ?? 'open',
+                'announcement' => $settings['order_acceptance_announcement'] ?? '',
+            ],
             'deliverySettings' => [
                 'enabled' => (bool) ($settings['shipping_delivery_enabled'] ?? true),
                 'gosend_enabled' => in_array('gosend', $shippingConfig['couriers'] ?? []),

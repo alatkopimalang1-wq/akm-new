@@ -101,6 +101,10 @@ interface CourierRate {
 interface CartPageProps {
     paymentSettings?: PaymentSettingsProps;
     pickupSettings?: PickupSettingsProps;
+    orderAcceptance?: {
+        status: string;
+        announcement?: string;
+    };
     deliverySettings?: {
         enabled: boolean;
         gosend_enabled: boolean;
@@ -122,6 +126,7 @@ interface CartPageProps {
 
 export default function CartPage({
     paymentSettings,
+    orderAcceptance,
     pickupSettings = {
         enabled: true,
         store_name: 'Alat Kopi Malang',
@@ -515,6 +520,32 @@ export default function CartPage({
                         Checkout &amp; Pembayaran
                     </h1>
                 </div>
+
+                {orderAcceptance?.status && orderAcceptance.status !== 'open' && (
+                    <div className={`p-4 rounded-xl border flex items-start gap-3 text-xs leading-relaxed ${
+                        orderAcceptance.status === 'closed_temp'
+                            ? 'bg-rose-50 border-rose-200 text-rose-900'
+                            : 'bg-amber-50 border-amber-200 text-amber-900'
+                    }`}>
+                        <div className="shrink-0 text-base">
+                            {orderAcceptance.status === 'closed_temp' ? '🔴' : '☕'}
+                        </div>
+                        <div>
+                            <p className="font-bold">
+                                {orderAcceptance.status === 'closed_temp'
+                                    ? 'Pemberitahuan Operasional Toko (Tutup Sementara / Libur)'
+                                    : 'Informasi Jadwal Sangrai & Batch Roasting'}
+                            </p>
+                            <p className="mt-0.5 text-xs opacity-90">
+                                {orderAcceptance.announcement || (
+                                    orderAcceptance.status === 'closed_temp'
+                                        ? 'Toko saat ini sedang libur operasional sementara. Pesanan Anda tetap dapat dimasukkan dan akan segera disiapkan saat toko aktif kembali.'
+                                        : 'Pesanan Anda tetap kami terima dengan baik dan akan disangrai segar sesuai jadwal roasting batch berikutnya.'
+                                )}
+                            </p>
+                        </div>
+                    </div>
+                )}
 
                 {items.length === 0 ? (
                     <div className="bg-white rounded-2xl p-12 text-center border border-sand-200 space-y-4 max-w-lg mx-auto shadow-xs">
