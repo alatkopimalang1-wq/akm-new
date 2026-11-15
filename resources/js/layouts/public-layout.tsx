@@ -353,9 +353,9 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
                                 type="search"
                                 value={headerSearch}
                                 onChange={(e) => handleHeaderSearchChange(e.target.value)}
-                                placeholder={isMobile ? '' : 'Cari biji kopi, varietas, tasting notes...'}
-                                className="w-full h-10 sm:h-10.5 pl-9 sm:pl-10 pr-8 bg-brand-800/90 hover:bg-brand-800 focus:bg-brand-800 border border-brand-700/70 focus:border-accent-copper rounded-xl text-[16px] sm:text-sm text-white placeholder-transparent sm:placeholder-brand-300/80 outline-none transition-colors shadow-inner"
-                                aria-label="Cari produk kopi"
+                                placeholder="Cari alat kopi..."
+                                className="w-full h-10 sm:h-10.5 pl-9 sm:pl-10 pr-8 bg-brand-800/90 hover:bg-brand-800 focus:bg-brand-800 border border-brand-700/70 focus:border-accent-copper rounded-xl text-[16px] sm:text-sm text-white placeholder-brand-300/80 outline-none transition-colors shadow-inner"
+                                aria-label="Cari alat kopi"
                             />
                             {headerSearch && (
                                 <button

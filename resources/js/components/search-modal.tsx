@@ -173,8 +173,8 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                         type="text"
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
-                        placeholder={isMobile ? '' : 'Cari kopi, tasting notes, proses, atau metode seduh...'}
-                        className="flex-1 bg-transparent border-0 text-brand-950 placeholder-transparent sm:placeholder-brand-500 text-[16px] sm:text-base font-medium focus:ring-0 focus:outline-none"
+                        placeholder="Cari alat kopi, grinder, mesin espresso, aksesoris..."
+                        className="flex-1 bg-transparent border-0 text-brand-950 placeholder-brand-400 sm:placeholder-brand-500 text-[16px] sm:text-base font-medium focus:ring-0 focus:outline-none"
                     />
 
                     {loading && (
@@ -334,7 +334,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                                 <div>
                                     <div className="flex items-center justify-between mb-3">
                                         <span className="text-xs font-bold text-brand-700">
-                                            Koleksi Biji Kopi ({products.length})
+                                            Koleksi Produk & Alat Kopi ({products.length})
                                         </span>
                                     </div>
                                     <div className="space-y-2">
@@ -415,10 +415,10 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                                         <Search className="w-6 h-6" />
                                     </div>
                                     <h4 className="text-base font-bold text-brand-900">
-                                        Biji kopi atau panduan seduh tidak ditemukan
+                                        Produk atau alat kopi tidak ditemukan
                                     </h4>
                                     <p className="text-xs sm:text-sm text-brand-700 max-w-sm mx-auto">
-                                        Tidak ada hasil untuk kata kunci "{query}". Coba cari "Kawi", "Espresso", "Filter", atau konsultasikan langsung ke roaster kami.
+                                        Tidak ada hasil untuk kata kunci "{query}". Coba cari "Grinder", "Espresso", "V60", atau konsultasikan langsung ke kami.
                                     </p>
                                     <div className="pt-2 flex justify-center gap-3">
                                         <button
@@ -446,7 +446,7 @@ export const SearchModal: React.FC<SearchModalProps> = ({ isOpen, onClose }) => 
                 {/* Footer Quick Tip */}
                 <div data-ui="search-footer" className="p-3 bg-cream-100 px-4 sm:px-6 flex items-center justify-between text-xs text-brand-600">
                     <span className="truncate">
-                        Ketik nama origin, metode seduh, atau tasting notes favorit Anda.
+                        Ketik nama alat kopi, grinder, mesin espresso, atau brand favorit Anda.
                     </span>
                         <Link
                             href="/shop"
