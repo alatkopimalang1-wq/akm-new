@@ -1280,21 +1280,16 @@ export default function CartPage({
                                                 : 'border-sand-200 bg-white hover:border-sand-300'
                                         }`}
                                     >
-                                        <div className="flex items-start justify-between gap-3">
-                                            <div className="flex items-start gap-3.5 sm:gap-3">
+                                        <div className="flex items-center justify-between gap-3">
+                                            <div className="flex items-center gap-3.5 sm:gap-3">
                                                 <div className={`w-11 h-11 sm:w-8 sm:h-8 rounded-xl sm:rounded-lg flex items-center justify-center flex-shrink-0 ${
                                                     paymentMethod === 'whatsapp' ? 'bg-[#25D366] text-white' : 'bg-sand-100 text-[#25D366]'
                                                 }`}>
                                                     <MessageCircle className="w-5 h-5 sm:w-4 sm:h-4" />
                                                 </div>
-                                                <div>
-                                                    <span className="text-sm sm:text-sm font-bold text-brand-950">Pesan via WhatsApp (Chat Roaster)</span>
-                                                    <p className="text-xs sm:text-[11px] text-brand-600 mt-1 sm:mt-0.5 leading-snug">
-                                                        Untuk Anda yang ingin konsultasi seduhan, custom racikan, atau kargo volume besar.
-                                                    </p>
-                                                </div>
+                                                <span className="text-sm sm:text-sm font-bold text-brand-950">Chat Via WhatsApp</span>
                                             </div>
-                                            <div className={`w-5 h-5 sm:w-4 sm:h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                                            <div className={`w-5 h-5 sm:w-4 sm:h-4 rounded-full border-2 flex items-center justify-center flex-shrink-0 ${
                                                 paymentMethod === 'whatsapp' ? 'border-[#25D366] bg-[#25D366] text-white' : 'border-sand-300 bg-white'
                                             }`}>
                                                 {paymentMethod === 'whatsapp' && <Check className="w-3 h-3 sm:w-2.5 sm:h-2.5 stroke-[3]" />}
