@@ -141,6 +141,67 @@ class ManagePageContents extends Page
             'home_promo_banner_image' => $settings['home_promo_banner_image'] ?? 'banners/banner-event-komunitas.jpg',
             'home_promo_banner_link' => $settings['home_promo_banner_link'] ?? 'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering',
             'home_promo_banner_alt' => $settings['home_promo_banner_alt'] ?? 'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang',
+            'home_partners_enabled' => (bool) ($settings['home_partners_enabled'] ?? true),
+            'home_partners_title' => $settings['home_partners_title'] ?? 'Mitra dan Client Langganan AKM',
+            'home_partners_subtitle' => $settings['home_partners_subtitle'] ?? 'Deretan Coffee Shop ternama yang mempercayakan perlengkapan mereka kepada kami.',
+            'home_partners_slides' => $settings['home_partners_slides'] ?? [
+                [
+                    'id' => 'gartenhaus',
+                    'title' => 'Gartenhaus Malang',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1497636577773-f1231844b336?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://www.instagram.com/gartenhaus_co/',
+                    'open_in_new_tab' => true,
+                ],
+                [
+                    'id' => 'sanubari-roastery',
+                    'title' => 'Sanubari Roastery',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://maps.app.goo.gl/Hua4AUHyaHLuY9uz7',
+                    'open_in_new_tab' => true,
+                ],
+                [
+                    'id' => 'bataputih',
+                    'title' => 'Bataputih Coffee',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://www.instagram.com/bataputihkopi/',
+                    'open_in_new_tab' => true,
+                ],
+                [
+                    'id' => 'lafayette',
+                    'title' => 'Lafayette Coffee & Eatery',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://www.instagram.com/lafayettecoffee/',
+                    'open_in_new_tab' => true,
+                ],
+                [
+                    'id' => 'coffee-heritage',
+                    'title' => 'Coffee Heritage',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://www.instagram.com/coffeeheritagemlg/',
+                    'open_in_new_tab' => true,
+                ],
+                [
+                    'id' => 'fee-space',
+                    'title' => 'Oura Coffee & Space',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://www.instagram.com/ouraspace/',
+                    'open_in_new_tab' => true,
+                ],
+                [
+                    'id' => 'dialoog',
+                    'title' => 'Dialoog Coffee',
+                    'city' => 'MALANG',
+                    'image' => 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=800&q=80',
+                    'href' => 'https://www.instagram.com/dialoog.coffee/',
+                    'open_in_new_tab' => true,
+                ],
+            ],
 
             // --- 4. HALAMAN SYARAT & KETENTUAN PRE-ORDER (/syarat-ketentuan-pre-order) ---
             'preorder_hero_badge' => $preorder['hero_badge'] ?? 'Kebijakan & Informasi Resmi',
@@ -469,6 +530,72 @@ class ManagePageContents extends Page
                                         ]),
                                     ]),
 
+                                Section::make('Mitra & Client Langganan AKM (Coverflow Slider - Posisi Paling Bawah)')
+                                    ->description('Bagian slider 3D interaktif yang menampilkan deretan coffee shop & mitra yang mempercayakan perlengkapan kepada AKM.')
+                                    ->schema([
+                                        Toggle::make('home_partners_enabled')
+                                            ->label('Tampilkan Mitra dan Client Langganan di Beranda')
+                                            ->default(true),
+                                        Grid::make(2)->schema([
+                                            TextInput::make('home_partners_title')
+                                                ->label('Judul Bagian')
+                                                ->placeholder('Mitra dan Client Langganan AKM')
+                                                ->default('Mitra dan Client Langganan AKM')
+                                                ->required(),
+                                            TextInput::make('home_partners_subtitle')
+                                                ->label('Subjudul Bagian')
+                                                ->placeholder('Deretan Coffee Shop ternama yang mempercayakan perlengkapan mereka kepada kami.')
+                                                ->default('Deretan Coffee Shop ternama yang mempercayakan perlengkapan mereka kepada kami.')
+                                                ->required(),
+                                        ]),
+                                        Repeater::make('home_partners_slides')
+                                            ->label('Daftar Kedai / Mitra Coffee Shop')
+                                            ->schema([
+                                                Grid::make(2)->schema([
+                                                    TextInput::make('title')
+                                                        ->label('Nama Coffee Shop / Mitra')
+                                                        ->placeholder('Contoh: Lafayette Coffee & Eatery')
+                                                        ->required(),
+                                                    TextInput::make('city')
+                                                        ->label('Kota / Wilayah')
+                                                        ->placeholder('MALANG')
+                                                        ->default('MALANG')
+                                                        ->required(),
+                                                ]),
+                                                Grid::make(2)->schema([
+                                                    TextInput::make('image')
+                                                        ->label('URL Foto Kedai')
+                                                        ->placeholder('https://... atau /storage/partners/...')
+                                                        ->helperText('Masukkan URL gambar langsung atau unggah foto di bawah.'),
+                                                    FileUpload::make('image_upload')
+                                                        ->label('Atau Unggah Foto Baru')
+                                                        ->disk('public')
+                                                        ->directory('partners')
+                                                        ->image()
+                                                        ->visibility('public')
+                                                        ->helperText('Format JPG/PNG/WEBP.')
+                                                        ->dehydrateStateUsing(fn ($state) => $state ? (is_array($state) ? array_values($state)[0] : $state) : null),
+                                                ]),
+                                                Grid::make(3)->schema([
+                                                    TextInput::make('href')
+                                                        ->label('Link URL Ketika Diklik (Opsional)')
+                                                        ->placeholder('https://instagram.com/... atau https://maps.app.goo.gl/...')
+                                                        ->columnSpan(2),
+                                                    Toggle::make('open_in_new_tab')
+                                                        ->label('Buka Tab Baru')
+                                                        ->default(true)
+                                                        ->inline(false)
+                                                        ->columnSpan(1),
+                                                ]),
+                                            ])
+                                            ->collapsible()
+                                            ->collapsed(false)
+                                            ->cloneable()
+                                            ->reorderable()
+                                            ->addActionLabel('+ Tambah Mitra / Coffee Shop')
+                                            ->columnSpanFull(),
+                                    ]),
+
                                 Section::make('Pintasan Pengaturan Bagian Beranda Lainnya')
                                     ->description('Kelola komponen visual interaktif lainnya yang ada pada halaman depan:')
                                     ->schema([
@@ -705,6 +832,38 @@ class ManagePageContents extends Page
         }
         if (isset($data['home_promo_banner_alt'])) {
             Setting::set('home_promo_banner_alt', $data['home_promo_banner_alt']);
+        }
+        if (isset($data['home_partners_enabled'])) {
+            Setting::set('home_partners_enabled', (bool) $data['home_partners_enabled']);
+        }
+        if (isset($data['home_partners_title'])) {
+            Setting::set('home_partners_title', $data['home_partners_title']);
+        }
+        if (isset($data['home_partners_subtitle'])) {
+            Setting::set('home_partners_subtitle', $data['home_partners_subtitle']);
+        }
+        if (isset($data['home_partners_slides']) && is_array($data['home_partners_slides'])) {
+            $processedPartners = [];
+            foreach ($data['home_partners_slides'] as $index => $slide) {
+                $imageUrl = $slide['image'] ?? '';
+                $upload = $slide['image_upload'] ?? null;
+                if (!empty($upload)) {
+                    $uploadPath = is_array($upload) ? array_values($upload)[0] : $upload;
+                    if (!empty($uploadPath)) {
+                        $clean = ltrim(preg_replace('#^/?(?:(?:storage|public)/)+#', '', trim($uploadPath)), '/');
+                        $imageUrl = '/storage/' . $clean;
+                    }
+                }
+                $processedPartners[] = [
+                    'id' => $slide['id'] ?? ('partner-' . ($index + 1) . '-' . uniqid()),
+                    'title' => $slide['title'] ?? '',
+                    'city' => $slide['city'] ?? 'MALANG',
+                    'image' => $imageUrl ?: 'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=800&q=80',
+                    'href' => $slide['href'] ?? '',
+                    'open_in_new_tab' => (bool) ($slide['open_in_new_tab'] ?? true),
+                ];
+            }
+            Setting::set('home_partners_slides', $processedPartners);
         }
 
         Cache::forget('sanubari_settings');

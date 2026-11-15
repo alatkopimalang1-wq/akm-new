@@ -7,6 +7,7 @@ import { DynamicCategoryIcon } from '@/components/dynamic-category-icon';
 import { CountingNumber } from '@animate-ui/react/primitives/texts/counting-number';
 import { BrandCarousel } from '@/components/brand-carousel';
 import type { BrandData } from '@/components/brand-avatar';
+import { CoverflowSlider } from '@/components/coverflow-slider';
 
 interface WelcomeProps {
     categories?: Category[];
@@ -248,6 +249,18 @@ export default function Welcome(_props: WelcomeProps) {
 
                 {/* 5. BANNER GAMBAR PROMO (Di Bawah Brand Pilihan - Default) */}
                 {showBelowBrands && promoBannerNode}
+
+                {/* 6. MITRA DAN CLIENT LANGGANAN AKM (3D Coverflow Slider - Posisi Paling Bawah) */}
+                {settings?.home_partners_enabled !== false && (
+                    <CoverflowSlider
+                        slides={settings?.home_partners_slides}
+                        title={settings?.home_partners_title || 'Mitra dan Client Langganan AKM'}
+                        subtitle={
+                            settings?.home_partners_subtitle ||
+                            'Deretan Coffee Shop ternama yang mempercayakan perlengkapan mereka kepada kami.'
+                        }
+                    />
+                )}
             </div>
         </PublicLayout>
     );
