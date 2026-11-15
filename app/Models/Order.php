@@ -45,11 +45,11 @@ class Order extends Model
     {
         $date = now()->format('ymd');
         $random = strtoupper(Str::random(4));
-        $number = "SNB-{$date}-{$random}";
+        $number = "AKM-{$date}-{$random}";
 
         while (static::where('order_number', $number)->exists()) {
             $random = strtoupper(Str::random(4));
-            $number = "SNB-{$date}-{$random}";
+            $number = "AKM-{$date}-{$random}";
         }
 
         return $number;

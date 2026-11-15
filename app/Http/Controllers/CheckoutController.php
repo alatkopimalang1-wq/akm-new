@@ -382,7 +382,22 @@ class CheckoutController extends Controller
     {
         $order = Order::with(['items.product', 'items.variant'])
             ->where('order_number', $orderNumber)
-            ->firstOrFail();
+            ->first();
+
+        if (! $order) {
+            $altNumber = str_starts_with($orderNumber, 'SNB-')
+                ? 'AKM-' . substr($orderNumber, 4)
+                : (str_starts_with($orderNumber, 'AKM-') ? 'SNB-' . substr($orderNumber, 4) : null);
+            if ($altNumber) {
+                $order = Order::with(['items.product', 'items.variant'])
+                    ->where('order_number', $altNumber)
+                    ->first();
+            }
+        }
+
+        if (! $order) {
+            abort(404);
+        }
 
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
@@ -509,7 +524,22 @@ class CheckoutController extends Controller
     {
         $order = Order::with(['items.product', 'items.variant'])
             ->where('order_number', $orderNumber)
-            ->firstOrFail();
+            ->first();
+
+        if (! $order) {
+            $altNumber = str_starts_with($orderNumber, 'SNB-')
+                ? 'AKM-' . substr($orderNumber, 4)
+                : (str_starts_with($orderNumber, 'AKM-') ? 'SNB-' . substr($orderNumber, 4) : null);
+            if ($altNumber) {
+                $order = Order::with(['items.product', 'items.variant'])
+                    ->where('order_number', $altNumber)
+                    ->first();
+            }
+        }
+
+        if (! $order) {
+            abort(404);
+        }
 
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
@@ -598,7 +628,7 @@ class CheckoutController extends Controller
                 'email' => $settings['invoice_email'] ?? ($settings['email'] ?? 'info@alatkopimalang.co.id'),
                 'website' => $settings['invoice_website'] ?? 'https://alatkopimalang.co.id',
                 'title_label' => $settings['invoice_title_label'] ?? 'FAKTUR PEMBELIAN / INVOICE',
-                'prefix' => $settings['invoice_prefix'] ?? '#',
+                'prefix' => $settings['invoice_prefix'] ?? '#AKM',
                 'paper_size' => $settings['invoice_paper_size'] ?? 'A4',
                 'show_paid_stamp' => (bool) ($settings['invoice_show_paid_stamp'] ?? true),
                 'stamp_text' => $settings['invoice_stamp_text'] ?? '★ LUNAS ★',

@@ -54,7 +54,7 @@ class ManageInvoiceSettings extends Page
 
             // Format Dokumen & Tampilan
             'invoice_title_label' => $settings['invoice_title_label'] ?? 'FAKTUR PEMBELIAN / INVOICE',
-            'invoice_prefix' => $settings['invoice_prefix'] ?? '#',
+            'invoice_prefix' => $settings['invoice_prefix'] ?? '#AKM',
             'invoice_paper_size' => $settings['invoice_paper_size'] ?? 'A4',
             'invoice_show_paid_stamp' => (bool) ($settings['invoice_show_paid_stamp'] ?? true),
             'invoice_stamp_text' => $settings['invoice_stamp_text'] ?? '★ LUNAS ★',
@@ -146,8 +146,9 @@ class ManageInvoiceSettings extends Page
                                 ->required(),
                             TextInput::make('invoice_prefix')
                                 ->label('Awalan Simbol No. Pesanan')
-                                ->placeholder('# atau INV-')
-                                ->default('#'),
+                                ->placeholder('#AKM atau #')
+                                ->default('#AKM')
+                                ->helperText('Awalan simbol nomor invoice, contoh: #AKM atau # (Default: #AKM).'),
                             Select::make('invoice_paper_size')
                                 ->label('Ukuran Kertas Cetak')
                                 ->options([

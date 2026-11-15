@@ -70,7 +70,7 @@ test('customer can checkout directly with QRIS payment method', function () {
     ]);
 
     $orderNumber = $response->json('order_number');
-    expect($orderNumber)->toStartWith('SNB-');
+    expect($orderNumber)->toStartWith('AKM-');
 
     $order = Order::where('order_number', $orderNumber)->first();
     expect($order)->not->toBeNull();

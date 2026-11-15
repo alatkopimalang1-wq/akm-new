@@ -651,7 +651,7 @@ export default function CustomerAccount({ user, orders = [], status, defaultTab 
                                                 <div className="flex items-center gap-2">
                                                     <span className="text-xs text-brand-500 font-medium">No. Pesanan:</span>
                                                     <span className="font-mono font-bold text-sm text-brand-950">
-                                                        #{order.order_number}
+                                                        #{order.order_number.replace(/^SNB-?/i, 'AKM-')}
                                                     </span>
                                                 </div>
                                                 <span className="text-brand-300 text-xs hidden sm:inline">•</span>

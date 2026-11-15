@@ -213,8 +213,10 @@ export default function OrderShowPage({
         order.shipping_courier?.toLowerCase().includes('ambil') ||
         order.shipping_courier?.toLowerCase().includes('pickup');
 
+    const displayOrderNumber = (order.order_number || '').replace(/^SNB-?/i, 'AKM-');
+
     return (
-        <PublicLayout title={`Instruksi Pembayaran #${order.order_number}`}>
+        <PublicLayout title={`Instruksi Pembayaran #${displayOrderNumber}`}>
             <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-32 md:pb-16 space-y-6">
                 {/* Back Link */}
                 <div className="flex items-center justify-between">
@@ -249,10 +251,10 @@ export default function OrderShowPage({
                                 <span className="text-xs text-brand-500 font-medium">Nomor Pesanan</span>
                                 <button
                                     type="button"
-                                    onClick={() => handleCopy(order.order_number, 'order_number')}
+                                    onClick={() => handleCopy(displayOrderNumber, 'order_number')}
                                     className="inline-flex items-center gap-1 text-[11px] text-brand-600 hover:text-brand-900 bg-sand-100 px-2 py-0.5 rounded cursor-pointer"
                                 >
-                                    <span>#{order.order_number}</span>
+                                    <span>#{displayOrderNumber}</span>
                                     {copiedField === 'order_number' ? <Check className="w-3 h-3 text-emerald-600" /> : <Copy className="w-3 h-3" />}
                                 </button>
                             </div>
@@ -519,7 +521,7 @@ export default function OrderShowPage({
                                 <li>Buka aplikasi m-Banking Anda, pilih menu <strong>Transfer Antar Bank / Sesama Bank</strong>.</li>
                                 <li>Pilih tujuan <strong>{bankDetails.name}</strong> dan masukkan nomor rekening di atas.</li>
                                 <li>Ketikkan nominal transfer tepat <strong>{formatRupiah(effectiveTotalAmount)}</strong>.</li>
-                                <li>Pada berita transfer (jika tersedia), cantumkan nomor pesanan: <strong>{order.order_number}</strong>.</li>
+                                <li>Pada berita transfer (jika tersedia), cantumkan nomor pesanan: <strong>{displayOrderNumber}</strong>.</li>
                                 <li>Simpan struk / bukti transfer berhasil untuk diunggah di formulir konfirmasi di bawah.</li>
                             </ol>
                         </div>

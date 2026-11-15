@@ -130,9 +130,28 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
         ? (settings.signature_image.startsWith('http') ? settings.signature_image : `/storage/${settings.signature_image.replace(/^\/?(public\/|storage\/)?/, '')}`)
         : null;
 
+    const cleanOrderNumber = (order.order_number || '').replace(/^SNB-?/i, 'AKM-');
+
+    // Hapus kode default SNB jika ada, ganti dengan AKM, dan sesuaikan dengan prefix (#AKM / #)
+    const displayOrderNumber = (() => {
+        let num = cleanOrderNumber;
+        const prefix = (settings.prefix || '#AKM').trim();
+
+        if (prefix.toUpperCase().includes('AKM') && num.toUpperCase().startsWith('AKM-')) {
+            const suffix = num.substring(4);
+            return prefix.endsWith('-') ? `${prefix}${suffix}` : `${prefix}-${suffix}`;
+        }
+
+        if (!num.toUpperCase().startsWith('AKM-')) {
+            num = `AKM-${num}`;
+        }
+
+        return `${prefix}${num}`;
+    })();
+
     const pageTitle = isPaid
-        ? `Invoice-LUNAS-${order.order_number}-${settings.site_name || 'Alat Kopi Malang'}`
-        : `Invoice-${order.order_number}-${settings.site_name || 'Alat Kopi Malang'}`;
+        ? `Invoice-LUNAS-${cleanOrderNumber}-${settings.site_name || 'Alat Kopi Malang'}`
+        : `Invoice-${cleanOrderNumber}-${settings.site_name || 'Alat Kopi Malang'}`;
 
     return (
         <div className="min-h-screen bg-sand-100/60 py-6 sm:py-10 px-4 sm:px-6 print:bg-white print:p-0 print:m-0 font-sans text-brand-950 selection:bg-brand-700 selection:text-white">
@@ -218,7 +237,7 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
                             {settings.title_label || 'FAKTUR PEMBELIAN / INVOICE'}
                         </span>
                         <div className="text-base sm:text-lg font-mono font-extrabold text-brand-950">
-                            {settings.prefix || '#'}{order.order_number}
+                            {displayOrderNumber}
                         </div>
                         <div className="text-xs text-brand-600 font-medium">
                             Tanggal Order: {order.created_at} WIB
@@ -339,8 +358,8 @@ export default function OrderInvoicePage({ order, settings }: InvoiceProps) {
 
                 {/* Items Table */}
                 <div className="py-6 space-y-4">
-                    <h3 className="text-xs font-bold uppercase tracking-wider text-brand-400">
-                        Rincian Biji Kopi & Produk yang Dipesan
+                    <h3 className="text-xs font-bold uppercase tracking-wider text-brand-700">
+                        Produk yang dipesan
                     </h3>
 
                     <div className="overflow-x-auto">

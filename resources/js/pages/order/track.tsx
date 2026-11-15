@@ -95,7 +95,7 @@ export default function OrderTrackPage({ error }: TrackPageProps) {
                         }`}
                     >
                         <Package className="w-4 h-4" />
-                        <span>No. Pesanan (SNB)</span>
+                        <span>No. Pesanan (AKM)</span>
                     </button>
                     <button
                         type="button"
@@ -131,7 +131,7 @@ export default function OrderTrackPage({ error }: TrackPageProps) {
                                         required
                                         value={orderNumber}
                                         onChange={(e) => setOrderNumber(e.target.value)}
-                                        placeholder="Contoh: SNB-261030-9A8B"
+                                        placeholder="Contoh: AKM-261030-9A8B"
                                         className="w-full px-4 py-3 rounded-xl bg-cream-50 border border-sand-200 text-sm font-mono font-bold text-brand-950 uppercase tracking-wider focus:outline-hidden focus:border-brand-700 focus:bg-white transition-colors"
                                     />
                                     <Search className="w-4 h-4 text-brand-400 absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none" />
