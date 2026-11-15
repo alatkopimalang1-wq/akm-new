@@ -54,6 +54,8 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'googleClientId' => config('services.google.client_id') ?: ($settings['google_client_id'] ?? null),
+            'googleLoginEnabled' => ! empty(config('services.google.client_id') ?: ($settings['google_client_id'] ?? null)),
             'metaPixelId' => config('services.meta_pixel.id'),
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
         ];

@@ -89,7 +89,7 @@ export const PublicLayout: React.FC<PublicLayoutProps> = ({ title, children }) =
     const { settings, locale = 'id', navCategories = [], auth } = props;
     const { itemCount, setIsCartOpen, isCartOpen } = useCart();
 
-    const accountHref = auth?.user ? '/akun' : '/login';
+    const accountHref = '/akun';
     const isAccountActive =
         url.startsWith('/akun') ||
         url.startsWith('/account') ||

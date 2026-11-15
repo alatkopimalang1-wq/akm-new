@@ -21,6 +21,15 @@ class AccountController extends Controller
     {
         $user = $request->user();
 
+        if (! $user) {
+            return Inertia::render('account/index', [
+                'user' => null,
+                'orders' => [],
+                'status' => session('status'),
+                'defaultTab' => 'login',
+            ]);
+        }
+
         $orders = Order::where(function ($q) use ($user) {
             $q->where('user_id', $user->id);
             if (! empty($user->email)) {
@@ -81,6 +90,7 @@ class AccountController extends Controller
                 'name' => $user->name,
                 'email' => $user->email,
                 'phone' => $user->phone,
+                'avatar' => $user->avatar,
                 'address' => $user->address,
                 'province' => $user->province,
                 'city' => $user->city,
@@ -89,6 +99,7 @@ class AccountController extends Controller
                 'is_wa_account' => str_starts_with((string) $user->email, 'wa_'),
                 'has_password' => ! empty($user->password) && empty($user->google_id),
                 'has_google' => ! empty($user->google_id),
+                'google_id' => $user->google_id,
             ],
             'orders' => $orders,
             'status' => session('status'),

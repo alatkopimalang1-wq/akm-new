@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Head, Link, router, useForm } from '@inertiajs/react';
+import GoogleAuthButton from '@/components/google-auth-button';
 import { PublicLayout } from '@/layouts/public-layout';
 import { getBundlePricingSummary, isBundleOrderItem, parseCustomNotes } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
@@ -73,6 +74,7 @@ interface UserProfile {
     name: string;
     email: string;
     phone?: string;
+    avatar?: string;
     address?: string;
     province?: string;
     city?: string;
@@ -81,16 +83,298 @@ interface UserProfile {
     is_wa_account: boolean;
     has_password?: boolean;
     has_google?: boolean;
+    google_id?: string;
 }
 
 interface Props {
-    user: UserProfile;
-    orders: OrderSummary[];
+    user?: UserProfile | null;
+    orders?: OrderSummary[];
     status?: string;
     defaultTab?: 'orders' | 'address' | 'profile' | 'security';
 }
 
-export default function CustomerAccount({ user, orders, status, defaultTab }: Props) {
+function CustomerAuthView({ status }: { status?: string }) {
+    const [authMode, setAuthMode] = useState<'login' | 'register'>('login');
+
+    const loginForm = useForm({
+        email: '',
+        password: '',
+        remember: true,
+    });
+
+    const registerForm = useForm({
+        name: '',
+        email: '',
+        password: '',
+        password_confirmation: '',
+    });
+
+    const handleLoginSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        loginForm.post('/login', {
+            preserveScroll: true,
+            onSuccess: () => {
+                window.location.href = '/akun';
+            },
+        });
+    };
+
+    const handleRegisterSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+        registerForm.post('/register', {
+            preserveScroll: true,
+            onSuccess: () => {
+                window.location.href = '/akun';
+            },
+        });
+    };
+
+    return (
+        <PublicLayout title="Portal Akun Pelanggan">
+            <Head title="Masuk / Daftar Akun Pelanggan — Alat Kopi Malang" />
+
+            <div className="max-w-md mx-auto px-4 py-10 sm:py-16">
+                {/* Header Sambutan */}
+                <div className="text-center space-y-2 mb-8">
+                    <div className="w-14 h-14 mx-auto rounded-2xl bg-brand-900 text-accent-copper flex items-center justify-center shadow-md">
+                        <ShoppingBag className="w-7 h-7" />
+                    </div>
+                    <h1 className="text-2xl sm:text-3xl font-extrabold text-brand-950 font-serif tracking-tight">
+                        Portal Akun Pelanggan
+                    </h1>
+                    <p className="text-xs sm:text-sm text-brand-600 max-w-sm mx-auto leading-relaxed">
+                        Masuk untuk memantau status pesanan kopi Anda secara real-time, melihat riwayat transaksi, dan menikmati kemudahan checkout.
+                    </p>
+                </div>
+
+                {status && (
+                    <div className="mb-6 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs sm:text-sm text-center font-medium shadow-xs">
+                        {status}
+                    </div>
+                )}
+
+                <div className="bg-white rounded-3xl p-6 sm:p-8 border border-sand-200 shadow-xl space-y-6">
+                    {/* Real-Time One Tap & One-Click Google Login */}
+                    <div className="space-y-2">
+                        <Label className="text-xs font-bold text-brand-900 block text-center mb-1">
+                            Masuk Cepat &amp; Real-Time
+                        </Label>
+                        <GoogleAuthButton redirect="/akun" text="Lanjutkan dengan Google" enableOneTap={true} />
+                        <p className="text-[11px] text-center text-brand-500">
+                            ⚡ Login instan 1-klik dengan akun Google Anda tanpa perlu menghafal kata sandi.
+                        </p>
+                    </div>
+
+                    {/* Divider */}
+                    <div className="relative flex items-center justify-center">
+                        <div className="border-t border-sand-200 w-full" />
+                        <span className="bg-white px-3 text-[11px] uppercase tracking-wider text-brand-400 shrink-0 font-bold">
+                            atau masuk dengan email
+                        </span>
+                        <div className="border-t border-sand-200 w-full" />
+                    </div>
+
+                    {/* Tab Switcher */}
+                    <div className="grid grid-cols-2 p-1 bg-sand-100 rounded-xl text-xs font-bold text-center">
+                        <button
+                            type="button"
+                            onClick={() => setAuthMode('login')}
+                            className={`py-2 rounded-lg transition-all cursor-pointer ${
+                                authMode === 'login'
+                                    ? 'bg-white text-brand-950 shadow-xs'
+                                    : 'text-brand-600 hover:text-brand-900'
+                            }`}
+                        >
+                            Masuk Akun
+                        </button>
+                        <button
+                            type="button"
+                            onClick={() => setAuthMode('register')}
+                            className={`py-2 rounded-lg transition-all cursor-pointer ${
+                                authMode === 'register'
+                                    ? 'bg-white text-brand-950 shadow-xs'
+                                    : 'text-brand-600 hover:text-brand-900'
+                            }`}
+                        >
+                            Daftar Baru
+                        </button>
+                    </div>
+
+                    {authMode === 'login' ? (
+                        <form onSubmit={handleLoginSubmit} className="space-y-4">
+                            <div>
+                                <Label htmlFor="login_email" className="text-xs font-bold text-brand-900 mb-1.5 block">
+                                    Alamat Email *
+                                </Label>
+                                <Input
+                                    id="login_email"
+                                    type="email"
+                                    value={loginForm.data.email}
+                                    onChange={(e) => loginForm.setData('email', e.target.value)}
+                                    placeholder="nama@email.com"
+                                    className="rounded-xl border-sand-300 h-11 text-xs sm:text-sm"
+                                    required
+                                />
+                                {loginForm.errors.email && (
+                                    <p className="text-xs text-red-600 mt-1">{loginForm.errors.email}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <div className="flex items-center justify-between mb-1.5">
+                                    <Label htmlFor="login_password" className="text-xs font-bold text-brand-900 block">
+                                        Kata Sandi *
+                                    </Label>
+                                    <Link
+                                        href="/forgot-password"
+                                        className="text-[11px] font-semibold text-brand-700 hover:text-brand-950"
+                                    >
+                                        Lupa kata sandi?
+                                    </Link>
+                                </div>
+                                <PasswordInput
+                                    id="login_password"
+                                    value={loginForm.data.password}
+                                    onChange={(e) => loginForm.setData('password', e.target.value)}
+                                    placeholder="••••••••"
+                                    className="rounded-xl border-sand-300 h-11 text-xs sm:text-sm"
+                                    required
+                                />
+                                {loginForm.errors.password && (
+                                    <p className="text-xs text-red-600 mt-1">{loginForm.errors.password}</p>
+                                )}
+                            </div>
+
+                            <Button
+                                type="submit"
+                                disabled={loginForm.processing}
+                                className="w-full bg-brand-900 hover:bg-brand-950 text-white font-bold py-3 rounded-xl shadow-md transition-all active:scale-[0.99] cursor-pointer"
+                            >
+                                {loginForm.processing ? (
+                                    <span className="flex items-center gap-2">
+                                        <Spinner className="w-4 h-4 text-white" />
+                                        Memproses...
+                                    </span>
+                                ) : (
+                                    'Masuk ke Akun'
+                                )}
+                            </Button>
+                        </form>
+                    ) : (
+                        <form onSubmit={handleRegisterSubmit} className="space-y-4">
+                            <div>
+                                <Label htmlFor="reg_name" className="text-xs font-bold text-brand-900 mb-1.5 block">
+                                    Nama Lengkap *
+                                </Label>
+                                <Input
+                                    id="reg_name"
+                                    type="text"
+                                    value={registerForm.data.name}
+                                    onChange={(e) => registerForm.setData('name', e.target.value)}
+                                    placeholder="Contoh: Budi Santoso"
+                                    className="rounded-xl border-sand-300 h-11 text-xs sm:text-sm"
+                                    required
+                                />
+                                {registerForm.errors.name && (
+                                    <p className="text-xs text-red-600 mt-1">{registerForm.errors.name}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <Label htmlFor="reg_email" className="text-xs font-bold text-brand-900 mb-1.5 block">
+                                    Alamat Email *
+                                </Label>
+                                <Input
+                                    id="reg_email"
+                                    type="email"
+                                    value={registerForm.data.email}
+                                    onChange={(e) => registerForm.setData('email', e.target.value)}
+                                    placeholder="nama@email.com"
+                                    className="rounded-xl border-sand-300 h-11 text-xs sm:text-sm"
+                                    required
+                                />
+                                {registerForm.errors.email && (
+                                    <p className="text-xs text-red-600 mt-1">{registerForm.errors.email}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <Label htmlFor="reg_password" className="text-xs font-bold text-brand-900 mb-1.5 block">
+                                    Kata Sandi Baru *
+                                </Label>
+                                <PasswordInput
+                                    id="reg_password"
+                                    value={registerForm.data.password}
+                                    onChange={(e) => registerForm.setData('password', e.target.value)}
+                                    placeholder="Minimal 8 karakter"
+                                    className="rounded-xl border-sand-300 h-11 text-xs sm:text-sm"
+                                    required
+                                />
+                                {registerForm.errors.password && (
+                                    <p className="text-xs text-red-600 mt-1">{registerForm.errors.password}</p>
+                                )}
+                            </div>
+
+                            <div>
+                                <Label htmlFor="reg_password_confirmation" className="text-xs font-bold text-brand-900 mb-1.5 block">
+                                    Konfirmasi Kata Sandi *
+                                </Label>
+                                <PasswordInput
+                                    id="reg_password_confirmation"
+                                    value={registerForm.data.password_confirmation}
+                                    onChange={(e) => registerForm.setData('password_confirmation', e.target.value)}
+                                    placeholder="Ulangi kata sandi di atas"
+                                    className="rounded-xl border-sand-300 h-11 text-xs sm:text-sm"
+                                    required
+                                />
+                            </div>
+
+                            <Button
+                                type="submit"
+                                disabled={registerForm.processing}
+                                className="w-full bg-brand-900 hover:bg-brand-950 text-white font-bold py-3 rounded-xl shadow-md transition-all active:scale-[0.99] cursor-pointer"
+                            >
+                                {registerForm.processing ? (
+                                    <span className="flex items-center gap-2">
+                                        <Spinner className="w-4 h-4 text-white" />
+                                        Mendaftarkan...
+                                    </span>
+                                ) : (
+                                    'Daftar Akun Baru'
+                                )}
+                            </Button>
+                        </form>
+                    )}
+                </div>
+
+                {/* Keuntungan Memiliki Akun */}
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div className="p-3 bg-white/70 rounded-2xl border border-sand-200">
+                        <div className="text-lg mb-1">📦</div>
+                        <p className="font-bold text-xs text-brand-900">Lacak Pengiriman</p>
+                        <p className="text-[11px] text-brand-600 mt-0.5">Pantau status &amp; nomor resi ekspedisi live</p>
+                    </div>
+                    <div className="p-3 bg-white/70 rounded-2xl border border-sand-200">
+                        <div className="text-lg mb-1">⚡</div>
+                        <p className="font-bold text-xs text-brand-900">Checkout Instan</p>
+                        <p className="text-[11px] text-brand-600 mt-0.5">Alamat &amp; nomor WA tersimpan otomatis</p>
+                    </div>
+                    <div className="p-3 bg-white/70 rounded-2xl border border-sand-200">
+                        <div className="text-lg mb-1">🔒</div>
+                        <p className="font-bold text-xs text-brand-900">Aman &amp; Terpercaya</p>
+                        <p className="text-[11px] text-brand-600 mt-0.5">Transaksi resmi &amp; garansi mesin resmi</p>
+                    </div>
+                </div>
+            </div>
+        </PublicLayout>
+    );
+}
+
+export default function CustomerAccount({ user, orders = [], status, defaultTab }: Props) {
+    if (!user) {
+        return <CustomerAuthView status={status} />;
+    }
+
     const [activeTab, setActiveTab] = useState<'orders' | 'address' | 'profile' | 'security'>(defaultTab || 'orders');
     const [logoutConfirm, setLogoutConfirm] = useState(false);
 
@@ -193,9 +477,17 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                     
                     <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
                         <div className="flex items-center gap-4 sm:gap-5">
-                            <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-brand-800/80 border border-brand-700/80 flex items-center justify-center text-accent-copper shadow-inner text-2xl font-black shrink-0">
-                                {user.name ? user.name.charAt(0).toUpperCase() : 'S'}
-                            </div>
+                            {user.avatar ? (
+                                <img
+                                    src={user.avatar}
+                                    alt={user.name}
+                                    className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-accent-copper/60 shadow-md shrink-0"
+                                />
+                            ) : (
+                                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-brand-800/80 border border-brand-700/80 flex items-center justify-center text-accent-copper shadow-inner text-2xl font-black shrink-0">
+                                    {user.name ? user.name.charAt(0).toUpperCase() : 'S'}
+                                </div>
+                            )}
                             <div>
                                 <div className="flex items-center gap-2.5 flex-wrap">
                                     <h1 className="text-xl sm:text-2xl font-bold font-serif tracking-tight text-white">
@@ -204,6 +496,17 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                                     <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-accent-copper/20 border border-accent-copper/40 text-accent-copper-light">
                                         Pelanggan Setia
                                     </span>
+                                    {user.has_google && (
+                                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-blue-500/20 border border-blue-400/40 text-blue-200">
+                                            <svg className="w-3 h-3 shrink-0" viewBox="0 0 24 24">
+                                                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                                                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                                            </svg>
+                                            Google Terhubung
+                                        </span>
+                                    )}
                                 </div>
                                 <div className="flex items-center gap-4 mt-1.5 text-xs text-brand-300 flex-wrap">
                                     {user.phone && (
@@ -794,17 +1097,54 @@ export default function CustomerAccount({ user, orders, status, defaultTab }: Pr
                             </div>
                         ) : (
                             <>
-                                {user.has_google && (
-                                    <div className="mb-6 p-4 rounded-2xl bg-blue-50 border border-blue-200 text-blue-900 flex items-start gap-3">
-                                        <Info className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
-                                        <div className="text-xs leading-relaxed">
-                                            <p className="font-bold text-blue-950 mb-0.5">Akun Terhubung dengan Google</p>
-                                            <p className="text-blue-800">
-                                                Akun Anda terhubung dengan akun Google ({user.email}). Anda dapat membuat kata sandi baru di bawah ini agar dapat login langsung menggunakan email dan kata sandi tanpa Google.
-                                            </p>
+                                {/* Status & Koneksi Akun Google */}
+                                <div className="mb-6 p-5 rounded-2xl bg-sand-50/80 border border-sand-200">
+                                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                                        <div className="flex items-start gap-3.5">
+                                            <div className="w-10 h-10 rounded-xl bg-white border border-sand-200 flex items-center justify-center shadow-xs shrink-0">
+                                                <svg className="w-5 h-5 shrink-0" viewBox="0 0 24 24">
+                                                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                                                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                                                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                                                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                                                </svg>
+                                            </div>
+                                            <div className="text-xs">
+                                                <div className="flex items-center gap-2">
+                                                    <p className="font-bold text-sm text-brand-950">
+                                                        {user.has_google ? 'Akun Google Terhubung' : 'Login Cepat dengan Google'}
+                                                    </p>
+                                                    {user.has_google && (
+                                                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 text-emerald-800">
+                                                            Aktif
+                                                        </span>
+                                                    )}
+                                                </div>
+                                                <p className="text-brand-600 mt-0.5">
+                                                    {user.has_google
+                                                        ? `Akun Anda terhubung dengan Google (${user.email}). Anda dapat masuk 1-klik tanpa kata sandi.`
+                                                        : 'Tautkan akun Anda dengan Google agar dapat masuk dalam 1 klik tanpa perlu mengetik kata sandi.'}
+                                                </p>
+                                            </div>
                                         </div>
+
+                                        {user.has_google ? (
+                                            user.has_password && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() => router.post('/auth/google/unlink', {}, { preserveScroll: true })}
+                                                    className="px-3.5 py-2 text-xs font-semibold text-red-700 hover:text-red-800 border border-red-200 hover:bg-red-50 rounded-xl transition-all cursor-pointer shrink-0"
+                                                >
+                                                    Putuskan Akun Google
+                                                </button>
+                                            )
+                                        ) : (
+                                            <div className="shrink-0 w-full sm:w-auto">
+                                                <GoogleAuthButton redirect="/akun?tab=security" text="Hubungkan Google" enableOneTap={false} />
+                                            </div>
+                                        )}
                                     </div>
-                                )}
+                                </div>
 
                                 <form onSubmit={handlePasswordSubmit} className="space-y-5">
                                     {user.has_password !== false && (

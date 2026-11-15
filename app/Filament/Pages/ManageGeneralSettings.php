@@ -75,6 +75,11 @@ class ManageGeneralSettings extends Page
             'pickup_store_address' => $settings['pickup_store_address'] ?? ($settings['address'] ?? 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur 65144'),
             'pickup_notes' => $settings['pickup_notes'] ?? 'Pesanan dapat diambil langsung di kasir Alat Kopi Malang dengan menunjukkan Nomor Pesanan setelah status pesanan Siap.',
 
+            // --- Integrasi Google OAuth & Login Pelanggan ---
+            'google_login_enabled' => (bool) ($settings['google_login_enabled'] ?? true),
+            'google_client_id' => $settings['google_client_id'] ?? env('GOOGLE_CLIENT_ID', ''),
+            'google_client_secret' => $settings['google_client_secret'] ?? env('GOOGLE_CLIENT_SECRET', ''),
+
             'announcement_enabled' => (bool) ($settings['announcement_enabled'] ?? true),
             'announcement_text_id' => $settings['announcement_text_id'] ?? 'Gratis ongkir ke seluruh Jawa untuk pesanan biji kopi di atas Rp 250.000!',
             'announcement_text_en' => $settings['announcement_text_en'] ?? 'Free shipping across Java for coffee bean orders above IDR 250,000!',
@@ -372,6 +377,33 @@ class ManageGeneralSettings extends Page
                                 ->placeholder('Contoh: 8a4b2c9... (Starter / Pro Key)')
                                 ->helperText('Jika dikosongkan, sistem secara otomatis menghitung tarif kurir resmi Malang Raya ke seluruh wilayah Indonesia melalui database tarif terintegrasi.'),
                         ]),
+                    ]),
+
+                Section::make('Integrasi Login Google (OAuth & One-Tap Real-Time)')
+                    ->description('Aktifkan login 1-klik via Google untuk mempermudah pelanggan masuk & melacak pesanan di website.')
+                    ->icon(Heroicon::UserCircle)
+                    ->collapsible()
+                    ->schema([
+                        Toggle::make('google_login_enabled')
+                            ->label('Aktifkan Login via Google untuk Pelanggan')
+                            ->default(true),
+                        Grid::make(2)->schema([
+                            TextInput::make('google_client_id')
+                                ->label('Google Client ID')
+                                ->placeholder('685666310500-....apps.googleusercontent.com')
+                                ->required(),
+                            TextInput::make('google_client_secret')
+                                ->label('Google Client Secret')
+                                ->password()
+                                ->revealable()
+                                ->placeholder('GOCSPX-....')
+                                ->required(),
+                        ]),
+                        TextInput::make('google_authorized_redirect_uri')
+                            ->label('Authorized Redirect URI (Google Cloud Console)')
+                            ->default('https://alatkopimalang.co.id/auth/google/callback')
+                            ->disabled()
+                            ->helperText('Pastikan URL ini telah didaftarkan pada Authorized redirect URIs di Google Cloud Console credentials Anda.'),
                     ]),
 
                 Section::make('Opsi Pengambilan di Toko (Self Pick Up)')

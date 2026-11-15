@@ -103,14 +103,17 @@ Route::get('/sitemap.xml', function () {
     return Response::make($xml, 200, ['Content-Type' => 'application/xml']);
 });
 
-// Customer Authentication Routes (Google OAuth)
+// Customer Authentication Routes (Google OAuth & Real-Time One Tap)
 Route::get('/auth/google/redirect', [GoogleAuthController::class, 'redirect'])->name('auth.google.redirect');
 Route::get('/auth/google/callback', [GoogleAuthController::class, 'callback'])->name('auth.google.callback');
+Route::post('/auth/google/one-tap', [GoogleAuthController::class, 'oneTap'])->name('auth.google.onetap');
+Route::post('/auth/google/unlink', [GoogleAuthController::class, 'unlink'])->name('auth.google.unlink')->middleware('auth');
 
-// Customer Account Portal (Akun Saya, Riwayat Pesanan, Alamat, Profil)
+// Customer Account Portal (Akun Saya, Riwayat Pesanan, Alamat, Profil, Login Google)
+Route::get('/akun', [AccountController::class, 'index'])->name('account.index');
+Route::get('/account', [AccountController::class, 'index'])->name('account.alias');
+
 Route::middleware(['auth'])->group(function () {
-    Route::get('/akun', [AccountController::class, 'index'])->name('account.index');
-    Route::get('/account', [AccountController::class, 'index'])->name('account.alias');
     Route::post('/akun/profile', [AccountController::class, 'updateProfile'])->name('account.profile');
     Route::post('/akun/address', [AccountController::class, 'updateAddress'])->name('account.address');
     Route::post('/akun/password', [AccountController::class, 'updatePassword'])->name('account.password');
