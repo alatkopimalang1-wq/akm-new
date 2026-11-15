@@ -526,19 +526,6 @@ export default function CustomerAccount({ user, orders = [], status, defaultTab 
                         </div>
 
                         <div className="flex items-center gap-2.5 sm:gap-3 flex-wrap">
-                            <button
-                                type="button"
-                                onClick={() => setActiveTab('security')}
-                                className={`inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl border text-xs font-bold transition-all active:scale-95 cursor-pointer ${
-                                    activeTab === 'security'
-                                        ? 'bg-accent-copper border-accent-copper text-white shadow-sm'
-                                        : 'bg-brand-800 hover:bg-brand-700 border-brand-700/60 text-brand-200 hover:text-white'
-                                }`}
-                                title="Ubah Kata Sandi"
-                            >
-                                <KeyRound className="w-4 h-4 text-accent-copper-light" />
-                                <span>Ubah Kata Sandi</span>
-                            </button>
                             <Link
                                 href="/shop"
                                 className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent-copper hover:bg-accent-copper/90 text-white text-xs font-bold transition-all shadow-sm active:scale-95"
