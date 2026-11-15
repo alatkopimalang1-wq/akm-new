@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import { PublicLayout } from '@/layouts/public-layout';
 import { BrandAvatar, BrandData } from '@/components/brand-avatar';
-import { Search, Sparkles, ChevronRight, Home } from 'lucide-react';
+import { Search, Sparkles } from 'lucide-react';
 
 interface BrandsIndexProps {
     brands: BrandData[];
@@ -33,16 +33,6 @@ export default function BrandsIndex({ brands = [] }: BrandsIndexProps) {
             </Head>
 
             <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-                {/* Breadcrumb */}
-                <nav className="flex items-center gap-2 text-xs sm:text-sm text-slate-500 mb-6 sm:mb-8">
-                    <Link href="/" className="hover:text-slate-800 flex items-center gap-1 transition-colors">
-                        <Home className="w-3.5 h-3.5" />
-                        <span>Beranda</span>
-                    </Link>
-                    <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-                    <span className="font-semibold text-slate-900">Brand</span>
-                </nav>
-
                 {/* Page Title & Subtitle matching Image 2 */}
                 <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
                     <h1 className="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">

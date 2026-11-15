@@ -37,6 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Blue,
             ])
+            ->breadcrumbs(false)
             ->viteTheme('resources/css/filament/admin/theme.css')
             ->plugin(\Crumbls\Layup\LayupPlugin::make())
             ->navigationGroups([
