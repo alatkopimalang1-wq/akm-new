@@ -136,6 +136,10 @@ class ManagePageContents extends Page
             'home_announcement_enabled' => (bool) ($settings['announcement_enabled'] ?? true),
             'home_announcement_text' => $settings['announcement_text'] ?? 'Gratis ongkir ke seluruh Jawa untuk pesanan di atas Rp 250.000 · Roasting segar setiap minggu di Kota Malang',
             'home_announcement_link' => $settings['announcement_link'] ?? '/shop',
+            'home_promo_banner_enabled' => (bool) ($settings['home_promo_banner_enabled'] ?? true),
+            'home_promo_banner_image' => $settings['home_promo_banner_image'] ?? 'banners/banner-event-komunitas.jpg',
+            'home_promo_banner_link' => $settings['home_promo_banner_link'] ?? 'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering',
+            'home_promo_banner_alt' => $settings['home_promo_banner_alt'] ?? 'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang',
 
             // --- 4. HALAMAN SYARAT & KETENTUAN PRE-ORDER (/syarat-ketentuan-pre-order) ---
             'preorder_hero_badge' => $preorder['hero_badge'] ?? 'Kebijakan & Informasi Resmi',
@@ -429,6 +433,30 @@ class ManagePageContents extends Page
                                         ]),
                                     ]),
 
+                                Section::make('Banner Gambar Promo / Event (Bawah Kategori Pilihan)')
+                                    ->description('Banner visual memanjang yang tampil tepat di bawah bagian Kategori Pilihan di halaman depan.')
+                                    ->schema([
+                                        Toggle::make('home_promo_banner_enabled')
+                                            ->label('Tampilkan Banner Gambar Promo di Beranda')
+                                            ->default(true),
+                                        FileUpload::make('home_promo_banner_image')
+                                            ->label('Gambar Banner Promo')
+                                            ->helperText('Unggah gambar banner promo. Format yang disarankan: Landscape (Rasio ~2.5:1 atau 3:1).')
+                                            ->image()
+                                            ->disk('public')
+                                            ->visibility('public')
+                                            ->directory('banners'),
+                                        Grid::make(2)->schema([
+                                            TextInput::make('home_promo_banner_link')
+                                                ->label('Tautan Tujuan Ketika Banner Diklik')
+                                                ->placeholder('https://wa.me/... atau /kunjungi')
+                                                ->helperText('Bisa berupa link eksternal (WhatsApp, Maps) atau link internal website.'),
+                                            TextInput::make('home_promo_banner_alt')
+                                                ->label('Teks Keterangan Gambar (Alt Text)')
+                                                ->placeholder('Book Now! Place For Your Event Komunitas & Gathering'),
+                                        ]),
+                                    ]),
+
                                 Section::make('Pintasan Pengaturan Bagian Beranda Lainnya')
                                     ->description('Kelola komponen visual interaktif lainnya yang ada pada halaman depan:')
                                     ->schema([
@@ -646,6 +674,22 @@ class ManagePageContents extends Page
             Setting::set('announcement_text', $data['home_announcement_text']);
             Setting::set('announcement_link', $data['home_announcement_link'] ?? '/shop');
             Setting::set('announcement_enabled', (bool) ($data['home_announcement_enabled'] ?? true));
+        }
+        if (isset($data['home_promo_banner_enabled'])) {
+            Setting::set('home_promo_banner_enabled', (bool) $data['home_promo_banner_enabled']);
+        }
+        if (array_key_exists('home_promo_banner_image', $data)) {
+            $bannerImg = $data['home_promo_banner_image'];
+            if (is_array($bannerImg)) {
+                $bannerImg = reset($bannerImg) ?: null;
+            }
+            Setting::set('home_promo_banner_image', $bannerImg ?: 'banners/banner-event-komunitas.jpg');
+        }
+        if (isset($data['home_promo_banner_link'])) {
+            Setting::set('home_promo_banner_link', $data['home_promo_banner_link']);
+        }
+        if (isset($data['home_promo_banner_alt'])) {
+            Setting::set('home_promo_banner_alt', $data['home_promo_banner_alt']);
         }
 
         Cache::forget('sanubari_settings');

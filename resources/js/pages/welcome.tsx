@@ -197,6 +197,39 @@ export default function Welcome(_props: WelcomeProps) {
                     </div>
                 </section>
 
+                {/* 3.5 BANNER GAMBAR PROMO (Di Bawah Kategori Pilihan) */}
+                {settings?.home_promo_banner_enabled !== false && (
+                    <section className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                        <a
+                            href={
+                                settings?.home_promo_banner_link ||
+                                'https://wa.me/6282132095241?text=Halo%20Alat%20Kopi%20Malang,%20saya%20ingin%20booking%20tempat%20untuk%20event%20komunitas%20/%20gathering'
+                            }
+                            target={
+                                (settings?.home_promo_banner_link || '').startsWith('http') || !settings?.home_promo_banner_link
+                                    ? '_blank'
+                                    : '_self'
+                            }
+                            rel="noopener noreferrer"
+                            className="group block relative w-full overflow-hidden rounded-2xl sm:rounded-3xl shadow-sm hover:shadow-md transition-all duration-300 hover:scale-[1.005] active:scale-[0.995] border border-sand-200/80 bg-sand-100"
+                        >
+                            <img
+                                src={
+                                    settings?.home_promo_banner_image
+                                        ? resolveImageUrl(settings.home_promo_banner_image, '/images/banners/banner-event-komunitas.jpg')
+                                        : '/images/banners/banner-event-komunitas.jpg'
+                                }
+                                alt={
+                                    settings?.home_promo_banner_alt ||
+                                    'Book Now! Place For Your Event Komunitas & Gathering — Alat Kopi Malang'
+                                }
+                                className="w-full h-auto object-cover block rounded-2xl sm:rounded-3xl"
+                                loading="lazy"
+                            />
+                        </a>
+                    </section>
+                )}
+
                 {/* 4. BRAND PILIHAN (Brand Carousel) */}
                 {_props.brands && _props.brands.length > 0 && (
                     <BrandCarousel
