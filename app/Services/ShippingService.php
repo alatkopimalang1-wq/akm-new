@@ -131,6 +131,49 @@ class ShippingService
     }
 
     /**
+     * Built-in Indonesian Provinces.
+     */
+    public static function getBuiltInProvinces(): array
+    {
+        return [
+            ['id' => 18, 'name' => 'Jawa Timur'],
+            ['id' => 10, 'name' => 'DKI Jakarta'],
+            ['id' => 5,  'name' => 'Jawa Barat'],
+            ['id' => 12, 'name' => 'Jawa Tengah'],
+            ['id' => 19, 'name' => 'DI Yogyakarta'],
+            ['id' => 11, 'name' => 'Banten'],
+            ['id' => 15, 'name' => 'Bali'],
+            ['id' => 1,  'name' => 'Nusa Tenggara Barat (NTB)'],
+            ['id' => 21, 'name' => 'Nusa Tenggara Timur (NTT)'],
+            ['id' => 9,  'name' => 'Nanggroe Aceh Darussalam (NAD)'],
+            ['id' => 16, 'name' => 'Sumatera Utara'],
+            ['id' => 23, 'name' => 'Sumatera Barat'],
+            ['id' => 25, 'name' => 'Riau'],
+            ['id' => 8,  'name' => 'Kepulauan Riau'],
+            ['id' => 13, 'name' => 'Jambi'],
+            ['id' => 26, 'name' => 'Sumatera Selatan'],
+            ['id' => 24, 'name' => 'Bangka Belitung'],
+            ['id' => 6,  'name' => 'Bengkulu'],
+            ['id' => 30, 'name' => 'Lampung'],
+            ['id' => 28, 'name' => 'Kalimantan Barat'],
+            ['id' => 4,  'name' => 'Kalimantan Tengah'],
+            ['id' => 3,  'name' => 'Kalimantan Selatan'],
+            ['id' => 7,  'name' => 'Kalimantan Timur'],
+            ['id' => 31, 'name' => 'Kalimantan Utara'],
+            ['id' => 22, 'name' => 'Sulawesi Utara'],
+            ['id' => 17, 'name' => 'Gorontalo'],
+            ['id' => 27, 'name' => 'Sulawesi Tengah'],
+            ['id' => 34, 'name' => 'Sulawesi Barat'],
+            ['id' => 33, 'name' => 'Sulawesi Selatan'],
+            ['id' => 20, 'name' => 'Sulawesi Tenggara'],
+            ['id' => 2,  'name' => 'Maluku'],
+            ['id' => 32, 'name' => 'Maluku Utara'],
+            ['id' => 14, 'name' => 'Papua'],
+            ['id' => 29, 'name' => 'Papua Barat'],
+        ];
+    }
+
+    /**
      * Get list of Indonesian Cities & Regencies.
      */
     public static function getCities(?int $provinceId = null): array
