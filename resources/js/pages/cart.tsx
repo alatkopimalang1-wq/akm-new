@@ -218,7 +218,7 @@ export default function CartPage({
     // Couriers state
     const [courierRates, setCourierRates] = useState<CourierRate[]>([]);
     const [selectedCourierIndex, setSelectedCourierIndex] = useState<number>(0);
-    const [isLoadingRates, setIsLoadingRates] = useState(false);
+    const [isLoadingRates, setIsLoadingRates] = useState<boolean>(true);
 
     // Payment method state
     const banksList = useMemo(() => {
@@ -381,7 +381,7 @@ export default function CartPage({
             isMounted = false;
             clearTimeout(timer);
         };
-    }, [selectedCityId, selectedSubdistrictId, selectedProvinceId, totalWeightGrams, subtotal, items.length, destLat, destLng]);
+    }, [selectedCityId, selectedSubdistrictId, selectedProvinceId, postalCode, totalWeightGrams, subtotal, items.length, destLat, destLng]);
 
     // Active selected courier (exclusively from Biteship)
     const activeCourier = courierRates[selectedCourierIndex] || null;
