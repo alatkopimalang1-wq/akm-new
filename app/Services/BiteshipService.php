@@ -169,12 +169,22 @@ class BiteshipService
                         $courierName = (string) ($p['courier_name'] ?? strtoupper($code));
                         $serviceName = (string) ($p['courier_service_name'] ?? $service);
                         $description = (string) ($p['description'] ?? "{$courierName} {$serviceName}");
+
                         $duration = (string) ($p['duration'] ?? ($p['shipment_duration_range'] ? "{$p['shipment_duration_range']} {$p['shipment_duration_unit']}" : '1-3 hari'));
+                        $duration = str_ireplace(['hours', 'hour'], 'Jam', $duration);
+                        $duration = str_ireplace(['days', 'day'], 'hari', $duration);
+
+                        $svcType = strtolower((string) ($p['service_type'] ?? ''));
+                        $svcLower = strtolower($serviceName);
 
                         $badge = null;
-                        if (str_contains(strtolower($serviceName), 'yes') || str_contains(strtolower($serviceName), 'instant') || str_contains(strtolower($serviceName), 'next day')) {
+                        if ($svcType === 'instant' || str_contains($svcLower, 'instant') || in_array($code, ['gojek', 'grab'], true) && str_contains($svcLower, 'instant')) {
+                            $badge = '⚡ Kurir Instan (1-2 Jam)';
+                        } elseif ($svcType === 'same_day' || str_contains($svcLower, 'same day') || str_contains($svcLower, 'sameday')) {
+                            $badge = '🕒 Same Day';
+                        } elseif (str_contains($svcLower, 'yes') || str_contains($svcLower, 'next day') || str_contains($svcLower, 'ons')) {
                             $badge = 'Express Cepat';
-                        } elseif (str_contains(strtolower($serviceName), 'trucking') || str_contains(strtolower($serviceName), 'cargo')) {
+                        } elseif (str_contains($svcLower, 'trucking') || str_contains($svcLower, 'cargo') || str_contains($svcLower, 'jtr')) {
                             $badge = 'Kargo Hemat';
                         }
 

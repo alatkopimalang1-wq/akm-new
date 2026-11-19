@@ -34,7 +34,9 @@ class ShippingService
     public static function getAvailableCouriers(): array
     {
         return [
-            'gosend' => 'GoSend (Instant — Area Malang Raya)',
+            'gojek' => 'Gojek (Instant & Same Day — Biteship Live)',
+            'grab' => 'Grab (Instant, Same Day & Car — Biteship Live)',
+            'gosend' => 'GoSend (Instant Estimator Lokal Malang)',
             'jne' => 'JNE Express',
             'jnt' => 'J&T Express',
             'sicepat' => 'SiCepat Ekspres',
@@ -457,8 +459,20 @@ class ShippingService
 
         // 1. Attempt Biteship Live Rates API if enabled
         if (BiteshipService::isEnabled() && ($destPostalCode || ($destLat && $destLng))) {
+            $configuredCouriers = array_map('strtolower', $config['couriers'] ?? []);
+
+            // Automatically include instant couriers (Gojek & Grab) if GPS pinpoint coordinates are provided
+            if ($destLat && $destLng) {
+                if (! in_array('gojek', $configuredCouriers, true)) {
+                    $configuredCouriers[] = 'gojek';
+                }
+                if (! in_array('grab', $configuredCouriers, true)) {
+                    $configuredCouriers[] = 'grab';
+                }
+            }
+
             $biteshipCouriers = array_values(array_filter(
-                array_map('strtolower', $config['couriers'] ?? []),
+                $configuredCouriers,
                 fn ($c) => $c !== 'gosend'
             ));
 
@@ -471,7 +485,7 @@ class ShippingService
                 'destination_longitude' => $destLng,
                 'weight_grams' => $chargeableWeightGrams,
                 'subtotal' => $subtotal,
-                'couriers' => ! empty($biteshipCouriers) ? $biteshipCouriers : ['jne', 'jnt', 'sicepat'],
+                'couriers' => ! empty($biteshipCouriers) ? $biteshipCouriers : ['jne', 'jnt', 'sicepat', 'gojek', 'grab'],
             ]);
 
             if (! empty($biteshipRates)) {
@@ -500,7 +514,35 @@ class ShippingService
                     }
                 }
 
-                return array_merge($goSendRates, $biteshipRates);
+                $hasInstantRate = false;
+                foreach ($biteshipRates as $rate) {
+                    if (in_array(strtolower($rate['courier_code']), ['gojek', 'grab'], true)) {
+                        $hasInstantRate = true;
+                        break;
+                    }
+                }
+
+                // If Biteship didn't return any instant rate and GPS is set, append internal GoSend
+                $finalRates = $hasInstantRate ? $biteshipRates : array_merge($goSendRates, $biteshipRates);
+
+                // Sort: Instant services (Gojek / Grab / GoSend) first when customer selects pinpoint
+                if ($destLat && $destLng) {
+                    usort($finalRates, function ($a, $b) {
+                        $aIsInstant = in_array(strtolower($a['courier_code']), ['gojek', 'grab', 'gosend'], true);
+                        $bIsInstant = in_array(strtolower($b['courier_code']), ['gojek', 'grab', 'gosend'], true);
+                        if ($aIsInstant && ! $bIsInstant) {
+                            return -1;
+                        }
+                        if (! $aIsInstant && $bIsInstant) {
+                            return 1;
+                        }
+                        return $a['cost'] <=> $b['cost'];
+                    });
+                } else {
+                    usort($finalRates, fn ($a, $b) => $a['cost'] <=> $b['cost']);
+                }
+
+                return $finalRates;
             }
         }
 

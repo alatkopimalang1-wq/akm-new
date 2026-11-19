@@ -219,14 +219,14 @@ export function ShippingMapPicker({
                         <h4 className="text-xs sm:text-sm font-bold text-brand-950">
                             Titik Lokasi Alamat Pengiriman
                         </h4>
-                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-800">
-                            Akurasi GoSend
+                        <span className="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-800 border border-emerald-200">
+                            Biteship Instan (Gojek &amp; Grab)
                         </span>
                     </div>
                     <p className="text-[11px] text-brand-600">
                         {hasPinpoint
                             ? `📍 Titik terpasang: ${currentLat}, ${currentLng} (${distanceKm} km dari Roastery)`
-                            : 'Tentukan titik peta agar kurir GoSend dapat mengantar langsung ke depan pintu Anda.'}
+                            : 'Tentukan titik peta agar kurir instan Gojek & Grab dari Biteship dapat mengantar langsung ke depan pintu Anda.'}
                     </p>
                 </div>
 
