@@ -123,4 +123,15 @@ class ShippingController extends Controller
 
         return response()->json($result);
     }
+
+    /**
+     * Handle incoming Biteship Webhook events (order.status, order.waybill_id, etc.).
+     */
+    public function webhook(Request $request): JsonResponse
+    {
+        $result = \App\Services\BiteshipService::handleWebhook($request);
+        $statusCode = ($result['success'] ?? true) ? 200 : ($result['status_code'] ?? 400);
+
+        return response()->json($result, $statusCode);
+    }
 }

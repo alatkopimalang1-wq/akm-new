@@ -394,4 +394,153 @@ class BiteshipService
             'message' => 'Data resi belum terdaftar atau masih dalam proses pemindaian sistem kurir.',
         ];
     }
+
+    /**
+     * Handle incoming webhook notification from Biteship.
+     */
+    public static function handleWebhook(\Illuminate\Http\Request $request): array
+    {
+        $payload = $request->all();
+        Log::info('Biteship Webhook Received:', $payload);
+
+        // Optional signature verification if webhook secret is configured
+        $secret = Setting::get('biteship_webhook_secret');
+        if (! empty($secret)) {
+            $incomingSignature = $request->header('X-Biteship-Signature')
+                ?: $request->header('biteship-signature')
+                ?: $request->header('X-Signature')
+                ?: $request->header('signature');
+
+            if ($incomingSignature && ! hash_equals((string) $secret, (string) $incomingSignature)) {
+                Log::warning('Biteship Webhook Signature Mismatch', [
+                    'expected' => $secret,
+                    'received' => $incomingSignature,
+                ]);
+
+                return [
+                    'success' => false,
+                    'status_code' => 401,
+                    'message' => 'Invalid webhook signature',
+                ];
+            }
+        }
+
+        $event = (string) $request->input('event', 'order.status');
+        $orderId = (string) ($request->input('order_id') ?: $request->input('id') ?: '');
+        $status = strtolower((string) ($request->input('status') ?: ''));
+        $waybill = (string) ($request->input('courier_waybill_id') ?: $request->input('waybill_id') ?: $request->input('courier_tracking_id') ?: '');
+        $courierCompany = (string) ($request->input('courier_company') ?: $request->input('courier.company') ?: $request->input('courier_name') ?: '');
+        $courierType = (string) ($request->input('courier_type') ?: $request->input('courier.type') ?: '');
+        $driver = $request->input('driver');
+        $trackingUrl = (string) ($request->input('tracking_url') ?: $request->input('tracking.link') ?: '');
+        $note = (string) ($request->input('note') ?: $request->input('message') ?: '');
+        $price = $request->input('price');
+
+        // Locate order in database
+        $order = null;
+
+        if ($waybill) {
+            $order = Order::where('tracking_number', $waybill)
+                ->orWhere('payment_details->biteship->waybill_id', $waybill)
+                ->orWhere('payment_details->biteship->tracking_id', $waybill)
+                ->first();
+        }
+
+        if (! $order && $orderId) {
+            $order = Order::where('payment_details->biteship->order_id', $orderId)
+                ->orWhere('order_number', $orderId)
+                ->first();
+        }
+
+        if (! $order) {
+            Log::info("Biteship Webhook: No local order found for Order ID '{$orderId}' or Waybill '{$waybill}'.");
+
+            return [
+                'success' => true,
+                'message' => 'Webhook received successfully (no local matching order found).',
+            ];
+        }
+
+        // Map Biteship status to local Order status
+        // Biteship statuses: confirmed, allocated, picking_up, picked, dropping_off, delivered, cancelled, rejected, courier_not_found, returned, on_hold
+        $statusMapping = [
+            'delivered' => 'completed',
+            'dropping_off' => 'shipped',
+            'picked' => 'shipped',
+            'picked_up' => 'shipped',
+            'allocated' => in_array($order->status, ['pending', 'processing']) ? 'processing' : $order->status,
+            'picking_up' => in_array($order->status, ['pending', 'processing']) ? 'processing' : $order->status,
+            'confirmed' => in_array($order->status, ['pending', 'processing']) ? 'processing' : $order->status,
+            'cancelled' => 'cancelled',
+            'rejected' => 'cancelled',
+            'returned' => 'cancelled',
+        ];
+
+        if (isset($statusMapping[$status])) {
+            $order->status = $statusMapping[$status];
+        }
+
+        // Update tracking number if available
+        if ($waybill && (empty($order->tracking_number) || $order->tracking_number === $orderId)) {
+            $order->tracking_number = $waybill;
+        }
+
+        // Update courier label if available
+        if ($courierCompany) {
+            $courierFull = strtoupper($courierCompany) . ($courierType ? ' ' . strtoupper($courierType) : '');
+            if (empty($order->shipping_courier) || $order->shipping_courier === 'KURIR') {
+                $order->shipping_courier = $courierFull;
+            }
+        }
+
+        // Update biteship payload inside payment_details
+        $paymentDetails = $order->payment_details ?? [];
+        $biteshipData = $paymentDetails['biteship'] ?? [];
+
+        $biteshipData['order_id'] = $biteshipData['order_id'] ?? $orderId;
+        $biteshipData['waybill_id'] = $waybill ?: ($biteshipData['waybill_id'] ?? null);
+        $biteshipData['latest_status'] = $status;
+        $biteshipData['latest_status_note'] = $note;
+        $biteshipData['last_webhook_at'] = now()->toDateTimeString();
+
+        if ($trackingUrl) {
+            $biteshipData['tracking_url'] = $trackingUrl;
+        }
+
+        if (is_array($driver) && ! empty($driver)) {
+            $biteshipData['driver'] = [
+                'name' => $driver['name'] ?? null,
+                'phone' => $driver['phone'] ?? null,
+                'plate_number' => $driver['plate_number'] ?? null,
+                'photo_url' => $driver['photo_url'] ?? null,
+            ];
+        }
+
+        if ($price !== null) {
+            $biteshipData['actual_price'] = (int) $price;
+        }
+
+        // Keep status audit log in biteship data
+        $history = $biteshipData['status_history'] ?? [];
+        $history[] = [
+            'status' => $status,
+            'note' => $note,
+            'timestamp' => now()->toDateTimeString(),
+        ];
+        $biteshipData['status_history'] = array_slice($history, -20);
+
+        $paymentDetails['biteship'] = $biteshipData;
+        $order->payment_details = $paymentDetails;
+        $order->save();
+
+        Log::info("Biteship Webhook: Order #{$order->order_number} status updated to '{$order->status}' (Biteship: '{$status}').");
+
+        return [
+            'success' => true,
+            'message' => "Order #{$order->order_number} successfully updated.",
+            'order_number' => $order->order_number,
+            'order_status' => $order->status,
+            'biteship_status' => $status,
+        ];
+    }
 }

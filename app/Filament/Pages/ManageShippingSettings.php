@@ -56,6 +56,8 @@ class ManageShippingSettings extends Page
             'biteship_enabled' => isset($settings['biteship_enabled']) ? (bool) $settings['biteship_enabled'] : true,
             'biteship_environment' => $settings['biteship_environment'] ?? 'testing',
             'biteship_api_key' => $settings['biteship_api_key'] ?? '',
+            'biteship_webhook_url' => url('/api/webhooks/biteship'),
+            'biteship_webhook_secret' => $settings['biteship_webhook_secret'] ?? '',
 
             // 1. Titik Asal Pengiriman (Origin Roastery Malang)
             'shipping_origin_province' => $settings['shipping_origin_province'] ?? 'Jawa Timur',
@@ -139,6 +141,34 @@ class ManageShippingSettings extends Page
                                 ->placeholder('Contoh: biteship_test.xxxxxx atau biteship_live.xxxxxx')
                                 ->helperText('Dapatkan kunci API dari dashboard biteship.com -> Developer.')
                                 ->required(),
+                        ]),
+
+                        Grid::make(2)->schema([
+                            TextInput::make('biteship_webhook_url')
+                                ->label('Webhook URL (Masukkan di Dashboard Biteship)')
+                                ->default(fn () => url('/api/webhooks/biteship'))
+                                ->disabled()
+                                ->dehydrated(false)
+                                ->helperText('Masukkan URL ini di Dashboard Biteship -> Integrations -> Webhook untuk update otomatis status pesanan & resi.')
+                                ->suffixAction(
+                                    Action::make('copyWebhookUrl')
+                                        ->icon(Heroicon::ClipboardDocument)
+                                        ->tooltip('Salin Webhook URL')
+                                        ->action(function () {
+                                            Notification::make()
+                                                ->title('URL Webhook Biteship Berhasil Disalin')
+                                                ->body(url('/api/webhooks/biteship'))
+                                                ->success()
+                                                ->send();
+                                        })
+                                ),
+
+                            TextInput::make('biteship_webhook_secret')
+                                ->label('Webhook Secret / Signature Key (Opsional)')
+                                ->password()
+                                ->revealable()
+                                ->placeholder('Contoh: secret_biteship_xxxx')
+                                ->helperText('Jika Anda mengonfigurasi Signature Header di dashboard Biteship, masukkan di sini untuk verifikasi keamanan request.'),
                         ]),
                     ]),
 
