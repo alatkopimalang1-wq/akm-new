@@ -37,6 +37,7 @@ class ShippingService
             'gojek' => 'Gojek (Instant & Same Day — Biteship Live)',
             'grab' => 'Grab (Instant, Same Day & Car — Biteship Live)',
             'gosend' => 'GoSend (Instant Estimator Lokal Malang)',
+            'jntcargo' => 'J&T Cargo (Kargo Khusus — Biteship Live)',
             'jne' => 'JNE Express',
             'jnt' => 'J&T Express',
             'sicepat' => 'SiCepat Ekspres',
@@ -469,6 +470,11 @@ class ShippingService
                 if (! in_array('grab', $configuredCouriers, true)) {
                     $configuredCouriers[] = 'grab';
                 }
+            }
+
+            // Automatically include J&T Cargo for heavy packages (>= 5 kg)
+            if ($chargeableWeightGrams >= 5000 && ! in_array('jntcargo', $configuredCouriers, true)) {
+                $configuredCouriers[] = 'jntcargo';
             }
 
             $biteshipCouriers = array_values(array_filter(

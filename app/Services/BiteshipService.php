@@ -184,7 +184,7 @@ class BiteshipService
                             $badge = '🕒 Same Day';
                         } elseif (str_contains($svcLower, 'yes') || str_contains($svcLower, 'next day') || str_contains($svcLower, 'ons')) {
                             $badge = 'Express Cepat';
-                        } elseif (str_contains($svcLower, 'trucking') || str_contains($svcLower, 'cargo') || str_contains($svcLower, 'jtr')) {
+                        } elseif (str_contains($svcLower, 'trucking') || str_contains($svcLower, 'cargo') || str_contains($svcLower, 'jtr') || $code === 'jntcargo' || $svcType === 'freight') {
                             $badge = 'Kargo Hemat';
                         }
 
