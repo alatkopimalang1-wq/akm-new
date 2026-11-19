@@ -121,7 +121,6 @@ class ManageGeneralSettings extends Page
             'payment_instructions' => $settings['payment_instructions'] ?? 'Silakan lakukan pembayaran sesuai nominal tepat. Pesanan akan otomatis diproses setelah pembayaran terverifikasi.',
 
             // --- Kurir & Pengiriman Otomatis ---
-            'rajaongkir_api_key' => $settings['rajaongkir_api_key'] ?? '',
             'shipping_origin_city' => $settings['shipping_origin_city'] ?? 'Kota Malang',
         ]);
     }
@@ -362,21 +361,16 @@ class ManageGeneralSettings extends Page
                             ]),
                     ]),
 
-                Section::make('Integrasi Kurir & Ongkos Kirim Otomatis (RajaOngkir)')
-                    ->description('Pengaturan cepat API kurir. Untuk konfigurasi mendalam (pilihan ekspedisi, GoSend, promo bebas ongkir), gunakan menu "Pengaturan RajaOngkir".')
+                Section::make('Asal Pengiriman & Ekspedisi')
+                    ->description('Lokasi asal pengiriman toko. Untuk konfigurasi ekspedisi, GoSend, dan promo ongkir, gunakan menu "Pengaturan Pengiriman".')
                     ->icon(Heroicon::Truck)
                     ->collapsible()
                     ->schema([
-                        Grid::make(2)->schema([
-                            TextInput::make('shipping_origin_city')
-                                ->label('Kota Asal Roastery (Origin)')
-                                ->default('Kota Malang')
-                                ->disabled(),
-                            TextInput::make('rajaongkir_api_key')
-                                ->label('RajaOngkir API Key (Opsional)')
-                                ->placeholder('Contoh: 8a4b2c9... (Starter / Pro Key)')
-                                ->helperText('Jika dikosongkan, sistem otomatis menggunakan default Pro Key. Pengaturan lengkap tersedia pada menu "Pengaturan RajaOngkir".'),
-                        ]),
+                        TextInput::make('shipping_origin_city')
+                            ->label('Kota Asal Roastery (Origin)')
+                            ->default('Kota Malang')
+                            ->disabled()
+                            ->helperText('Pengaturan alamat lengkap dan koordinat tersedia di menu "Pengaturan Pengiriman".'),
                     ]),
 
                 Section::make('Integrasi Login Google (OAuth & One-Tap Real-Time)')

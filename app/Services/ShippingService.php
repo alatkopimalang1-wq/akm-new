@@ -12,7 +12,7 @@ use Illuminate\Support\Str;
 class ShippingService
 {
     /**
-     * Default Origin for RajaOngkir Enterprise Pro (Komerce V2):
+     * Default Origin for Roastery Malang:
      * Provinsi Jawa Timur (18), Kota/Kab Malang (391), Kecamatan Lowokwaru (3896) - Alat Kopi Malang Tlogomas.
      */
     public const DEFAULT_ORIGIN_PROVINCE_ID = 18;
@@ -27,10 +27,9 @@ class ShippingService
     public const DEFAULT_GOSEND_RATE_PER_KM = 2500;
     public const DEFAULT_GOSEND_MIN_COST = 12000;
     public const DEFAULT_GOSEND_MAX_DISTANCE_KM = 25;
-    public const DEFAULT_PRO_API_KEY = '2cf8fb5b92fc044107fd94c5a8d52c06';
 
     /**
-     * Supported Couriers Catalog for RajaOngkir Enterprise Pro & Instant Delivery.
+     * Supported Couriers Catalog for Delivery.
      */
     public static function getAvailableCouriers(): array
     {
@@ -52,7 +51,7 @@ class ShippingService
     }
 
     /**
-     * Format ALL-CAPS location names from RajaOngkir into clean Title Case while preserving acronyms.
+     * Format ALL-CAPS location names into clean Title Case while preserving acronyms.
      */
     public static function formatLocationName(string $name): string
     {
@@ -72,37 +71,9 @@ class ShippingService
     {
         $settings = Setting::all()->pluck('value', 'key')->toArray();
 
-        $apiKey = trim((string) ($settings['rajaongkir_api_key'] ?? config('services.rajaongkir.key', env('RAJAONGKIR_API_KEY', self::DEFAULT_PRO_API_KEY))));
-        if ($apiKey === '') {
-            $apiKey = self::DEFAULT_PRO_API_KEY;
-        }
-
-        $enabled = isset($settings['rajaongkir_enabled']) ? (bool) $settings['rajaongkir_enabled'] : true;
-        $rawAccountType = (string) ($settings['rajaongkir_account_type'] ?? config('services.rajaongkir.type', env('RAJAONGKIR_ACCOUNT_TYPE', 'pro')));
-        $accountType = in_array($rawAccountType, ['pro', 'komerce_v2', 'enterprise', 'starter', 'basic']) ? $rawAccountType : 'pro';
-
-        // If using the Enterprise Pro key (32 chars) and account_type was left on 'starter', automatically upgrade to 'pro'
-        if ($accountType === 'starter' && strlen($apiKey) === 32) {
-            $accountType = 'pro';
-        }
-
-        $isKomercePro = in_array($accountType, ['pro', 'komerce_v2', 'enterprise']);
-        $fallbackEnabled = isset($settings['rajaongkir_fallback_enabled']) ? (bool) $settings['rajaongkir_fallback_enabled'] : true;
-
         $originProvinceId = (int) ($settings['shipping_origin_province_id'] ?? self::DEFAULT_ORIGIN_PROVINCE_ID);
         $originCityId = (int) ($settings['shipping_origin_city_id'] ?? self::DEFAULT_ORIGIN_CITY_ID);
         $originSubdistrictId = (int) ($settings['shipping_origin_subdistrict_id'] ?? self::DEFAULT_ORIGIN_SUBDISTRICT_ID);
-
-        // Auto-translate legacy V1 default Malang IDs (11 / 256 / 3552) to Enterprise Pro Komerce V2 IDs (18 / 391 / 3896)
-        if ($isKomercePro) {
-            if ($originProvinceId === 11 && $originCityId === 256) {
-                $originProvinceId = 18;
-                $originCityId = 391;
-            }
-            if ($originSubdistrictId === 3552 || $originSubdistrictId === 0 || $originSubdistrictId === 65144) {
-                $originSubdistrictId = 3896;
-            }
-        }
 
         $originCityName = (string) ($settings['shipping_origin_city'] ?? self::DEFAULT_ORIGIN_CITY_NAME);
         $originProvinceName = (string) ($settings['shipping_origin_province'] ?? self::DEFAULT_ORIGIN_PROVINCE_NAME);
@@ -113,7 +84,7 @@ class ShippingService
         $gosendMinCost = max(5000, (int) ($settings['gosend_min_cost'] ?? self::DEFAULT_GOSEND_MIN_COST));
         $gosendMaxDistanceKm = max(5, (int) ($settings['gosend_max_distance_km'] ?? self::DEFAULT_GOSEND_MAX_DISTANCE_KM));
 
-        $activeCouriers = $settings['rajaongkir_couriers'] ?? ['gosend', 'jne', 'jnt', 'sicepat', 'anteraja', 'pos', 'tiki'];
+        $activeCouriers = $settings['shipping_couriers'] ?? $settings['rajaongkir_couriers'] ?? ['gosend', 'jne', 'jnt', 'sicepat', 'anteraja', 'pos', 'tiki'];
         if (is_string($activeCouriers)) {
             $decoded = json_decode($activeCouriers, true);
             $activeCouriers = is_array($decoded) ? $decoded : array_filter(array_map('trim', explode(',', $activeCouriers)));
@@ -130,11 +101,6 @@ class ShippingService
         $defaultWeightGrams = max(1, (int) ($settings['shipping_default_weight_grams'] ?? 200));
 
         return [
-            'enabled' => $enabled,
-            'api_key' => $apiKey,
-            'account_type' => $accountType,
-            'is_komerce_pro' => $isKomercePro,
-            'fallback_enabled' => $fallbackEnabled,
             'origin_province_id' => $originProvinceId,
             'origin_city_id' => $originCityId,
             'origin_subdistrict_id' => $originSubdistrictId,
@@ -157,262 +123,31 @@ class ShippingService
     }
 
     /**
-     * Base URL for RajaOngkir API based on account tier.
-     */
-    public static function getBaseUrl(string $accountType): string
-    {
-        return match ($accountType) {
-            'pro', 'komerce_v2', 'enterprise' => 'https://rajaongkir.komerce.id/api/v1',
-            'basic' => 'https://api.rajaongkir.com/basic',
-            default => 'https://api.rajaongkir.com/starter',
-        };
-    }
-
-    /**
-     * Get list of Indonesian Provinces (Live RajaOngkir Enterprise Pro API with cached fallback).
+     * Get list of Indonesian Provinces.
      */
     public static function getProvinces(): array
     {
-        $config = self::getConfig();
-
-        if ($config['enabled'] && ! empty($config['api_key'])) {
-            $cacheKey = 'ro_provinces_v2_' . md5($config['account_type'] . '_' . $config['api_key']);
-            $liveProvinces = Cache::remember($cacheKey, now()->addDays(7), function () use ($config) {
-                try {
-                    $baseUrl = self::getBaseUrl($config['account_type']);
-                    $endpoint = $config['is_komerce_pro']
-                        ? "{$baseUrl}/destination/province"
-                        : "{$baseUrl}/province";
-
-                    $response = Http::timeout(6)
-                        ->withHeaders(['key' => $config['api_key'], 'Accept' => 'application/json'])
-                        ->get($endpoint);
-
-                    if ($response->successful()) {
-                        $json = $response->json();
-
-                        // RajaOngkir Enterprise Pro (Komerce V2) format
-                        if (! empty($json['data']) && is_array($json['data'])) {
-                            $provinces = array_values(array_map(fn ($p) => [
-                                'id' => (int) ($p['id'] ?? $p['province_id'] ?? 0),
-                                'name' => self::formatLocationName((string) ($p['name'] ?? $p['province'] ?? '')),
-                            ], $json['data']));
-
-                            // Put Jawa Timur first for convenience, then alphabetical
-                            usort($provinces, function ($a, $b) {
-                                if ($a['id'] === 18) return -1;
-                                if ($b['id'] === 18) return 1;
-                                return strcmp($a['name'], $b['name']);
-                            });
-
-                            return $provinces;
-                        }
-
-                        // Legacy RajaOngkir V1 format
-                        $results = $json['rajaongkir']['results'] ?? [];
-                        if (! empty($results) && is_array($results)) {
-                            return array_values(array_map(fn ($p) => [
-                                'id' => (int) ($p['province_id'] ?? 0),
-                                'name' => (string) ($p['province'] ?? ''),
-                            ], $results));
-                        }
-                    }
-                } catch (\Throwable $e) {
-                    Log::warning('RajaOngkir getProvinces error: ' . $e->getMessage());
-                }
-
-                return [];
-            });
-
-            if (! empty($liveProvinces)) {
-                return $liveProvinces;
-            }
-        }
-
         return self::getBuiltInProvinces();
     }
 
     /**
-     * Built-in Indonesian Provinces matching RajaOngkir Enterprise Pro (Komerce V2) IDs.
-     */
-    public static function getBuiltInProvinces(): array
-    {
-        return [
-            ['id' => 18, 'name' => 'Jawa Timur'],
-            ['id' => 10, 'name' => 'DKI Jakarta'],
-            ['id' => 5,  'name' => 'Jawa Barat'],
-            ['id' => 12, 'name' => 'Jawa Tengah'],
-            ['id' => 19, 'name' => 'DI Yogyakarta'],
-            ['id' => 11, 'name' => 'Banten'],
-            ['id' => 15, 'name' => 'Bali'],
-            ['id' => 1,  'name' => 'Nusa Tenggara Barat (NTB)'],
-            ['id' => 21, 'name' => 'Nusa Tenggara Timur (NTT)'],
-            ['id' => 9,  'name' => 'Nanggroe Aceh Darussalam (NAD)'],
-            ['id' => 16, 'name' => 'Sumatera Utara'],
-            ['id' => 23, 'name' => 'Sumatera Barat'],
-            ['id' => 25, 'name' => 'Riau'],
-            ['id' => 8,  'name' => 'Kepulauan Riau'],
-            ['id' => 13, 'name' => 'Jambi'],
-            ['id' => 26, 'name' => 'Sumatera Selatan'],
-            ['id' => 24, 'name' => 'Bangka Belitung'],
-            ['id' => 6,  'name' => 'Bengkulu'],
-            ['id' => 30, 'name' => 'Lampung'],
-            ['id' => 28, 'name' => 'Kalimantan Barat'],
-            ['id' => 4,  'name' => 'Kalimantan Tengah'],
-            ['id' => 3,  'name' => 'Kalimantan Selatan'],
-            ['id' => 7,  'name' => 'Kalimantan Timur'],
-            ['id' => 31, 'name' => 'Kalimantan Utara'],
-            ['id' => 22, 'name' => 'Sulawesi Utara'],
-            ['id' => 17, 'name' => 'Gorontalo'],
-            ['id' => 27, 'name' => 'Sulawesi Tengah'],
-            ['id' => 34, 'name' => 'Sulawesi Barat'],
-            ['id' => 33, 'name' => 'Sulawesi Selatan'],
-            ['id' => 20, 'name' => 'Sulawesi Tenggara'],
-            ['id' => 2,  'name' => 'Maluku'],
-            ['id' => 32, 'name' => 'Maluku Utara'],
-            ['id' => 14, 'name' => 'Papua'],
-            ['id' => 29, 'name' => 'Papua Barat'],
-        ];
-    }
-
-    /**
-     * Get list of Indonesian Cities & Regencies (Live RajaOngkir Enterprise Pro API with cached fallback).
+     * Get list of Indonesian Cities & Regencies.
      */
     public static function getCities(?int $provinceId = null): array
     {
         $config = self::getConfig();
         $targetProvinceId = $provinceId ?? $config['origin_province_id'] ?? self::DEFAULT_ORIGIN_PROVINCE_ID;
 
-        if ($config['enabled'] && ! empty($config['api_key'])) {
-            $cacheKey = 'ro_cities_v2_' . $targetProvinceId . '_' . md5($config['account_type'] . '_' . $config['api_key']);
-            $liveCities = Cache::remember($cacheKey, now()->addDays(7), function () use ($config, $targetProvinceId) {
-                try {
-                    $baseUrl = self::getBaseUrl($config['account_type']);
-
-                    if ($config['is_komerce_pro']) {
-                        $response = Http::timeout(6)
-                            ->withHeaders(['key' => $config['api_key'], 'Accept' => 'application/json'])
-                            ->get("{$baseUrl}/destination/city/{$targetProvinceId}");
-
-                        if ($response->successful()) {
-                            $data = $response->json()['data'] ?? [];
-                            if (! empty($data) && is_array($data)) {
-                                $cities = array_values(array_map(function ($c) use ($targetProvinceId) {
-                                    $rawName = trim((string) ($c['name'] ?? $c['city_name'] ?? ''));
-                                    $type = '';
-                                    $cleanName = self::formatLocationName($rawName);
-
-                                    if (str_starts_with(strtoupper($rawName), 'KABUPATEN ')) {
-                                        $type = 'Kab.';
-                                        $cleanName = self::formatLocationName(substr($rawName, 10));
-                                    } elseif (str_starts_with(strtoupper($rawName), 'KOTA ')) {
-                                        $type = 'Kota';
-                                        $cleanName = self::formatLocationName(substr($rawName, 5));
-                                    }
-
-                                    return [
-                                        'id' => (int) ($c['id'] ?? $c['city_id'] ?? 0),
-                                        'province_id' => $targetProvinceId,
-                                        'type' => $type,
-                                        'name' => $cleanName,
-                                        'postal_code' => (string) ($c['zip_code'] ?? $c['postal_code'] ?? ''),
-                                    ];
-                                }, $data));
-
-                                // Put Malang (391) first when viewing Jawa Timur (18)
-                                usort($cities, function ($a, $b) {
-                                    if ($a['id'] === 391) return -1;
-                                    if ($b['id'] === 391) return 1;
-                                    return strcmp($a['name'], $b['name']);
-                                });
-
-                                return $cities;
-                            }
-                        }
-                    } else {
-                        $query = $targetProvinceId ? ['province' => $targetProvinceId] : [];
-                        $response = Http::timeout(6)
-                            ->withHeaders(['key' => $config['api_key'], 'Accept' => 'application/json'])
-                            ->get("{$baseUrl}/city", $query);
-
-                        if ($response->successful()) {
-                            $results = $response->json()['rajaongkir']['results'] ?? [];
-                            if (! empty($results) && is_array($results)) {
-                                return array_values(array_map(fn ($c) => [
-                                    'id' => (int) ($c['city_id'] ?? 0),
-                                    'province_id' => (int) ($c['province_id'] ?? $targetProvinceId),
-                                    'type' => (string) ($c['type'] ?? ''),
-                                    'name' => (string) ($c['city_name'] ?? ''),
-                                    'postal_code' => (string) ($c['postal_code'] ?? ''),
-                                ], $results));
-                            }
-                        }
-                    }
-                } catch (\Throwable $e) {
-                    Log::warning('RajaOngkir getCities error: ' . $e->getMessage());
-                }
-
-                return [];
-            });
-
-            if (! empty($liveCities)) {
-                return $liveCities;
-            }
-        }
-
         return self::getBuiltInCities($targetProvinceId);
     }
 
     /**
-     * Get list of Subdistricts / Kecamatan for a City (RajaOngkir Enterprise Pro API).
+     * Get list of Subdistricts / Kecamatan for a City.
      */
     public static function getSubdistricts(int $cityId): array
     {
-        $config = self::getConfig();
-
-        // Map legacy Malang ID 256 -> 391 if using Enterprise Pro
-        if ($config['is_komerce_pro'] && $cityId === 256) {
+        if ($cityId === 256) {
             $cityId = 391;
-        }
-
-        if ($config['enabled'] && ! empty($config['api_key']) && $config['is_komerce_pro']) {
-            $cacheKey = "ro_subdistricts_v2_{$cityId}_" . md5($config['account_type'] . '_' . $config['api_key']);
-            $liveSubdistricts = Cache::remember($cacheKey, now()->addDays(7), function () use ($config, $cityId) {
-                try {
-                    $baseUrl = self::getBaseUrl($config['account_type']);
-                    $response = Http::timeout(6)
-                        ->withHeaders(['key' => $config['api_key'], 'Accept' => 'application/json'])
-                        ->get("{$baseUrl}/destination/district/{$cityId}");
-
-                    if ($response->successful()) {
-                        $data = $response->json()['data'] ?? [];
-                        if (! empty($data) && is_array($data)) {
-                            $districts = array_values(array_map(fn ($d) => [
-                                'id' => (int) ($d['id'] ?? $d['subdistrict_id'] ?? 0),
-                                'city_id' => $cityId,
-                                'name' => self::formatLocationName((string) ($d['name'] ?? $d['subdistrict_name'] ?? '')),
-                            ], $data));
-
-                            // Put Lowokwaru (3896) first when viewing Malang (391)
-                            usort($districts, function ($a, $b) {
-                                if ($a['id'] === 3896) return -1;
-                                if ($b['id'] === 3896) return 1;
-                                return strcmp($a['name'], $b['name']);
-                            });
-
-                            return $districts;
-                        }
-                    }
-                } catch (\Throwable $e) {
-                    Log::warning('RajaOngkir getSubdistricts error: ' . $e->getMessage());
-                }
-
-                return [];
-            });
-
-            if (! empty($liveSubdistricts)) {
-                return $liveSubdistricts;
-            }
         }
 
         return self::getBuiltInSubdistricts($cityId);
@@ -646,25 +381,9 @@ class ShippingService
             );
         }
 
-        // 1. Attempt Live RajaOngkir Enterprise Pro API
-        if ($config['enabled'] && ! empty($config['api_key'])) {
-            $liveRates = self::tryLiveRajaOngkir(
-                $config,
-                $destCityId,
-                $destSubdistrictId,
-                $destProvinceId,
-                $chargeableWeightGrams,
-                $subtotal
-            );
-
-            if (! empty($liveRates) || ! empty($goSendRates)) {
-                return array_merge($goSendRates, $liveRates);
-            }
-        }
-
-        // 2. Fallback to Built-in Tariff Engine
-        $fallbackRates = self::calculateBuiltInRates($config, $destCityId, $destProvinceId, $weightInKg, $subtotal);
-        return array_merge($goSendRates, $fallbackRates);
+        // Calculate shipping rates using verified tariff engine
+        $tariffRates = self::calculateBuiltInRates($config, $destCityId, $destProvinceId, $weightInKg, $subtotal);
+        return array_merge($goSendRates, $tariffRates);
     }
 
     /**
@@ -820,322 +539,7 @@ class ShippingService
         ];
     }
 
-    /**
-     * Live RajaOngkir Enterprise Pro API Cost Calculation.
-     */
-    protected static function tryLiveRajaOngkir(
-        array $config,
-        int $destinationCityId,
-        ?int $destinationSubdistrictId,
-        int $destProvinceId,
-        int $weightGrams,
-        float $subtotal
-    ): array {
-        try {
-            $accountType = $config['account_type'];
-            $isKomercePro = $config['is_komerce_pro'];
-            $apiKey = $config['api_key'];
-            $originCityId = $config['origin_city_id'];
-            $originSubdistrictId = $config['origin_subdistrict_id'] ?: self::DEFAULT_ORIGIN_SUBDISTRICT_ID;
-            $activeCouriers = $config['couriers'];
 
-            // If using Enterprise Pro (Komerce V2) and destinationSubdistrictId is not yet provided, resolve first district of destinationCityId
-            if ($isKomercePro && empty($destinationSubdistrictId)) {
-                $cityDistricts = self::getSubdistricts($destinationCityId);
-                if (! empty($cityDistricts[0]['id'])) {
-                    $destinationSubdistrictId = (int) $cityDistricts[0]['id'];
-                } else {
-                    $destinationSubdistrictId = 3896; // Fallback Lowokwaru (Tlogomas)
-                }
-            }
-
-            $destKey = $destinationSubdistrictId ? "sub_{$destinationSubdistrictId}" : "city_{$destinationCityId}";
-            $cacheKey = 'ro_cost_v3_' . md5("{$accountType}_{$originSubdistrictId}_{$destKey}_{$weightGrams}_" . implode(',', $activeCouriers));
-
-            $rawCourierItems = Cache::remember($cacheKey, now()->addHours(6), function () use (
-                $accountType,
-                $isKomercePro,
-                $apiKey,
-                $originCityId,
-                $originSubdistrictId,
-                $destinationCityId,
-                $destinationSubdistrictId,
-                $weightGrams,
-                $activeCouriers
-            ) {
-                $baseUrl = self::getBaseUrl($accountType);
-                $items = [];
-
-                // --- RajaOngkir Enterprise Pro (Komerce V2 District Domestic Cost) ---
-                if ($isKomercePro) {
-                    $validKomerceCouriers = [
-                        'jne', 'sicepat', 'ide', 'sap', 'jnt', 'ninja', 'tiki',
-                        'lion', 'anteraja', 'pos', 'ncs', 'rex', 'rpx', 'sentral',
-                        'star', 'wahana', 'spx',
-                    ];
-                    $komerceCouriers = array_values(array_intersect(
-                        array_map('strtolower', $activeCouriers),
-                        $validKomerceCouriers
-                    ));
-
-                    if (empty($komerceCouriers)) {
-                        return [];
-                    }
-
-                    $hasPos = in_array('pos', $komerceCouriers, true);
-                    $fastCouriers = array_values(array_diff($komerceCouriers, ['pos']));
-
-                    if (! empty($fastCouriers)) {
-                        $courierString = implode(':', $fastCouriers);
-
-                        $response = Http::timeout(15)
-                            ->asForm()
-                            ->withHeaders(['key' => $apiKey, 'Accept' => 'application/json'])
-                            ->post("{$baseUrl}/calculate/district/domestic-cost", [
-                                'origin' => $originSubdistrictId,
-                                'destination' => $destinationSubdistrictId ?: $destinationCityId,
-                                'weight' => $weightGrams,
-                                'courier' => $courierString,
-                            ]);
-
-                        if ($response->successful()) {
-                            $data = $response->json()['data'] ?? [];
-                            foreach ($data as $row) {
-                                $service = (string) ($row['service'] ?? 'REG');
-                                $desc = (string) ($row['description'] ?? $service);
-                                $cost = (int) ($row['cost'] ?? 0);
-
-                                if ($cost <= 0 || ! self::shouldIncludeService($service, $desc, $weightGrams)) {
-                                    continue;
-                                }
-
-                                $items[] = [
-                                    'courier_name' => (string) ($row['name'] ?? strtoupper($row['code'] ?? 'KURIR')),
-                                    'courier_code' => strtolower((string) ($row['code'] ?? 'jne')),
-                                    'service' => $service,
-                                    'description' => $desc,
-                                    'cost' => $cost,
-                                    'etd' => (string) ($row['etd'] ?? '1-3'),
-                                ];
-                            }
-                        }
-                    }
-
-                    // Query POS Indonesia in an isolated sub-call with short timeout so its slow response never blocks other couriers
-                    if ($hasPos) {
-                        try {
-                            $posResponse = Http::timeout(4)
-                                ->asForm()
-                                ->withHeaders(['key' => $apiKey, 'Accept' => 'application/json'])
-                                ->post("{$baseUrl}/calculate/district/domestic-cost", [
-                                    'origin' => $originSubdistrictId,
-                                    'destination' => $destinationSubdistrictId ?: $destinationCityId,
-                                    'weight' => $weightGrams,
-                                    'courier' => 'pos',
-                                ]);
-
-                            if ($posResponse->successful()) {
-                                $data = $posResponse->json()['data'] ?? [];
-                                if (is_array($data)) {
-                                    foreach ($data as $row) {
-                                        $service = (string) ($row['service'] ?? 'REG');
-                                        $desc = (string) ($row['description'] ?? $service);
-                                        $cost = (int) ($row['cost'] ?? 0);
-
-                                        if ($cost > 0 && self::shouldIncludeService($service, $desc, $weightGrams)) {
-                                            $items[] = [
-                                                'courier_name' => (string) ($row['name'] ?? 'POS Indonesia'),
-                                                'courier_code' => 'pos',
-                                                'service' => $service,
-                                                'description' => $desc,
-                                                'cost' => $cost,
-                                                'etd' => (string) ($row['etd'] ?? '2-4'),
-                                            ];
-                                        }
-                                    }
-                                }
-                            }
-                        } catch (\Throwable) {
-                            // POS timeout will silently be ignored while other couriers are intact
-                        }
-                    }
-
-                    return $items;
-                }
-
-                // --- Legacy RajaOngkir Basic / Starter ---
-                $starterSupported = ['jne', 'pos', 'tiki'];
-                $couriersToQuery = $accountType === 'starter'
-                    ? array_values(array_intersect($activeCouriers, $starterSupported))
-                    : $activeCouriers;
-
-                if (empty($couriersToQuery) && $accountType === 'starter') {
-                    $couriersToQuery = ['jne', 'pos', 'tiki'];
-                }
-
-                foreach ($couriersToQuery as $courier) {
-                    $response = Http::timeout(5)
-                        ->withHeaders(['key' => $apiKey, 'Accept' => 'application/json'])
-                        ->post("{$baseUrl}/cost", [
-                            'origin' => $originCityId,
-                            'destination' => $destinationCityId,
-                            'weight' => $weightGrams,
-                            'courier' => strtolower($courier),
-                        ]);
-
-                    if ($response->successful()) {
-                        $results = $response->json()['rajaongkir']['results'] ?? [];
-                        foreach ($results as $courierResult) {
-                            $code = strtolower((string) ($courierResult['code'] ?? $courier));
-                            $name = (string) ($courierResult['name'] ?? strtoupper($code));
-                            foreach (($courierResult['costs'] ?? []) as $c) {
-                                $items[] = [
-                                    'courier_name' => $name,
-                                    'courier_code' => $code,
-                                    'service' => (string) ($c['service'] ?? 'REG'),
-                                    'description' => (string) ($c['description'] ?? ''),
-                                    'cost' => (int) ($c['cost'][0]['value'] ?? 0),
-                                    'etd' => (string) ($c['cost'][0]['etd'] ?? '1-3'),
-                                ];
-                            }
-                        }
-                    }
-                }
-
-                return $items;
-            });
-
-            if (empty($rawCourierItems)) {
-                return [];
-            }
-
-            $catalog = self::getAvailableCouriers();
-            $formattedRates = [];
-            foreach ($rawCourierItems as $item) {
-                $code = $item['courier_code'];
-                $displayName = $catalog[$code] ?? $item['courier_name'];
-                $formattedRates[] = self::formatCourierRate(
-                    $displayName,
-                    $code,
-                    $item['service'],
-                    $item['description'],
-                    (int) $item['cost'],
-                    (string) $item['etd'],
-                    $config,
-                    $destProvinceId,
-                    $destinationCityId,
-                    $subtotal
-                );
-            }
-
-            // Sort rates by cost ascending so the most affordable options appear first
-            usort($formattedRates, fn ($a, $b) => $a['cost'] <=> $b['cost']);
-
-            return $formattedRates;
-        } catch (\Throwable $e) {
-            Log::warning('RajaOngkir Live API error: ' . $e->getMessage());
-            return [];
-        }
-    }
-
-    /**
-     * Test RajaOngkir API Connection directly from Filament Admin Panel.
-     */
-    public static function testConnection(
-        ?string $apiKey,
-        string $accountType = 'pro',
-        int $originCityId = 391,
-        int $originDistrictId = 3895
-    ): array {
-        $apiKey = trim((string) $apiKey);
-        if ($apiKey === '') {
-            return [
-                'success' => false,
-                'message' => 'API Key RajaOngkir masih kosong. Silakan masukkan API Key terlebih dahulu.',
-                'sample_rates' => [],
-            ];
-        }
-
-        try {
-            $isKomercePro = in_array($accountType, ['pro', 'komerce_v2', 'enterprise']) || strlen($apiKey) === 32;
-            $baseUrl = self::getBaseUrl($isKomercePro ? 'pro' : $accountType);
-
-            if ($isKomercePro) {
-                $originId = in_array($originDistrictId, [0, 256, 391, 3552, 3895]) ? 3896 : $originDistrictId;
-                $response = Http::timeout(15)
-                    ->asForm()
-                    ->withHeaders(['key' => $apiKey, 'Accept' => 'application/json'])
-                    ->post("{$baseUrl}/calculate/district/domestic-cost", [
-                        'origin' => $originId, // Lowokwaru, Malang (3896)
-                        'destination' => 5880, // Gubeng, Surabaya (5880)
-                        'weight' => 1000,
-                        'courier' => 'jne:jnt:sicepat:anteraja:tiki',
-                    ]);
-
-                if ($response->successful() && isset($response->json()['data'])) {
-                    $rawData = $response->json()['data'];
-                    $filtered = array_values(array_filter($rawData, function ($row) {
-                        return self::shouldIncludeService((string) ($row['service'] ?? ''), (string) ($row['description'] ?? ''), 1000);
-                    }));
-                    $samples = [];
-                    foreach (array_slice($filtered, 0, 4) as $row) {
-                        $samples[] = ($row['name'] ?? strtoupper($row['code'] ?? 'KURIR')) . ' ' . ($row['service'] ?? 'REG') . ': Rp ' . number_format((int) ($row['cost'] ?? 0), 0, ',', '.');
-                    }
-                    $sampleText = ! empty($samples) ? implode(' | ', $samples) : 'Terhubung ke RajaOngkir Enterprise Pro';
-
-                    return [
-                        'success' => true,
-                        'message' => "Terhubung ke RajaOngkir Enterprise Pro! Contoh tarif Malang (Tlogomas) → Surabaya (Gubeng) 1kg: {$sampleText}.",
-                        'sample_rates' => $filtered,
-                    ];
-                }
-
-                $errMsg = $response->json()['meta']['message'] ?? $response->body();
-                return [
-                    'success' => false,
-                    'message' => "Gagal menghubungi RajaOngkir Enterprise Pro (HTTP {$response->status()}): {$errMsg}",
-                    'sample_rates' => [],
-                ];
-            }
-
-            $response = Http::timeout(6)
-                ->withHeaders(['key' => $apiKey, 'Accept' => 'application/json'])
-                ->post("{$baseUrl}/cost", [
-                    'origin' => 256,
-                    'destination' => 444,
-                    'weight' => 1000,
-                    'courier' => 'jne',
-                ]);
-
-            if ($response->successful()) {
-                $json = $response->json();
-                $costs = $json['rajaongkir']['results'][0]['costs'] ?? [];
-                $first = $costs[0] ?? null;
-                $sampleText = $first
-                    ? 'JNE ' . ($first['service'] ?? 'REG') . ' (Malang → Surabaya 1kg): Rp ' . number_format((int) ($first['cost'][0]['value'] ?? 0), 0, ',', '.')
-                    : 'Endpoint merespons dengan status 200 OK';
-
-                return [
-                    'success' => true,
-                    'message' => 'Koneksi API RajaOngkir (' . strtoupper($accountType) . ") Berhasil! {$sampleText}.",
-                    'sample_rates' => $costs,
-                ];
-            }
-
-            $statusDesc = $response->json()['rajaongkir']['status']['description'] ?? $response->body();
-            return [
-                'success' => false,
-                'message' => 'Koneksi RajaOngkir (' . strtoupper($accountType) . ") Gagal: {$statusDesc}",
-                'sample_rates' => [],
-            ];
-        } catch (\Throwable $e) {
-            return [
-                'success' => false,
-                'message' => 'Terjadi kesalahan jaringan saat menghubungi server RajaOngkir: ' . $e->getMessage(),
-                'sample_rates' => [],
-            ];
-        }
-    }
 
     /**
      * Built-in verified tariff matrix based on official Malang origin rates.
@@ -1402,14 +806,11 @@ class ShippingService
     public static function testShippingDeliveryConnection(?string $apiKey = null, string $env = 'production'): array
     {
         $key = trim($apiKey ?: (string) Setting::get('komerce_shipping_delivery_key', ''));
-        if (empty($key)) {
-            $key = trim((string) Setting::get('rajaongkir_api_key', '2cf8fb5b92fc044107fd94c5a8d52c06'));
-        }
 
         if (empty($key)) {
             return [
                 'success' => false,
-                'message' => 'API Key Shipping Delivery belum diisi. Silakan klik "Show Key" pada baris Shipping Delivery di dashboard Komerce / RajaOngkir Anda.',
+                'message' => 'API Key Shipping Delivery belum diisi.',
             ];
         }
 
@@ -1461,22 +862,7 @@ class ShippingService
                 ];
             }
 
-            // 3. Fallback: Check if the user entered a RajaOngkir / Komerce Cek Ongkir / Tariff API Key (authenticated with 'key' header)
-            $tariffResponse = Http::timeout(6)
-                ->withHeaders([
-                    'key' => $key,
-                    'Accept' => 'application/json',
-                ])
-                ->get("https://rajaongkir.komerce.id/api/v1/destination/province");
 
-            if ($tariffResponse->successful()) {
-                $count = count($tariffResponse->json()['data'] ?? []);
-                return [
-                    'success' => true,
-                    'message' => "Koneksi Berhasil! API Key ini terhubung ke Gateway Tarif RajaOngkir / Komerce ({$count} data provinsi aktif).",
-                    'detected_env' => $env,
-                ];
-            }
 
             $errJson = $response->json();
             $errMsg = $errJson['meta']['message'] ?? $errJson['message'] ?? $response->body();
@@ -1559,7 +945,7 @@ class ShippingService
             'destination' => $order->shipping_city ?? 'Kota Malang',
             'weight_grams' => (int) ($order->total_weight_grams ?: 200),
             'status' => 'booked',
-            'api_provider' => ! empty($komerceOrderData) ? 'Komerce Shipping Delivery' : 'RajaOngkir Engine',
+            'api_provider' => ! empty($komerceOrderData) ? 'Komerce Shipping Delivery' : 'Shipping Engine',
         ];
 
         $order->tracking_number = $awb;
@@ -1635,7 +1021,7 @@ class ShippingService
             'driver_notes' => $driverNotes,
             'requested_at' => now()->toDateTimeString(),
             'status' => 'scheduled',
-            'api_provider' => ! empty($komercePickupData) ? 'Komerce Shipping Delivery' : 'RajaOngkir Engine',
+            'api_provider' => ! empty($komercePickupData) ? 'Komerce Shipping Delivery' : 'Shipping Engine',
         ];
 
         $order->payment_details = $paymentDetails;
@@ -1696,32 +1082,6 @@ class ShippingService
             ];
         }
 
-        $config = self::getConfig();
-        $apiKey = $config['api_key'];
-
-        $courierMap = [
-            'jne express' => 'jne',
-            'j&t express' => 'jnt',
-            'j&t' => 'jnt',
-            'sicepat ekspres' => 'sicepat',
-            'sicepat' => 'sicepat',
-            'pos indonesia' => 'pos',
-            'tiki (titipan kilat)' => 'tiki',
-            'tiki' => 'tiki',
-            'anteraja' => 'anteraja',
-            'shopee express (spx)' => 'spx',
-            'spx' => 'spx',
-            'ninja xpress' => 'ninja',
-            'ninja' => 'ninja',
-            'wahana prestasi logistik' => 'wahana',
-            'wahana' => 'wahana',
-            'lion parcel' => 'lion',
-            'lion' => 'lion',
-            'id express' => 'ide',
-            'ide' => 'ide',
-            'sap express' => 'sap',
-            'sap' => 'sap',
-        ];
         $cleanCourier = $courierMap[$courier] ?? $courier;
 
         // Dedicated handling for GoSend Instant
@@ -1758,70 +1118,13 @@ class ShippingService
             ];
         }
 
-        // Live RajaOngkir / Komerce Waybill Endpoint
-        try {
-            $payload = [
-                'awb' => $waybill,
-                'courier' => $cleanCourier,
-            ];
-            if (! empty($lastPhone)) {
-                $payload['last_phone_number'] = substr(preg_replace('/[^0-9]/', '', $lastPhone), -5);
-            }
-
-            $response = Http::timeout(10)
-                ->asForm()
-                ->withHeaders([
-                    'key' => $apiKey,
-                    'Accept' => 'application/json',
-                ])
-                ->post('https://rajaongkir.komerce.id/api/v1/track/waybill', $payload);
-
-            if ($response->successful()) {
-                $data = $response->json()['data'] ?? null;
-                if ($data) {
-                    $summary = $data['summary'] ?? [];
-                    $manifests = $data['manifest'] ?? $data['history'] ?? [];
-
-                    $history = [];
-                    foreach ($manifests as $m) {
-                        $history[] = [
-                            'date' => trim(($m['manifest_date'] ?? $m['date'] ?? '') . ' ' . ($m['manifest_time'] ?? $m['time'] ?? '')),
-                            'desc' => (string) ($m['manifest_description'] ?? $m['desc'] ?? ''),
-                            'location' => (string) ($m['city_name'] ?? $m['location'] ?? ''),
-                        ];
-                    }
-
-                    $statusCode = strtoupper((string) ($summary['status'] ?? $data['status'] ?? 'ON PROCESS'));
-                    $isDelivered = in_array($statusCode, ['DELIVERED', 'POD', 'TERKIRIM'], true);
-
-                    return [
-                        'success' => true,
-                        'provider' => 'RajaOngkir Enterprise Pro',
-                        'courier_name' => strtoupper($cleanCourier),
-                        'waybill' => $waybill,
-                        'status' => $statusCode,
-                        'status_label' => $isDelivered ? 'Paket Telah Diterima (Delivered)' : 'Dalam Proses Pengiriman (' . $statusCode . ')',
-                        'shipper' => $summary['shipper_name'] ?? 'Alat Kopi Malang',
-                        'receiver' => $summary['receiver_name'] ?? '-',
-                        'origin' => $summary['origin'] ?? 'Malang',
-                        'destination' => $summary['destination'] ?? '-',
-                        'delivered' => $isDelivered,
-                        'history' => $history,
-                    ];
-                }
-            }
-        } catch (\Throwable $e) {
-            Log::warning('RajaOngkir track/waybill API error: ' . $e->getMessage());
-        }
-
-        // Informative Fallback for newly generated AWBs before physical courier sorting scan
         return [
             'success' => true,
-            'provider' => 'RajaOngkir Tracking System',
+            'provider' => 'Sistem Pelacakan Ekspedisi',
             'courier_name' => strtoupper($cleanCourier),
             'waybill' => $waybill,
             'status' => 'REGISTERED / ON PROCESS',
-            'status_label' => 'Nomor Resi Telah Diterbitkan & Menunggu Pickup Kurir',
+            'status_label' => 'Nomor Resi Telah Diterbitkan & Terdaftar di Ekspedisi',
             'shipper' => 'Alat Kopi Malang (Tlogomas, Malang)',
             'receiver' => 'Pelanggan Alat Kopi Malang',
             'origin' => 'Kota Malang',

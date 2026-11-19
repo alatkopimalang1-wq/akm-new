@@ -318,7 +318,7 @@ export default function CartPage({
         };
     }, [selectedCityId]);
 
-    // Calculate courier rates automatically via RajaOngkir Gateway
+    // Calculate courier rates automatically via Shipping Gateway
     useEffect(() => {
         if (items.length === 0 || !selectedCityId) {
             setCourierRates([]);
@@ -1094,13 +1094,13 @@ export default function CartPage({
                                                     <span>2. Pilih Layanan Kurir Ekspedisi</span>
                                                 </label>
                                                 <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-900/10 text-brand-800 text-[10px] font-bold">
-                                                    RajaOngkir Enterprise Pro · Asal: {origin.city}
+                                                    Ekspedisi Otomatis · Asal: {origin.city}
                                                 </span>
                                             </div>
                                             {isLoadingRates && (
                                                 <span className="text-xs sm:text-[11px] text-brand-500 flex items-center gap-1.5 animate-pulse">
                                                     <RefreshCw className="w-3.5 h-3.5 animate-spin text-brand-700" />
-                                                    <span>Menghitung tarif RajaOngkir...</span>
+                                                    <span>Menghitung tarif ongkir...</span>
                                                 </span>
                                             )}
                                         </div>

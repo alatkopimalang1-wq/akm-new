@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class ShippingController extends Controller
 {
     /**
-     * Get list of provinces (RajaOngkir).
+     * Get list of provinces.
      */
     public function provinces(): JsonResponse
     {
@@ -20,7 +20,7 @@ class ShippingController extends Controller
     }
 
     /**
-     * Get list of cities optionally filtered by province ID (RajaOngkir).
+     * Get list of cities optionally filtered by province ID.
      */
     public function cities(Request $request): JsonResponse
     {
@@ -34,11 +34,11 @@ class ShippingController extends Controller
     }
 
     /**
-     * Get list of subdistricts / kecamatan filtered by city ID (RajaOngkir Pro / Komerce V2 / Built-in).
+     * Get list of subdistricts / kecamatan filtered by city ID.
      */
     public function subdistricts(Request $request): JsonResponse
     {
-        $cityId = (int) $request->query('city_id', 256);
+        $cityId = (int) $request->query('city_id', 391);
         $subdistricts = ShippingService::getSubdistricts($cityId);
 
         return response()->json([
@@ -48,7 +48,7 @@ class ShippingController extends Controller
     }
 
     /**
-     * Calculate automatic courier shipping rates via RajaOngkir Shipping Gateway.
+     * Calculate automatic courier shipping rates.
      */
     public function calculate(Request $request): JsonResponse
     {
@@ -68,7 +68,7 @@ class ShippingController extends Controller
         return response()->json([
             'success' => true,
             'gateway' => [
-                'provider' => 'RajaOngkir',
+                'provider' => 'Alat Kopi Malang Shipping',
                 'account_type' => $config['account_type'],
                 'live_api' => $config['enabled'] && ! empty($config['api_key']),
             ],
@@ -84,7 +84,7 @@ class ShippingController extends Controller
     }
 
     /**
-     * Live Tracking / Cek Resi (RajaOngkir).
+     * Live Tracking / Cek Resi.
      */
     public function track(Request $request): JsonResponse
     {

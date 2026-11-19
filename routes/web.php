@@ -39,7 +39,7 @@ Route::post('/pesanan/{orderNumber}/upload-bukti', [CheckoutController::class, '
 Route::post('/pesanan/{orderNumber}/update-dp', [CheckoutController::class, 'updateDp'])->name('orders.update-dp');
 Route::get('/lacak-pesanan', [CheckoutController::class, 'track'])->name('orders.track');
 
-// Automatic Indonesian Courier Shipping API (RajaOngkir Gateway)
+// Automatic Indonesian Courier Shipping API
 Route::get('/api/shipping/provinces', [ShippingController::class, 'provinces'])->name('api.shipping.provinces');
 Route::get('/api/shipping/cities', [ShippingController::class, 'cities'])->name('api.shipping.cities');
 Route::get('/api/shipping/subdistricts', [ShippingController::class, 'subdistricts'])->name('api.shipping.subdistricts');

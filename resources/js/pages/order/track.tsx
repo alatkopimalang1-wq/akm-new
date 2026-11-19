@@ -60,7 +60,7 @@ export default function OrderTrackPage({ error }: TrackPageProps) {
             console.error('Tracking error:', err);
             setTrackingResult({
                 success: false,
-                message: 'Gagal terhubung ke server tracking RajaOngkir. Silakan coba sesaat lagi.',
+                message: 'Gagal terhubung ke server tracking ekspedisi. Silakan coba sesaat lagi.',
             });
         } finally {
             setTrackingLoading(false);
@@ -79,7 +79,7 @@ export default function OrderTrackPage({ error }: TrackPageProps) {
                         Lacak Pesanan & Cek Resi
                     </h1>
                     <p className="text-xs sm:text-sm text-brand-600 max-w-md mx-auto">
-                        Pantau status pesanan kopi Anda atau cek nomor resi ekspedisi secara real-time via gateway RajaOngkir Enterprise.
+                        Pantau status pesanan kopi Anda atau cek nomor resi ekspedisi secara real-time.
                     </p>
                 </div>
 
@@ -150,7 +150,7 @@ export default function OrderTrackPage({ error }: TrackPageProps) {
                             </button>
                         </form>
                     ) : (
-                        /* TAB 2: TRACK BY AWB / RESI (LIVE RAJAONGKIR) */
+                        /* TAB 2: TRACK BY AWB / RESI (LIVE EKSPEDISI) */
                         <form onSubmit={handleWaybillSubmit} className="space-y-4">
                             <div className="space-y-1.5">
                                 <label className="block text-xs font-bold uppercase tracking-wider text-brand-900">

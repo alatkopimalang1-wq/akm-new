@@ -980,7 +980,7 @@ export default function OrderShowPage({
                                                 className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-800 hover:bg-brand-900 text-white text-xs font-bold shadow-xs transition-all cursor-pointer"
                                             >
                                                 <Search className="w-3.5 h-3.5" />
-                                                <span>Lacak Paket Live (RajaOngkir)</span>
+                                                <span>Lacak Paket Live</span>
                                             </button>
 
                                             <a
@@ -1045,7 +1045,7 @@ export default function OrderShowPage({
                                 <Truck className="w-5 h-5 text-accent-copper" />
                                 <div>
                                     <h3 className="text-sm font-extrabold tracking-wide">Status Pengiriman Real-Time</h3>
-                                    <p className="text-[11px] text-brand-300">RajaOngkir Enterprise Pro Tracking</p>
+                                    <p className="text-[11px] text-brand-300">Live Ekspedisi Tracking</p>
                                 </div>
                             </div>
                             <button
@@ -1062,7 +1062,7 @@ export default function OrderShowPage({
                             {trackingLoading ? (
                                 <div className="py-12 text-center space-y-3">
                                     <div className="w-10 h-10 border-3 border-brand-700 border-t-transparent rounded-full animate-spin mx-auto" />
-                                    <p className="text-xs text-brand-600 font-medium">Menghubungkan ke API RajaOngkir & server ekspedisi...</p>
+                                    <p className="text-xs text-brand-600 font-medium">Menghubungkan ke server ekspedisi...</p>
                                 </div>
                             ) : trackingData?.success ? (
                                 <div className="space-y-4">

@@ -20,7 +20,7 @@
                     </span>
                     <span class="text-xs text-gray-600 dark:text-gray-400">{{ $tracking['status_label'] ?? '' }}</span>
                 </div>
-                <span class="text-xs text-gray-500">Gateway: {{ $tracking['provider'] ?? 'RajaOngkir Pro' }}</span>
+                <span class="text-xs text-gray-500">Gateway: {{ $tracking['provider'] ?? 'Ekspedisi' }}</span>
             </div>
 
             <div class="mt-3 grid grid-cols-2 gap-3 border-t border-gray-200 pt-3 text-xs dark:border-gray-800">
