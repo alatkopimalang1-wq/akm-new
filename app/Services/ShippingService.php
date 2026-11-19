@@ -487,542 +487,115 @@ class ShippingService
     }
 
     /**
-     * Calculate automatic shipping options from Origin to Destination.
+     * Calculate automatic shipping options exclusively via Biteship Live Gateway.
      */
     public static function calculateRates(array $payload): array
     {
         $config = self::getConfig();
 
+        // Biteship is the exclusive shipping gateway
+        if (! BiteshipService::isEnabled()) {
+            return [];
+        }
+
         $destCityId = (int) ($payload['destination_city_id'] ?? $config['origin_city_id']);
-        $destSubdistrictId = ! empty($payload['destination_subdistrict_id']) ? (int) $payload['destination_subdistrict_id'] : null;
+        $destPostalCode = ! empty($payload['destination_postal_code']) ? (int) $payload['destination_postal_code'] : null;
+        if (! $destPostalCode && $destCityId) {
+            $destPostalCode = self::getPostalCodeForCity($destCityId);
+        }
+
         $destLat = isset($payload['destination_latitude']) && $payload['destination_latitude'] !== '' ? (float) $payload['destination_latitude'] : null;
         $destLng = isset($payload['destination_longitude']) && $payload['destination_longitude'] !== '' ? (float) $payload['destination_longitude'] : null;
         $destProvinceId = (int) ($payload['province_id'] ?? $config['origin_province_id']);
         $rawWeight = (int) ($payload['weight_grams'] ?? $config['default_weight_grams']);
         $subtotal = (float) ($payload['subtotal'] ?? 0);
 
-        $chargeableWeightGrams = max(1000, $rawWeight);
-        $weightInKg = (int) ceil($chargeableWeightGrams / 1000);
+        $chargeableWeightGrams = max(100, $rawWeight);
 
-        $goSendRates = [];
-        if (in_array('gosend', array_map('strtolower', $config['couriers'] ?? []), true)) {
-            $goSendRates = self::calculateGoSendRates(
-                $config,
-                $destCityId,
-                $destSubdistrictId,
-                $destProvinceId,
-                $rawWeight,
-                $subtotal,
-                $destLat,
-                $destLng
-            );
-        }
-
-        $destPostalCode = ! empty($payload['destination_postal_code']) ? (int) $payload['destination_postal_code'] : null;
-        if (! $destPostalCode && $destCityId) {
-            $destPostalCode = self::getPostalCodeForCity($destCityId);
-        }
-
-        // 1. Attempt Biteship Live Rates API if enabled
-        if (BiteshipService::isEnabled() && ($destPostalCode || ($destLat && $destLng))) {
-            $configuredCouriers = array_map('strtolower', $config['couriers'] ?? []);
-
-            // Automatically include instant couriers (Gojek & Grab) if GPS pinpoint coordinates are provided
-            if ($destLat && $destLng) {
-                if (! in_array('gojek', $configuredCouriers, true)) {
-                    $configuredCouriers[] = 'gojek';
-                }
-                if (! in_array('grab', $configuredCouriers, true)) {
-                    $configuredCouriers[] = 'grab';
-                }
-            }
-
-            // Automatically include J&T Cargo for heavy packages (>= 5 kg)
-            if ($chargeableWeightGrams >= 5000 && ! in_array('jntcargo', $configuredCouriers, true)) {
-                $configuredCouriers[] = 'jntcargo';
-            }
-
-            $biteshipCouriers = array_values(array_filter(
-                $configuredCouriers,
-                fn ($c) => $c !== 'gosend'
-            ));
-
-            $biteshipRates = BiteshipService::getRates([
-                'origin_postal_code' => (int) $config['origin_postal_code'],
-                'origin_latitude' => (float) $config['origin_latitude'],
-                'origin_longitude' => (float) $config['origin_longitude'],
-                'destination_postal_code' => $destPostalCode,
-                'destination_latitude' => $destLat,
-                'destination_longitude' => $destLng,
-                'weight_grams' => $chargeableWeightGrams,
-                'subtotal' => $subtotal,
-                'couriers' => ! empty($biteshipCouriers) ? $biteshipCouriers : ['jne', 'jnt', 'sicepat', 'gojek', 'grab'],
-            ]);
-
-            if (! empty($biteshipRates)) {
-                // Apply promo free shipping rules if active
-                if ($config['free_shipping_enabled'] && $subtotal >= $config['free_shipping_min']) {
-                    $isEligibleZone = match ($config['free_shipping_zone']) {
-                        'malang_only' => in_array($destCityId, [391, 393, 256, 255, 74]),
-                        'java_only' => in_array($destProvinceId, [18, 10, 5, 12, 19, 11, 15]),
-                        default => true,
-                    };
-
-                    if ($isEligibleZone) {
-                        $maxSubsidy = (int) $config['free_shipping_max_subsidy'];
-                        foreach ($biteshipRates as &$rate) {
-                            $originalCost = $rate['cost'];
-                            if ($maxSubsidy <= 0 || $originalCost <= $maxSubsidy) {
-                                $rate['cost'] = 0;
-                                $rate['is_free'] = true;
-                                $rate['badge'] = 'Bebas Ongkir';
-                            } else {
-                                $rate['cost'] = max(0, $originalCost - $maxSubsidy);
-                                $rate['badge'] = 'Subsidi Ongkir';
-                            }
-                        }
-                        unset($rate);
-                    }
-                }
-
-                $hasInstantRate = false;
-                foreach ($biteshipRates as $rate) {
-                    if (in_array(strtolower($rate['courier_code']), ['gojek', 'grab'], true)) {
-                        $hasInstantRate = true;
-                        break;
-                    }
-                }
-
-                // If Biteship didn't return any instant rate and GPS is set, append internal GoSend
-                $finalRates = $hasInstantRate ? $biteshipRates : array_merge($goSendRates, $biteshipRates);
-
-                // Sort: Instant services (Gojek / Grab / GoSend) first when customer selects pinpoint
-                if ($destLat && $destLng) {
-                    usort($finalRates, function ($a, $b) {
-                        $aIsInstant = in_array(strtolower($a['courier_code']), ['gojek', 'grab', 'gosend'], true);
-                        $bIsInstant = in_array(strtolower($b['courier_code']), ['gojek', 'grab', 'gosend'], true);
-                        if ($aIsInstant && ! $bIsInstant) {
-                            return -1;
-                        }
-                        if (! $aIsInstant && $bIsInstant) {
-                            return 1;
-                        }
-                        return $a['cost'] <=> $b['cost'];
-                    });
-                } else {
-                    usort($finalRates, fn ($a, $b) => $a['cost'] <=> $b['cost']);
-                }
-
-                return $finalRates;
-            }
-        }
-
-        // 2. Fallback to verified local tariff engine
-        $tariffRates = self::calculateBuiltInRates($config, $destCityId, $destProvinceId, $weightInKg, $subtotal);
-        return array_merge($goSendRates, $tariffRates);
-    }
-
-    /**
-     * Calculate road distance in kilometers between two GPS pinpoint coordinates (Haversine * 1.28 urban road factor).
-     */
-    public static function calculateRoadDistanceKm(float $lat1, float $lng1, float $lat2, float $lng2): float
-    {
-        $earthRadiusKm = 6371.0;
-        $dLat = deg2rad($lat2 - $lat1);
-        $dLng = deg2rad($lng2 - $lng1);
-
-        $a = sin($dLat / 2) * sin($dLat / 2)
-            + cos(deg2rad($lat1)) * cos(deg2rad($lat2))
-            * sin($dLng / 2) * sin($dLng / 2);
-        $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
-        $straightLineKm = $earthRadiusKm * $c;
-
-        return max(0.5, round($straightLineKm * 1.28, 1));
-    }
-
-    /**
-     * Calculate GoSend Instant courier rates based on GPS Pinpoint Coordinates or RajaOngkir district (kecamatan).
-     */
-    protected static function calculateGoSendRates(
-        array $config,
-        int $destCityId,
-        ?int $destSubdistrictId,
-        int $destProvinceId,
-        int $weightGrams,
-        float $subtotal,
-        ?float $destLat = null,
-        ?float $destLng = null
-    ): array {
-        // GoSend Instant supports up to 20 kg (20,000 grams)
-        if ($weightGrams > 20000) {
+        // Biteship requires either destination postal code or GPS coordinates
+        if (! $destPostalCode && (! $destLat || ! $destLng)) {
             return [];
         }
 
-        $originLat = (float) ($config['origin_latitude'] ?? self::DEFAULT_ORIGIN_LATITUDE);
-        $originLng = (float) ($config['origin_longitude'] ?? self::DEFAULT_ORIGIN_LONGITUDE);
-        $ratePerKm = (int) ($config['gosend_rate_per_km'] ?? self::DEFAULT_GOSEND_RATE_PER_KM);
-        $minCost = (int) ($config['gosend_min_cost'] ?? self::DEFAULT_GOSEND_MIN_COST);
-        $maxInstantDistanceKm = (float) ($config['gosend_max_distance_km'] ?? self::DEFAULT_GOSEND_MAX_DISTANCE_KM);
+        $configuredCouriers = array_values(array_filter(
+            array_map('strtolower', $config['couriers'] ?? []),
+            fn ($c) => $c !== 'gosend'
+        ));
 
-        // 1. Exact GPS Pinpoint Calculation (when customer sets pinpoint on map)
-        if ($destLat !== null && $destLng !== null) {
-            $distanceKm = self::calculateRoadDistanceKm($originLat, $originLng, $destLat, $destLng);
-
-            // If beyond maxInstantDistanceKm, out of GoSend Instant coverage area
-            if ($distanceKm > $maxInstantDistanceKm) {
-                return [];
+        // Automatically include instant couriers (Gojek & Grab) if GPS pinpoint coordinates are provided
+        if ($destLat && $destLng) {
+            if (! in_array('gojek', $configuredCouriers, true)) {
+                $configuredCouriers[] = 'gojek';
             }
-
-            $extraKm = max(0.0, $distanceKm - 4.0);
-            $instantCost = (int) ($minCost + ceil(($extraKm * $ratePerKm) / 500) * 500);
-            $instantEtd = $distanceKm <= 12.0 ? '1-2 jam' : '1-3 jam';
-            $distLabel = number_format($distanceKm, 1, ',', '.');
-
-            return [
-                self::formatCourierRate(
-                    'GoSend',
-                    'gosend',
-                    'Instant',
-                    "Pengiriman Instan sesuai Titik Lokasi ({$distLabel} km dari Roastery)",
-                    $instantCost,
-                    $instantEtd,
-                    $config,
-                    $destProvinceId,
-                    $destCityId,
-                    $subtotal,
-                    "⚡ Instan · {$distLabel} km"
-                ),
-            ];
+            if (! in_array('grab', $configuredCouriers, true)) {
+                $configuredCouriers[] = 'grab';
+            }
         }
 
-        // 2. District-level Fallback (when pinpoint coordinates are not yet set)
-        $malangRayaCities = [391, 393, 256, 255, 74];
-        if (! in_array($destCityId, $malangRayaCities, true)) {
+        // Automatically include J&T Cargo for heavy packages (>= 5 kg)
+        if ($chargeableWeightGrams >= 5000 && ! in_array('jntcargo', $configuredCouriers, true)) {
+            $configuredCouriers[] = 'jntcargo';
+        }
+
+        $biteshipRates = BiteshipService::getRates([
+            'origin_postal_code' => (int) $config['origin_postal_code'],
+            'origin_latitude' => (float) $config['origin_latitude'],
+            'origin_longitude' => (float) $config['origin_longitude'],
+            'destination_postal_code' => $destPostalCode,
+            'destination_latitude' => $destLat,
+            'destination_longitude' => $destLng,
+            'weight_grams' => $chargeableWeightGrams,
+            'subtotal' => $subtotal,
+            'couriers' => ! empty($configuredCouriers) ? $configuredCouriers : ['jne', 'jnt', 'sicepat', 'gojek', 'grab'],
+        ]);
+
+        if (empty($biteshipRates)) {
             return [];
         }
 
-        // Determine distance zone based on RajaOngkir District (Kecamatan) ID from Alat Kopi Malang (Ruko Tlogomas Square, Lowokwaru 3896)
-        $subId = (int) ($destSubdistrictId ?: 3896);
+        // Apply promo free shipping rules if active
+        if ($config['free_shipping_enabled'] && $subtotal >= $config['free_shipping_min']) {
+            $isEligibleZone = match ($config['free_shipping_zone']) {
+                'malang_only' => in_array($destCityId, [391, 393, 256, 255, 74]),
+                'java_only' => in_array($destProvinceId, [18, 10, 5, 12, 19, 11, 15]),
+                default => true,
+            };
 
-        // Zone 1 (0–4 km): Lowokwaru (Tlogomas) & Dau (Kab. Malang perbatasan langsung)
-        $zone1Core = [3896, 3553]; // Lowokwaru
-        $zone1Near = [3931, 3562]; // Dau
+            if ($isEligibleZone) {
+                $maxSubsidy = (int) $config['free_shipping_max_subsidy'];
+                foreach ($biteshipRates as &$rate) {
+                    $originalCost = $rate['cost'];
+                    if ($maxSubsidy <= 0 || $originalCost <= $maxSubsidy) {
+                        $rate['cost'] = 0;
+                        $rate['is_free'] = true;
+                        $rate['badge'] = 'Bebas Ongkir';
+                    } else {
+                        $rate['cost'] = max(0, $originalCost - $maxSubsidy);
+                        $rate['badge'] = 'Subsidi Ongkir';
+                    }
+                }
+                unset($rate);
+            }
+        }
 
-        // Zone 2 (4–8 km): Klojen, Blimbing, Sukun, Karangploso
-        $zone2Lowokwaru = [3895, 3552]; // Klojen
-        $zone2Blimbing = [3893, 3550]; // Blimbing
-        $zone2Kedungkandang = [3897, 3554]; // Sukun
-
-        // Zone 3 (8–15 km): Kedungkandang, Wagir, Pakisaji, Pakis, Karangploso, Singosari
-        $zone3NearKab = [3894, 3551, 3951, 3584]; // Kedungkandang, Wagir
-        $zone3MidKab = [3942, 3941, 3937, 3576, 3575, 3567]; // Pakisaji, Pakis, Karangploso
-        $zone3OuterKab = [3944, 3929, 3947, 3578, 3560, 3580]; // Singosari, Bululawang, Tajinan
-
-        // Zone 4 (15–25 km): Kota Batu & Kab. Malang Tengah (Kepanjen, Lawang, Tumpang, Gondanglegi, Pujon, Turen, Poncokusumo, Wajak)
-        $zone4Batu = [3923, 3924, 3925, 1021, 1022, 1023];
-        $zone4KabMid = [3926, 3957, 3950, 3934, 3955, 3943, 3949, 3952, 3938, 3939];
-
-        if (in_array($subId, $zone1Core, true)) {
-            $instantCost = 12000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone1Near, true)) {
-            $instantCost = 14000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone2Lowokwaru, true)) {
-            $instantCost = 16000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone2Blimbing, true)) {
-            $instantCost = 17000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone2Kedungkandang, true)) {
-            $instantCost = 18000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone3NearKab, true)) {
-            $instantCost = 22000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone3MidKab, true)) {
-            $instantCost = 26000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone3OuterKab, true)) {
-            $instantCost = 29000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($destCityId, [393, 74], true) || in_array($subId, $zone4Batu, true)) {
-            $instantCost = 36000;
-            $instantEtd = '1-2 jam';
-        } elseif (in_array($subId, $zone4KabMid, true)) {
-            $instantCost = 38000;
-            $instantEtd = '1-3 jam';
+        // Sort: Instant services (Gojek / Grab) first when customer selects pinpoint
+        if ($destLat && $destLng) {
+            usort($biteshipRates, function ($a, $b) {
+                $aIsInstant = in_array(strtolower($a['courier_code']), ['gojek', 'grab'], true);
+                $bIsInstant = in_array(strtolower($b['courier_code']), ['gojek', 'grab'], true);
+                if ($aIsInstant && ! $bIsInstant) {
+                    return -1;
+                }
+                if (! $aIsInstant && $bIsInstant) {
+                    return 1;
+                }
+                return $a['cost'] <=> $b['cost'];
+            });
         } else {
-            // Farther districts in Kab. Malang (25–40 km)
-            $instantCost = 48000;
-            $instantEtd = '2-3 jam';
+            usort($biteshipRates, fn ($a, $b) => $a['cost'] <=> $b['cost']);
         }
 
-        return [
-            self::formatCourierRate(
-                'GoSend',
-                'gosend',
-                'Instant',
-                'Pengiriman Instan Langsung ke Lokasi',
-                $instantCost,
-                $instantEtd,
-                $config,
-                $destProvinceId,
-                $destCityId,
-                $subtotal,
-                '⚡ Instan (1-2 Jam)'
-            ),
-        ];
-    }
-
-
-
-    /**
-     * Built-in verified tariff matrix based on official Malang origin rates.
-     */
-    protected static function calculateBuiltInRates(
-        array $config,
-        int $destCityId,
-        int $destProvinceId,
-        int $weightInKg,
-        float $subtotal
-    ): array {
-        $isMalangRaya = in_array($destCityId, [391, 393, 256, 255, 74]);
-        $isJawaTimur = in_array($destProvinceId, [18, 11]);
-        $isJabodetabek = in_array($destProvinceId, [10, 11, 6, 3]);
-        $isJawaLain = in_array($destProvinceId, [5, 12, 19, 9, 10]);
-        $isBaliNtb = in_array($destProvinceId, [15, 1, 21, 22, 23]);
-
-        if ($isMalangRaya) {
-            $baseJneReg = 9000;
-            $baseJneYes = 15000;
-            $baseJntEz = 8000;
-            $baseSicepat = 8500;
-            $baseAnteraja = 8000;
-            $basePos = 8000;
-            $baseTiki = 8500;
-            $baseNinja = 8000;
-            $baseWahana = 7500;
-            $baseLion = 8000;
-            $baseIde = 8000;
-            $baseSap = 8500;
-            $etdReg = '1';
-            $etdYes = '1';
-        } elseif ($isJawaTimur) {
-            $baseJneReg = 11000;
-            $baseJneYes = 18000;
-            $baseJntEz = 10000;
-            $baseSicepat = 10000;
-            $baseAnteraja = 10000;
-            $basePos = 9500;
-            $baseTiki = 10500;
-            $baseNinja = 10000;
-            $baseWahana = 9000;
-            $baseLion = 9500;
-            $baseIde = 10000;
-            $baseSap = 10500;
-            $etdReg = '1-2';
-            $etdYes = '1';
-        } elseif ($isJabodetabek) {
-            $baseJneReg = 18000;
-            $baseJneYes = 30000;
-            $baseJntEz = 17000;
-            $baseSicepat = 17000;
-            $baseAnteraja = 16500;
-            $basePos = 16000;
-            $baseTiki = 17500;
-            $baseNinja = 16500;
-            $baseWahana = 15000;
-            $baseLion = 16000;
-            $baseIde = 16500;
-            $baseSap = 17000;
-            $etdReg = '2-3';
-            $etdYes = '1';
-        } elseif ($isJawaLain) {
-            $baseJneReg = 16000;
-            $baseJneYes = 26000;
-            $baseJntEz = 15000;
-            $baseSicepat = 15000;
-            $baseAnteraja = 15000;
-            $basePos = 14500;
-            $baseTiki = 15500;
-            $baseNinja = 15000;
-            $baseWahana = 14000;
-            $baseLion = 14500;
-            $baseIde = 15000;
-            $baseSap = 15500;
-            $etdReg = '2-3';
-            $etdYes = '1';
-        } elseif ($isBaliNtb) {
-            $baseJneReg = 22000;
-            $baseJneYes = 36000;
-            $baseJntEz = 20000;
-            $baseSicepat = 21000;
-            $baseAnteraja = 20000;
-            $basePos = 19000;
-            $baseTiki = 21500;
-            $baseNinja = 20500;
-            $baseWahana = 19000;
-            $baseLion = 19500;
-            $baseIde = 20000;
-            $baseSap = 21000;
-            $etdReg = '2-4';
-            $etdYes = '1-2';
-        } else {
-            $baseJneReg = 34000;
-            $baseJneYes = 55000;
-            $baseJntEz = 32000;
-            $baseSicepat = 33000;
-            $baseAnteraja = 32000;
-            $basePos = 29000;
-            $baseTiki = 33000;
-            $baseNinja = 32500;
-            $baseWahana = 30000;
-            $baseLion = 31000;
-            $baseIde = 32000;
-            $baseSap = 33500;
-            $etdReg = '3-5';
-            $etdYes = '2';
-        }
-
-        $candidateServices = [
-            [
-                'courier' => 'J&T Express',
-                'courier_code' => 'jnt',
-                'service' => 'EZ',
-                'description' => 'Layanan Reguler Cepat & Handal',
-                'raw_cost' => $baseJntEz * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => 'Paling Populer',
-            ],
-            [
-                'courier' => 'JNE Express',
-                'courier_code' => 'jne',
-                'service' => 'REG',
-                'description' => 'Layanan Reguler JNE ke Seluruh Indonesia',
-                'raw_cost' => $baseJneReg * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'SiCepat Ekspres',
-                'courier_code' => 'sicepat',
-                'service' => 'REG',
-                'description' => 'SiCepat Reguler Terpercaya',
-                'raw_cost' => $baseSicepat * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'AnterAja',
-                'courier_code' => 'anteraja',
-                'service' => 'REG',
-                'description' => 'Layanan Reguler AnterAja',
-                'raw_cost' => $baseAnteraja * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'JNE Express',
-                'courier_code' => 'jne',
-                'service' => 'YES',
-                'description' => 'Yakin Esok Sampai (Garansi Cepat)',
-                'raw_cost' => $baseJneYes * $weightInKg,
-                'etd' => $etdYes,
-                'default_badge' => 'Express 1 Hari',
-            ],
-            [
-                'courier' => 'POS Indonesia',
-                'courier_code' => 'pos',
-                'service' => 'Pos Reguler',
-                'description' => 'Pos Indonesia Menjangkau Pelosok Nusantara',
-                'raw_cost' => $basePos * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'TIKI',
-                'courier_code' => 'tiki',
-                'service' => 'REG',
-                'description' => 'TIKI Layanan Reguler',
-                'raw_cost' => $baseTiki * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'Ninja Xpress',
-                'courier_code' => 'ninja',
-                'service' => 'STANDARD',
-                'description' => 'Ninja Xpress Standard Delivery',
-                'raw_cost' => $baseNinja * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'Wahana Logistik',
-                'courier_code' => 'wahana',
-                'service' => 'Normal',
-                'description' => 'Wahana Prestasi Logistik Ekonomis',
-                'raw_cost' => $baseWahana * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => 'Ekonomis',
-            ],
-            [
-                'courier' => 'Lion Parcel',
-                'courier_code' => 'lion',
-                'service' => 'REGPACK',
-                'description' => 'Lion Parcel Regular Package',
-                'raw_cost' => $baseLion * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'ID Express',
-                'courier_code' => 'ide',
-                'service' => 'STD',
-                'description' => 'ID Express Standard',
-                'raw_cost' => $baseIde * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-            [
-                'courier' => 'SAP Express',
-                'courier_code' => 'sap',
-                'service' => 'UDRREG',
-                'description' => 'SAP Express Regular',
-                'raw_cost' => $baseSap * $weightInKg,
-                'etd' => $etdReg,
-                'default_badge' => null,
-            ],
-        ];
-
-        $activeCouriers = array_map('strtolower', $config['couriers'] ?? []);
-        $filtered = array_filter($candidateServices, function ($item) use ($activeCouriers) {
-            return empty($activeCouriers) || in_array($item['courier_code'], $activeCouriers);
-        });
-
-        if (empty($filtered)) {
-            $filtered = array_slice($candidateServices, 0, 5);
-        }
-
-        $rates = [];
-        foreach ($filtered as $svc) {
-            $rates[] = self::formatCourierRate(
-                $svc['courier'],
-                $svc['courier_code'],
-                $svc['service'],
-                $svc['description'],
-                (int) $svc['raw_cost'],
-                (string) $svc['etd'],
-                $config,
-                $destProvinceId,
-                $destCityId,
-                $subtotal,
-                $svc['default_badge']
-            );
-        }
-
-        return $rates;
+        return $biteshipRates;
     }
 
     /**

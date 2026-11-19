@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Head, Link } from '@inertiajs/react';
 import {
+    AlertCircle,
     ArrowLeft,
     Building2,
     Check,
@@ -249,45 +250,43 @@ export default function CartPage({
     // Format weight text: e.g. "400g (Dihitung 1 kg)"
     const chargeableWeightKg = Math.max(1, Math.ceil(totalWeightGrams / 1000));
 
-    // When province changes, fetch cities for that province
-    useEffect(() => {
-        if (!selectedProvinceId) return;
+    // When province changes, fetch cities for that province immediately
+    const handleProvinceChange = async (provId: number) => {
+        setSelectedProvinceId(provId);
+        setCitiesList([]);
+        setSelectedCityId(0);
+        setSubdistrictsList([]);
+        setSelectedSubdistrictId(null);
+        setDistrict('');
+        setPostalCode('');
+        setCourierRates([]);
+        setIsLoadingRates(true);
 
-        let isMounted = true;
-        const fetchCities = async () => {
-            try {
-                const res = await fetch(`/api/shipping/cities?province_id=${selectedProvinceId}`);
-                const data = await res.json();
-                if (isMounted && data.success && data.data.length > 0) {
-                    setCitiesList(data.data);
-                    setSelectedCityId((prevCityId) => {
-                        const existingCity = data.data.find((c: CityItem) => c.id === prevCityId);
-                        const chosenCity = existingCity || data.data[0];
-                        if (chosenCity?.postal_code) {
-                            setPostalCode(chosenCity.postal_code);
-                        }
-                        if (!existingCity) {
-                            setSubdistrictsList([]);
-                            setSelectedSubdistrictId(null);
-                            setDistrict('');
-                        }
-                        return chosenCity.id;
-                    });
+        try {
+            const res = await fetch(`/api/shipping/cities?province_id=${provId}`);
+            const data = await res.json();
+            if (data.success && Array.isArray(data.data) && data.data.length > 0) {
+                setCitiesList(data.data);
+                const firstCity = data.data[0];
+                setSelectedCityId(firstCity.id);
+                if (firstCity.postal_code) {
+                    setPostalCode(firstCity.postal_code);
                 }
-            } catch (err) {
-                console.error('Error fetching cities', err);
             }
-        };
+        } catch (err) {
+            console.error('Error fetching cities', err);
+        } finally {
+            setIsLoadingRates(false);
+        }
+    };
 
-        fetchCities();
-        return () => {
-            isMounted = false;
-        };
-    }, [selectedProvinceId]);
-
-    // When city changes, update postal code & fetch subdistricts
+    // When city changes, update postal code & clear stale subdistricts
     const handleCityChange = (cityId: number) => {
         setSelectedCityId(cityId);
+        setSubdistrictsList([]);
+        setSelectedSubdistrictId(null);
+        setDistrict('');
+        setCourierRates([]);
         const found = citiesList.find((c) => c.id === cityId);
         if (found && found.postal_code) {
             setPostalCode(found.postal_code);
@@ -384,9 +383,9 @@ export default function CartPage({
         };
     }, [selectedCityId, selectedSubdistrictId, selectedProvinceId, totalWeightGrams, subtotal, items.length, destLat, destLng]);
 
-    // Active selected courier
+    // Active selected courier (exclusively from Biteship)
     const activeCourier = courierRates[selectedCourierIndex] || null;
-    const shippingCost = items.length === 0 || isPickup ? 0 : (activeCourier ? activeCourier.cost : 15000);
+    const shippingCost = items.length === 0 || isPickup ? 0 : (activeCourier ? activeCourier.cost : 0);
 
     // Free shipping threshold
     const freeShippingMin = paymentSettings?.free_shipping_min ?? 250000;
@@ -427,6 +426,10 @@ export default function CartPage({
                 setErrorMessage('Mohon lengkapi Nama Lengkap, Nomor WhatsApp, dan Alamat Pengiriman.');
                 return;
             }
+            if (!activeCourier) {
+                setErrorMessage('Mohon pilih salah satu layanan kurir pengiriman Biteship yang tersedia.');
+                return;
+            }
         }
 
         setIsSubmitting(true);
@@ -462,11 +465,11 @@ export default function CartPage({
                     longitude: isPickup ? null : destLng,
                 },
                 shipping: {
-                    courier: isPickup ? 'Ambil di Toko' : (activeCourier?.courier || 'J&T Express'),
-                    courier_code: isPickup ? 'pickup' : (activeCourier?.courier_code || 'jnt'),
-                    service: isPickup ? 'Self Pick Up' : (activeCourier?.service || 'EZ'),
-                    cost: isPickup ? 0 : shippingCost,
-                    etd: isPickup ? 'Siap Diambil di Roastery' : (activeCourier?.etd || '1-2 hari'),
+                    courier: isPickup ? 'Ambil di Toko' : (activeCourier?.courier || ''),
+                    courier_code: isPickup ? 'pickup' : (activeCourier?.courier_code || ''),
+                    service: isPickup ? 'Self Pick Up' : (activeCourier?.service || ''),
+                    cost: isPickup ? 0 : (activeCourier?.cost ?? 0),
+                    etd: isPickup ? 'Siap Diambil di Roastery' : (activeCourier?.etd || '-'),
                 },
                 payment_method: paymentMethod,
                 payment_channel: paymentMethod === 'bank_transfer' ? selectedBank : (paymentMethod === 'qris' ? 'qris' : 'whatsapp'),
@@ -803,7 +806,7 @@ export default function CartPage({
                                                     {fulfillmentType === 'delivery' && <Check className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-brand-700 stroke-[3]" />}
                                                 </div>
                                                 <p className="text-xs sm:text-[11px] text-brand-600 mt-1 leading-snug">
-                                                    Biteship Official (J&amp;T, JNE, SiCepat, AnterAja, POS, TIKI) &amp; GoSend Instan.
+                                                    Biteship Official Gateway (J&amp;T, JNE, SiCepat, Gojek, Grab, J&amp;T Cargo, dll.).
                                                 </p>
                                             </div>
                                         </button>
@@ -981,7 +984,7 @@ export default function CartPage({
                                                 <div className="relative">
                                                     <select
                                                         value={selectedProvinceId}
-                                                        onChange={(e) => setSelectedProvinceId(Number(e.target.value))}
+                                                        onChange={(e) => handleProvinceChange(Number(e.target.value))}
                                                         className="w-full px-3.5 py-2.5 pr-8 rounded-xl bg-cream-50 border border-sand-200 text-xs sm:text-sm text-brand-950 focus:outline-hidden focus:border-brand-700 focus:bg-white appearance-none cursor-pointer"
                                                     >
                                                         {provinces.map((prov) => (
@@ -1126,7 +1129,18 @@ export default function CartPage({
 
                                         {/* Courier Cards Grid */}
                                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-2.5">
-                                            {courierRates.map((rate, idx) => {
+                                            {courierRates.length === 0 && !isLoadingRates ? (
+                                                <div className="col-span-1 sm:col-span-2 p-4 rounded-xl border border-amber-200 bg-amber-50/70 text-amber-900 text-xs sm:text-sm space-y-1">
+                                                    <div className="font-bold flex items-center gap-1.5 text-amber-950">
+                                                        <AlertCircle className="w-4 h-4 text-amber-700 flex-shrink-0" />
+                                                        <span>Tidak ada opsi pengiriman Biteship yang tersedia</span>
+                                                    </div>
+                                                    <p className="text-amber-800 text-xs leading-relaxed">
+                                                        Silakan pastikan Provinsi, Kota/Kabupaten, Kecamatan, dan Kode Pos sudah terisi dengan benar. Jika Anda memilih kurir instan (Gojek / Grab), pastikan juga Titik Lokasi Peta Alamat Pengiriman sudah ditentukan.
+                                                    </p>
+                                                </div>
+                                            ) : (
+                                                courierRates.map((rate, idx) => {
                                                 const isSelected = selectedCourierIndex === idx;
                                                 return (
                                                     <div
@@ -1192,7 +1206,7 @@ export default function CartPage({
                                                         </div>
                                                     </div>
                                                 );
-                                            })}
+                                            }))}
                                         </div>
                                     </div>
                                 )}
