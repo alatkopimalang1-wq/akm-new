@@ -362,6 +362,77 @@ class ManageShippingSettings extends Page
         }
     }
 
+    public function createBiteshipTestOrder(): void
+    {
+        $apiKey = \App\Services\BiteshipService::getApiKey();
+        if (empty($apiKey)) {
+            Notification::make()
+                ->title('Gagal: API Key Biteship Belum Disetel')
+                ->danger()
+                ->send();
+            return;
+        }
+
+        $orderPayload = [
+            'origin_contact_name' => 'Alat Kopi Malang',
+            'origin_contact_phone' => '082132095241',
+            'origin_address' => 'Ruko Tlogomas Square Kav. 34, Jl. Raya Tlogomas, Lowokwaru, Kota Malang, Jawa Timur',
+            'origin_postal_code' => 65144,
+            'destination_contact_name' => 'Budi Santoso (Test Webhook)',
+            'destination_contact_phone' => '081234567890',
+            'destination_address' => 'Jl. Soekarno Hatta No. 9, Lowokwaru, Kota Malang, Jawa Timur',
+            'destination_postal_code' => 65141,
+            'courier_company' => 'jnt',
+            'courier_type' => 'ez',
+            'delivery_type' => 'now',
+            'order_note' => 'Test Uji Coba Webhook Biteship',
+            'items' => [
+                [
+                    'name' => 'Biji Kopi Arabika Specialty 250g',
+                    'description' => 'Test Item',
+                    'value' => 85000,
+                    'quantity' => 1,
+                    'weight' => 250,
+                ],
+            ],
+        ];
+
+        try {
+            $response = \Illuminate\Support\Facades\Http::timeout(15)
+                ->withHeaders([
+                    'Authorization' => $apiKey,
+                    'Content-Type' => 'application/json',
+                    'Accept' => 'application/json',
+                ])
+                ->post('https://api.biteship.com/v1/orders', $orderPayload);
+
+            $data = $response->json();
+
+            if ($response->successful() && ($data['success'] ?? false)) {
+                $orderId = $data['id'] ?? '-';
+                $waybill = $data['courier']['waybill_id'] ?? '-';
+                Notification::make()
+                    ->title('Pesanan Uji Coba Biteship Berhasil Dibuat!')
+                    ->body("Order ID: {$orderId} | Resi: {$waybill}. Silakan refresh halaman Pesanan di dashboard Biteship untuk menekan tombol Play Webhook.")
+                    ->success()
+                    ->send();
+            } else {
+                $msg = $data['error'] ?? $data['message'] ?? 'Gagal membuat pesanan uji coba.';
+                Notification::make()
+                    ->title('Gagal Membuat Pesanan Sandbox')
+                    ->body($msg)
+                    ->danger()
+                    ->send();
+            }
+        } catch (\Throwable $e) {
+            Notification::make()
+                ->title('Terjadi Kesalahan')
+                ->body($e->getMessage())
+                ->danger()
+                ->send();
+        }
+    }
+
     protected function getFormActions(): array
     {
         return [
@@ -373,6 +444,11 @@ class ManageShippingSettings extends Page
                 ->action('testBiteshipConnection')
                 ->color('gray')
                 ->icon(Heroicon::ArrowPath),
+            Action::make('createTestOrder')
+                ->label('Buat Pesanan Uji Coba (Sandbox)')
+                ->action('createBiteshipTestOrder')
+                ->color('warning')
+                ->icon(Heroicon::ShoppingBag),
         ];
     }
 }
