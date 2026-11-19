@@ -239,29 +239,41 @@ class ShippingService
     }
 
     /**
-     * Built-in Cities fallback matching RajaOngkir Enterprise Pro IDs.
+     * Built-in Cities covering all 34 Indonesian Provinces.
      */
     public static function getBuiltInCities(?int $provinceId = null): array
     {
-        $allCities = [
+        static $cachedCities = null;
+
+        if ($cachedCities === null) {
+            $jsonPath = resource_path('data/indonesia_cities.json');
+            if (file_exists($jsonPath)) {
+                $decoded = json_decode(file_get_contents($jsonPath), true);
+                if (is_array($decoded) && ! empty($decoded)) {
+                    $cachedCities = $decoded;
+                }
+            }
+        }
+
+        $allCities = $cachedCities ?? [
             // Jawa Timur (18)
-            ['id' => 391, 'province_id' => 18, 'type' => '', 'name' => 'Malang', 'postal_code' => '65116'],
-            ['id' => 393, 'province_id' => 18, 'type' => '', 'name' => 'Batu', 'postal_code' => '65311'],
-            ['id' => 577, 'province_id' => 18, 'type' => '', 'name' => 'Surabaya', 'postal_code' => '60119'],
-            ['id' => 583, 'province_id' => 18, 'type' => '', 'name' => 'Sidoarjo', 'postal_code' => '61219'],
-            ['id' => 531, 'province_id' => 18, 'type' => '', 'name' => 'Pasuruan', 'postal_code' => '67118'],
-            ['id' => 289, 'province_id' => 18, 'type' => '', 'name' => 'Kediri', 'postal_code' => '64125'],
-            ['id' => 392, 'province_id' => 18, 'type' => '', 'name' => 'Blitar', 'postal_code' => '66117'],
-            ['id' => 256, 'province_id' => 18, 'type' => '', 'name' => 'Jember', 'postal_code' => '68124'],
-            ['id' => 257, 'province_id' => 18, 'type' => '', 'name' => 'Banyuwangi', 'postal_code' => '68416'],
-            ['id' => 388, 'province_id' => 18, 'type' => '', 'name' => 'Mojokerto', 'postal_code' => '61316'],
-            ['id' => 578, 'province_id' => 18, 'type' => '', 'name' => 'Gresik', 'postal_code' => '61115'],
-            ['id' => 353, 'province_id' => 18, 'type' => '', 'name' => 'Madiun', 'postal_code' => '63122'],
-            ['id' => 394, 'province_id' => 18, 'type' => '', 'name' => 'Probolinggo', 'postal_code' => '67215'],
-            ['id' => 585, 'province_id' => 18, 'type' => '', 'name' => 'Tuban', 'postal_code' => '62319'],
-            ['id' => 579, 'province_id' => 18, 'type' => '', 'name' => 'Lamongan', 'postal_code' => '62218'],
-            ['id' => 389, 'province_id' => 18, 'type' => '', 'name' => 'Jombang', 'postal_code' => '61419'],
-            ['id' => 586, 'province_id' => 18, 'type' => '', 'name' => 'Tulungagung', 'postal_code' => '66212'],
+            ['id' => 391, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Malang', 'postal_code' => '65116'],
+            ['id' => 393, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Batu', 'postal_code' => '65311'],
+            ['id' => 577, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Surabaya', 'postal_code' => '60119'],
+            ['id' => 583, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Sidoarjo', 'postal_code' => '61219'],
+            ['id' => 531, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Pasuruan', 'postal_code' => '67118'],
+            ['id' => 289, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Kediri', 'postal_code' => '64125'],
+            ['id' => 392, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Blitar', 'postal_code' => '66117'],
+            ['id' => 256, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Jember', 'postal_code' => '68124'],
+            ['id' => 257, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Banyuwangi', 'postal_code' => '68416'],
+            ['id' => 388, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Mojokerto', 'postal_code' => '61316'],
+            ['id' => 578, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Gresik', 'postal_code' => '61115'],
+            ['id' => 353, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Madiun', 'postal_code' => '63122'],
+            ['id' => 394, 'province_id' => 18, 'type' => 'Kota', 'name' => 'Probolinggo', 'postal_code' => '67215'],
+            ['id' => 585, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Tuban', 'postal_code' => '62319'],
+            ['id' => 579, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Lamongan', 'postal_code' => '62218'],
+            ['id' => 389, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Jombang', 'postal_code' => '61419'],
+            ['id' => 586, 'province_id' => 18, 'type' => 'Kabupaten', 'name' => 'Tulungagung', 'postal_code' => '66212'],
         ];
 
         if ($provinceId !== null) {

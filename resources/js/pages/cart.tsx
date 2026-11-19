@@ -96,6 +96,7 @@ interface CourierRate {
     etd: string;
     is_free: boolean;
     badge?: string | null;
+    source?: string;
 }
 
 interface CartPageProps {
@@ -262,6 +263,11 @@ export default function CartPage({
                         const chosenCity = existingCity || data.data[0];
                         if (chosenCity?.postal_code) {
                             setPostalCode(chosenCity.postal_code);
+                        }
+                        if (!existingCity) {
+                            setSubdistrictsList([]);
+                            setSelectedSubdistrictId(null);
+                            setDistrict('');
                         }
                         return chosenCity.id;
                     });
@@ -789,7 +795,7 @@ export default function CartPage({
                                                     {fulfillmentType === 'delivery' && <Check className="w-4 h-4 sm:w-3.5 sm:h-3.5 text-brand-700 stroke-[3]" />}
                                                 </div>
                                                 <p className="text-xs sm:text-[11px] text-brand-600 mt-1 leading-snug">
-                                                    GoSend Instan (Malang), J&amp;T, JNE, SiCepat langsung ke alamat Anda.
+                                                    Biteship Official (J&amp;T, JNE, SiCepat, AnterAja, POS, TIKI) &amp; GoSend Instan.
                                                 </p>
                                             </div>
                                         </button>
@@ -1089,13 +1095,14 @@ export default function CartPage({
                                 {!isPickup && (
                                     <div className="pt-4 border-t border-sand-200 space-y-3">
                                         <div className="flex flex-wrap items-center justify-between gap-2">
-                                            <div className="flex items-center gap-2">
+                                            <div className="flex flex-wrap items-center gap-2">
                                                 <label className="text-sm sm:text-xs font-bold uppercase tracking-wider text-brand-950 flex items-center gap-2">
                                                     <Truck className="w-5 h-5 sm:w-4 sm:h-4 text-brand-700" />
                                                     <span>2. Pilih Layanan Kurir Ekspedisi</span>
                                                 </label>
-                                                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-brand-900/10 text-brand-800 text-[10px] font-bold">
-                                                    Ekspedisi Otomatis · Asal: {origin.city}
+                                                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200/80 text-emerald-800 text-[10px] font-bold shadow-2xs">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                                                    <span>Biteship Live Gateway · Asal: {origin.city || 'Kota Malang'}</span>
                                                 </span>
                                             </div>
                                             {isLoadingRates && (
@@ -1122,13 +1129,18 @@ export default function CartPage({
                                                     >
                                                         <div className="flex items-start justify-between gap-2">
                                                             <div>
-                                                                <div className="flex items-center gap-2 sm:gap-1.5">
+                                                                <div className="flex items-center gap-2 sm:gap-1.5 flex-wrap">
                                                                     <span className="text-sm sm:text-xs font-bold text-brand-950">
                                                                         {rate.courier}
                                                                     </span>
                                                                     <span className="px-2 py-0.5 rounded text-[11px] sm:text-[10px] font-bold bg-sand-200/80 text-brand-800">
                                                                         {rate.service}
                                                                     </span>
+                                                                    {rate.source === 'biteship' && (
+                                                                        <span className="px-1.5 py-0.5 rounded text-[9px] font-extrabold bg-emerald-100 text-emerald-800 border border-emerald-200 tracking-wider">
+                                                                            Biteship Live
+                                                                        </span>
+                                                                    )}
                                                                 </div>
                                                                 <p className="text-xs sm:text-[11px] text-brand-500 mt-1 sm:mt-0.5">
                                                                     Estimasi: <strong className="text-brand-800">{rate.etd}</strong>
