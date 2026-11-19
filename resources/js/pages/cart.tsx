@@ -84,6 +84,8 @@ interface SubdistrictItem {
     id: number;
     city_id: number;
     name: string;
+    postal_code?: string;
+    area_id?: string;
 }
 
 interface CourierRate {
@@ -298,7 +300,9 @@ export default function CartPage({
         let isMounted = true;
         const fetchSubdistricts = async () => {
             try {
-                const res = await fetch(`/api/shipping/subdistricts?city_id=${selectedCityId}`);
+                const foundCity = citiesList.find((c) => c.id === selectedCityId);
+                const cityParam = foundCity ? `&city_name=${encodeURIComponent(foundCity.name)}` : '';
+                const res = await fetch(`/api/shipping/subdistricts?city_id=${selectedCityId}${cityParam}`);
                 const data = await res.json();
                 if (isMounted && data.success && Array.isArray(data.data)) {
                     setSubdistrictsList(data.data);
@@ -307,10 +311,14 @@ export default function CartPage({
                             const existingSub = data.data.find((s: SubdistrictItem) => s.id === prevSubId);
                             const chosenSub = existingSub || data.data[0];
                             setDistrict(chosenSub.name);
+                            if (chosenSub?.postal_code) {
+                                setPostalCode(chosenSub.postal_code);
+                            }
                             return chosenSub.id;
                         });
                     } else {
                         setSelectedSubdistrictId(null);
+                        setDistrict('');
                     }
                 }
             } catch (err) {
@@ -322,7 +330,7 @@ export default function CartPage({
         return () => {
             isMounted = false;
         };
-    }, [selectedCityId]);
+    }, [selectedCityId, citiesList]);
 
     // Calculate courier rates automatically via Shipping Gateway
     useEffect(() => {
@@ -1023,13 +1031,16 @@ export default function CartPage({
                                                                 const subObj = subdistrictsList.find((s) => s.id === subId);
                                                                 if (subObj) {
                                                                     setDistrict(subObj.name);
+                                                                    if (subObj.postal_code) {
+                                                                        setPostalCode(subObj.postal_code);
+                                                                    }
                                                                 }
                                                             }}
                                                             className="w-full px-3.5 py-2.5 pr-8 rounded-xl bg-cream-50 border border-sand-200 text-xs sm:text-sm text-brand-950 focus:outline-hidden focus:border-brand-700 focus:bg-white appearance-none cursor-pointer"
                                                         >
                                                             {subdistrictsList.map((sub) => (
                                                                 <option key={sub.id} value={sub.id}>
-                                                                    Kec. {sub.name}
+                                                                    Kec. {sub.name} {sub.postal_code ? `(${sub.postal_code})` : ''}
                                                                 </option>
                                                             ))}
                                                         </select>

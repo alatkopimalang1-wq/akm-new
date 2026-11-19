@@ -190,13 +190,78 @@ class ShippingService
     /**
      * Get list of Subdistricts / Kecamatan for a City.
      */
-    public static function getSubdistricts(int $cityId): array
+    public static function getSubdistricts(int $cityId, ?string $cityName = null): array
     {
         if ($cityId === 256) {
             $cityId = 391;
         }
 
-        return self::getBuiltInSubdistricts($cityId);
+        $builtIn = self::getBuiltInSubdistricts($cityId);
+        if (! empty($builtIn)) {
+            return $builtIn;
+        }
+
+        // Resolve city name from getBuiltInCities() if not provided
+        if (empty($cityName)) {
+            foreach (self::getBuiltInCities() as $city) {
+                if ((int) $city['id'] === $cityId) {
+                    $cityName = $city['name'];
+                    break;
+                }
+            }
+        }
+
+        if (empty($cityName)) {
+            return [];
+        }
+
+        $cleanCityName = trim(preg_replace('/\s*\(.*?\)\s*/', '', $cityName));
+
+        // Fetch subdistricts from Biteship Maps Areas API with 24-hour cache
+        $cacheKey = 'biteship_subdistricts_' . md5(strtolower($cleanCityName));
+        return \Illuminate\Support\Facades\Cache::remember($cacheKey, 86400, function () use ($cleanCityName, $cityId) {
+            $apiKey = BiteshipService::getApiKey();
+            if (empty($apiKey)) {
+                return [];
+            }
+
+            try {
+                $response = \Illuminate\Support\Facades\Http::timeout(6)
+                    ->withHeaders([
+                        'Authorization' => $apiKey,
+                        'Accept' => 'application/json',
+                    ])
+                    ->get(BiteshipService::BASE_URL . '/maps/areas', [
+                        'countries' => 'ID',
+                        'input' => $cleanCityName,
+                        'type' => 'single',
+                    ]);
+
+                if ($response->successful()) {
+                    $areas = $response->json()['areas'] ?? [];
+                    $districts = [];
+                    $subId = 10000;
+                    foreach ($areas as $a) {
+                        $distName = $a['administrative_division_level_3_name'] ?? '';
+                        if (! empty($distName) && ! isset($districts[$distName])) {
+                            $districts[$distName] = [
+                                'id' => ++$subId,
+                                'city_id' => $cityId,
+                                'name' => $distName,
+                                'postal_code' => (string) ($a['postal_code'] ?? ''),
+                                'area_id' => $a['id'] ?? null,
+                            ];
+                        }
+                    }
+
+                    return array_values($districts);
+                }
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning("Error fetching subdistricts from Biteship for {$cleanCityName}: " . $e->getMessage());
+            }
+
+            return [];
+        });
     }
 
     /**

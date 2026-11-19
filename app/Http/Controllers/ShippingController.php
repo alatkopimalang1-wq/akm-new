@@ -39,7 +39,8 @@ class ShippingController extends Controller
     public function subdistricts(Request $request): JsonResponse
     {
         $cityId = (int) $request->query('city_id', 391);
-        $subdistricts = ShippingService::getSubdistricts($cityId);
+        $cityName = $request->query('city_name');
+        $subdistricts = ShippingService::getSubdistricts($cityId, $cityName);
 
         return response()->json([
             'success' => true,
