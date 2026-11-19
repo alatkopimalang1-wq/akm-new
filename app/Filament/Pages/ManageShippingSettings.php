@@ -52,6 +52,11 @@ class ManageShippingSettings extends Page
         }
 
         $this->form->fill([
+            // 0. Integrasi Biteship
+            'biteship_enabled' => isset($settings['biteship_enabled']) ? (bool) $settings['biteship_enabled'] : true,
+            'biteship_environment' => $settings['biteship_environment'] ?? 'testing',
+            'biteship_api_key' => $settings['biteship_api_key'] ?? '',
+
             // 1. Titik Asal Pengiriman (Origin Roastery Malang)
             'shipping_origin_province' => $settings['shipping_origin_province'] ?? 'Jawa Timur',
             'shipping_origin_province_id' => $settings['shipping_origin_province_id'] ?? 18,
@@ -107,6 +112,36 @@ class ManageShippingSettings extends Page
     {
         return $schema
             ->components([
+                Section::make('Integrasi Biteship (Gateway Pengiriman & Pick-Up Otomatis)')
+                    ->description('Hubungkan website dengan Biteship untuk kalkulasi ongkir live, request pick-up kurir instan, dan penerbitan resi otomatis.')
+                    ->icon(Heroicon::Bolt)
+                    ->schema([
+                        Toggle::make('biteship_enabled')
+                            ->label('Aktifkan Integrasi Biteship API')
+                            ->helperText('Jika diaktifkan, tarif ongkir checkout akan dihitung otomatis secara live via server Biteship.')
+                            ->default(true),
+
+                        Grid::make(2)->schema([
+                            Select::make('biteship_environment')
+                                ->label('Mode Lingkungan (Environment)')
+                                ->options([
+                                    'testing' => 'Testing / Sandbox (Uji Coba)',
+                                    'production' => 'Production / Live (Aktif Nyata)',
+                                ])
+                                ->default('testing')
+                                ->required()
+                                ->native(false),
+
+                            TextInput::make('biteship_api_key')
+                                ->label('Biteship API Key')
+                                ->password()
+                                ->revealable()
+                                ->placeholder('Contoh: biteship_test.xxxxxx atau biteship_live.xxxxxx')
+                                ->helperText('Dapatkan kunci API dari dashboard biteship.com -> Developer.')
+                                ->required(),
+                        ]),
+                    ]),
+
                 Section::make('Titik Asal Pengiriman (Roastery Origin Malang)')
                     ->description('Konfigurasi alamat asal gudang pengiriman pesanan Alat Kopi Malang.')
                     ->icon(Heroicon::MapPin)
@@ -276,12 +311,38 @@ class ManageShippingSettings extends Page
             ->send();
     }
 
+    public function testBiteshipConnection(): void
+    {
+        $data = $this->form->getState();
+        $apiKey = $data['biteship_api_key'] ?? null;
+        $result = \App\Services\BiteshipService::testConnection($apiKey);
+
+        if ($result['success']) {
+            Notification::make()
+                ->title('Koneksi Biteship Berhasil!')
+                ->body($result['message'])
+                ->success()
+                ->send();
+        } else {
+            Notification::make()
+                ->title('Gagal Terhubung ke Biteship')
+                ->body($result['message'])
+                ->danger()
+                ->send();
+        }
+    }
+
     protected function getFormActions(): array
     {
         return [
             Action::make('save')
                 ->label('Simpan Pengaturan Pengiriman')
                 ->submit('save'),
+            Action::make('testBiteshipConnection')
+                ->label('Uji Koneksi Biteship API')
+                ->action('testBiteshipConnection')
+                ->color('gray')
+                ->icon(Heroicon::ArrowPath),
         ];
     }
 }

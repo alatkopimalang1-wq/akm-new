@@ -55,6 +55,7 @@ class ShippingController extends Controller
         $validated = $request->validate([
             'destination_city_id' => 'required|integer',
             'destination_subdistrict_id' => 'nullable|integer',
+            'destination_postal_code' => 'nullable|string',
             'destination_latitude' => 'nullable|numeric|between:-90,90',
             'destination_longitude' => 'nullable|numeric|between:-180,180',
             'province_id' => 'nullable|integer',
@@ -68,9 +69,9 @@ class ShippingController extends Controller
         return response()->json([
             'success' => true,
             'gateway' => [
-                'provider' => 'Alat Kopi Malang Shipping',
-                'account_type' => $config['account_type'],
-                'live_api' => $config['enabled'] && ! empty($config['api_key']),
+                'provider' => \App\Services\BiteshipService::isEnabled() ? 'Biteship Official Gateway' : 'Alat Kopi Malang Shipping',
+                'live_api' => \App\Services\BiteshipService::isEnabled(),
+                'environment' => \App\Services\BiteshipService::getEnvironment(),
             ],
             'origin' => [
                 'city' => $config['origin_city_name'],

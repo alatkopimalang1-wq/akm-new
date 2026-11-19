@@ -212,6 +212,85 @@ class OrdersTable
                             ->send();
                     }),
 
+                Action::make('biteship_request')
+                    ->label('Kirim via Biteship')
+                    ->icon(Heroicon::Bolt)
+                    ->color('warning')
+                    ->visible(fn (Order $record): bool => ! $record->is_pickup && \App\Services\BiteshipService::isEnabled())
+                    ->modalHeading(fn (Order $record): string => "Request Pickup & Resi Biteship: {$record->order_number}")
+                    ->modalDescription('Sistem akan memanggil kurir via Biteship API untuk penjemputan paket ke roastery dan menerbitkan nomor resi otomatis.')
+                    ->form([
+                        Select::make('courier_company')
+                            ->label('Pilihan Ekspedisi')
+                            ->options([
+                                'jne' => 'JNE Express',
+                                'jnt' => 'J&T Express',
+                                'sicepat' => 'SiCepat Ekspres',
+                                'anteraja' => 'Anteraja',
+                                'pos' => 'POS Indonesia',
+                                'tiki' => 'TIKI',
+                                'gojek' => 'Gojek (Instant / Same Day)',
+                                'grab' => 'Grab (Instant)',
+                            ])
+                            ->default(function (Order $record): string {
+                                $c = strtolower((string) $record->shipping_courier);
+                                if (str_contains($c, 'j&t') || str_contains($c, 'jnt')) return 'jnt';
+                                if (str_contains($c, 'sicepat')) return 'sicepat';
+                                if (str_contains($c, 'anteraja')) return 'anteraja';
+                                if (str_contains($c, 'pos')) return 'pos';
+                                if (str_contains($c, 'tiki')) return 'tiki';
+                                if (str_contains($c, 'gojek') || str_contains($c, 'gosend')) return 'gojek';
+                                if (str_contains($c, 'grab')) return 'grab';
+                                return 'jne';
+                            })
+                            ->required()
+                            ->native(false),
+
+                        Select::make('courier_type')
+                            ->label('Layanan Pengiriman')
+                            ->options([
+                                'reg' => 'Reguler (Standar 1-3 Hari)',
+                                'yes' => 'Express / Next Day (YES / 1 Hari)',
+                                'jtr' => 'Kargo / Trucking (Barang Berat)',
+                                'instant' => 'Instant Kurir (1-3 Jam)',
+                                'same_day' => 'Same Day (Hari yang Sama)',
+                            ])
+                            ->default('reg')
+                            ->required()
+                            ->native(false),
+
+                        TextInput::make('destination_postal_code')
+                            ->label('Kode Pos Penerima')
+                            ->default(fn (Order $record) => $record->shipping_postal_code ?: '65144')
+                            ->required(),
+                    ])
+                    ->action(function (Order $record, array $data): void {
+                        if (! empty($data['destination_postal_code'])) {
+                            $record->shipping_postal_code = $data['destination_postal_code'];
+                            $record->save();
+                        }
+
+                        $res = \App\Services\BiteshipService::createShipmentOrder(
+                            $record,
+                            $data['courier_company'],
+                            $data['courier_type']
+                        );
+
+                        if ($res['success']) {
+                            Notification::make()
+                                ->title('Pesanan Berhasil Dikirim ke Biteship!')
+                                ->body($res['message'])
+                                ->success()
+                                ->send();
+                        } else {
+                            Notification::make()
+                                ->title('Gagal Request Biteship')
+                                ->body($res['message'])
+                                ->danger()
+                                ->send();
+                        }
+                    }),
+
                 Action::make('update_resi')
                     ->label('Input Resi')
                     ->icon(Heroicon::Truck)

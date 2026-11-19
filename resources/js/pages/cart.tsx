@@ -340,6 +340,7 @@ export default function CartPage({
                     body: JSON.stringify({
                         destination_city_id: selectedCityId,
                         destination_subdistrict_id: selectedSubdistrictId,
+                        destination_postal_code: postalCode,
                         destination_latitude: destLat,
                         destination_longitude: destLng,
                         province_id: selectedProvinceId,

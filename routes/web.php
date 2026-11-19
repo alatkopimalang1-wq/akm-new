@@ -46,6 +46,37 @@ Route::get('/api/shipping/subdistricts', [ShippingController::class, 'subdistric
 Route::post('/api/shipping/calculate', [ShippingController::class, 'calculate'])->name('api.shipping.calculate');
 Route::post('/api/shipping/track', [ShippingController::class, 'track'])->name('api.shipping.track');
 Route::post('/api/shipping/pickup', [ShippingController::class, 'requestPickup'])->name('api.shipping.pickup');
+Route::post('/api/webhooks/biteship', function (\Illuminate\Http\Request $request) {
+    \Illuminate\Support\Facades\Log::info('Biteship Webhook:', $request->all());
+
+    $orderId = $request->input('order_id');
+    $status = $request->input('status');
+    $waybill = $request->input('courier_waybill_id');
+
+    if ($orderId || $waybill) {
+        $order = \App\Models\Order::where('tracking_number', $waybill)
+            ->orWhere('payment_details->biteship->order_id', $orderId)
+            ->first();
+
+        if ($order) {
+            $mappedStatus = match (strtolower((string) $status)) {
+                'delivered' => 'completed',
+                'picking_up', 'dropping_off' => 'ready_for_pickup',
+                'allocated', 'courier_not_found' => 'processing',
+                'cancelled', 'rejected' => 'cancelled',
+                default => 'shipped',
+            };
+
+            $order->status = $mappedStatus;
+            if ($waybill && empty($order->tracking_number)) {
+                $order->tracking_number = $waybill;
+            }
+            $order->save();
+        }
+    }
+
+    return response()->json(['success' => true]);
+})->name('api.webhooks.biteship');
 
 // Public English Routes (Prefix: /en)
 Route::prefix('en')->as('en.')->group(function () {

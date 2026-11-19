@@ -230,6 +230,20 @@ class ShippingService
     }
 
     /**
+     * Get default postal code for a city ID.
+     */
+    public static function getPostalCodeForCity(int $cityId): ?int
+    {
+        foreach (self::getBuiltInCities() as $city) {
+            if ((int) $city['id'] === (int) $cityId && ! empty($city['postal_code'])) {
+                return (int) $city['postal_code'];
+            }
+        }
+
+        return null;
+    }
+
+    /**
      * Filter out irrelevant motorcycle/heavy-trucking/dangerous-goods services for coffee orders.
      */
     protected static function shouldIncludeService(string $serviceCode, string $description, int $weightGrams): bool
@@ -381,7 +395,61 @@ class ShippingService
             );
         }
 
-        // Calculate shipping rates using verified tariff engine
+        $destPostalCode = ! empty($payload['destination_postal_code']) ? (int) $payload['destination_postal_code'] : null;
+        if (! $destPostalCode && $destCityId) {
+            $destPostalCode = self::getPostalCodeForCity($destCityId);
+        }
+
+        // 1. Attempt Biteship Live Rates API if enabled
+        if (BiteshipService::isEnabled() && ($destPostalCode || ($destLat && $destLng))) {
+            $biteshipCouriers = array_values(array_filter(
+                array_map('strtolower', $config['couriers'] ?? []),
+                fn ($c) => $c !== 'gosend'
+            ));
+
+            $biteshipRates = BiteshipService::getRates([
+                'origin_postal_code' => (int) $config['origin_postal_code'],
+                'origin_latitude' => (float) $config['origin_latitude'],
+                'origin_longitude' => (float) $config['origin_longitude'],
+                'destination_postal_code' => $destPostalCode,
+                'destination_latitude' => $destLat,
+                'destination_longitude' => $destLng,
+                'weight_grams' => $chargeableWeightGrams,
+                'subtotal' => $subtotal,
+                'couriers' => ! empty($biteshipCouriers) ? $biteshipCouriers : ['jne', 'jnt', 'sicepat'],
+            ]);
+
+            if (! empty($biteshipRates)) {
+                // Apply promo free shipping rules if active
+                if ($config['free_shipping_enabled'] && $subtotal >= $config['free_shipping_min']) {
+                    $isEligibleZone = match ($config['free_shipping_zone']) {
+                        'malang_only' => in_array($destCityId, [391, 393, 256, 255, 74]),
+                        'java_only' => in_array($destProvinceId, [18, 10, 5, 12, 19, 11, 15]),
+                        default => true,
+                    };
+
+                    if ($isEligibleZone) {
+                        $maxSubsidy = (int) $config['free_shipping_max_subsidy'];
+                        foreach ($biteshipRates as &$rate) {
+                            $originalCost = $rate['cost'];
+                            if ($maxSubsidy <= 0 || $originalCost <= $maxSubsidy) {
+                                $rate['cost'] = 0;
+                                $rate['is_free'] = true;
+                                $rate['badge'] = 'Bebas Ongkir';
+                            } else {
+                                $rate['cost'] = max(0, $originalCost - $maxSubsidy);
+                                $rate['badge'] = 'Subsidi Ongkir';
+                            }
+                        }
+                        unset($rate);
+                    }
+                }
+
+                return array_merge($goSendRates, $biteshipRates);
+            }
+        }
+
+        // 2. Fallback to verified local tariff engine
         $tariffRates = self::calculateBuiltInRates($config, $destCityId, $destProvinceId, $weightInKg, $subtotal);
         return array_merge($goSendRates, $tariffRates);
     }
@@ -1082,7 +1150,38 @@ class ShippingService
             ];
         }
 
+        $courierMap = [
+            'jne express' => 'jne',
+            'j&t express' => 'jnt',
+            'j&t' => 'jnt',
+            'sicepat ekspres' => 'sicepat',
+            'sicepat' => 'sicepat',
+            'pos indonesia' => 'pos',
+            'tiki (titipan kilat)' => 'tiki',
+            'tiki' => 'tiki',
+            'anteraja' => 'anteraja',
+            'shopee express (spx)' => 'spx',
+            'spx' => 'spx',
+            'ninja xpress' => 'ninja',
+            'ninja' => 'ninja',
+            'wahana prestasi logistik' => 'wahana',
+            'wahana' => 'wahana',
+            'lion parcel' => 'lion',
+            'lion' => 'lion',
+            'id express' => 'ide',
+            'ide' => 'ide',
+            'sap express' => 'sap',
+            'sap' => 'sap',
+        ];
         $cleanCourier = $courierMap[$courier] ?? $courier;
+
+        // Attempt Biteship live tracking if enabled
+        if (BiteshipService::isEnabled()) {
+            $biteshipTracking = BiteshipService::trackWaybill($waybill, $cleanCourier);
+            if ($biteshipTracking['success']) {
+                return $biteshipTracking;
+            }
+        }
 
         // Dedicated handling for GoSend Instant
         if ($cleanCourier === 'gosend') {
